@@ -21,4 +21,4 @@ docker_build_development:
     - kubectl apply -f node-rolling-update.yml
   when: manual
   only:   
-    - development
+    - development 
