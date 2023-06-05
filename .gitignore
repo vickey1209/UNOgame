@@ -1,0 +1,6 @@
+node_modules
+logs
+.env
+dist
+package-lock.json
+.gitlab-ci.yml
