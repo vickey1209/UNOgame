@@ -34,7 +34,7 @@ async function firstRoundBootCollect(
 
 
     tableGamePlay.tableStatus = TABLE_STATE.COLLECTING_BOOT_VALUE;
-    // tableGamePlay.potValue = tableConfig.entryFee * tableConfig.activePlayer * NUMERICAL.EIGHTY;
+    // tableGamePlay.potValue = tableConfig.entryFee * tableGamePlay.currentPlayerInTable * NUMERICAL.EIGHTY;
 
     await tableGamePlayCache.insertTableGamePlay(tableGamePlay, tableId);
     
@@ -50,10 +50,10 @@ async function firstRoundBootCollect(
           tournamentId: userProfile.lobbyId
         }
 
-        const debitAmountDetail = await wallateDebit(apiData, userProfile.authToken, userProfile.socketId);
+        // const debitAmountDetail = await wallateDebit(apiData, userProfile.authToken, userProfile.socketId);
 
-        const userOwnProfile = await getUserOwnProfile(userProfile.authToken, userProfile.socketId, userProfile.userId);
-        const updatedBalance: number = userOwnProfile.bonus + userOwnProfile.winCash + userOwnProfile.cash || 0;
+        // const userOwnProfile = await getUserOwnProfile(userProfile.authToken, userProfile.socketId, userProfile.userId);
+        const updatedBalance: number = 100;//userOwnProfile.bonus + userOwnProfile.winCash + userOwnProfile.cash || 0;
         userProfile.balance = updatedBalance;
         await userProfileCache.setUserProfile(tableGamePlay.seats[v].userId, userProfile);
 

@@ -1,8 +1,9 @@
 import CommonEventEmitter from '../commonEventEmitter';
 import { EMPTY, EVENTS, EVENT_EMITTER, NUMERICAL, TABLE_STATE } from '../constants';
 import { roundTimerExpired } from "../services/round";
-// import { changeTurn, onTurnExpire, startUserTurn } from "../services/turn";
+import { changeTurn, onTurnExpire, startUserTurn } from "../services/turn";
 // import { roundDealerSetTimer, cardDealingTimer, tossCardTimer } from "../services/initializeRound";
+import { cardDealing, cardDealingTimer } from '../services/cardDealing';
 import {
   DACLARE_PLAYER_TURN_TIMER_EXPIRED,
   LOCK_IN_PERIOD_EXPIRED,
@@ -30,7 +31,7 @@ import Scheduler from '../scheduler';
 import roundStartTimer from '../services/round/roundStartTimer';
 import { responseData } from "../interfaces/responseData";
 // import expireScoreBoardShow from '../services/scoreBoard/expireScoreBoardShow';
-// import nextRound from '../services/nextRound';
+import nextRound from '../services/nextRound';
 // import seconderyTimer from '../services/turn/secondryTimer';
 import global from "../global";
 import { tableGamePlayCache } from '../cache';
@@ -300,7 +301,15 @@ function scoreBoardClientEvent(payload: any) {
   Logger.debug(tableId, "SEND EVENT TO TABLE :: ", responseData);
   sendEventToClient(socket, responseData, tableId);
 }
-
+function scoreBoardTableEvent(payload: any) {
+  const { data, tableId } = payload;
+  const responseData: responseData = {
+    eventName: EVENTS.SCORE_BOARD_CLIENT_SOCKET_EVENT,
+    data
+  };
+  Logger.debug(tableId, "SEND EVENT TO TABLE :: ", responseData);
+  sendEventToRoom(tableId, responseData);
+}
 function leaveTableEvent(payload: any) {
   const { data, tableId } = payload;
   const responseData: responseData = {
@@ -448,7 +457,7 @@ CommonEventEmitter.on(LOCK_IN_PERIOD_EXPIRED, roundTimerExpired);
 
 CommonEventEmitter.on(EVENTS.COLLECT_BOOT_VALUE_SOCKET_EVENT, bootColletEvent);
 
-// CommonEventEmitter.on(BOOT_COLLECTING_START_TIMER_EXPIRED, tossCardTimer);
+CommonEventEmitter.on(BOOT_COLLECTING_START_TIMER_EXPIRED, cardDealing);
 
 CommonEventEmitter.on(EVENTS.TOSS_CARD_SOCKET_EVENT, tossCardEvent);
 
@@ -456,13 +465,15 @@ CommonEventEmitter.on(EVENTS.TOSS_CARD_SOCKET_EVENT, tossCardEvent);
 
 CommonEventEmitter.on(EVENTS.SET_DEALER_SOCKET_EVENT, dealerPlayerEvent);
 
-// CommonEventEmitter.on(CARD_DEALING_TIMER_EXPIRED, cardDealingTimer);
+CommonEventEmitter.on(CARD_DEALING_TIMER_EXPIRED, cardDealingTimer);
 
 CommonEventEmitter.on(EVENTS.PROVIDED_CARDS_EVENT, provideCardEvent);
 
 CommonEventEmitter.on(EVENTS.USER_TURN_STARTED_SOCKET_EVENT, startUserTurnSocket);
 
 // CommonEventEmitter.on(PLAYER_TURN_TIMER_EXPIRED, seconderyTimer);
+
+CommonEventEmitter.on(PLAYER_TURN_TIMER_EXPIRED, onTurnExpire);
 
 CommonEventEmitter.on(EVENTS.SAVE_CARDS_IN_SORTS_SOCKET_EVENT, saveCardsInSorts);
 
@@ -528,17 +539,17 @@ CommonEventEmitter.on(EVENTS.LEAVE_TABLE_SOCKET_EVENT, leaveTableEvent);
 
 CommonEventEmitter.on(NEXT_TURN_DELAY, (res) => {
   // Logger.info("changeTurn : res :: ", res);
-  // changeTurn(res.tableId);
+  changeTurn(res.tableId);
 });
 
 CommonEventEmitter.on(START_USER_TURN, (res) => {
   // Logger.info("startUserTurn : res ::", res.userId, res.seatIndex);
-  // startUserTurn(
-  //   res.tableId,
-  //   res.userId,
-  //   res.seatIndex,
-  //   res.tableGamePlay
-  // );
+  startUserTurn(
+    res.tableId,
+    res.userId,
+    res.seatIndex,
+    res.tableGamePlay
+  );
 
 });
 
@@ -558,7 +569,7 @@ CommonEventEmitter.on(WAITING_FOR_PLAYER_TIMER_EXPIRED, async (res) => {
 
 CommonEventEmitter.on(EVENTS.SCORE_BOARD_SOCKET_EVENT, scoreBoardEvent);
 
-CommonEventEmitter.on(EVENTS.SCORE_BOARD_CLIENT_SOCKET_EVENT, scoreBoardClientEvent);
+CommonEventEmitter.on(EVENTS.SCORE_BOARD_CLIENT_SOCKET_EVENT, scoreBoardTableEvent);
 
 CommonEventEmitter.on(EVENTS.WINNER_SOCKET_EVENT, winnerEvent);
 
@@ -566,7 +577,7 @@ CommonEventEmitter.on(EVENTS.WINNER_SOCKET_EVENT, winnerEvent);
 
 // CommonEventEmitter.on(EVENT_EMITTER.SHOW_AFTER_EXPIRE_SCORE_BOARD_VIEW, expireScoreBoardShow);
 
-// CommonEventEmitter.on(EVENT_EMITTER.EXPIRE_SCORE_BOARD_TIMER, nextRound);
+CommonEventEmitter.on(EVENT_EMITTER.EXPIRE_SCORE_BOARD_TIMER, nextRound);
 
 // CommonEventEmitter.on(EVENT_EMITTER.EXIRE_SECONDERY_TIMER, onTurnExpire);
 

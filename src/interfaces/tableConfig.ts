@@ -9,7 +9,6 @@ export interface defaultTableConfig {
   lobbyId: string;
   gameId : string;
   minPlayer: number;
-  activePlayer: number;
   noOfPlayer: number;
   gameStartTimer: number;
   userTurnTimer: number;
@@ -72,20 +71,20 @@ export interface formatedJTResponse {
   jointTable: Array<any>;
   tableState : string;
   totalRoundTimer : number;
-  dealerPlayer: number;
-  validDeclaredPlayerSI: number;
-  validDeclaredPlayer: string;
+  // dealerPlayer: number;
+  // validDeclaredPlayerSI: number;
+  // validDeclaredPlayer: string;
   currentTurnSeatIndex: number;
   currentTurn: any;
   totalUserTurnTimer : number;
   userTurnTimer : number;
   totalUserSeconderyTimer : number;
-  trumpCard: Array<string>
-  closedDeck: Array<string>;
-  opendDeck: Array<string>;
-  finishDeck: Array<string>;
-  isSeconderyTimer:boolean;
-  isRemainSeconderyTurns:boolean;
+  // trumpCard: Array<string>
+  movedCard: Array<string>;
+  extraCard: Array<string>;
+  turnCard: Array<string>;
+  // isSeconderyTimer:boolean;
+  // isRemainSeconderyTurns:boolean;
 }
 
 export interface BootCollectResponse {

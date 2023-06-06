@@ -53,7 +53,7 @@ async function insertPlayerInTable(
 
 
       if (userStatus == PLAYER_STATE.PLAYING) {
-        tableConfig.activePlayer += NUMERICAL.ONE;
+        tableGamePlay.currentPlayerInTable += NUMERICAL.ONE;
       }
       playerGamePlay = await defaulPlayerGamePlayData(userId, seatIndex, userData.username, userData.profilePic, userStatus);
 

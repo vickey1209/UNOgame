@@ -108,7 +108,7 @@ async function signUpHandler(socket: any, signUpData: SignupInput, isRejoinOrNew
     // RECONNECTION CASE HANDLE
     let freshSignup = true;
     let tableId = '';
-    if (userProfile.tableId != '' && (signUpType === SIGN_UP_TYPES.RECONNECTION || signUpType === SIGN_UP_TYPES.REJOIN || signUpData.fromNewGame)) {
+    if (userProfile.tableId != '' /*&& (signUpType === SIGN_UP_TYPES.RECONNECTION || signUpType === SIGN_UP_TYPES.REJOIN || signUpData.fromNewGame)*/) {
       tableId = userProfile.tableId;
     }
     Logger.info("tableId :: ", tableId);
@@ -171,7 +171,7 @@ async function signUpHandler(socket: any, signUpData: SignupInput, isRejoinOrNew
       }
     }
 
-    if (freshSignup && signUpType === SIGN_UP_TYPES.ADD_TABLE || tableId === "") {
+    if (freshSignup && /*signUpType === SIGN_UP_TYPES.ADD_TABLE ||*/ tableId === "") {
 
       const findTableInput = {
         ...userSignUp.signUpData,

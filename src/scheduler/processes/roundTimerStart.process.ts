@@ -5,8 +5,8 @@ import { EVENTS, MESSAGES, NUMERICAL, TABLE_STATE } from '../../constants';
 import { getConfig } from "../../config";
 import { playerGamePlayCache, tableGamePlayCache, userProfileCache } from '../../cache';
 import { ROUND_TIMER_START_TIMER_EXPIED } from '../../constants/eventEmitter';
-// import { shuffleCardData } from '../../services/shuffleCards';
-// import getCards from '../../utils/getCards';
+import { shuffleCardData } from '../../services/shuffleCards';
+import getCards from '../../utils/getCards';
 const { LOCK_IN_TIMER } = getConfig();
 
 
@@ -36,11 +36,13 @@ export async function roundTimerStartProcess(job: any){
     
     // card distribution
     const totalActivePlayer = tableGamePlay.seats.length;
-    // const userCards: shuffleCardData = await getCards(tableId, NUMERICAL.ONE, totalActivePlayer);
-    // Logger.info(tableId,"  userCards  ==>> ", userCards);
-    // tableGamePlay.closedDeck = userCards.closedDeck;
-    // tableGamePlay.opendDeck = userCards.opendDeck;
-    // tableGamePlay.trumpCard = userCards.trumpCard;
+    const userCards: shuffleCardData = await getCards(tableId, NUMERICAL.ONE, totalActivePlayer);
+    Logger.info(tableId,"  userCards  ==>> ", userCards);
+    tableGamePlay.movedCard = userCards.moved_card;
+    tableGamePlay.extraCard = userCards.extraCard;
+    tableGamePlay.turnCard = userCards.moved_card;
+    tableGamePlay.cardColor = userCards.cardColor;
+    tableGamePlay.cardNumber = userCards.cardNumber;
     Logger.info(tableId,"tableGamePlay  card distribution  ::>>", tableGamePlay);
     await tableGamePlayCache.insertTableGamePlay(tableGamePlay, tableId);
 
@@ -49,7 +51,7 @@ export async function roundTimerStartProcess(job: any){
       const playerGamePlay = await playerGamePlayCache.getPlayerGamePlay( tableGamePlay.seats[i].userId.toString(),  tableId)
       if (!playerGamePlay) throw Error('Unable to get data card dealing');
 
-      // playerGamePlay.currentCards = [userCards.cardAndPoint[i].card];
+      playerGamePlay.card = userCards.userCardArray[i];
       // playerGamePlay.cardPoints = userCards.cardAndPoint[i].points;
       // playerGamePlay.groupingCards.dwd.push(userCards.cardAndPoint[i].card);
 

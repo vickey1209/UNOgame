@@ -65,7 +65,6 @@ function defaulTableData(signUpData: CreateTableI): defaultTableConfig {
     lobbyId: signUpData.lobbyId,
     gameId : signUpData.gameId,
     minPlayer: NUMERICAL.TWO,
-    activePlayer: NUMERICAL.ZERO,
     noOfPlayer: signUpData.noOfPlayer,
     gameStartTimer: Number(GAME_START_TIMER),
     userTurnTimer: Number(USER_TURN_TIMER),
@@ -92,11 +91,11 @@ function defaultTableGamePlayData(
     extraCard:[], // extra Card 
     turnCard:[], // turn Card   
     cardColor:"", // Use for check card color 
-    cardNumber:-1, // Card Number 
+    cardNumber:"", // Card Number 
     cardTurnCircle:'0-1', // card_turn_circle 
     cardDrawCounter:0, // card_draw_counter 
     // currentTurn:0,  //current turn  
-    playingUserCounter:1, //playing user count 
+    currentPlayerInTable:NUMERICAL.ZERO, //playing user count 
     tableStatus: TABLE_STATE.WAITING_FOR_PLAYERS, 
     DCSend:false, // Check for DD(Dice Distribute event sended or not) 
     currentTurnUserId:"",
@@ -124,7 +123,7 @@ function defaulPlayerGamePlayData(
     "seatIndex" : seatIndex,
     "isRobot" : false,
     "userId" : userId,
-    "timeOutCounter" : 2,
+    "timeOutCounter" : 0,
     "ScriptUser" : false,
     "points" : 0,
     "userStatus" : userStatus,

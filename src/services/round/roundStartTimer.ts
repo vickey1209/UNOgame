@@ -24,7 +24,7 @@ async function roundStartTimer(
       throw Error('Unable to get data');
     }
 
-    if (tableConfig.activePlayer >= NUMERICAL.TWO) {
+    if (tableGamePlay.currentPlayerInTable >= NUMERICAL.TWO) {
 
       // Add tracked lobby in db
       // await addLobbyTracking(tableId);

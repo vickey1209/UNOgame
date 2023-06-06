@@ -10,7 +10,6 @@ class TableConfiguration {
       lobbyId: Joi.string().required(),
       gameId : Joi.string().required(),
       minPlayer: Joi.number().required(),
-      activePlayer: Joi.number().required(),
       noOfPlayer: Joi.number().required(),
       gameStartTimer: Joi.number().required(),
       userTurnTimer: Joi.number().required(),
