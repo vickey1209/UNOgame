@@ -14,11 +14,11 @@ export interface defaultTableGamePlayInterface {
   turnCard: Array<string>;
   seats : Array<seatsInterface>;
   cardColor : string;
-  cardNumber: number;
+  cardNumber: string;
   cardTurnCircle: string;
   cardDrawCounter: number;
   currentTurnUserId : string;
-  playingUserCounter : number;
+  currentPlayerInTable : number;
   tableStatus : string;
   DCSend : boolean;
   currentTurnSeatIndex: number;

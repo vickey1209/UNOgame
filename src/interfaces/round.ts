@@ -6,7 +6,7 @@ export interface countDownInterface {
 }
 
 export interface setDealerInterface {
-  DLR: number;
+  // DLR: number;
   round: number;
   tableId : string;
 }
@@ -40,10 +40,8 @@ export interface userCardsInterface {
 }
 export interface formateProvidedCardsIF {
   cards: Array<cards>;
-  closedDeck: Array<string>;
-  opendDeck: Array<string>;
-  trumpCard: Array<string>;
-  cardCount: number;
+  movedCard: Array<string>;
+  extraCard: Array<string>;
+  turnCard: Array<string>;
   tableId :string;
 }
-

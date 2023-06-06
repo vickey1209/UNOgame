@@ -134,7 +134,7 @@ const emitJoinTableEvent = async (
     }
 
     let totalRoundTimer: number = NUMERICAL.MINUS_ONE;
-    if (tableConfig.activePlayer > NUMERICAL.TWO) {
+    if (tableGamePlay.currentPlayerInTable > NUMERICAL.TWO) {
 
       // if (tableGamePlay.tableState === TABLE_STATE.WAITING_FOR_PLAYERS){
       //   totalRoundTimer =

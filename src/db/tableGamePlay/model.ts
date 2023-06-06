@@ -19,11 +19,11 @@ class TableGamePlay {
       //   userState: Joi.string().required()
       // }).default([]).required(),
       cardColor : Joi.string().allow("").required(),
-      cardNumber : Joi.number().required(),
+      cardNumber : Joi.string().allow("").required(),
       cardTurnCircle: Joi.string().allow("").required(),
       cardDrawCounter: Joi.number().required(),
       currentTurnUserId : Joi.string().allow("").required(),
-      playingUserCounter : Joi.number().required(),
+      currentPlayerInTable : Joi.number().required(),
       tableStatus :  Joi.string().required(),
       DCSend :  Joi.boolean().required(),
       currentTurnSeatIndex: Joi.number().required(),

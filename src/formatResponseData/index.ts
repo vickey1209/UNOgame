@@ -334,7 +334,7 @@ async function formateUpdatedGameTableData(
       maximumSeat: Number(tableConfig.noOfPlayer),
       minimumSeat: Number(tableConfig.minPlayer),
       entryFee: String(tableConfig.entryFee),
-      activePlayers: tableConfig.activePlayer,
+      activePlayers: tableGamePlay.currentPlayerInTable,
       gameStartTimer: tableConfig.gameStartTimer,
       turnTimer: tableConfig.userTurnTimer,
       tableState: tableGamePlay.tableStatus,
@@ -370,7 +370,7 @@ async function formatBootCollectData(
     const data = {
       updatedUserWallet: String(updatedUserWallet.toFixed(2)),
       bv: Number(tableConfig.entryFee) * NUMERICAL.EIGHTY,
-      tbv: Number(tableConfig.entryFee) * tableConfig.activePlayer * NUMERICAL.EIGHTY,
+      tbv: Number(tableConfig.entryFee) * tableGamePlay.currentPlayerInTable * NUMERICAL.EIGHTY,
       collectBootValueSIArray,
       tableId
     };
@@ -385,12 +385,12 @@ async function formatBootCollectData(
 
 async function formatSetDearData(
   tableId: string,
-  dealerSeatIndex: number,
+  // dealerSeatIndex: number,
   currentRound: number
 ): Promise<setDealerInterface> {
   try {
     const data: setDealerInterface = {
-      DLR: dealerSeatIndex,
+      // DLR: dealerSeatIndex,
       round: currentRound,
       tableId
     };
@@ -426,18 +426,17 @@ async function formatTossCardData(
 async function formateProvidedCards(
   tableId: string,
   userId: string,
-  closedDeck: Array<string>,
-  opendDeck: Array<string>,
-  trumpCard: Array<string>,
-  cards: Array<cards>
+  movedCard: Array<string>,
+  extraCard: Array<string>,
+  turnCard: Array<string>,
+  cards: Array<string> | any
 ): Promise<formateProvidedCardsIF> {
   try {
     const providedCardData: formateProvidedCardsIF = {
       cards,
-      opendDeck,
-      trumpCard,
-      closedDeck,
-      cardCount: cards[0].group.length,
+      movedCard,
+      extraCard,
+      turnCard,
       tableId
     };
     const validatedCardResponse: formateProvidedCardsIF =
@@ -946,10 +945,11 @@ async function formatRejoinTableData(
   playerData: defaulPlayerGamePlayInterface
 ): Promise<NewGTIResponse> {
   try {
+    Logger.info('formatRejoinTableData : ');
     const GAME_START: number = Number(GAME_START_TIMER);
     const LOCK_TIMER: number = Number(LOCK_IN_TIMER);
     const tablePlayers: Array<seatsInterface> = [];
-
+    Logger.info('formatRejoinTableData 1: ');
     const availablePlayerIds: Array<string> = tableGamePlay.seats.map(
       (e: seatsInterface): string => e.userId
     );
@@ -957,6 +957,7 @@ async function formatRejoinTableData(
     const availablePlayerSeats: Array<number> = tableGamePlay.seats.map(
       (e: seatsInterface): number => e.si
     );
+    Logger.info('formatRejoinTableData 2: ');
     const availablePlayerLength: number = availablePlayerIds.length;
 
     const availablePGP: Array<defaulPlayerGamePlayInterface | null> =
@@ -968,7 +969,7 @@ async function formatRejoinTableData(
           );
         })
       );
-
+      Logger.info('formatRejoinTableData 3: ');
     const availableUsers: Array<UserProfileOutput | null> = await Promise.all(
       availablePlayerIds.map(async (id: string) => await getUserProfile(id))
     );
@@ -990,7 +991,7 @@ async function formatRejoinTableData(
         tablePlayers.push(seatPlayer);
       }
     }
-
+    Logger.info('formatRejoinTableData 4: ');
     let remainingTimer =
       diffSeconds(new Date(), new Date(tableGamePlay.updatedAt)) * NUMERICAL.THOUSAND;
     if (tableGamePlay.tableStatus === TABLE_STATE.ROUND_TIMER_STARTED)
@@ -1000,14 +1001,14 @@ async function formatRejoinTableData(
     if (tableGamePlay.tableStatus === TABLE_STATE.ROUND_STARTED)
       remainingTimer = tableConfig.userTurnTimer - remainingTimer;
 
-    const { cards, totalScorePoint }: manageAndUpdateDataInterface =
-      await manageAndUpdateData(playerData.card, playerData)
+    // const { cards, totalScorePoint }: manageAndUpdateDataInterface =
+    //   await manageAndUpdateData(playerData.card, playerData)
 
-    let cardCount: number = NUMERICAL.ZERO;
+    // let cardCount: number = NUMERICAL.ZERO;
     // playerData.currentCards.map((ele: Array<string>) => {
-      cardCount = cardCount + playerData.card.length;
+      // cardCount = cardCount + playerData.card.length;
     // });
-
+    Logger.info('formatRejoinTableData 5: ');
     const data:any = {
       tableId: tableConfig._id,
       seatIndex: playerData.seatIndex,
@@ -1015,7 +1016,7 @@ async function formatRejoinTableData(
       maximumSeat: tableConfig.noOfPlayer,
       minimumSeat: tableConfig.minPlayer,
       entryFee: String(tableConfig.entryFee),
-      activePlayers: tableConfig.activePlayer,
+      activePlayers: tableGamePlay.currentPlayerInTable,
       gameStartTimer: tableConfig.gameStartTimer,
       turnTimer: tableConfig.userTurnTimer,
       tableState: tableGamePlay.tableStatus,

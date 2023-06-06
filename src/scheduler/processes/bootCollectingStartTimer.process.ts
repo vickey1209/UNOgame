@@ -6,7 +6,8 @@ export async function bootCollectingStartTimerProcess(job: any){
   try {
     Logger.info(' bootCollectingStartTimerProcess :: job is ::', job.data);
 
-    commonEventEmitter.emit(BOOT_COLLECTING_START_TIMER_EXPIRED, job.data);
+    commonEventEmitter.emit(BOOT_COLLECTING_START_TIMER_EXPIRED, {tableId:job.data.tableId,
+      currentRound:job.data.currentRound} );
 
     return job.data;
     

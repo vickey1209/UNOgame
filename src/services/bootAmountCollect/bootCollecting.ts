@@ -33,7 +33,7 @@ async function bootCollecting(
       jobId: `${tableConfig.gameType}:gameStart:${tableId}`,
       tableId,
       currentRound,
-      tableGamePlay
+      // tableGamePlay
     });
 
     Logger.info(tableId,`Ending bootCollecting for tableId : ${tableId}`);

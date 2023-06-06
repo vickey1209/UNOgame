@@ -19,7 +19,7 @@ async function roundStart(
     // tableGamePlay.tableCurrentTimer = new Date();
     await tableGamePlayCache.insertTableGamePlay(tableGamePlay, tableId)
 
-    if (tableConfig.activePlayer > NUMERICAL.ONE) {
+    if (tableGamePlay.currentPlayerInTable > NUMERICAL.ONE) {
       await bootCollecting(tableId, currentRound, true);
     }
 
