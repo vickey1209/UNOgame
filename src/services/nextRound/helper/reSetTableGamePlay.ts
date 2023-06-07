@@ -77,6 +77,7 @@ async function reSetTableGameTable(tableId: string, newTableId: string) {
                     name: seat.name,
                     pp: seat.pp,
                     userState: PLAYER_STATE.PLAYING,
+                    isBot:seat.isBot
                 }
                 remainUsers.push(obj);
 

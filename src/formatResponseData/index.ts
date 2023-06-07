@@ -76,7 +76,7 @@ async function formatSignUpData(
       lobbyId: userProfileData.lobbyId,
       chips: String(userProfileData.balance.toFixed(2)),
       isPlay: userProfileData?.isPlay,
-      isRobot: userProfileData.isRobot,
+      isBot: userProfileData.isBot,
       latitude: userProfileData.latitude,
       longitude : userProfileData.longitude,
       entryFee: String(userProfileData.entryFee),
@@ -138,7 +138,8 @@ async function formatGameTableData(
           si: playerSeat,
           name: playerGamePlay.userName,
           pp: userProfileData.profilePic,
-          userState: tableGamePlay.seats[i].userState
+          userState: tableGamePlay.seats[i].userState,
+          isBot : userProfileData.isBot,
         };
         tablePlayers.push(seatPlayer);
       }
@@ -321,7 +322,8 @@ async function formateUpdatedGameTableData(
           si: playerGamePlay.seatIndex,
           name: userProfileData.username,
           pp: userProfileData.profilePic,
-          userState: playerGamePlay.userStatus
+          userState: playerGamePlay.userStatus,
+          isBot : playerGamePlay.isBot
         };
         tablePlayers.push(seatPlayer);
       }
@@ -986,7 +988,8 @@ async function formatRejoinTableData(
           si: playerSeat,
           name: userProfileData.username,
           pp: userProfileData.profilePic,
-          userState: playerGamePlay.userStatus
+          userState: playerGamePlay.userStatus,
+          isBot : userProfileData.isBot
         };
         tablePlayers.push(seatPlayer);
       }

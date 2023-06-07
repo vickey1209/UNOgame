@@ -3,7 +3,11 @@ import EVENT from "../constants/event";
 import hearBeat from "./hearBeatHandler";
 import Logger from "../logger";
 import signUpHandler from "./signupHandler";
+import leaveTableHandler from "./leaveTableHandler";
+import pickFromExtraCardHandler from "./pickFromExtraCardHandler";
+import throwCardHandler from "./throwCardHandler";
 import { joinTable } from "../services/playTable/joinTable";
+import unoClickHandler from "./unoClickHandler";
 
 async function requestHandler(
     this: any,
@@ -35,6 +39,23 @@ async function requestHandler(
                     await joinTable(response, socket, false);
                 if (response && response['reconnect']) await joinTable(response, socket, true);
                 break;
+
+            case EVENT.LEAVE_TABLE_SOCKET_EVENT:
+                response = await leaveTableHandler(socket, body.data);
+                break;  
+                
+            case EVENT.PICK_FROM_EXTRA_CARD:
+                body.data.isPanelty=false;
+                response = await pickFromExtraCardHandler(socket,body.data);
+                break    
+
+            case EVENT.THROW_CARD:
+                response = await throwCardHandler(socket,body.data);
+                break  
+
+            case EVENT.UNO_CLICK:
+                response = await unoClickHandler(socket,body.data);
+                break  
 
             default:
                 Logger.info("<<====== Default Event :: Call ========>>");

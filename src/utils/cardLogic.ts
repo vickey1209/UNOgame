@@ -80,7 +80,7 @@ function isPure(card: string[]): any {
     else if (typeArr.includes('J')) {
         if (card.length > NUMERICAL.TWO && res.indexOf(false) == res.length - NUMERICAL.ONE && cardLatter) return true;
         else if (numArr.includes(NUMERICAL.FOURTEEN)) {
-            var index = numArr.indexOf(NUMERICAL.FOURTEEN);
+            let index = numArr.indexOf(NUMERICAL.FOURTEEN);
             if (index) {
                 numArr[index] = NUMERICAL.ONE;
                 for (let i = NUMERICAL.ZERO; i < card.length; i++) {
@@ -97,7 +97,7 @@ function isPure(card: string[]): any {
     else {
         if (card.length > NUMERICAL.TWO && res.indexOf(false) == res.length - NUMERICAL.ONE && allEqual && cardLatter) { return true }
         else if (numArr.includes(NUMERICAL.FOURTEEN)) {
-            var index = numArr.indexOf(NUMERICAL.FOURTEEN);
+            let index = numArr.indexOf(NUMERICAL.FOURTEEN);
             if (index) {
                 numArr[index] = NUMERICAL.ONE;
                 for (let i = NUMERICAL.ZERO; i < card.length; i++) {
@@ -127,14 +127,14 @@ function isImpure(card: string[]): any {
         deckNo.push(arr[NUMERICAL.THREE]);
     })
 
-    var cardJW = [];
-    var cardWithOutJW: any[] = [];
-    var typeCardWithOutJW: any[] = [];
-    var numArrWithOutJW: any[] = [];
-    var typeArrWithOutJW: any[] = [];
-    var diffArr: any[] = [];
-    var gapCount = 0;
-    var newCard = [];
+    let cardJW = [];
+    let cardWithOutJW: any[] = [];
+    let typeCardWithOutJW: any[] = [];
+    let numArrWithOutJW: any[] = [];
+    let typeArrWithOutJW: any[] = [];
+    let diffArr: any[] = [];
+    let gapCount = 0;
+    let newCard = [];
 
     typeArr.map((ele, ind) => {
         if (ele == 'J') cardJW.push(card[ind]);
@@ -173,7 +173,7 @@ function isImpure(card: string[]): any {
     }
     else {
         if ((numArrWithOutJW.includes(NUMERICAL.FOURTEEN))) {
-            var index = numArr.indexOf(`${NUMERICAL.FOURTEEN}`);
+            let index = numArr.indexOf(`${NUMERICAL.FOURTEEN}`);
             if (index != NUMERICAL.MINUS_ONE) {
                 numArr[index] = `${NUMERICAL.ONE}`;
                 for (let i = NUMERICAL.ZERO; i < card.length; i++) {
@@ -204,11 +204,11 @@ function isSet(card: string[]) {
         typeArr.push(arr[NUMERICAL.TWO])
     })
 
-    var cardJW = [];
-    var cardWithOutJW: any[] = [];
-    var typeCardWithOutJW: any[] = [];
-    var numArrWithOutJW: any[] = [];
-    var typeArrWithOutJW: any[] = [];
+    let cardJW = [];
+    let cardWithOutJW: any[] = [];
+    let typeCardWithOutJW: any[] = [];
+    let numArrWithOutJW: any[] = [];
+    let typeArrWithOutJW: any[] = [];
 
     typeArr.map((ele, ind) => {
         if (ele == 'J') cardJW.push(card[ind]);
@@ -223,10 +223,10 @@ function isSet(card: string[]) {
     })
 
     const allNumberSame = numArrWithOutJW.every((val) => val === numArrWithOutJW[0])
-    var allSameSuitCount_S = NUMERICAL.ZERO;
-    var allSameSuitCount_C = NUMERICAL.ZERO;
-    var allSameSuitCount_H = NUMERICAL.ZERO;
-    var allSameSuitCount_D = NUMERICAL.ZERO;
+    let allSameSuitCount_S = NUMERICAL.ZERO;
+    let allSameSuitCount_C = NUMERICAL.ZERO;
+    let allSameSuitCount_H = NUMERICAL.ZERO;
+    let allSameSuitCount_D = NUMERICAL.ZERO;
 
     typeCardWithOutJW.map((ele) => {
         if (ele == 'S') allSameSuitCount_S++;

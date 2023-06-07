@@ -32,7 +32,7 @@ function defaulTableData(
         scriptUser : tableConfig.scriptUser,
         totalTurnTime : tableConfig.totalTurnTime,
         rejoinTime :  tableConfig.rejoinTime,
-        isRobot : tableConfig.isRobot,
+        isBot : tableConfig.isBot,
         robotType : tableConfig.robotType, //high, low, medium
 
         createdAt: currentTimestamp.toString(),

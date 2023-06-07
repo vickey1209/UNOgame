@@ -26,6 +26,7 @@ function gtiResponseValidator(): Joi.ObjectSchema {
         name: Joi.string().allow("").required(),
         pp: Joi.string().required(),
         userState : Joi.string().required(),
+        isBot : Joi.boolean().required(),
       })
     )
   });

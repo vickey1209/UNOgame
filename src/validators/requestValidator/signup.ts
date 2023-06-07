@@ -6,7 +6,7 @@ function signupFormatorValidator(): Joi.ObjectSchema {
     minPlayer: Joi.number().required(),
     noOfPlayer: Joi.number().required(),
     lobbyId: Joi.string().required(),
-    isUseBot: Joi.boolean().required(),
+    isBot: Joi.boolean().required(),
     entryFee: Joi.string().required(),
     moneyMode: Joi.string().allow('').required(),
     userName: Joi.string().required(),

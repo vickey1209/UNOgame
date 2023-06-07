@@ -20,7 +20,7 @@ function robots(botId:string) : UserProfileOutput{
       noOfPlayer : 0,
       isPlay: false,
       isFTUE : false,
-      isRobot: true,
+      isBot: true,
       createdAt: new Date().toString().toString(),
       updatedAt: new Date().toString().toString(),
       latitude : "0.0",
@@ -29,7 +29,6 @@ function robots(botId:string) : UserProfileOutput{
       gameType : 'points',
       authToken : "BOT_AUTH",
       isAnyRunningGame : false,
-      isUseBot: true
     };
 
 }

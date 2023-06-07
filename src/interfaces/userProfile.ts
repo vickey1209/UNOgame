@@ -13,7 +13,7 @@ export interface UserProfileDataInput {
   profilePic: string;
   entryFee: number;
   noOfPlayer : number;
-  isUseBot : boolean;
+  isBot : boolean;
   isFTUE : boolean;
   authToken : string;
   isAnyRunningGame : boolean;
@@ -34,10 +34,9 @@ export interface UserProfileOutput {
   lobbyId: string;
   entryFee : number;
   noOfPlayer : number;
-  isUseBot : boolean;
+  isBot : boolean;
   isFTUE : boolean;
   isPlay? : boolean;
-  isRobot : boolean;
   createdAt: string;
   updatedAt: string;
   oldTableId : Array<string>;

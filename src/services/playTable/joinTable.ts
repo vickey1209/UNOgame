@@ -1,6 +1,6 @@
 import redis from '../../cache/redisCommon';
 import Logger from "../../logger"
-import { EMPTY, EVENTS, MESSAGES, NUMERICAL, PLAYER_STATE, REDIS, TABLE_STATE } from '../../constants';
+import { EMPTY, EVENTS,EVENT_EMITTER, MESSAGES, NUMERICAL, PLAYER_STATE, REDIS, TABLE_STATE } from '../../constants';
 import {
   userProfileCache,
   playerGamePlayCache,
@@ -23,6 +23,7 @@ import { getTableGamePlay } from '../../cache/tableGamePlay';
 import { setUserProfile } from '../../cache/userProfile';
 import { getOnliPlayerCountLobbyWise, incrCounterLobbyWise, setCounterIntialValueLobby } from '../../cache/onlinePlayer';
 import { addGameRunningStatus } from '../../clientsideapi';
+import robotManage from '../../requestHandlers/botTurn';
 const { ROBOT_SEATNG_IN_TABLE_TIMER, WAIT_FOR_OTHER_PLAYER_TIMER } = getConfig();
 
 
@@ -143,15 +144,20 @@ export async function joinTable(
               // scheduler.cancelJob.cancelrobotSeatTimer(`robotSeatTimer:${tableId}:${NUMERICAL.ONE}`);         
               await roundStartTimer(tableId, tableConfig.currentRound);
             }
-            // if(totalPlayersCount == NUMERICAL.ONE) {
-            //   Logger.info("<<===  ROBOT SEAT IN TABLE TIMER START  ===>>");
-            //   let robotSeatTimer = Number(ROBOT_SEATNG_IN_TABLE_TIMER);
-            //   scheduler.addJob.robotSeatInTableTimer({
-            //     timer: robotSeatTimer,
-            //     jobId: `robotSeatTimer:${tableId}:${NUMERICAL.ONE}`,
-            //     tableId
-            //   })
-            // }
+            if(totalPlayersCount == NUMERICAL.ONE) {
+              Logger.info("<<===  ROBOT SEAT IN TABLE TIMER START  ===>>");
+              let robotSeatTimer = Number(ROBOT_SEATNG_IN_TABLE_TIMER);
+              setTimeout(async () => {
+                // await robotManage.Robotcall({tableId:tableId})
+                CommonEventEmitter.emit(EVENT_EMITTER.ROBOT_JOIN_CALL, {tableId:tableId});
+              }, 2000);
+              
+              // scheduler.addJob.robotSeatInTableTimer({
+              //   timer: robotSeatTimer,
+              //   jobId: `robotSeatTimer:${tableId}:${NUMERICAL.ONE}`,
+              //   tableId
+              // })
+            }
           }
 
         } else if (PGP?.userStatus == PLAYER_STATE.WATCHING) {

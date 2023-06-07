@@ -10,6 +10,7 @@ function reSetPlayerGamePlayData(
     username: string,
     profilePic: string,
     userStatus: string,
+    isBot:boolean,
 ): defaulPlayerGamePlayInterface {
     const currentTimestamp = new Date();
     return {
@@ -17,12 +18,13 @@ function reSetPlayerGamePlayData(
         "userName" : username,
         "profilePic" : profilePic,
         "seatIndex" : seatIndex,
-        "isRobot" : false,
+        "isBot" : isBot,
         "userId" : userId,
         "timeOutCounter" : 0,
         "ScriptUser" : false,
         "points" : 0,
         "userStatus" : userStatus,
+        isUnoClick: false,
         card: [],
         createdAt: currentTimestamp.toString(),
         updatedAt: currentTimestamp.toString(),
@@ -35,6 +37,7 @@ async function reSetPlayerGamePlay(
     seatIndex: number,
     username: string,
     profilePic: string,
+    isBot:any 
 ) {
     try {
         const reSetPlayerGamePlay = await reSetPlayerGamePlayData(
@@ -42,7 +45,8 @@ async function reSetPlayerGamePlay(
             seatIndex,
             username,
             profilePic,
-            PLAYER_STATE.PLAYING
+            PLAYER_STATE.PLAYING,
+            isBot
             )
             await insertPlayerGamePlay(reSetPlayerGamePlay, tableId)
             Logger.info(tableId,` reSetPlayerGamePlay :: reSetPlayerGamePlay :: >>`,reSetPlayerGamePlay)

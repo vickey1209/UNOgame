@@ -35,7 +35,7 @@ const changeTurn = async (
 
     // change turn user
     let nextPlayer: seatsInterface = {} as seatsInterface;
-    if (IS_CLOCKWISE_TURN) {
+    if (tableGamePlayInfo.cardTurnCircle === "0-1") {
       nextPlayer = getNextPlayer(activePlayersData, tableGamePlay.currentTurnUserId, tableId);
     } else {
       Logger.info(tableId," changeTurn :: priviuosPlayer :: ", nextPlayer);

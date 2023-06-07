@@ -36,6 +36,11 @@ import nextRound from '../services/nextRound';
 import global from "../global";
 import { tableGamePlayCache } from '../cache';
 import { defaultTableGamePlayInterface } from '../interfaces/tableGamePlay';
+import botManage from '../requestHandlers/botTurn';
+import pickFromExtraCardHandler from '../requestHandlers/pickFromExtraCardHandler';
+import throwCardHandler from '../requestHandlers/throwCardHandler';
+import givePanelty from '../utils/givePanelty';
+
 
 function heartBeatEvent(payload: any) {
   const { socketId, data } = payload;
@@ -201,10 +206,19 @@ function resuffalCardEvent(payload: any) {
   sendEventToRoom(tableId, responseData);
 }
 
-function pickCardFromOpendDack(payload: any) {
+function pickFromExtraCard(payload: any) {
   const { socket, data, tableId } = payload;
   const responseData: responseData = {
-    eventName: EVENTS.PICK_FROM_OPEN_DECK_SOCKET_EVENT,
+    eventName: EVENTS.PICK_FROM_EXTRA_CARD,
+    data
+  };
+  Logger.debug(tableId, "SEND EVENT TO TABLE :: ", responseData);
+  sendEventToRoom(tableId, responseData);
+}
+function throwCard(payload: any) {
+  const { socket, data, tableId } = payload;
+  const responseData: responseData = {
+    eventName: EVENTS.THROW_CARD,
     data
   };
   Logger.debug(tableId, "SEND EVENT TO TABLE :: ", responseData);
@@ -433,7 +447,15 @@ function newGameTimerEvent(payload: any) {
   Logger.debug(tableId, "SEND EVENT TO TABLE :: ", responseData);
   sendEventToRoom(tableId, responseData);
 }
-
+function unoClick(payload: any) {
+  const { tableId, data } = payload;
+  const responseData: responseData = {
+    eventName: EVENTS.UNO_CLICK,
+    data
+  };
+  Logger.debug(tableId, "SEND EVENT TO TABLE :: ", responseData);
+  sendEventToRoom(tableId, responseData);
+}
 
 CommonEventEmitter.on(EVENTS.HEART_BEAT_SOCKET_EVENT, heartBeatEvent);
 
@@ -481,7 +503,8 @@ CommonEventEmitter.on(EVENTS.PICK_FROM_CLOSE_DECK_SOCKET_EVENT, pickCardFromClos
 
 CommonEventEmitter.on(EVENTS.RESUFFAL_CARD, resuffalCardEvent);
 
-CommonEventEmitter.on(EVENTS.PICK_FROM_OPEN_DECK_SOCKET_EVENT, pickCardFromOpendDack);
+CommonEventEmitter.on(EVENTS.PICK_FROM_EXTRA_CARD, pickFromExtraCard);
+CommonEventEmitter.on(EVENTS.THROW_CARD, throwCard);
 
 CommonEventEmitter.on(EVENTS.DISCARD_CARD_SOCKET_EVENT, discardCard);
 
@@ -537,6 +560,9 @@ CommonEventEmitter.on(DACLARE_PLAYER_TURN_TIMER_EXPIRED, (res) => {
 
 CommonEventEmitter.on(EVENTS.LEAVE_TABLE_SOCKET_EVENT, leaveTableEvent);
 
+CommonEventEmitter.on(EVENTS.UNO_CLICK, unoClick);
+
+
 CommonEventEmitter.on(NEXT_TURN_DELAY, (res) => {
   // Logger.info("changeTurn : res :: ", res);
   changeTurn(res.tableId);
@@ -578,7 +604,10 @@ CommonEventEmitter.on(EVENTS.WINNER_SOCKET_EVENT, winnerEvent);
 // CommonEventEmitter.on(EVENT_EMITTER.SHOW_AFTER_EXPIRE_SCORE_BOARD_VIEW, expireScoreBoardShow);
 
 CommonEventEmitter.on(EVENT_EMITTER.EXPIRE_SCORE_BOARD_TIMER, nextRound);
-
+CommonEventEmitter.on(EVENT_EMITTER.ROBOT_JOIN_CALL, botManage.Robotcall);
+CommonEventEmitter.on(EVENT_EMITTER.ROBOT_THROW_CARD_CALL, throwCardHandler);
+CommonEventEmitter.on(EVENT_EMITTER.ROBOT_PICK_CARD_CALL, pickFromExtraCardHandler);
+CommonEventEmitter.on(EVENT_EMITTER.GIVE_PANELTY_TO_PLAYER, givePanelty);
 // CommonEventEmitter.on(EVENT_EMITTER.EXIRE_SECONDERY_TIMER, onTurnExpire);
 
 

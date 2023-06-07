@@ -36,7 +36,7 @@ async function findOrCreateUser(
       userProfileData.noOfPlayer = userData.noOfPlayer;
       userProfileData.authToken = userData.authToken;
       userProfileData.isAnyRunningGame = userData.isAnyRunningGame; 
-      userProfileData.isUseBot = userData.isUseBot;
+      userProfileData.isBot = userData.isBot;
       userProfileData.isFTUE = userData.isFTUE;
       userProfileData.longitude = userData.longitude;
       userProfileData.latitude = userData.latitude;
