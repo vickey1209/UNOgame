@@ -10,15 +10,18 @@ function ackMid(eventName, response, userId, tableId, ack) {
     if(eventName != EVENTS.HEART_BEAT_SOCKET_EVENT){
       console.log("acknowleadgement event ::==========================================>> ", eventName, JSON.stringify(response));
     }
-    ack(
-      JSON.stringify({
-        eventName,
-        success: true,
-        data: response,
-        userId,
-        tableId,
-      }),
-    );
+    if(ack && typeof ack === "function"){
+      ack(
+        JSON.stringify({
+          eventName,
+          success: true,
+          data: response,
+          userId,
+          tableId,
+        }),
+      );
+    }
+  
   } catch (error) {
     console.log('CATCH_ERROR in ackMid: ', error);
     // @ts-ignore

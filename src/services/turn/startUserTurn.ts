@@ -12,6 +12,8 @@ import {
 } from '../../cache';
 // import { addTurnHistory } from '../turnHistory';
 import { StartUserTurnResponse } from '../../interfaces/userTurn';
+import botManage from '../../requestHandlers/botTurn';
+import {userBlockCheck} from '../../common';
 
 
 const startUserTurn = async (
@@ -79,13 +81,23 @@ const startUserTurn = async (
     await tableGamePlayCache.insertTableGamePlay(tableGamePlay, tableId);
     Logger.info(tableId,'==== ResData : formatedStartUserTurnData ::', formatedStartUserTurnData);
 
+
+    let userBlockCheckRes = await userBlockCheck(playerGamePlay,tableGamePlay);
+
     CommonEventEmitter.emit(EVENTS.USER_TURN_STARTED_SOCKET_EVENT, {
       tableId: tableId,
-      data: formatedStartUserTurnData
+      data: {seatIndex : tableGamePlay.currentTurnSeatIndex ,cardTurnCircle:tableGamePlay.cardTurnCircle, tt:tableConfig.userTurnTimer,userId: currentTurnUserId,isActiveCard: userBlockCheckRes.flag, activeCards:userBlockCheckRes.activeCards}
     });
 
     // add turn details in history
     // await addTurnHistory(tableId, currentRound, tableGamePlay, playerGamePlay);
+
+
+    if(playerGamePlay.isBot){
+      setTimeout(() => {
+        botManage.botTurn({id:"bot",userId:currentTurnUserId,tableId:tableId},{})
+      }, 2000);
+    }
 
     Scheduler.addJob.playerTurnTimer({
       timer: tableConfig.userTurnTimer,

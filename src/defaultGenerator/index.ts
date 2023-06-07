@@ -38,10 +38,9 @@ function defaultUserProfile(userData: UserProfileDataInput): UserProfileOutput {
     tableIds: [],
     socketId: userData.socketId,
     noOfPlayer : userData.noOfPlayer,
-    isUseBot : userData.isUseBot || false,
+    isBot : userData.isBot || false,
     isFTUE : userData.isFTUE || false,
     gameId: userData.gameId,
-    isRobot : false,
     lobbyId: userData.lobbyId,
     entryFee : Number(userData.entryFee),
     createdAt: currentTimestamp,
@@ -73,7 +72,7 @@ function defaulTableData(signUpData: CreateTableI): defaultTableConfig {
     scriptUser : false,
     totalTurnTime : NUMERICAL.TWO,
     rejoinTime :  NUMERICAL.TWO,
-    isRobot : true,
+    isBot : true,
     robotType : "high", //high, low, medium
     createdAt: currentTimestamp.toString(),
     updatedAt: currentTimestamp.toString(),
@@ -114,6 +113,7 @@ function defaulPlayerGamePlayData(
   userName: string,
   profilePic: string,
   userStatus : string,
+  isBot:boolean,
 ): defaulPlayerGamePlayInterface {
   const currentTimestamp = new Date();
   return {
@@ -121,12 +121,13 @@ function defaulPlayerGamePlayData(
     "userName" : userName,
     "profilePic" : profilePic,
     "seatIndex" : seatIndex,
-    "isRobot" : false,
+    "isBot" : isBot,
     "userId" : userId,
     "timeOutCounter" : 0,
     "ScriptUser" : false,
     "points" : 0,
     "userStatus" : userStatus,
+    "isUnoClick" : false,
     card: [],
     createdAt: currentTimestamp.toString(),
     updatedAt: currentTimestamp.toString(),

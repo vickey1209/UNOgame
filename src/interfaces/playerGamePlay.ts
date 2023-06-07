@@ -6,13 +6,14 @@ export interface defaulPlayerGamePlayInterface {
   userName :string,
   profilePic :string,
   seatIndex : number,
-  isRobot : false,
+  isBot : boolean,
   userId : string,
   timeOutCounter : number,
   ScriptUser : boolean,
   points : number,
   userStatus : string,
-  card: Array<string> | Array<null>,
+  isUnoClick : boolean,
+  card: Array<string>,
   createdAt: string;
   updatedAt: string;
 }

@@ -7,7 +7,7 @@ import { findTotalPlayersCount } from "../userPlayTable";
 import { checkBalanceBeforeNewRoundStart, reSetPlayerGamePlay, reSetTableConfig, reSetTableGameTable, sendJoinTableEvent, setDataInSocket } from "./helper";
 import Scheduler = require("../../scheduler");
 import CommonEventEmitter from "../../commonEventEmitter"
-import { deletePlayerGamePlay } from "../../cache/playerGamePlay";
+import { deletePlayerGamePlay,getPlayerGamePlay } from "../../cache/playerGamePlay";
 import { removeQueue, setQueue } from "../common/queue";
 import { UserProfileOutput } from "../../interfaces/userProfile";
 import { defaultTableGamePlayInterface } from "../../interfaces/tableGamePlay";
@@ -36,6 +36,7 @@ async function nextRound(data: any) {
         const userIDS: string[] = [];
         for await (const seat of tableGamePlay.seats) {
             // Logger.info("-------->> nextRound :: seat ::", seat)
+            // const pgp = await getPlayerGamePlay(seat.userId,tableConfig._id);
             userIDS.push(seat.userId)
             await reSetPlayerGamePlay(
                 seat.userId,
@@ -43,6 +44,7 @@ async function nextRound(data: any) {
                 seat.si,
                 seat.name,
                 seat.pp,
+                seat.isBot,
             )
             const deleteUser = await deletePlayerGamePlay(seat.userId, data.tableId);
         }

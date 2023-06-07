@@ -9,13 +9,12 @@ import CommonEventEmitter from '../commonEventEmitter';
 import Errors from "../errors";
 import Lock from "../lock";
 
-async function leaveTableHandler(socket: any, leaveTableData: leaveTableInput, isLeaveEventSend : boolean = true): Promise<boolean | errorRes | undefined | string> {
+async function unoClickHandler(socket: any, data: any): Promise<boolean | errorRes | undefined | string> {
   const socketId = socket.id;
   const userId = /*String(leaveTableData.userId) ||*/ socket.userId;
   const tableId= /*string = String(leaveTableData.tableId) ||*/ socket.tableId;
   Logger.info(tableId," reqData :leaveTableHandler socket ==>>", userId , tableId);
-  let lock : any;
-  if(isLeaveEventSend){ lock = await Lock.getLock().acquire([tableId], 2000); }
+  let lock = await Lock.getLock().acquire([tableId], 2000); 
   try {
     Logger.info(tableId,"leaveTableHandler : starting ...")
     // const formatedLeaveTableHandlerData = await leaveTableFormator(leaveTableData);
@@ -33,57 +32,19 @@ async function leaveTableHandler(socket: any, leaveTableData: leaveTableInput, i
 
     Logger.info(tableId,"leaveTableHandler :: playerGamePlay.userStatus ::>", playerGamePlay.userStatus);
     Logger.info(tableId,"leaveTableHandler :: tableGamePlay.tableStatus ::>", tableGamePlay.tableStatus);
-
-    if (
-      tableGamePlay.tableStatus !== TABLE_STATE.WAITING_FOR_PLAYERS &&
-      tableGamePlay.tableStatus !== TABLE_STATE.WAIT_FOR_OTHER_PLAYERS &&
-      tableGamePlay.tableStatus !== TABLE_STATE.ROUND_TIMER_STARTED &&
-      tableGamePlay.tableStatus !== TABLE_STATE.LOCK_IN_PERIOD &&
-      tableGamePlay.tableStatus !== TABLE_STATE.WINNER_DECLARED &&
-      tableGamePlay.tableStatus !== TABLE_STATE.SCORE_BOARD
-    ) {
-      Logger.info(tableId,"leaveTableHandler :: Before :: playerGamePlay :>", playerGamePlay);
-      Logger.info(tableId,"leaveTableHandler :: Before :: tableGamePlay :: ", tableGamePlay);
-
-      if (playerGamePlay.userStatus == PLAYER_STATE.PLAYING) {
-        Logger.info(tableId,"-------->> leaveTableHandler :: status :: ", playerGamePlay.userStatus);
-        playerGamePlay.userStatus = PLAYER_STATE.QUIT;
-        // playerGamePlay.looseingCash = NUMERICAL.EIGHTY * tableConfig.entryFee;
-        tableGamePlay.currentPlayerInTable = tableGamePlay.currentPlayerInTable - NUMERICAL.ONE;
-        for (let i = 0; i < tableGamePlay.seats.length; i++) {
-          const ele = tableGamePlay.seats[i];
-          if (ele.userId == userId) { ele.userState = PLAYER_STATE.QUIT; }
-        }
-      }
-      else if (playerGamePlay.userStatus == PLAYER_STATE.WATCHING) {
-        playerGamePlay.userStatus = PLAYER_STATE.WATCHING_LEAVE;
-        for (let i = 0; i < tableGamePlay.seats.length; i++) {
-          const ele = tableGamePlay.seats[i];
-          if (ele.userId == userId) { ele.userState = PLAYER_STATE.QUIT; }
-        }
-      }
-      else if (playerGamePlay.userStatus == PLAYER_STATE.DROP || playerGamePlay.userStatus == PLAYER_STATE.WRONG_SHOW) {
-        Logger.info(tableId,"-------->> leaveTableHandler :: status :: ", playerGamePlay.userStatus);
-        // playerGamePlay.userStatus = PLAYER_STATE.QUIT;
-        for (let i = 0; i < tableGamePlay.seats.length; i++) {
-          const ele = tableGamePlay.seats[i];
-          if (ele.userId == userId) { ele.userState = PLAYER_STATE.QUIT; }
-        }
-      }
-      Logger.info(tableId,"leaveTableHandler :: After :: playerGamePlay :>", playerGamePlay);
-      Logger.info(tableId,"leaveTableHandler :: After :: tableGamePlay :: ", tableGamePlay);
-      await Promise.all([
-        tableGamePlayCache.insertTableGamePlay(tableGamePlay, tableId),
-        playerGamePlayCache.insertPlayerGamePlay(playerGamePlay, tableId)
-      ]);
+    
+    if(playerGamePlay.card.length !== 2){
+      throw {message:"Invalid action!"};
     }
 
-    if (
-      (tableGamePlay.tableStatus === TABLE_STATE.WINNER_DECLARED && playerGamePlay.userStatus === PLAYER_STATE.DISCONNECTED) ||
-      tableGamePlay.tableStatus !== TABLE_STATE.WINNER_DECLARED
-    ) {
-      await leaveTable(userId, tableId, isLeaveEventSend, socketId);
-    }
+    playerGamePlay.isUnoClick = true;
+    playerGamePlayCache.insertPlayerGamePlay(playerGamePlay, tableId);
+
+    CommonEventEmitter.emit(EVENTS.UNO_CLICK, {
+      socketId : socketId,
+      tableId: tableId,
+      data: { seatIndex : playerGamePlay.seatIndex }
+    });
 
     return true;
   }
@@ -128,7 +89,7 @@ async function leaveTableHandler(socket: any, leaveTableData: leaveTableInput, i
         },
       });
     } else {
-      CommonEventEmitter.emit(EVENTS.LEAVE_TABLE_SOCKET_EVENT, {
+      CommonEventEmitter.emit(EVENTS.UNO_CLICK, {
         socket: socketId,
         data: {
           success: false,
@@ -152,4 +113,4 @@ async function leaveTableHandler(socket: any, leaveTableData: leaveTableInput, i
   }
 }
 
-export = leaveTableHandler;
+export = unoClickHandler;

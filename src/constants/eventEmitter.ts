@@ -17,6 +17,10 @@ const exportObj = Object.freeze({
   EXPIRE_SCORE_BOARD_TIMER : "expireScoreBoardTimer",
   EXIRE_SECONDERY_TIMER : "expireSeconderyTimer",
   REMOVE_SOCKER_ID_FOR_JOIN_TABLE:"removeSockerIDForJoinTable",
+  ROBOT_JOIN_CALL:"robotJoinCall",
+  ROBOT_THROW_CARD_CALL:"robotThrowCardCall",
+  ROBOT_PICK_CARD_CALL:"robotPickCardCall",
+  GIVE_PANELTY_TO_PLAYER:"givePaneltyToPlayer",
 });
 
 export = exportObj;

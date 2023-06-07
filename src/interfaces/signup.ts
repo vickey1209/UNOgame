@@ -6,7 +6,7 @@ export interface SignupInput {
   minPlayer: number;
   noOfPlayer: number;
   lobbyId: string;
-  isUseBot: boolean;
+  isBot: boolean;
   entryFee: string;
   moneyMode: string;
   totalRound: number;
@@ -35,7 +35,7 @@ export interface findUserI {
   profilePic: string;
   entryFee: number;
   noOfPlayer: number;
-  isUseBot: boolean;
+  isBot: boolean;
   isFTUE: boolean;
   authToken: string;
   isAnyRunningGame: boolean;
@@ -59,7 +59,7 @@ export interface CreateTableI {
   latitude : string;
   longitude : string;
   authToken : string;
-  isUseBot: boolean;
+  isBot: boolean;
 }
 
 export interface seatsInterface {
@@ -69,6 +69,7 @@ export interface seatsInterface {
   rejoin?: boolean;
   pp: string;
   userState: string;
+  isBot:boolean;
 }
 
 export interface successRes {
@@ -99,7 +100,7 @@ export interface SignupResponse {
   lobbyId: string;
   chips: string;
   isPlay?: boolean;
-  isRobot: boolean;
+  isBot: boolean;
   latitude : string;
   longitude : string;
   entryFee: string;

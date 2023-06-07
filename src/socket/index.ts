@@ -46,7 +46,7 @@ async function sendEventToRoom(
     }
     
     if (typeof socketId == 'string') {
-      var socket = await global.IO.sockets.sockets.get(socketId);
+      let socket = await global.IO.sockets.sockets.get(socketId);
       global.IO.to(socket.tableId).emit(responseData.eventName, JSON.stringify(responseData));
     }
     else {

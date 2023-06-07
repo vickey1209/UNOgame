@@ -228,35 +228,49 @@ async function setDistributedCard(tableId:string,seats:any){
   // databaseClass.findOne('playing_table',{_id:ObjectId(tableId.toString())} ,{}, function (tabledata) {
       // if(tabledata!=null){
         
-          let getConstantCards = await globalVariable();
-
+          let getConstantCards = await getCardList();
+          let extraCard = shuffleCards(getConstantCards.cardArrayWithOutActionCard);
           // Get index of first move of card
-          var random_card_index = await GetRandomInt(0, (getConstantCards.cardArrayWithOutActionCard.length - 1));
+          // let random_card_index = await GetRandomInt(0, (getConstantCards.cardArrayWithOutActionCard.length - 1));
           // Get card for first move.
-          var first_turn_random_card=getConstantCards.cardArrayWithOutActionCard[random_card_index];
-          var first_turn_random_card_array=[];
-          first_turn_random_card_array.push(first_turn_random_card);
-          for (var i = 0; i < getConstantCards.cardArray.length; i++) {
-              if(first_turn_random_card==getConstantCards.cardArray[i]){
-                getConstantCards.cardArray.splice(i, 1);
-              }
-          }
+          let first_turn_random_card=extraCard.slice(0, 1);
+          let first_turn_random_card_array=first_turn_random_card;
+          // first_turn_random_card_array.push(first_turn_random_card);
+          // for (let i = 0; i < getConstantCards.cardArray.length; i++) {
+          //     if(first_turn_random_card==getConstantCards.cardArray[i]){
+          //       getConstantCards.cardArray.splice(i, 1);
+          //     }
+          // }
           // Find number for first moved card 
-          var cardNumber= first_turn_random_card.slice(2, 3); //number
+          let cardNumber= first_turn_random_card[0].slice(2, 3); //number
           // Find color for first moved card  
-          var cardColor= first_turn_random_card.slice(0, 1); //color
+          let cardColor= first_turn_random_card[0].slice(0, 1); //color
           // c("========Send Card=>>>",getConstantCards.cardArrayWithOutActionCard.length,random_card_index,first_turn_random_card,CardArray);
           // shuffle card array
-          var extraCard = shuffleCards(getConstantCards.cardArray);
-          // var updateData = { $set : {buc:0,cp:0,tos:tos,lws:lws,ob:[],fd:"",tst:'round_start',tt:new Date(),moved_card :first_turn_random_card_array,card_color:card_color,card_number:card_number} };
-          var sn = (seats.length==2)?7:7; //splice number
+          // let extraCard = shuffleCards(getConstantCards.cardArray);
+          // let updateData = { $set : {buc:0,cp:0,tos:tos,lws:lws,ob:[],fd:"",tst:'round_start',tt:new Date(),moved_card :first_turn_random_card_array,card_color:card_color,card_number:card_number} };
+          let noOfCards = (seats.length==2)?5:5; //splice number
           // c("SendCard >> nu >>",nu);
           let userCardArray = [];
           // Distribute and update card
           for(let i in seats){
-              var user_card = extraCard.splice(0,sn);
+              let user_card = extraCard.splice(0,noOfCards);
               userCardArray.push(user_card);
           }
+        console.log("ddd : ",userCardArray);
+
+          let actionCard = shuffleCards(getConstantCards.actionCardArray);
+          console.log("ddd actionCard: ",actionCard);
+          userCardArray.forEach(element => {
+            let user_card = actionCard.splice(0,2);
+            element = element.concat(user_card);
+          });
+          // for(let j in seats){
+          //   let user_card = actionCard.splice(0,2);
+          //   userCardArray = userCardArray.concat(user_card);
+          // }
+          extraCard = extraCard.concat(actionCard);
+          extraCard = shuffleCards(extraCard);
           return {moved_card:first_turn_random_card_array, cardColor, cardNumber,extraCard,userCardArray }
           // tos=0;
           // updateData["$set"]["tos"] = tos;
@@ -271,7 +285,7 @@ async function setDistributedCard(tableId:string,seats:any){
   // })
 }
 
-async function globalVariable(){
+async function getCardList(){
   /*
   R-S-1 -> Red Skip Card 1
   Y-S-1 -> Yellow Skip Card 1
@@ -335,18 +349,27 @@ const cardArray = ["R-0-1","R-1-1","R-2-1","R-3-1","R-4-1","R-5-1","R-6-1","R-7-
   "G-1-2","G-2-2","G-3-2","G-4-2","G-5-2","G-6-2","G-7-2","G-8-2","G-9-2",
 
   "B-0-1","B-1-1","B-2-1","B-3-1","B-4-1","B-5-1","B-6-1","B-7-1","B-8-1","B-9-1",
-  "B-1-2","B-2-2","B-3-2","B-4-2","B-5-2","B-6-2","B-7-2","B-8-2","B-9-2"]
-  // global.DiceArray = ["6-6","6-5","6-4","6-3","6-2","6-1","6-0","5-5","5-4","5-3","5-2","5-1","5-0","4-4","4-3","4-2","4-1","4-0","3-3","3-2","3-1","3-0","2-2","2-1","2-0","1-1","1-0","0-0"];
-  // global.DiceArray = ["6-6","6-5","6-4","6-3","6-2","6-1","6-0","5-5","5-4","5-3","5-2","5-1","5-0","4-4","4-3","4-2","4-1","4-0","3-3","3-2","3-1","3-0","2-2","2-1","2-0","1-1","1-0","0-0"];
-  // global.SeqDiceArray = ["6-6","5-5","4-4","3-3","2-2","1-1","0-0","1-0","2-0","2-1","3-0","3-1","3-2","4-0","4-1","4-2","4-3","5-0","5-1","5-2","5-3","5-4","6-0","6-1","6-2","6-3","6-4","6-5"];
+  "B-1-2","B-2-2","B-3-2","B-4-2","B-5-2","B-6-2","B-7-2","B-8-2","B-9-2"];
+ 
+  const actionCardArray = [
+    "R-S-1","R-RE-1","R-D2C-1","WC-1",
+  "R-S-2","R-RE-2","R-D2C-2","D4C-1",
+  
+  "Y-S-1","Y-RE-1","Y-D2C-1","WC-2",
+  "Y-S-2","Y-RE-2","Y-D2C-2","D4C-2",
 
-  return {cardArray, cardArrayWithOutActionCard};
+  "G-S-1","G-RE-1","G-D2C-1","WC-3",
+  "G-S-2","G-RE-2","G-D2C-2","D4C-3",
+
+  "B-S-1","B-RE-1","B-D2C-1","WC-4",
+  "B-S-2","B-RE-2","B-D2C-2","D4C-4"]
+  return {cardArray, cardArrayWithOutActionCard,actionCardArray};
 
 }
 
 // async function getRandomInt(min:number, max:number) {
-//   var rnd = Math.floor(Math.random() * (max - min + 1)) + min;
+//   let rnd = Math.floor(Math.random() * (max - min + 1)) + min;
 //   return Number(rnd);
 // }
 
-export { setDistributedCard, pointCalculate, globalVariable };
+export { setDistributedCard, pointCalculate, getCardList };

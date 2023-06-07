@@ -17,7 +17,7 @@ export interface defaultTableConfig {
   scriptUser : boolean;
   totalTurnTime : number;
   rejoinTime : number;
-  isRobot : boolean;
+  isBot : boolean;
   robotType : string;
   createdAt: string;
   updatedAt: string;

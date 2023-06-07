@@ -18,7 +18,7 @@ class TableConfiguration {
       scriptUser : Joi.boolean().required(),
       totalTurnTime : Joi.number().required(),
       rejoinTime : Joi.number().required(),
-      isRobot : Joi.boolean().required(),
+      isBot : Joi.boolean().required(),
       robotType : Joi.string().required(),
       createdAt: Joi.string().required(),
       updatedAt: Joi.string().required(),

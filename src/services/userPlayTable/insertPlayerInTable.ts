@@ -47,7 +47,7 @@ async function insertPlayerInTable(
     let playerGamePlay;
     if (seatIndex !== NUMERICAL.MINUS_ONE && isSeatEmpty) {
 
-      const seatObject: seatsInterface = { userId: userId, si: seatIndex, name: userData.username, pp: userData.profilePic, userState: userStatus };
+      const seatObject: seatsInterface = { userId: userId, si: seatIndex, name: userData.username, pp: userData.profilePic, userState: userStatus, isBot: userData.isBot };
       Logger.info(tableId,"seatObject :: ", seatObject);
       tableGamePlay.seats.splice(seatIndex, 0, seatObject);
 
@@ -55,7 +55,7 @@ async function insertPlayerInTable(
       if (userStatus == PLAYER_STATE.PLAYING) {
         tableGamePlay.currentPlayerInTable += NUMERICAL.ONE;
       }
-      playerGamePlay = await defaulPlayerGamePlayData(userId, seatIndex, userData.username, userData.profilePic, userStatus);
+      playerGamePlay = await defaulPlayerGamePlayData(userId, seatIndex, userData.username, userData.profilePic, userStatus,userData.isBot);
 
       await Promise.all([
         playerGamePlayCache.insertPlayerGamePlay(playerGamePlay, tableId),
@@ -69,7 +69,7 @@ async function insertPlayerInTable(
       // player is already in a table
       playerGamePlay = await playerGamePlayCache.getPlayerGamePlay(userId.toString(), tableId);
       if (!playerGamePlay) {
-        playerGamePlay = await defaulPlayerGamePlayData(userId, seatIndex, username, profilePic, userStatus);
+        playerGamePlay = await defaulPlayerGamePlayData(userId, seatIndex, username, profilePic, userStatus,userData.isBot);
         await playerGamePlayCache.insertPlayerGamePlay(playerGamePlay, tableId);
       }
 

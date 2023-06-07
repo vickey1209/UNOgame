@@ -69,7 +69,7 @@ async function signUpHandler(socket: any, signUpData: SignupInput, isRejoinOrNew
       entryFee: Number(Number(signUpData.entryFee) / NUMERICAL.EIGHTY),
       noOfPlayer: signUpData.noOfPlayer,
       gameType: signUpData.rummyType,
-      isUseBot: signUpData.isUseBot,
+      isBot: signUpData.isBot,
       isFTUE: signUpData.isFTUE,
       authToken: socket.authToken || signUpData.accessToken,
       isAnyRunningGame: false, //(isValidUserData && isValidUserData.isValidUser) ? isValidUserData.isAnyRunningGame : false,
@@ -183,7 +183,7 @@ async function signUpHandler(socket: any, signUpData: SignupInput, isRejoinOrNew
           latitude : userProfile.latitude,
           longitude : userProfile.longitude,
           authToken : userProfile.authToken,
-          isUseBot : signUpData.isUseBot
+          isBot : signUpData.isBot
         }
       };
       // Logger.info("findTableInput :::", findTableInput);

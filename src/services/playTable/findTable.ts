@@ -138,11 +138,11 @@ export async function findOrCreateTable(signUpData: CreateTableI): Promise<strin
 
        
         // const rediusCheckData: rediusCheckDataRes = await rediusCheck(signUpData.gameId, signUpData.authToken, userProfile.socketId, tableId);
-        // Logger.info("userData.isUseBot  ==>>>",signUpData.isUseBot);
+        // Logger.info("userData.isBot  ==>>>",signUpData.isBot);
         // if (rediusCheckData) {
 
         //   let rangeRediusCheck : number = parseFloat(rediusCheckData.LocationRange);
-        //   if (rediusCheckData && rediusCheckData.isGameRadiusLocationOn && rangeRediusCheck != NUMERICAL.ZERO && signUpData.isUseBot == false) {
+        //   if (rediusCheckData && rediusCheckData.isGameRadiusLocationOn && rangeRediusCheck != NUMERICAL.ZERO && signUpData.isBot == false) {
 
             Logger.info("locationDistanceCheck=====>>before", tableId);
             // tableId = await locationDistanceCheck(tableId, signUpData, key, rangeRediusCheck);
