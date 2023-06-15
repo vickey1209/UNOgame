@@ -47,25 +47,25 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         let isPlayableCard = false;
 
-        const PickCardFromCloseDeck = TableDetails.closeCardDeck[0];
+        const PickCardsFromCloseDeck = TableDetails.closeCardDeck[0];
 
-        if (PickCardFromCloseDeck.split("-")[1] === TableDetails.activeCardType || PickCardFromCloseDeck.split("-")[0] === TableDetails.activeCardColor) {
+        if (PickCardsFromCloseDeck.split("-")[1] === TableDetails.activeCardType || PickCardsFromCloseDeck.split("-")[0] === TableDetails.activeCardColor) {
 
             isPlayableCard = true;
 
-            UserInTableDetails.lastPickCard = PickCardFromCloseDeck;
+            UserInTableDetails.lastPickCard = PickCardsFromCloseDeck;
 
         };
 
         TableDetails.closeCardDeck.splice(0, 1);
 
-        UserInTableDetails.cardArray.push(PickCardFromCloseDeck);
+        UserInTableDetails.cardArray.push(PickCardsFromCloseDeck);
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        const ResData = { ...Data, pickCard: PickCardFromCloseDeck, isPlayableCard };
+        const ResData = { ...Data, pickCard: [PickCardsFromCloseDeck], isPlayableCard };
 
         EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: ResData });
 
