@@ -107,7 +107,7 @@ const DistributeCards = async (tableId: string) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        setTimeout(async () => { await RandomPlayerTurn(TableDetails.tableId); }, 1000);
+        await RandomPlayerTurn(TableDetails.tableId);
 
     } catch (error: any) {
         Logger('DistributeCards Error : ', error);

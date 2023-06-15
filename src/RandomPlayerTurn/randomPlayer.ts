@@ -46,9 +46,13 @@ const RandomPlayerTurn = async (tableId: string) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        await BullTimer.AddJob.UserTurn(tableId);
+        setTimeout(async () => {
 
-        EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+            await BullTimer.AddJob.UserTurn(tableId);
+
+            EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+
+        }, 1000);
 
     } catch (error: any) {
         Logger('RandomPlayerTurn Error : ', error);
