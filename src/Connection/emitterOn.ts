@@ -1,0 +1,109 @@
+import { io } from './socket';
+import { CONSTANTS } from '../Constants';
+import { Logger } from '../Logger/logger';
+import { EventEmitter } from './emitter';
+
+const SendToSocket = async (EVENT: string, data: any) => {
+
+    try {
+
+        let { en, SocketId, Data } = data;
+
+        Logger("SendToSocket", JSON.stringify({ EVENT, Data }));
+
+        io.to(SocketId).emit(EVENT, JSON.stringify({ en, Data }));
+
+    } catch (error: any) {
+        Logger('SendToSocket Error : ', error);
+    }
+}
+
+const SendToRoom = async (EVENT: string, data: any) => {
+
+    try {
+
+        let { en, RoomId, Data } = data;
+
+        Logger("SendToRoom", JSON.stringify({ EVENT, Data }));
+
+        io.to(RoomId).emit(EVENT, JSON.stringify({ en, Data }));
+
+    } catch (error: any) {
+        Logger('SendToRoom Error : ', error);
+    }
+}
+
+const EmitterON = () => {
+
+    try {
+
+        console.log(`EventEmitter Done !`);
+
+        const {
+
+            TEST,
+            DEFAULT,
+            ERROR,
+            SIGNUP,
+            JOIN_TABLE,
+            NEW_USER,
+            GAME_START,
+            COLLECT_BOOT,
+            MY_CARDS,
+            TURN_INFO,
+            THROW_CARD,
+            PICK_CARD,
+
+        } = CONSTANTS.EVENTS_NAME;
+
+        EventEmitter.on(TEST, async (data) => {
+            await SendToSocket(TEST, data);
+        });
+
+        EventEmitter.on(DEFAULT, async (data) => {
+            await SendToSocket(DEFAULT, data);
+        });
+
+        EventEmitter.on(ERROR, async (data) => {
+            await SendToSocket(ERROR, data);
+        });
+
+        EventEmitter.on(SIGNUP, async (data) => {
+            await SendToSocket(SIGNUP, data);
+        });
+
+        EventEmitter.on(JOIN_TABLE, async (data) => {
+            await SendToSocket(JOIN_TABLE, data);
+        });
+
+        EventEmitter.on(NEW_USER, async (data) => {
+            await SendToRoom(NEW_USER, data);
+        });
+
+        EventEmitter.on(GAME_START, async (data) => {
+            await SendToRoom(GAME_START, data);
+        });
+
+        EventEmitter.on(COLLECT_BOOT, async (data) => {
+            await SendToRoom(COLLECT_BOOT, data);
+        });
+
+        EventEmitter.on(MY_CARDS, async (data) => {
+            await SendToSocket(MY_CARDS, data);
+        });
+
+        EventEmitter.on(TURN_INFO, async (data) => {
+            await SendToRoom(TURN_INFO, data);
+        });
+
+        EventEmitter.on(THROW_CARD, async (data) => {
+            await SendToRoom(THROW_CARD, data);
+        });
+
+
+    } catch (error: any) {
+        Logger('EmitterON Error', error);
+    }
+}
+
+export { EmitterON };

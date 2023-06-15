@@ -1,0 +1,16 @@
+export = Object.freeze({
+
+    TEST: 'TEST',
+    ERROR: 'ERROR',
+    DEFAULT: 'DEFAULT',
+    SIGNUP: 'SIGNUP',
+    JOIN_TABLE: 'JOIN_TABLE',
+    NEW_USER: 'NEW_USER',
+    GAME_START: 'GAME_START',
+    COLLECT_BOOT: 'COLLECT_BOOT',
+    MY_CARDS: 'MY_CARDS',
+    TURN_INFO: 'TURN_INFO',
+    THROW_CARD: 'THROW_CARD',
+    PICK_CARD: 'PICK_CARD'
+
+});
