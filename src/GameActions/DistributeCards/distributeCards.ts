@@ -50,9 +50,6 @@ const DistributeCards = async (tableId: string) => {
                     if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); }
                     if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); }
                     if (SplecialUnoCards.includes(Card)) { SplecialUnoCards.splice(SplecialUnoCards.indexOf(Card), 1); }
-                    // if (AllUnoCards.indexOf(Card) !== -1) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); }
-                    // if (SimpleUnoCards.indexOf(Card) !== -1) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); }
-                    // if (SplecialUnoCards.indexOf(Card) !== -1) { SplecialUnoCards.splice(SplecialUnoCards.indexOf(Card), 1); }
 
                 } else {
 
@@ -65,9 +62,6 @@ const DistributeCards = async (tableId: string) => {
                     if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
                     if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
                     if (SplecialUnoCards.includes(Card)) { SplecialUnoCards.splice(SplecialUnoCards.indexOf(Card), 1); };
-                    // if (AllUnoCards.indexOf(Card) !== -1) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
-                    // if (SimpleUnoCards.indexOf(Card) !== -1) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
-                    // if (SplecialUnoCards.indexOf(Card) !== -1) { SplecialUnoCards.splice(SplecialUnoCards.indexOf(Card), 1); };
 
                 }
             }

@@ -1,8 +1,8 @@
 import { Socket } from "socket.io";
-import { Logger } from "../Logger/logger";
 import { CONSTANTS } from "../Constants";
+import { PickCardInterface } from "../Interface/PickCard/PickCardInterface";
+import { Logger } from "../Logger/logger";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
-import { ThrowCardInterface } from "../Interface/ThrowCard/ThrowCardInterface";
 import { GetTable, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { EventEmitter } from "../Connection/emitter";
@@ -10,11 +10,11 @@ import { BullTimer } from "../BullTimer";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 
-const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) => {
+const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => {
 
-    const Path = 'ThrowCard';
+    const Path = 'PickCard';
 
-    const { ERROR, THROW_CARD } = CONSTANTS.EVENTS_NAME;
+    const { PICK_CARD, ERROR } = CONSTANTS.EVENTS_NAME;
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
@@ -23,7 +23,7 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
 
     try {
 
-        Logger("ThrowCard", JSON.stringify({ Data }));
+        Logger("PickCard", JSON.stringify({ Data }));
 
         let TableDetails: TableInterface = await GetTable(Data?.tableId);
 
@@ -32,8 +32,6 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
         if (TableDetails.currentTurn !== Data?.seatIndex) {
             return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
         }
-
-        await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === Data?.userId });
 
@@ -45,38 +43,43 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-        if (!UserInTableDetails.cardArray.includes(Data?.card)) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_CARD } });
-        }
+        if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-        if (TableDetails.activeCardType !== Data?.card.split("-")[1] && TableDetails.activeCardColor !== Data?.card.split("-")[0]) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_CARD } });
-        }
+        let isPlayableCard = false;
 
-        if (UserInTableDetails.lastPickCard !== '' && UserInTableDetails.lastPickCard !== Data?.card) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.MUST_THROW_PICK_CARD } });
-        }
+        const PickCardFromCloseDeck = TableDetails.closeCardDeck[0];
 
-        TableDetails.activeCard = Data?.card;
-        TableDetails.activeCardType = Data?.card.split("-")[1];
-        TableDetails.activeCardColor = Data?.card.split("-")[0];
+        if (PickCardFromCloseDeck.split("-")[1] === TableDetails.activeCardType || PickCardFromCloseDeck.split("-")[0] === TableDetails.activeCardColor) {
 
-        TableDetails.openCardDeck.push(Data?.card);
+            isPlayableCard = true;
 
-        UserInTableDetails.lastPickCard = ''
-        UserInTableDetails.cardArray.splice(UserInTableDetails.cardArray.indexOf(Data?.card), 1);
+            UserInTableDetails.lastPickCard = PickCardFromCloseDeck;
+
+        };
+
+        TableDetails.closeCardDeck.splice(0, 1);
+
+        UserInTableDetails.cardArray.push(PickCardFromCloseDeck);
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        EventEmitter.emit(THROW_CARD, { en: THROW_CARD, RoomId: TableDetails.tableId, Data: Data });
+        const ResData = { ...Data, pickCard: PickCardFromCloseDeck, isPlayableCard };
 
-        await ChangeUserTurn(TableDetails.tableId);
+        EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: ResData });
+
+        if (!isPlayableCard) {
+
+            await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
+
+            await ChangeUserTurn(TableDetails.tableId);
+
+        };
 
     } catch (error: any) {
 
-        Logger('ThrowCard Error : ', error);
+        Logger('PickCard Error : ', error);
 
     } finally {
 
@@ -85,4 +88,4 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
     };
 };
 
-export { ThrowCard };
+export { PickCard };

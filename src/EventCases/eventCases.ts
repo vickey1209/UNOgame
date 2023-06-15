@@ -6,6 +6,7 @@ import { SignUp } from "../SignUp/signUp";
 
 import { CONSTANTS } from '../Constants';
 import { ThrowCard } from "../ThrowCard/throwCard";
+import { PickCard } from "../PickCard/pickCard";
 
 const EventCases = async (socket: Socket) => {
 
@@ -44,6 +45,11 @@ const EventCases = async (socket: Socket) => {
                 case THROW_CARD:
                     Logger('EventCases THROW_CARD', JSON.stringify({ Data }));
                     ThrowCard(EventName, socket, Data);
+                    break;
+
+                case PICK_CARD:
+                    Logger('EventCases PICK_CARD', JSON.stringify({ Data }));
+                    PickCard(EventName, socket, Data);
                     break;
 
                 default:

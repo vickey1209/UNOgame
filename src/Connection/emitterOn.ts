@@ -100,6 +100,10 @@ const EmitterON = () => {
             await SendToRoom(THROW_CARD, data);
         });
 
+        EventEmitter.on(PICK_CARD, async (data) => {
+            await SendToRoom(PICK_CARD, data);
+        });
+
 
     } catch (error: any) {
         Logger('EmitterON Error', error);
