@@ -49,21 +49,21 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-        // if (!UserInTableDetails.cardArray.includes(Data?.card)) {
-        //     return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_CARD } });
-        // }
+        if (!UserInTableDetails.cardArray.includes(Data?.card)) {
+            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_CARD } });
+        }
 
-        // if (TableDetails.activeCardType !== Data?.card.split("-")[1] && TableDetails.activeCardColor !== Data?.card.split("-")[0]) {
-        //     return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_CARD } });
-        // }
+        if (TableDetails.activeCardType !== Data?.card.split("-")[1] && TableDetails.activeCardColor !== Data?.card.split("-")[0]) {
+            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_CARD } });
+        }
 
-        // TableDetails.activeCard = Data?.card;
-        // TableDetails.activeCardType = Data?.card.split("-")[1];
-        // TableDetails.activeCardColor = Data?.card.split("-")[0];
+        TableDetails.activeCard = Data?.card;
+        TableDetails.activeCardType = Data?.card.split("-")[1];
+        TableDetails.activeCardColor = Data?.card.split("-")[0];
 
-        // TableDetails.openCardDeck.push(Data?.card);
+        TableDetails.openCardDeck.push(Data?.card);
 
-        // UserInTableDetails.cardArray.splice(UserInTableDetails.cardArray.indexOf(Data?.card), 1);
+        UserInTableDetails.cardArray.splice(UserInTableDetails.cardArray.indexOf(Data?.card), 1);
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
