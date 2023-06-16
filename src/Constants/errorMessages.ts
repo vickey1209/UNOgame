@@ -11,6 +11,9 @@ export = Object.freeze({
     TURN_CHANGE_ERROR: "Error In Turn Change !",
     MUST_THROW_PICK_CARD: "Must Throw Last Pick Card !",
     WRONG_CURRENT_TURN_AT_PROCESS: "Wrong Table Turn Found At Turn Process !",
-    ARRAY_FIND_ERROR: "Array Find Method Issue !"
+    ARRAY_FIND_ERROR: "Array Find Method Issue !",
+    NOT_ENOUGH_CARDS: "Cards Not Available In Close Deck",
+    BULL_DATA_NOT_FOUND: "Data Not Found At Bull Process",
+    SKIP_ERROR: "Skip Return Data Error !"
 
 });

@@ -30,8 +30,6 @@ const SignUp = async (en: string, socket: Socket, Data: SignUpInterface) => {
         socket.handshake.auth.playerCount = Data?.playerCount;
         socket.handshake.auth.bootValue = Data?.bootValue;
 
-        console.log({ SocketData: socket.handshake.auth });
-
         const UserDetails: SignUpInterface = await GetUser(Data.userId);
 
         if (UserDetails) {

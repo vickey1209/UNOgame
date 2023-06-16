@@ -27,6 +27,8 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         let TableDetails: TableInterface = await GetTable(Data?.tableId);
 
+        let pickCards: Array<string> = [];
+
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
         if (TableDetails.currentTurn !== Data?.seatIndex) {
@@ -43,29 +45,49 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-        if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
-
         let isPlayableCard = false;
 
-        const PickCardsFromCloseDeck = TableDetails.closeCardDeck[0];
+        if (TableDetails.numberOfCardToPick === 0) {
 
-        if (PickCardsFromCloseDeck.split("-")[1] === TableDetails.activeCardType || PickCardsFromCloseDeck.split("-")[0] === TableDetails.activeCardColor) {
+            if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
 
-            isPlayableCard = true;
+            pickCards.push(TableDetails.closeCardDeck[0]);
 
-            UserInTableDetails.lastPickCard = PickCardsFromCloseDeck;
+            if (pickCards[0].split("-")[1] === TableDetails.activeCardType || pickCards[0].split("-")[0] === TableDetails.activeCardColor) {
+
+                isPlayableCard = true;
+
+                UserInTableDetails.lastPickCard = pickCards[0];
+
+            };
+
+            TableDetails.closeCardDeck.splice(0, 1);
+
+            UserInTableDetails.cardArray.push(pickCards[0]);
+
+        } else {
+
+            for (let i = 0; i < TableDetails.numberOfCardToPick; i++) {
+
+                if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
+
+                UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+
+                pickCards.push(TableDetails.closeCardDeck[0]);
+
+                TableDetails.closeCardDeck.splice(0, 1);
+
+            }
+
+            TableDetails.numberOfCardToPick = 0;
 
         };
-
-        TableDetails.closeCardDeck.splice(0, 1);
-
-        UserInTableDetails.cardArray.push(PickCardsFromCloseDeck);
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        const ResData = { ...Data, pickCard: [PickCardsFromCloseDeck], isPlayableCard };
+        const ResData = { ...Data, pickCards, isPlayableCard };
 
         EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: ResData });
 
@@ -73,7 +95,7 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
             await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
-            await ChangeUserTurn(TableDetails.tableId);
+            await ChangeUserTurn(TableDetails.tableId, false);
 
         };
 

@@ -24,6 +24,8 @@ const CollectBootValueProcessAction = async (Data: any) => {
 
         const tableId = Data?.tableId;
 
+        if (!tableId) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
+
         let TableDetails: TableInterface = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };

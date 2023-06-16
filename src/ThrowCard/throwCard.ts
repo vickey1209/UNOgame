@@ -49,12 +49,12 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
             return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_CARD } });
         }
 
-        if (TableDetails.activeCardType !== Data?.card.split("-")[1] && TableDetails.activeCardColor !== Data?.card.split("-")[0]) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_CARD } });
-        }
-
         if (UserInTableDetails.lastPickCard !== '' && UserInTableDetails.lastPickCard !== Data?.card) {
             return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.MUST_THROW_PICK_CARD } });
+        }
+
+        if (TableDetails.activeCardType !== Data?.card.split("-")[1] && TableDetails.activeCardColor !== Data?.card.split("-")[0]) { // ^ ---------------
+            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_CARD } });
         }
 
         TableDetails.activeCard = Data?.card;
@@ -63,7 +63,7 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
 
         TableDetails.openCardDeck.push(Data?.card);
 
-        UserInTableDetails.lastPickCard = ''
+        UserInTableDetails.lastPickCard = '';
         UserInTableDetails.cardArray.splice(UserInTableDetails.cardArray.indexOf(Data?.card), 1);
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
@@ -72,7 +72,7 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
 
         EventEmitter.emit(THROW_CARD, { en: THROW_CARD, RoomId: TableDetails.tableId, Data: Data });
 
-        await ChangeUserTurn(TableDetails.tableId);
+        await ChangeUserTurn(TableDetails.tableId, true);
 
     } catch (error: any) {
 

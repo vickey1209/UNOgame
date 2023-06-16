@@ -23,6 +23,8 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
         const UserDetails: SignUpInterface = await GetUser(Data.userId);
 
+        if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
+
         const EmptyTableList: Array<string> = await GetEmptyTable(Data?.bootValue, Data?.playerCount);
 
         if (!EmptyTableList) {

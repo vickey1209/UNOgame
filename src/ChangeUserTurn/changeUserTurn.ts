@@ -7,7 +7,7 @@ import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { Logger } from "../Logger/logger";
 
-const ChangeUserTurn = async (tableId: string) => {
+const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
     try {
 
@@ -15,28 +15,60 @@ const ChangeUserTurn = async (tableId: string) => {
 
         const CONFIG = Config();
 
-        const { TURN_INFO } = CONSTANTS.EVENTS_NAME;
+        const { TURN_INFO, PICK_CARD } = CONSTANTS.EVENTS_NAME;
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        if (TableDetails.isClockwise) {
+        let isSkip = false, skipSeatIndex = -1, manuallSkip = false;
 
-            const NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
+        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) {
 
-            if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+            TableDetails.isClockwise = TableDetails.isClockwise ? false : true;
 
-            TableDetails.currentTurn = NextTurn;
+        }
+
+        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.SKIP && isThrow) {
+
+            const SkipData = await GAME_ACTIONS.Skip(TableDetails.tableId);
+
+            if (!SkipData) { throw new Error(CONSTANTS.ERROR_MESSAGES.SKIP_ERROR) };
+
+            TableDetails.currentTurn = SkipData.nextTurnSeatIndex;
+
+            isSkip = SkipData.isSkip
+            skipSeatIndex = SkipData.skipSeatIndex
+
+        } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO && isThrow) {
+
+            const PlusTwoData = await GAME_ACTIONS.PlusTwo(TableDetails.tableId);
+
+            if (!PlusTwoData) { throw new Error(CONSTANTS.ERROR_MESSAGES.SKIP_ERROR) };
+
+            TableDetails.currentTurn = PlusTwoData.nextTurnSeatIndex;
+            TableDetails.numberOfCardToPick = PlusTwoData.penaltyNumber;
+
+            PlusTwoData.pickCards.forEach(element => { TableDetails.closeCardDeck.splice(TableDetails.closeCardDeck.indexOf(element), 1); });
 
         } else {
 
-            const NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
+            if (TableDetails.isClockwise) {
 
-            if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+                let NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
 
-            TableDetails.currentTurn = NextTurn;
+                if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
+                TableDetails.currentTurn = NextTurn;
+
+            } else {
+
+                let NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
+
+                if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+
+                TableDetails.currentTurn = NextTurn;
+            }
         }
 
         await SetTable(TableDetails.tableId, TableDetails);
@@ -49,6 +81,9 @@ const ChangeUserTurn = async (tableId: string) => {
             activeCard: TableDetails.activeCard,
             activeCardType: TableDetails.activeCardType,
             activeCardColor: TableDetails.activeCardColor,
+
+            isSkip,
+            skipSeatIndex,
 
             totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
             remainingTime: CONFIG.GamePlay.USER_TURN_TIMER

@@ -33,9 +33,12 @@ const DevConfig = (): ConfigInterface => {
 
         LOG: true,
 
-        GAME_START_TIMER: 2,
-        USER_TURN_TIMER: 10,
+        PLUS_ON_PLUS: true,
 
+        GAME_START_TIMER: 2,
+        USER_TURN_TIMER: 60,
+
+        DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
 

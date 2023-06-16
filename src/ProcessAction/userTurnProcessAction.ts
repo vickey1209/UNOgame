@@ -25,6 +25,10 @@ const UserTurnProcessAction = async (Data: any) => {
         const tableId = Data?.tableId;
         const currentTurn = Data?.currentTurn;
 
+        let pickCards: Array<string> = [];
+
+        if (!tableId || currentTurn === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
+
         let TableDetails: TableInterface = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
@@ -45,22 +49,39 @@ const UserTurnProcessAction = async (Data: any) => {
 
         } else {
 
-            if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
+            if (TableDetails.numberOfCardToPick === 0) {
 
-            const PickCardsFromCloseDeck = TableDetails.closeCardDeck[0];
+                if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
 
-            TableDetails.closeCardDeck.splice(0, 1);
+                UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
-            UserInTableDetails.cardArray.push(PickCardsFromCloseDeck);
+                pickCards.push(TableDetails.closeCardDeck[0]);
 
-            await SetTable(TableDetails.tableId, TableDetails);
+                TableDetails.closeCardDeck.splice(0, 1);
+
+            } else {
+
+                for (let i = 0; i < TableDetails.numberOfCardToPick; i++) {
+
+                    if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
+
+                    UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+
+                    pickCards.push(TableDetails.closeCardDeck[0]);
+
+                    TableDetails.closeCardDeck.splice(0, 1);
+
+                }
+
+                TableDetails.numberOfCardToPick = 0;
+            }
 
             const ResData = {
 
                 userId: UserInTableDetails.userId,
                 tableId: UserInTableDetails.tableId,
                 seatIndex: UserInTableDetails.seatIndex,
-                pickCard: [PickCardsFromCloseDeck],
+                pickCards,
                 isPlayableCard: false
 
             };
@@ -69,9 +90,11 @@ const UserTurnProcessAction = async (Data: any) => {
 
         };
 
+        await SetTable(TableDetails.tableId, TableDetails);
+
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
-        await ChangeUserTurn(TableDetails.tableId);
+        await ChangeUserTurn(TableDetails.tableId, false);
 
     } catch (error: any) {
 

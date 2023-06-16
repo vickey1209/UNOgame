@@ -39,6 +39,9 @@ const RandomPlayerTurn = async (tableId: string) => {
             activeCardType: TableDetails.activeCardType,
             activeCardColor: TableDetails.activeCardColor,
 
+            isSkip: false,
+            skipSeatIndex: -1,
+
             totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
             remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
 

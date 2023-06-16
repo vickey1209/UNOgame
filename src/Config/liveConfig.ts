@@ -54,9 +54,12 @@ const LiveConfig = (): ConfigInterface => {
 
         LOG: true,
 
+        PLUS_ON_PLUS: false,
+
         GAME_START_TIMER: 5,
         USER_TURN_TIMER: 30,
 
+        DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
 

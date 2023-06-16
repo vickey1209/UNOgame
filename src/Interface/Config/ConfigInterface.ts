@@ -31,9 +31,12 @@ export interface GamePlayInterface {
 
     LOG: boolean,
 
-    GAME_START_TIMER: number,
-    USER_TURN_TIMER:number,
+    PLUS_ON_PLUS: boolean,
 
+    GAME_START_TIMER: number,
+    USER_TURN_TIMER: number,
+
+    DISTRIBUTE_CARDS_LIMIT: number,
     MIN_SPECIAL_CARD: number,
     MAX_SPECIAL_CARD: number,
 
