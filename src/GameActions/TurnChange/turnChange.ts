@@ -18,7 +18,7 @@ const ClockWiseTurnChange = async (TableDetails: TableInterface) => {
             } else {
                 break;
             }
-        }
+        };
 
         return NextTurn;
 
@@ -46,7 +46,7 @@ const AntiClockWiseTurnChange = async (TableDetails: TableInterface) => {
             } else {
                 break;
             }
-        }
+        };
 
         return NextTurn;
 

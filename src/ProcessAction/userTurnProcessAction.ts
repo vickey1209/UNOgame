@@ -3,6 +3,7 @@ import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GetTable, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
@@ -76,7 +77,7 @@ const UserTurnProcessAction = async (Data: any) => {
                 TableDetails.numberOfCardToPick = 0;
             }
 
-            const ResData = {
+            const ResData:PickCardResInterface = {
 
                 userId: UserInTableDetails.userId,
                 tableId: UserInTableDetails.tableId,

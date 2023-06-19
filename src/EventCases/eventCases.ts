@@ -56,6 +56,7 @@ const EventCases = async (socket: Socket) => {
                     Logger("EventCases Default", JSON.stringify({ Data }));
                     EventEmitter.emit(DEFAULT, { en: EventName, SocketId: socket.id, Data: { "Message": "Unknown Event" } });
                     break;
+
             }
         });
 

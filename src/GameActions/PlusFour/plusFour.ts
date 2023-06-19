@@ -8,11 +8,11 @@ import { TableInterface } from "../../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../../Logger/logger";
 
-const PlusTwo = async (tableId: string) => {
+const PlusFour = async (tableId: string) => {
 
     try {
 
-        Logger("PlusTwo", JSON.stringify({ tableId }));
+        Logger("PlusFour", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -24,7 +24,7 @@ const PlusTwo = async (tableId: string) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        let pickCards: Array<string> = [], penaltySeatIndex = -1, forLimit = (TableDetails.numberOfCardToPick + 2);
+        let pickCards: Array<string> = [], penaltySeatIndex = -1, forLimit = (TableDetails.numberOfCardToPick + 4);
 
         if (TableDetails.isClockwise) {
 
@@ -54,8 +54,7 @@ const PlusTwo = async (tableId: string) => {
 
         for (let i = 0; i < UserInTableDetails.cardArray.length; i++) {
 
-            if (TableDetails.activeCardType === UserInTableDetails.cardArray[i].split("-")[1] || CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR === UserInTableDetails.cardArray[i].split("-")[1]) {
-                // if (TableDetails.activeCardType === UserInTableDetails.cardArray[i].split("-")[1]) { 
+            if (TableDetails.activeCardType === UserInTableDetails.cardArray[i].split("-")[1]) {
 
                 isPenaltyFreeCard = true;
                 break;
@@ -68,7 +67,7 @@ const PlusTwo = async (tableId: string) => {
 
             if (!SkipData) { throw new Error(CONSTANTS.ERROR_MESSAGES.SKIP_ERROR) };
 
-            penaltyNumber = (TableDetails.numberOfCardToPick + 2);
+            penaltyNumber = (TableDetails.numberOfCardToPick + 4);
 
             SkipData = { ...SkipData, nextTurnSeatIndex: SkipData.skipSeatIndex };
 
@@ -76,7 +75,7 @@ const PlusTwo = async (tableId: string) => {
 
         } else {
 
-            if (forLimit === 0) { forLimit = 2 };
+            if (forLimit === 0) { forLimit = 4 };
 
             for (let i = 0; i < forLimit; i++) {
 
@@ -109,12 +108,11 @@ const PlusTwo = async (tableId: string) => {
             if (!SkipData) { throw new Error(CONSTANTS.ERROR_MESSAGES.SKIP_ERROR) };
 
             return { ...SkipData, pickCards, isPenaltyFreeCard, penaltyNumber };
-
         };
 
     } catch (error: any) {
-        Logger('PlusTwo Error : ', error);
-    }
+        Logger('PlusFour Error : ', error);
+    };
 };
 
-export { PlusTwo };
+export { PlusFour };

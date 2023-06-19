@@ -3,6 +3,7 @@ import { Config } from "../../Config";
 import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
 import { GetTable, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
+import { MyCardsResInterface } from "../../Interface/MyCardsRes/MyCardsResInterface";
 import { SignUpInterface } from "../../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../../Interface/Table/TableInterface";
 import { Logger } from "../../Logger/logger";
@@ -22,7 +23,7 @@ const DistributeCards = async (tableId: string) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        const PowerCardNumber = 2;
+        const PowerCardNumber = 4;
         // const PowerCardNumber = await GAME_ACTIONS.RandomNumber(CONFIG.GamePlay.MIN_SPECIAL_CARD, CONFIG.GamePlay.MAX_SPECIAL_CARD);
 
         let AllUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.ALL_UNO_CARDS));
@@ -88,7 +89,7 @@ const DistributeCards = async (tableId: string) => {
 
         for (let i = 0; i < AllUserSocketId.length; i++) {
 
-            const ResData = {
+            const ResData: MyCardsResInterface = {
 
                 activeCard: TableDetails.activeCard,
                 openCardDeck: TableDetails.openCardDeck,

@@ -5,6 +5,7 @@ import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
+import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { Logger } from "../Logger/logger";
 
 const RandomPlayerTurn = async (tableId: string) => {
@@ -32,7 +33,7 @@ const RandomPlayerTurn = async (tableId: string) => {
         TableDetails.isLeaveLock = false;
         TableDetails.currentTurn = RandomPlayerSelect;
 
-        const ResData = {
+        const ResData: TurnInfoResInterface = {
 
             currentTurn: TableDetails.currentTurn,
             activeCard: TableDetails.activeCard,

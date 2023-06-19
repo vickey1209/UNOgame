@@ -14,6 +14,8 @@ export = Object.freeze({
     ARRAY_FIND_ERROR: "Array Find Method Issue !",
     NOT_ENOUGH_CARDS: "Cards Not Available In Close Deck",
     BULL_DATA_NOT_FOUND: "Data Not Found At Bull Process",
-    SKIP_ERROR: "Skip Return Data Error !"
+    SKIP_ERROR: "Skip Return Data Error !",
+    PLUS_2_ERROR: "Plus 2 Return Data Error !",
+    PLUS_4_ERROR: "Plus 4 Return Data Error !"
 
 });

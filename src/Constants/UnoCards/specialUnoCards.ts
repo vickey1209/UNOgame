@@ -23,8 +23,8 @@ export = Object.freeze([
 
     'B-D2C-0', 'B-D2C-1',
 
-    // 'W-CH-0', 'W-CH-1', 'W-CH-2', 'W-CH-3',
-    // 'W-D4C-0', 'W-D4C-1', 'W-D4C-2', 'W-D4C-3'
+    'W-CH-0', 'W-CH-1', 'W-CH-2', 'W-CH-3',
+    'W-D4C-0', 'W-D4C-1', 'W-D4C-2', 'W-D4C-3'
 
 ]);
 

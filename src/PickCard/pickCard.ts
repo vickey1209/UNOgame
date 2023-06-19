@@ -9,6 +9,7 @@ import { EventEmitter } from "../Connection/emitter";
 import { BullTimer } from "../BullTimer";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
+import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
 
 const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => {
 
@@ -87,7 +88,7 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        const ResData = { ...Data, pickCards, isPlayableCard };
+        const ResData: PickCardResInterface = { ...Data, pickCards, isPlayableCard };
 
         EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: ResData });
 
