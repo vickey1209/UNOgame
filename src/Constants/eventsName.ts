@@ -11,6 +11,9 @@ export = Object.freeze({
     MY_CARDS: 'MY_CARDS',
     TURN_INFO: 'TURN_INFO',
     THROW_CARD: 'THROW_CARD',
-    PICK_CARD: 'PICK_CARD'
-
+    PICK_CARD: 'PICK_CARD',
+    USERS_SCORE: 'USERS_SCORE',
+    KEEP_CARD: 'KEEP_CARD',
+    ROUND_START: 'ROUND_START',
+    
 });

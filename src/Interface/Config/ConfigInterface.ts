@@ -35,9 +35,17 @@ export interface GamePlayInterface {
 
     GAME_START_TIMER: number,
     USER_TURN_TIMER: number,
+    ROUND_TIMER: number,
+    NEXT_ROUND_TIMER: number,
 
     DISTRIBUTE_CARDS_LIMIT: number,
     MIN_SPECIAL_CARD: number,
     MAX_SPECIAL_CARD: number,
 
+    ZERO_POINT: number,
+    SKIP_POINT: number,
+    REVERS_POINT: number,
+    PUSE_TWO_POINT: number,
+    PUSE_FOUR_POINT: number,
+    COLOR_CHANGE_POINT: number,
 }

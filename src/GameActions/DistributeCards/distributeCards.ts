@@ -1,4 +1,5 @@
 import { GAME_ACTIONS } from "..";
+import { BullTimer } from "../../BullTimer";
 import { Config } from "../../Config";
 import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
@@ -17,7 +18,7 @@ const DistributeCards = async (tableId: string) => {
 
         const CONFIG = Config();
 
-        const { MY_CARDS } = CONSTANTS.EVENTS_NAME;
+        const { MY_CARDS, ROUND_START } = CONSTANTS.EVENTS_NAME;
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -64,13 +65,13 @@ const DistributeCards = async (tableId: string) => {
                     if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
                     if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
 
-                }
-            }
+                };
+            };
 
             AllUserSocketId.push({ socketId: UserDetails.socketId, Cards: UserInTableDetails.cardArray });
 
             await SetUserInTable(TableDetails.playersArray[i].userId, UserInTableDetails);
-        }
+        };
 
         TableDetails.playersArray = TableDetails.playersArray.sort((a, b) => { return a.seatIndex - b.seatIndex });
 
@@ -87,6 +88,10 @@ const DistributeCards = async (tableId: string) => {
 
         TableDetails.closeCardDeck = ShuffelCard;
 
+        await BullTimer.AddJob.Round(tableId);
+
+        EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: tableId, Data: { timer: CONFIG.GamePlay.ROUND_TIMER } });
+
         for (let i = 0; i < AllUserSocketId.length; i++) {
 
             const ResData: MyCardsResInterface = {
@@ -98,7 +103,7 @@ const DistributeCards = async (tableId: string) => {
             }
 
             EventEmitter.emit(MY_CARDS, { en: MY_CARDS, SocketId: AllUserSocketId[i].socketId, Data: ResData });
-        }
+        };
 
         await SetTable(TableDetails.tableId, TableDetails);
 

@@ -34,13 +34,13 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         if (TableDetails.currentTurn !== Data?.seatIndex) {
             return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
-        }
+        };
 
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === Data?.userId });
 
         if (!UserAvailableInTable) {
             return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_TABLE } });
-        }
+        };
 
         let UserInTableDetails: UserInTableInterface = await GetUserInTable(Data?.userId);
 

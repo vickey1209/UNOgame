@@ -1,3 +1,4 @@
+import { AllUserScore } from "../AllUserScore/allUserScore";
 import { BullTimer } from "../BullTimer";
 import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
@@ -52,11 +53,13 @@ const RandomPlayerTurn = async (tableId: string) => {
 
         setTimeout(async () => {
 
+            await AllUserScore(TableDetails.tableId);
+
             await BullTimer.AddJob.UserTurn(tableId);
 
             EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
 
-        }, 1000);
+        }, 2000);
 
     } catch (error: any) {
         Logger('RandomPlayerTurn Error : ', error);

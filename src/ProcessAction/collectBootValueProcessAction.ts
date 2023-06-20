@@ -32,14 +32,14 @@ const CollectBootValueProcessAction = async (Data: any) => {
 
         await CutBootValueFromUser(TableDetails);
 
-        const ResData = {
+        // const ResData = {
 
-            Message: `Collect Boot ${TableDetails.bootValue} !`,
-            bootValue: TableDetails.bootValue
+        //     Message: `Collect Boot ${TableDetails.bootValue} !`,
+        //     bootValue: TableDetails.bootValue
 
-        };
+        // };
 
-        EventEmitter.emit(COLLECT_BOOT, { en: COLLECT_BOOT, RoomId: TableDetails.tableId, Data: ResData });
+        // EventEmitter.emit(COLLECT_BOOT, { en: COLLECT_BOOT, RoomId: TableDetails.tableId, Data: ResData });
 
         await GAME_ACTIONS.DistributeCards(TableDetails.tableId);
 

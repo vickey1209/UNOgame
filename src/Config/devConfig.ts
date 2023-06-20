@@ -36,11 +36,20 @@ const DevConfig = (): ConfigInterface => {
         PLUS_ON_PLUS: true,
 
         GAME_START_TIMER: 2,
-        USER_TURN_TIMER: 60,
+        USER_TURN_TIMER: 5,
+        ROUND_TIMER: 30,
+        NEXT_ROUND_TIMER: 20,
 
         DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
+
+        ZERO_POINT: 10,
+        SKIP_POINT: 20,
+        REVERS_POINT: 20,
+        PUSE_TWO_POINT: 20,
+        PUSE_FOUR_POINT: 50,
+        COLOR_CHANGE_POINT: 35,
 
     }
 

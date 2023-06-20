@@ -3,13 +3,13 @@ import { Logger } from "../../Logger/logger";
 import { CollectBootQueue } from "../AllQueues/allQueues";
 import { CollectBootValueProcess } from "../ProcessJob/collectBootValueProcess";
 
-const CONFIG = Config();
-
 const CollectBootValue = async (tableId: string) => {
 
     try {
 
         Logger("CollectBootValue", JSON.stringify({ tableId }));
+
+        const CONFIG = Config();
 
         const jobId = `${tableId}`;
 
@@ -17,7 +17,7 @@ const CollectBootValue = async (tableId: string) => {
             delay: CONFIG.GamePlay.GAME_START_TIMER * 1000,
             jobId,
             removeOnComplete: true
-        }
+        };
 
         CollectBootQueue.add({ tableId }, options);
 

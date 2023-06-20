@@ -16,6 +16,8 @@ export = Object.freeze({
     BULL_DATA_NOT_FOUND: "Data Not Found At Bull Process",
     SKIP_ERROR: "Skip Return Data Error !",
     PLUS_2_ERROR: "Plus 2 Return Data Error !",
-    PLUS_4_ERROR: "Plus 4 Return Data Error !"
+    PLUS_4_ERROR: "Plus 4 Return Data Error !",
+    CHECK_SCORE_ERROR: "Check User Score Error !",
+    KEEP_ERROR: "Keep Card Not Possible !"
 
 });

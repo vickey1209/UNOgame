@@ -6,5 +6,6 @@ export = Object.freeze({
     PLUS_TWO: "D2C",
     REVERS: "RE",
     SKIP: "S",
+    ZERO: "0"
 
 });

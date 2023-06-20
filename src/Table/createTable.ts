@@ -33,7 +33,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
             await JoinTable(socket, Data);
             return;
 
-        }
+        };
 
         const Table = await CreateNewTable(socket, UserDetails);
 
@@ -84,7 +84,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
             isWinning: false,
             isLeaveLock: false,
 
-        }
+        };
 
         const UserInTable: UserInTableInterface = {
 
@@ -98,7 +98,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
             lastThrowCard: '',
             cardArray: [],
 
-        }
+        };
 
         socket.handshake.auth.tableId = Table?.tableId;
         socket.handshake.auth.seatIndex = 0;

@@ -11,7 +11,7 @@ const ClockWiseTurnChange = async (TableDetails: TableInterface) => {
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            if ((TableDetails.playersArray.length - 1) < NextTurn) { NextTurn = 0; }
+            if ((TableDetails.playersArray.length - 1) < NextTurn) { NextTurn = 0; };
 
             if (TableDetails.playersArray[NextTurn].isLeave === true) {
                 NextTurn += 1;

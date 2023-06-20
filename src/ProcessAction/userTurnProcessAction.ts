@@ -105,7 +105,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         await RemoveLock(Path, Tablelock);
 
-    }
+    };
 };
 
 export { UserTurnProcessAction };

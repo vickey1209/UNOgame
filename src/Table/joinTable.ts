@@ -52,8 +52,7 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
                     TableDetails = await SeatPlayerOnTable(socket, TableDetails, UserDetails);
 
-                }
-
+                };
 
                 EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: TableDetails });
 
