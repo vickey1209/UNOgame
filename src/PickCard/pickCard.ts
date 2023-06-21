@@ -10,6 +10,7 @@ import { BullTimer } from "../BullTimer";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
+import { GAME_ACTIONS } from "../GameActions";
 
 const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => {
 
@@ -28,7 +29,7 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         let TableDetails: TableInterface = await GetTable(Data?.tableId);
 
-        let pickCards: Array<string> = [];
+        let pickCards: Array<string> = [], isGameEnd = false;
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -51,6 +52,21 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
         if (TableDetails.numberOfCardToPick === 0) {
 
             if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
+
+            // if (TableDetails.closeCardDeck.length < 1) {
+
+            //     const FillCloseDeckData = await FillCloseDeck(TableDetails);
+
+            //     if (!FillCloseDeckData?.sufficientCard) {
+
+            //         isGameEnd = true;
+
+            //     } else {
+
+
+
+            //     };
+            // };
 
             pickCards.push(TableDetails.closeCardDeck[0]);
 
@@ -110,5 +126,38 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
     };
 };
+
+const FillCloseDeck = async (TableDetails: TableInterface) => {
+
+    try {
+
+        Logger("FillCloseDeck", JSON.stringify({ TableDetails }));
+
+        console.log({ TableDetails });
+
+        let sufficientCard = true;
+
+        if (TableDetails.openCardDeck.length < 1) {
+            sufficientCard = false;
+            console.log('FillCloseDeck > TableDetails.openCardDeck.length < 1');
+        };
+
+        let [OneCard, ...OtherCloseDeckCards] = TableDetails.openCardDeck;
+
+        if (OtherCloseDeckCards.length < 1) {
+            sufficientCard = false;
+            console.log('FillCloseDeck > OtherCloseDeckCards.length < 1');
+        };
+
+        console.log({ sufficientCard });
+
+        OtherCloseDeckCards = await GAME_ACTIONS.ShuffleArray(OtherCloseDeckCards);
+
+        return { sufficientCard, OtherCloseDeckCards };
+
+    } catch (error: any) {
+        Logger('FillCloseDeck Error : ', error);
+    };
+}
 
 export { PickCard };

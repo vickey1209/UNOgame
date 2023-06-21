@@ -15,5 +15,6 @@ export = Object.freeze({
     USERS_SCORE: 'USERS_SCORE',
     KEEP_CARD: 'KEEP_CARD',
     ROUND_START: 'ROUND_START',
-    
+    ROUND_SCORE: 'ROUND_SCORE',
+
 });

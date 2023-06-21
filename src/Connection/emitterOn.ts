@@ -55,6 +55,7 @@ const EmitterON = () => {
             PICK_CARD,
             USERS_SCORE,
             ROUND_START,
+            ROUND_SCORE,
 
         } = CONSTANTS.EVENTS_NAME;
 
@@ -112,6 +113,10 @@ const EmitterON = () => {
 
         EventEmitter.on(ROUND_START, async (data) => {
             await SendToRoom(ROUND_START, data);
+        });
+
+        EventEmitter.on(ROUND_SCORE, async (data) => {
+            await SendToRoom(ROUND_SCORE, data);
         });
 
     } catch (error: any) {

@@ -65,6 +65,8 @@ const LiveConfig = (): ConfigInterface => {
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
 
+        TOTAL_ROUND_NUMBER: 3,
+
         ZERO_POINT: 10,
         SKIP_POINT: 20,
         REVERS_POINT: 20,

@@ -30,7 +30,7 @@ const AllUserScore = async (tableId: string) => {
 
             if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
 
-            ScoreResData.allUserScore.push({ userScore: Score, seatIndex: UserInTableDetails.seatIndex, cardsLength: UserInTableDetails.cardArray.length });
+            ScoreResData.allUserScore.push({ userScore: Score.totalScore, seatIndex: UserInTableDetails.seatIndex, cardsLength: UserInTableDetails.cardArray.length });
 
         };
 
@@ -49,42 +49,63 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
         const CONFIG = Config();
 
-        let Score = 0;
+        let totalScore = 0, simpleCardsScore = 0, specialCardsPoint = 0, simpleCards = [], specialCards = [];
 
         for (let i = 0; i < UserInTableDetails.cardArray.length; i++) {
 
             if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) {
 
-                Score += CONFIG.GamePlay.PUSE_FOUR_POINT;
+                totalScore += CONFIG.GamePlay.PUSE_FOUR_POINT;
+                specialCardsPoint += CONFIG.GamePlay.PUSE_FOUR_POINT;
+
+                specialCards.push(UserInTableDetails.cardArray[i]);
 
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) {
 
-                Score += CONFIG.GamePlay.COLOR_CHANGE_POINT;
+                totalScore += CONFIG.GamePlay.COLOR_CHANGE_POINT;
+                specialCardsPoint += CONFIG.GamePlay.COLOR_CHANGE_POINT;
+
+                specialCards.push(UserInTableDetails.cardArray[i]);
 
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) {
 
-                Score += CONFIG.GamePlay.PUSE_TWO_POINT;
+                totalScore += CONFIG.GamePlay.PUSE_TWO_POINT;
+                specialCardsPoint += CONFIG.GamePlay.PUSE_TWO_POINT;
+
+                specialCards.push(UserInTableDetails.cardArray[i]);
 
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS) {
 
-                Score += CONFIG.GamePlay.REVERS_POINT;
+                totalScore += CONFIG.GamePlay.REVERS_POINT;
+                specialCardsPoint += CONFIG.GamePlay.REVERS_POINT;
+
+                specialCards.push(UserInTableDetails.cardArray[i]);
 
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.SKIP) {
 
-                Score += CONFIG.GamePlay.SKIP_POINT;
+                totalScore += CONFIG.GamePlay.SKIP_POINT;
+                specialCardsPoint += CONFIG.GamePlay.SKIP_POINT;
+
+                specialCards.push(UserInTableDetails.cardArray[i]);
 
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.ZERO) {
 
-                Score += CONFIG.GamePlay.ZERO_POINT;
+                totalScore += CONFIG.GamePlay.ZERO_POINT;
+                simpleCardsScore += CONFIG.GamePlay.ZERO_POINT;
+
+                simpleCards.push(UserInTableDetails.cardArray[i]);
 
             } else {
 
-                Score += Number(UserInTableDetails.cardArray[i].split("-")[1]);
+                totalScore += Number(UserInTableDetails.cardArray[i].split("-")[1]);
+                simpleCardsScore += Number(UserInTableDetails.cardArray[i].split("-")[1]);
+
+                simpleCards.push(UserInTableDetails.cardArray[i]);
 
             };
         };
 
-        return Score;
+        return { totalScore, simpleCardsScore, specialCardsPoint, simpleCards, specialCards };
 
     } catch (error: any) {
         Logger('CheckUserScore Error : ', error);

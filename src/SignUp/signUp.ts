@@ -46,7 +46,7 @@ const SignUp = async (en: string, socket: Socket, Data: SignUpInterface) => {
 
             await CreateTable(socket, Data);
 
-        }
+        };
 
     } catch (error: any) {
 

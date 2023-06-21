@@ -45,7 +45,6 @@ const NextRoundProcessAction = async (Data: any) => {
 
         };
 
-        TableDetails.currentRound += 1;
         TableDetails.numberOfCardToPick = 0;
 
         TableDetails.activeCard = '';

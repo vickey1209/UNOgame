@@ -42,6 +42,8 @@ export interface GamePlayInterface {
     MIN_SPECIAL_CARD: number,
     MAX_SPECIAL_CARD: number,
 
+    TOTAL_ROUND_NUMBER: number,
+
     ZERO_POINT: number,
     SKIP_POINT: number,
     REVERS_POINT: number,
