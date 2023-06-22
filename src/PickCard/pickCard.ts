@@ -29,7 +29,7 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         let TableDetails: TableInterface = await GetTable(Data?.tableId);
 
-        let pickCards: Array<string> = [], isGameEnd = false;
+        let pickCards: Array<string> = [];
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -51,50 +51,42 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         if (TableDetails.numberOfCardToPick === 0) {
 
-            if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
+            // if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
 
-            // if (TableDetails.closeCardDeck.length < 1) {
+            if (TableDetails.closeCardDeck.length) {
 
-            //     const FillCloseDeckData = await FillCloseDeck(TableDetails);
+                pickCards.push(TableDetails.closeCardDeck[0]);
 
-            //     if (!FillCloseDeckData?.sufficientCard) {
+                if (pickCards[0].split("-")[1] === TableDetails.activeCardType || pickCards[0].split("-")[0] === TableDetails.activeCardColor) {
 
-            //         isGameEnd = true;
+                    isPlayableCard = true;
 
-            //     } else {
+                    UserInTableDetails.lastPickCard = pickCards[0];
 
+                };
 
+                TableDetails.closeCardDeck.splice(0, 1);
 
-            //     };
-            // };
-
-            pickCards.push(TableDetails.closeCardDeck[0]);
-
-            if (pickCards[0].split("-")[1] === TableDetails.activeCardType || pickCards[0].split("-")[0] === TableDetails.activeCardColor) {
-
-                isPlayableCard = true;
-
-                UserInTableDetails.lastPickCard = pickCards[0];
+                UserInTableDetails.cardArray.push(pickCards[0]);
 
             };
-
-            TableDetails.closeCardDeck.splice(0, 1);
-
-            UserInTableDetails.cardArray.push(pickCards[0]);
 
         } else {
 
             for (let i = 0; i < TableDetails.numberOfCardToPick; i++) {
 
-                if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
+                // if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
 
-                UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+                if (TableDetails.closeCardDeck.length) {
 
-                pickCards.push(TableDetails.closeCardDeck[0]);
+                    UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
-                TableDetails.closeCardDeck.splice(0, 1);
+                    pickCards.push(TableDetails.closeCardDeck[0]);
 
-            }
+                    TableDetails.closeCardDeck.splice(0, 1);
+
+                };
+            };
 
             TableDetails.numberOfCardToPick = 0;
 

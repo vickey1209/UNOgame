@@ -55,7 +55,6 @@ const PlusTwo = async (tableId: string) => {
         for (let i = 0; i < UserInTableDetails.cardArray.length; i++) {
 
             if (TableDetails.activeCardType === UserInTableDetails.cardArray[i].split("-")[1] || CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR === UserInTableDetails.cardArray[i].split("-")[1]) {
-                // if (TableDetails.activeCardType === UserInTableDetails.cardArray[i].split("-")[1]) { 
 
                 isPenaltyFreeCard = true;
                 break;
@@ -80,15 +79,17 @@ const PlusTwo = async (tableId: string) => {
 
             for (let i = 0; i < forLimit; i++) {
 
-                if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
+                // if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
 
-                UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+                if (TableDetails.closeCardDeck.length) {
 
-                pickCards.push(TableDetails.closeCardDeck[0]);
+                    UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
-                TableDetails.closeCardDeck.splice(0, 1);
+                    pickCards.push(TableDetails.closeCardDeck[0]);
 
-            }
+                    TableDetails.closeCardDeck.splice(0, 1);
+                };
+            };
 
             await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 

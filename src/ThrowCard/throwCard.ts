@@ -35,8 +35,6 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
             return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
         };
 
-        await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
-
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === Data?.userId });
 
         if (!UserAvailableInTable) {
@@ -75,6 +73,8 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
         await SetTable(TableDetails.tableId, TableDetails);
+
+        await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
         EventEmitter.emit(THROW_CARD, { en: THROW_CARD, RoomId: TableDetails.tableId, Data: Data });
 

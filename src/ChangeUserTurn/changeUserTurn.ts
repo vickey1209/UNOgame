@@ -23,7 +23,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        let isSkip = false, skipSeatIndex = -1;
+        let isSkip = false, skipSeatIndex = -1, isGameEnd = false;
 
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card
 
@@ -84,31 +84,115 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
             };
         };
 
+        if (TableDetails.closeCardDeck.length < 1) {
+
+            const IsShufflePossibleData = await IsShufflePossible(TableDetails.tableId);
+
+            console.log({ IsShufflePossibleData });
+
+            if (!IsShufflePossibleData) { throw new Error(CONSTANTS.ERROR_MESSAGES.CLOSE_DECK_FILL_ERROR) }
+
+            if (IsShufflePossibleData.isShuffle) {
+
+                TableDetails.closeCardDeck = IsShufflePossibleData.cardsForCloseDeckArray;
+                TableDetails.openCardDeck = IsShufflePossibleData.cardsForOpenDeckArray;
+
+            } else {
+
+                isGameEnd = true;
+
+            };
+        };
+
         await SetTable(TableDetails.tableId, TableDetails);
 
-        await BullTimer.AddJob.UserTurn(TableDetails.tableId);
+        if (isGameEnd) { // ^ End Game Immediately
 
-        const ResData: TurnInfoResInterface = {
+            console.log('End Game Immediately !!!');
+            console.log('End Game Immediately !!!');
+            console.log('End Game Immediately !!!');
+            console.log('End Game Immediately !!!');
+            console.log('End Game Immediately !!!');
+            console.log('End Game Immediately !!!');
 
-            currentTurn: TableDetails.currentTurn,
-            activeCard: TableDetails.activeCard,
-            activeCardType: TableDetails.activeCardType,
-            activeCardColor: TableDetails.activeCardColor,
+        } else {
 
-            isSkip,
-            skipSeatIndex,
+            await BullTimer.AddJob.UserTurn(TableDetails.tableId);
 
-            totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
-            remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
-        }
+            const ResData: TurnInfoResInterface = {
 
-        EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+                currentTurn: TableDetails.currentTurn,
+                activeCard: TableDetails.activeCard,
+                activeCardType: TableDetails.activeCardType,
+                activeCardColor: TableDetails.activeCardColor,
 
-        await AllUserScore(TableDetails.tableId);
+                isSkip,
+                skipSeatIndex,
+
+                totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
+                remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
+            }
+
+            EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+
+            await AllUserScore(TableDetails.tableId);
+
+        };
+
+        // await BullTimer.AddJob.UserTurn(TableDetails.tableId);
+
+        // const ResData: TurnInfoResInterface = {
+
+        //     currentTurn: TableDetails.currentTurn,
+        //     activeCard: TableDetails.activeCard,
+        //     activeCardType: TableDetails.activeCardType,
+        //     activeCardColor: TableDetails.activeCardColor,
+
+        //     isSkip,
+        //     skipSeatIndex,
+
+        //     totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
+        //     remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
+        // }
+
+        // EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+
+        // await AllUserScore(TableDetails.tableId);
 
     } catch (error: any) {
         Logger('ChangeUserTurn Error : ', error);
     }
 };
+
+const IsShufflePossible = async (tableId: string) => {
+
+    try {
+
+        Logger("IsShufflePossible", JSON.stringify({ tableId }));
+
+        let TableDetails: TableInterface = await GetTable(tableId);
+
+        if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
+
+        let isShuffle = true;
+
+        let cardsForCloseDeckArray = TableDetails.openCardDeck.splice(0, TableDetails.openCardDeck.length - 1);
+
+        if (cardsForCloseDeckArray.length < 1) {
+
+            isShuffle = false;
+
+        } else {
+
+            cardsForCloseDeckArray = await GAME_ACTIONS.ShuffleArray(cardsForCloseDeckArray);
+
+        };
+
+        return { isShuffle, cardsForCloseDeckArray, cardsForOpenDeckArray: TableDetails.openCardDeck };
+
+    } catch (error: any) {
+        Logger('IsShufflePossible Error : ', error);
+    };
+}
 
 export { ChangeUserTurn };

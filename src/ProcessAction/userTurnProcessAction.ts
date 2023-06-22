@@ -52,19 +52,9 @@ const UserTurnProcessAction = async (Data: any) => {
 
             if (TableDetails.numberOfCardToPick === 0) {
 
-                if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
+                // if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
 
-                UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
-
-                pickCards.push(TableDetails.closeCardDeck[0]);
-
-                TableDetails.closeCardDeck.splice(0, 1);
-
-            } else {
-
-                for (let i = 0; i < TableDetails.numberOfCardToPick; i++) {
-
-                    if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
+                if (TableDetails.closeCardDeck.length) {
 
                     UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
@@ -72,12 +62,30 @@ const UserTurnProcessAction = async (Data: any) => {
 
                     TableDetails.closeCardDeck.splice(0, 1);
 
-                }
+                };
+
+            } else {
+
+                for (let i = 0; i < TableDetails.numberOfCardToPick; i++) {
+
+                    // if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
+
+                    if (TableDetails.closeCardDeck.length) {
+
+                        UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+
+                        pickCards.push(TableDetails.closeCardDeck[0]);
+
+                        TableDetails.closeCardDeck.splice(0, 1);
+
+                    };
+                };
 
                 TableDetails.numberOfCardToPick = 0;
-            }
 
-            const ResData:PickCardResInterface = {
+            };
+
+            const ResData: PickCardResInterface = {
 
                 userId: UserInTableDetails.userId,
                 tableId: UserInTableDetails.tableId,

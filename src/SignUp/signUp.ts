@@ -35,14 +35,14 @@ const SignUp = async (en: string, socket: Socket, Data: SignUpInterface) => {
         if (UserDetails) {
 
             const UserData = await UpdateUser(socket, Data, UserDetails);
-            EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
+            // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             await CreateTable(socket, Data);
 
         } else {
 
             const UserData = await NewUser(socket, Data);
-            EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
+            // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             await CreateTable(socket, Data);
 

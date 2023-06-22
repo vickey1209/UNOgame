@@ -37,7 +37,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
         const Table = await CreateNewTable(socket, UserDetails);
 
-        EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
+        // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
 
     } catch (error: any) {
         Logger('CreateTable Error : ', error);

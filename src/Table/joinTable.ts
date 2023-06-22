@@ -54,11 +54,13 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
                 };
 
-                EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: TableDetails });
+                // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: TableDetails });
 
                 await JoinRoom(socket, TableDetails.tableId);
 
                 if (TableDetails.playersArray.length === TableDetails.maxPlayers) {
+
+                    EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: TableDetails });
 
                     await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
 
