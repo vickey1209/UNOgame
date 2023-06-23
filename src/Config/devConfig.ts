@@ -37,7 +37,7 @@ const DevConfig = (): ConfigInterface => {
 
         GAME_START_TIMER: 5,
         USER_TURN_TIMER: 60,
-        ROUND_TIMER: 1000,
+        ROUND_TIMER: 10,
         NEXT_ROUND_TIMER: 10,
 
         DISTRIBUTE_CARDS_LIMIT: 10,

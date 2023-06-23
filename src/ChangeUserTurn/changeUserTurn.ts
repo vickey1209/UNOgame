@@ -8,6 +8,7 @@ import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { Logger } from "../Logger/logger";
+import { PROCESS_ACTION } from "../ProcessAction";
 
 const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
@@ -108,6 +109,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
         if (isGameEnd) { // ^ End Game Immediately
 
+            await PROCESS_ACTION.RoundProcessAction(TableDetails);
+
             console.log('End Game Immediately !!!');
             console.log('End Game Immediately !!!');
             console.log('End Game Immediately !!!');
@@ -131,7 +134,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
                 totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
                 remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
-            }
+            };
 
             EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
 

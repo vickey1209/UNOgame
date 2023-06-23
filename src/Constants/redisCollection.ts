@@ -5,6 +5,7 @@ export = Object.freeze({
     TABLES: 'Tables',
     TABLES_CONFIG: 'Tables_Config',
     EMPTY_TABLE: 'Empty_Tables',
-    LOCK: 'Lock'
+    LOCK: 'Lock',
+    ROUND_HISTORY: 'Round_History',
 
 });
