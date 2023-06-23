@@ -53,6 +53,9 @@ const EmitterON = () => {
             TURN_INFO,
             THROW_CARD,
             PICK_CARD,
+            USERS_SCORE,
+            ROUND_START,
+            ROUND_SCORE,
 
         } = CONSTANTS.EVENTS_NAME;
 
@@ -100,6 +103,21 @@ const EmitterON = () => {
             await SendToRoom(THROW_CARD, data);
         });
 
+        EventEmitter.on(PICK_CARD, async (data) => {
+            await SendToRoom(PICK_CARD, data);
+        });
+
+        EventEmitter.on(USERS_SCORE, async (data) => {
+            await SendToRoom(USERS_SCORE, data);
+        });
+
+        EventEmitter.on(ROUND_START, async (data) => {
+            await SendToRoom(ROUND_START, data);
+        });
+
+        EventEmitter.on(ROUND_SCORE, async (data) => {
+            await SendToRoom(ROUND_SCORE, data);
+        });
 
     } catch (error: any) {
         Logger('EmitterON Error', error);

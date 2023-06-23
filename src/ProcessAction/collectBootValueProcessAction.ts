@@ -24,20 +24,22 @@ const CollectBootValueProcessAction = async (Data: any) => {
 
         const tableId = Data?.tableId;
 
+        if (!tableId) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
+
         let TableDetails: TableInterface = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
         await CutBootValueFromUser(TableDetails);
 
-        const ResData = {
+        // const ResData = {
 
-            Message: `Collect Boot ${TableDetails.bootValue} !`,
-            bootValue: TableDetails.bootValue
+        //     Message: `Collect Boot ${TableDetails.bootValue} !`,
+        //     bootValue: TableDetails.bootValue
 
-        };
+        // };
 
-        EventEmitter.emit(COLLECT_BOOT, { en: COLLECT_BOOT, RoomId: TableDetails.tableId, Data: ResData });
+        // EventEmitter.emit(COLLECT_BOOT, { en: COLLECT_BOOT, RoomId: TableDetails.tableId, Data: ResData });
 
         await GAME_ACTIONS.DistributeCards(TableDetails.tableId);
 

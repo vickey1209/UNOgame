@@ -3,9 +3,10 @@ import { Socket } from "socket.io";
 import { Logger } from "../Logger/logger";
 import { EventEmitter } from "../Connection/emitter";
 import { SignUp } from "../SignUp/signUp";
-
 import { CONSTANTS } from '../Constants';
 import { ThrowCard } from "../ThrowCard/throwCard";
+import { PickCard } from "../PickCard/pickCard";
+import { KeepCard } from "../KeepCard/keepCard";
 
 const EventCases = async (socket: Socket) => {
 
@@ -20,6 +21,7 @@ const EventCases = async (socket: Socket) => {
                 SIGNUP,
                 THROW_CARD,
                 PICK_CARD,
+                KEEP_CARD,
 
             } = CONSTANTS.EVENTS_NAME;
 
@@ -46,11 +48,22 @@ const EventCases = async (socket: Socket) => {
                     ThrowCard(EventName, socket, Data);
                     break;
 
+                case PICK_CARD:
+                    Logger('EventCases PICK_CARD', JSON.stringify({ Data }));
+                    PickCard(EventName, socket, Data);
+                    break;
+
+                case KEEP_CARD:
+                    Logger('EventCases KEEP_CARD', JSON.stringify({ Data }));
+                    KeepCard(EventName, socket, Data);
+                    break;
+
                 default:
                     Logger("EventCases Default", JSON.stringify({ Data }));
                     EventEmitter.emit(DEFAULT, { en: EventName, SocketId: socket.id, Data: { "Message": "Unknown Event" } });
                     break;
-            }
+
+            };
         });
 
     } catch (error) {

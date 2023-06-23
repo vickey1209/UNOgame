@@ -30,25 +30,23 @@ const SignUp = async (en: string, socket: Socket, Data: SignUpInterface) => {
         socket.handshake.auth.playerCount = Data?.playerCount;
         socket.handshake.auth.bootValue = Data?.bootValue;
 
-        console.log({ SocketData: socket.handshake.auth });
-
         const UserDetails: SignUpInterface = await GetUser(Data.userId);
 
         if (UserDetails) {
 
             const UserData = await UpdateUser(socket, Data, UserDetails);
-            EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
+            // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             await CreateTable(socket, Data);
 
         } else {
 
             const UserData = await NewUser(socket, Data);
-            EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
+            // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             await CreateTable(socket, Data);
 
-        }
+        };
 
     } catch (error: any) {
 

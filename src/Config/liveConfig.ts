@@ -45,8 +45,8 @@ const LiveConfig = (): ConfigInterface => {
     };
 
     const ServerPort = SERVER_PORT ? Number(SERVER_PORT) : 8000;
-    const CertPath = SERVER_CERT_PATH;
-    const KeyPath = SERVER_KEY_PATH;
+    const CertPath = SERVER_CERT_PATH ? SERVER_CERT_PATH : '';
+    const KeyPath = SERVER_KEY_PATH ? SERVER_KEY_PATH : '';
 
     const Environment = ENVIRONMENT ? ENVIRONMENT : 'dev';
 
@@ -54,11 +54,25 @@ const LiveConfig = (): ConfigInterface => {
 
         LOG: true,
 
+        PLUS_ON_PLUS: false,
+
         GAME_START_TIMER: 5,
         USER_TURN_TIMER: 30,
+        ROUND_TIMER: 100,
+        NEXT_ROUND_TIMER: 10,
 
+        DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
+
+        TOTAL_ROUND_NUMBER: 3,
+
+        ZERO_POINT: 10,
+        SKIP_POINT: 20,
+        REVERS_POINT: 20,
+        PUSE_TWO_POINT: 20,
+        PUSE_FOUR_POINT: 50,
+        COLOR_CHANGE_POINT: 35,
 
     }
 

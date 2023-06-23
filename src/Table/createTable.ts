@@ -33,11 +33,11 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
             await JoinTable(socket, Data);
             return;
 
-        }
+        };
 
         const Table = await CreateNewTable(socket, UserDetails);
 
-        EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
+        // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
 
     } catch (error: any) {
         Logger('CreateTable Error : ', error);
@@ -84,7 +84,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
             isWinning: false,
             isLeaveLock: false,
 
-        }
+        };
 
         const UserInTable: UserInTableInterface = {
 
@@ -98,7 +98,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
             lastThrowCard: '',
             cardArray: [],
 
-        }
+        };
 
         socket.handshake.auth.tableId = Table?.tableId;
         socket.handshake.auth.seatIndex = 0;

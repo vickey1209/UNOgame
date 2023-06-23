@@ -1,8 +1,10 @@
 import { GAME_ACTIONS } from "..";
+import { BullTimer } from "../../BullTimer";
 import { Config } from "../../Config";
 import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
 import { GetTable, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
+import { MyCardsResInterface } from "../../Interface/MyCardsRes/MyCardsResInterface";
 import { SignUpInterface } from "../../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../../Interface/Table/TableInterface";
 import { Logger } from "../../Logger/logger";
@@ -16,18 +18,18 @@ const DistributeCards = async (tableId: string) => {
 
         const CONFIG = Config();
 
-        const { MY_CARDS } = CONSTANTS.EVENTS_NAME;
+        const { MY_CARDS, ROUND_START } = CONSTANTS.EVENTS_NAME;
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        const PowerCardNumber = 0;
+        const PowerCardNumber = 3;
         // const PowerCardNumber = await GAME_ACTIONS.RandomNumber(CONFIG.GamePlay.MIN_SPECIAL_CARD, CONFIG.GamePlay.MAX_SPECIAL_CARD);
 
-        let AllUnoCards = JSON.parse(JSON.stringify(CONSTANTS.ALL_UNO_CARDS));
-        let SimpleUnoCards = JSON.parse(JSON.stringify(CONSTANTS.SIMPLE_UNO_CARDS));
-        let SplecialUnoCards = JSON.parse(JSON.stringify(CONSTANTS.SPECIAL_UNO_CARDS));
+        let AllUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.ALL_UNO_CARDS));
+        let SimpleUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.SIMPLE_UNO_CARDS));
+        let SpecialUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.SPECIAL_UNO_CARDS));
 
         const AllUserSocketId = [];
 
@@ -37,22 +39,19 @@ const DistributeCards = async (tableId: string) => {
 
             const UserDetails: SignUpInterface = await GetUser(TableDetails.playersArray[i].userId);
 
-            for (let j = 0; j < 7; j++) {
+            for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
 
                 if (PowerCardNumber > j) {
 
-                    const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SplecialUnoCards.length - 1));
+                    const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SpecialUnoCards.length - 1));
 
-                    const Card = SplecialUnoCards[RendomNumber];
+                    const Card = SpecialUnoCards[RendomNumber];
 
                     UserInTableDetails.cardArray.push(Card);
 
-                    if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); }
-                    if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); }
-                    if (SplecialUnoCards.includes(Card)) { SplecialUnoCards.splice(SplecialUnoCards.indexOf(Card), 1); }
-                    // if (AllUnoCards.indexOf(Card) !== -1) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); }
-                    // if (SimpleUnoCards.indexOf(Card) !== -1) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); }
-                    // if (SplecialUnoCards.indexOf(Card) !== -1) { SplecialUnoCards.splice(SplecialUnoCards.indexOf(Card), 1); }
+                    if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
+                    if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
+                    if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
 
                 } else {
 
@@ -64,18 +63,15 @@ const DistributeCards = async (tableId: string) => {
 
                     if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
                     if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
-                    if (SplecialUnoCards.includes(Card)) { SplecialUnoCards.splice(SplecialUnoCards.indexOf(Card), 1); };
-                    // if (AllUnoCards.indexOf(Card) !== -1) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
-                    // if (SimpleUnoCards.indexOf(Card) !== -1) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
-                    // if (SplecialUnoCards.indexOf(Card) !== -1) { SplecialUnoCards.splice(SplecialUnoCards.indexOf(Card), 1); };
+                    if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
 
-                }
-            }
+                };
+            };
 
             AllUserSocketId.push({ socketId: UserDetails.socketId, Cards: UserInTableDetails.cardArray });
 
             await SetUserInTable(TableDetails.playersArray[i].userId, UserInTableDetails);
-        }
+        };
 
         TableDetails.playersArray = TableDetails.playersArray.sort((a, b) => { return a.seatIndex - b.seatIndex });
 
@@ -92,9 +88,13 @@ const DistributeCards = async (tableId: string) => {
 
         TableDetails.closeCardDeck = ShuffelCard;
 
+        await BullTimer.AddJob.Round(tableId);
+
+        EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: tableId, Data: { timer: CONFIG.GamePlay.ROUND_TIMER } });
+
         for (let i = 0; i < AllUserSocketId.length; i++) {
 
-            const ResData = {
+            const ResData: MyCardsResInterface = {
 
                 activeCard: TableDetails.activeCard,
                 openCardDeck: TableDetails.openCardDeck,
@@ -103,7 +103,7 @@ const DistributeCards = async (tableId: string) => {
             }
 
             EventEmitter.emit(MY_CARDS, { en: MY_CARDS, SocketId: AllUserSocketId[i].socketId, Data: ResData });
-        }
+        };
 
         await SetTable(TableDetails.tableId, TableDetails);
 

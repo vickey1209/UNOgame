@@ -16,12 +16,15 @@ const BullRedisOptions = {
 
 const CollectBootQueue = new Bull('CollectBoot', BullRedisOptions);
 const UserTurnQueue = new Bull('UserTurn', BullRedisOptions);
-   
+const RoundQueue = new Bull('Round', BullRedisOptions);
+const NextRoundQueue = new Bull('NextRound', BullRedisOptions);
+
 
 export {
 
     CollectBootQueue,
     UserTurnQueue,
+    RoundQueue,
+    NextRoundQueue,
 
-}
-
+};

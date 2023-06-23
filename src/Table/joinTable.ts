@@ -23,6 +23,8 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
         const UserDetails: SignUpInterface = await GetUser(Data.userId);
 
+        if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
+
         const EmptyTableList: Array<string> = await GetEmptyTable(Data?.bootValue, Data?.playerCount);
 
         if (!EmptyTableList) {
@@ -50,14 +52,15 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
                     TableDetails = await SeatPlayerOnTable(socket, TableDetails, UserDetails);
 
-                }
+                };
 
-
-                EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: TableDetails });
+                // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: TableDetails });
 
                 await JoinRoom(socket, TableDetails.tableId);
 
                 if (TableDetails.playersArray.length === TableDetails.maxPlayers) {
+
+                    EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: TableDetails.tableId, Data: TableDetails });
 
                     await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
 
@@ -140,7 +143,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
 
         await SetUserInTable(UserDetails.userId, UserInTable);
 
-        EventEmitter.emit(NEW_USER, { en: NEW_USER, Data: PlayerForPlayerArray, RoomId: TableDetails.tableId });
+        // EventEmitter.emit(NEW_USER, { en: NEW_USER, Data: PlayerForPlayerArray, RoomId: TableDetails.tableId });
 
         return TableDetails;
 

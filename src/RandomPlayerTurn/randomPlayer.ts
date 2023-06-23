@@ -1,3 +1,4 @@
+import { AllUserScore } from "../AllUserScore/allUserScore";
 import { BullTimer } from "../BullTimer";
 import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
@@ -5,6 +6,7 @@ import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
+import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { Logger } from "../Logger/logger";
 
 const RandomPlayerTurn = async (tableId: string) => {
@@ -32,12 +34,15 @@ const RandomPlayerTurn = async (tableId: string) => {
         TableDetails.isLeaveLock = false;
         TableDetails.currentTurn = RandomPlayerSelect;
 
-        const ResData = {
+        const ResData: TurnInfoResInterface = {
 
             currentTurn: TableDetails.currentTurn,
             activeCard: TableDetails.activeCard,
             activeCardType: TableDetails.activeCardType,
             activeCardColor: TableDetails.activeCardColor,
+
+            isSkip: false,
+            skipSeatIndex: -1,
 
             totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
             remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
@@ -48,11 +53,13 @@ const RandomPlayerTurn = async (tableId: string) => {
 
         setTimeout(async () => {
 
+            await AllUserScore(TableDetails.tableId);
+
             await BullTimer.AddJob.UserTurn(tableId);
 
             EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
 
-        }, 1000);
+        }, 2000);
 
     } catch (error: any) {
         Logger('RandomPlayerTurn Error : ', error);
