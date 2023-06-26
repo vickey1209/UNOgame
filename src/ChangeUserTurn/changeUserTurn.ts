@@ -130,6 +130,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
             };
         };
 
+        TableDetails.isTurnLock = true;
+
         await SetTable(TableDetails.tableId, TableDetails);
 
         if (isGameEnd) { // ^ End Game Immediately
@@ -145,34 +147,36 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
         } else {
 
-            await BullTimer.AddJob.UserTurn(TableDetails.tableId);
+            await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 0.5);
 
-            const ResData: TurnInfoResInterface = {
+            // await BullTimer.AddJob.UserTurn(TableDetails.tableId);
 
-                currentTurn: TableDetails.currentTurn,
-                activeCard: TableDetails.activeCard,
-                activeCardType: TableDetails.activeCardType,
-                activeCardColor: TableDetails.activeCardColor,
+            // const ResData: TurnInfoResInterface = {
 
-                isSkip,
-                skipSeatIndex,
+            //     currentTurn: TableDetails.currentTurn,
+            //     activeCard: TableDetails.activeCard,
+            //     activeCardType: TableDetails.activeCardType,
+            //     activeCardColor: TableDetails.activeCardColor,
 
-                isRevers,
-                isClockwise: TableDetails.isClockwise,
+            //     isSkip,
+            //     skipSeatIndex,
 
-                totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
-                remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
-            };
+            //     isRevers,
+            //     isClockwise: TableDetails.isClockwise,
 
-            EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+            //     totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
+            //     remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
+            // };
 
-            await AllUserScore(TableDetails.tableId);
+            // EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+
+            // await AllUserScore(TableDetails.tableId);
 
         };
 
     } catch (error: any) {
         Logger('ChangeUserTurn Error : ', error);
-    }
+    };
 };
 
 const IsShufflePossible = async (tableId: string) => {

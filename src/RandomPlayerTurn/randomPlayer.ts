@@ -19,6 +19,8 @@ const RandomPlayerTurn = async (tableId: string) => {
 
         const { TURN_INFO } = CONSTANTS.EVENTS_NAME;
 
+        let isSkip = false, skipSeatIndex = -1, isRevers = false;
+
         let TableDetails: TableInterface = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
@@ -31,38 +33,43 @@ const RandomPlayerTurn = async (tableId: string) => {
 
         } else { TableDetails.currentRound += 1; };
 
+        TableDetails.isTurnLock = true;
         TableDetails.isLeaveLock = false;
         TableDetails.currentTurn = RandomPlayerSelect;
 
-        const ResData: TurnInfoResInterface = {
-
-            currentTurn: TableDetails.currentTurn,
-            activeCard: TableDetails.activeCard,
-            activeCardType: TableDetails.activeCardType,
-            activeCardColor: TableDetails.activeCardColor,
-
-            isSkip: false,
-            skipSeatIndex: -1,
-
-            isRevers: false,
-            isClockwise: TableDetails.isClockwise,
-
-            totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
-            remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
-
-        };
-
         await SetTable(TableDetails.tableId, TableDetails);
 
-        setTimeout(async () => {
+        await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 7);
 
-            await AllUserScore(TableDetails.tableId);
+        // const ResData: TurnInfoResInterface = {
 
-            await BullTimer.AddJob.UserTurn(tableId);
+        //     currentTurn: TableDetails.currentTurn,
+        //     activeCard: TableDetails.activeCard,
+        //     activeCardType: TableDetails.activeCardType,
+        //     activeCardColor: TableDetails.activeCardColor,
 
-            EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+        //     isSkip,
+        //     skipSeatIndex,
 
-        }, 7000);
+        //     isRevers,
+        //     isClockwise: TableDetails.isClockwise,
+
+        //     totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
+        //     remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
+
+        // };
+
+        // await SetTable(TableDetails.tableId, TableDetails);
+
+        // setTimeout(async () => {
+
+        //     await AllUserScore(TableDetails.tableId);
+
+        //     await BullTimer.AddJob.UserTurn(tableId);
+
+        //     EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+
+        // }, 7000);
 
     } catch (error: any) {
         Logger('RandomPlayerTurn Error : ', error);

@@ -33,6 +33,10 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
+        if (TableDetails.isTurnLock) {
+            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WAIT_FOR_TURN_INFO } });
+        };
+        
         if (TableDetails.currentTurn !== Data?.seatIndex) {
             return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
         };
@@ -100,7 +104,7 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: ResData });
 
-        if (!isPlayableCard) {
+        if (!isPlayableCard) {``
 
             await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 

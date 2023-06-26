@@ -19,6 +19,9 @@ export = Object.freeze({
     PLUS_4_ERROR: "Plus 4 Return Data Error !!!",
     CHECK_SCORE_ERROR: "Check User Score Error !!!",
     KEEP_ERROR: "Keep Card Not Possible !!!",
-    CLOSE_DECK_FILL_ERROR: "Fill Close Deck Error !!!"
+    CLOSE_DECK_FILL_ERROR: "Fill Close Deck Error !!!",
+    WINNING_DONE: "Already Winning Declared !!!",
+    ROUND_SCORE_DONE: "Already Round Score Declared !!!",
+    WAIT_FOR_TURN_INFO: "Wait For Turn Info !!!"
 
 });
