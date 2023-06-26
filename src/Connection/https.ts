@@ -37,7 +37,13 @@ const HttpsConnection = async () => {
 
             console.log('Alert : Certificate Files Not Found');
 
-        }
+        };
+
+        app.get('/test', (req, res) => {
+
+            res.send('Done UNO !!!');
+
+        });
 
     } catch (error) {
         console.log('HttpsConnection Error : ', error);

@@ -8,6 +8,7 @@ import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { Logger } from "../Logger/logger";
+import { PROCESS_ACTION } from "../ProcessAction";
 
 const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
@@ -25,13 +26,13 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
         let isSkip = false, skipSeatIndex = -1, isGameEnd = false;
 
-        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card
+        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
 
             TableDetails.isClockwise = TableDetails.isClockwise ? false : true;
 
         };
 
-        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR && isThrow) { // ^ +4 Wild Card
+        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR && isThrow) { // ^ +4 Wild Card !
 
             const PlusFourData = await GAME_ACTIONS.PlusFour(TableDetails.tableId);
 
@@ -42,7 +43,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
             PlusFourData.pickCards.forEach(element => { TableDetails.closeCardDeck.splice(TableDetails.closeCardDeck.indexOf(element), 1); });
 
-        } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO && isThrow) { // ^ +2 Card
+        } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO && isThrow) { // ^ +2 Card !
 
             const PlusTwoData = await GAME_ACTIONS.PlusTwo(TableDetails.tableId);
 
@@ -53,7 +54,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
             PlusTwoData.pickCards.forEach(element => { TableDetails.closeCardDeck.splice(TableDetails.closeCardDeck.indexOf(element), 1); });
 
-        } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.SKIP && isThrow) { // ^ Skip Card
+        } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.SKIP && isThrow) { // ^ Skip Card !
 
             const SkipData = await GAME_ACTIONS.Skip(TableDetails.tableId);
 
@@ -63,6 +64,31 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
             isSkip = SkipData.isSkip;
             skipSeatIndex = SkipData.skipSeatIndex;
+
+        } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
+
+            const PlayersAvailableInTable = TableDetails.playersArray.filter(player => { return player.isLeave === false });
+
+            if (PlayersAvailableInTable.length > 2) {
+
+                if (TableDetails.isClockwise) {
+
+                    let NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
+
+                    if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+
+                    TableDetails.currentTurn = NextTurn;
+
+                } else {
+
+                    let NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
+
+                    if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+
+                    TableDetails.currentTurn = NextTurn;
+                };
+
+            };
 
         } else { // ^ Normal Cards
 
@@ -108,6 +134,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
         if (isGameEnd) { // ^ End Game Immediately
 
+            await PROCESS_ACTION.RoundProcessAction(TableDetails);
+
             console.log('End Game Immediately !!!');
             console.log('End Game Immediately !!!');
             console.log('End Game Immediately !!!');
@@ -131,7 +159,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
                 totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
                 remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
-            }
+            };
 
             EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
 

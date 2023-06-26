@@ -3,7 +3,7 @@ import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { Logger } from "../Logger/logger";
 import { AllKeys, DeleteData, GetData, SetData } from "../RedisOperations/redisOperations";
 
-const { USERS, EMPTY_TABLE, TABLES, USER_IN_TABLE } = CONSTANTS.REDIS_COLLECTION;
+const { USERS, EMPTY_TABLE, TABLES, USER_IN_TABLE, ROUND_HISTORY } = CONSTANTS.REDIS_COLLECTION;
 
 // ^ User ...
 
@@ -181,6 +181,55 @@ const DeleteUserInTable = async (UserInTableId: string) => {
 // ^ User In Table ...
 
 
+// ^ Round History ...
+
+const RoundHistoryKeySet = async (RoundId: string) => {
+
+    Logger('RoundHistory', JSON.stringify({ RoundId }));
+
+    const key = `${ROUND_HISTORY}:${RoundId}`;
+
+    return key;
+
+}
+
+const SetRoundHistory = async (RoundId: string, RoundHistoryData: any) => {
+
+    Logger('SetRoundHistory', JSON.stringify({}));
+
+    const key = await RoundHistoryKeySet(RoundId);
+
+    const RoundHistorySet = await SetData(key, RoundHistoryData);
+
+    return RoundHistorySet;
+
+}
+
+const GetRoundHistory = async (RoundId: string) => {
+
+    Logger('GetRoundHistory', JSON.stringify({}));
+
+    const key = await RoundHistoryKeySet(RoundId);
+
+    const RoundHistoryGet = await GetData(key);
+
+    return RoundHistoryGet;
+
+}
+
+const DeleteRoundHistory = async (RoundId: string) => {
+
+    Logger('DeleteRoundHistory', JSON.stringify({}));
+
+    const key = await RoundHistoryKeySet(RoundId);
+
+    await DeleteData(key);
+
+}
+
+// ^ Round History ...
+
+
 export {
 
     SetUser,
@@ -197,5 +246,9 @@ export {
     SetUserInTable,
     GetUserInTable,
     DeleteUserInTable,
+
+    SetRoundHistory,
+    GetRoundHistory,
+    DeleteRoundHistory,
 
 };

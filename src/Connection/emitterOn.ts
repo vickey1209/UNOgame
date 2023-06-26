@@ -31,7 +31,7 @@ const SendToRoom = async (EVENT: string, data: any) => {
     } catch (error: any) {
         Logger('SendToRoom Error : ', error);
     }
-}
+};
 
 const EmitterON = () => {
 
@@ -122,6 +122,6 @@ const EmitterON = () => {
     } catch (error: any) {
         Logger('EmitterON Error', error);
     }
-}
+};
 
 export { EmitterON };
