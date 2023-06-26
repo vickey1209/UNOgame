@@ -54,14 +54,14 @@ const LiveConfig = (): ConfigInterface => {
 
         LOG: true,
 
-        PLUS_ON_PLUS: false,
+        PLUS_ON_PLUS: true,
 
-        GAME_START_TIMER: 5,
-        USER_TURN_TIMER: 30,
-        ROUND_TIMER: 100,
+        GAME_START_TIMER: 4,
+        USER_TURN_TIMER: 20,
+        ROUND_TIMER: 180,
         NEXT_ROUND_TIMER: 10,
 
-        DISTRIBUTE_CARDS_LIMIT: 7,
+        DISTRIBUTE_CARDS_LIMIT: 10,
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
 

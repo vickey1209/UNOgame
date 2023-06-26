@@ -44,10 +44,13 @@ const RandomPlayerTurn = async (tableId: string) => {
             isSkip: false,
             skipSeatIndex: -1,
 
+            isRevers: false,
+            isClockwise: TableDetails.isClockwise,
+
             totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
             remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
 
-        }
+        };
 
         await SetTable(TableDetails.tableId, TableDetails);
 
@@ -59,7 +62,7 @@ const RandomPlayerTurn = async (tableId: string) => {
 
             EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
 
-        }, 2000);
+        }, 5000);
 
     } catch (error: any) {
         Logger('RandomPlayerTurn Error : ', error);

@@ -39,11 +39,7 @@ const HttpsConnection = async () => {
 
         };
 
-        app.get('/test', (req, res) => {
-
-            res.send('Done UNO !!!');
-
-        });
+        app.get('/test', (req, res) => { res.send('UNO !!!'); });
 
     } catch (error) {
         console.log('HttpsConnection Error : ', error);
