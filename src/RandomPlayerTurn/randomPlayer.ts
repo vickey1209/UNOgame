@@ -62,7 +62,7 @@ const RandomPlayerTurn = async (tableId: string) => {
 
             EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
 
-        }, 5000);
+        }, 7000);
 
     } catch (error: any) {
         Logger('RandomPlayerTurn Error : ', error);
