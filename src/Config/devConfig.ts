@@ -36,8 +36,8 @@ const DevConfig = (): ConfigInterface => {
         PLUS_ON_PLUS: true,
 
         GAME_START_TIMER: 4,
-        USER_TURN_TIMER: 20,
-        ROUND_TIMER: 180,
+        USER_TURN_TIMER: 60,
+        ROUND_TIMER: 500,
         NEXT_ROUND_TIMER: 10,
 
         DISTRIBUTE_CARDS_LIMIT: 10,
@@ -53,8 +53,7 @@ const DevConfig = (): ConfigInterface => {
         PUSE_FOUR_POINT: 50,
         COLOR_CHANGE_POINT: 35,
 
-    }
-
+    };
 
     return { Redis, PubSubRedis, ServerPort, GamePlay, Environment };
 

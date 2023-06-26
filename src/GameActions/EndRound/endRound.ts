@@ -3,7 +3,7 @@ import { BullTimer } from "../../BullTimer";
 import { Config } from "../../Config";
 import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
-import { GetRoundHistory, GetTable, GetUserInTable, SetRoundHistory, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
+import { GetRoundHistory, GetTable, GetUserInTable, SetRoundHistory, SetTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../../Logger/logger";
@@ -60,6 +60,10 @@ const EndRound = async (tableId: string) => {
         RoundScoreArray = RoundScoreArray.sort((a: any, b: any) => { return b.userScore - a.userScore; });
 
         await SetRoundHistory(TableDetails.tableId, RoundWiseScore);
+
+        TableDetails.isRoundScoreScreen = true;
+
+        await SetTable(TableDetails.tableId, TableDetails);
 
         if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {
 

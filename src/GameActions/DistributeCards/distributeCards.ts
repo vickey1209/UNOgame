@@ -100,7 +100,7 @@ const DistributeCards = async (tableId: string) => {
                 openCardDeck: TableDetails.openCardDeck,
                 playerCard: AllUserSocketId[i].Cards
 
-            }
+            };
 
             EventEmitter.emit(MY_CARDS, { en: MY_CARDS, SocketId: AllUserSocketId[i].socketId, Data: ResData });
         };

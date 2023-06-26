@@ -19,7 +19,9 @@ export interface TableInterface {
     isClockwise: boolean,
     isGameStart: boolean,
     isWinning: boolean,
+    isRoundScoreScreen: boolean,
     isLeaveLock: boolean,
+    isTurnLock: boolean,
 
 }
 

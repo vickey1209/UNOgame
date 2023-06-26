@@ -74,7 +74,7 @@ const LiveConfig = (): ConfigInterface => {
         PUSE_FOUR_POINT: 50,
         COLOR_CHANGE_POINT: 35,
 
-    }
+    };
 
     return { Redis, PubSubRedis, ServerPort, CertPath, KeyPath, GamePlay, Environment };
 

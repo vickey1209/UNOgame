@@ -52,8 +52,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
         const Table: TableInterface = {
 
-            tableId: 'TABLE',
-            // tableId: cryptoRandomString({ length: 24, type: 'hex' }),
+            // tableId: 'TABLE',
+            tableId: cryptoRandomString({ length: 24, type: 'hex' }),
             bootValue: UserDetails.bootValue,
             currentTurn: -1,
             currentRound: -1,
@@ -82,7 +82,9 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
             isClockwise: true,
             isGameStart: false,
             isWinning: false,
+            isRoundScoreScreen: false,
             isLeaveLock: false,
+            isTurnLock: false,
 
         };
 
