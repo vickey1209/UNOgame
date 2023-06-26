@@ -45,7 +45,7 @@ const ApplyLock = async (Path: string, LockId: string) => {
 
         Logger("ApplyLock", JSON.stringify({ Path, LockId }));
 
-        const Lock = await redLock.acquire([LockId], 200 * 1000);
+        const Lock = await redLock.acquire([LockId], 2 * 1000);
 
         return Lock;
 

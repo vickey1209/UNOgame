@@ -8,6 +8,9 @@ export interface TurnInfoResInterface {
     isSkip: boolean,
     skipSeatIndex: number,
 
+    isRevers: boolean,
+    isClockwise: boolean,
+
     totalTime: number,
     remainingTime: number,
 

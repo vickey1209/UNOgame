@@ -8,7 +8,6 @@ import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { Logger } from "../Logger/logger";
-import { PROCESS_ACTION } from "../ProcessAction";
 
 const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
@@ -24,11 +23,12 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        let isSkip = false, skipSeatIndex = -1, isGameEnd = false;
+        let isSkip = false, skipSeatIndex = -1, isRevers = false, isGameEnd = false;
 
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
 
             TableDetails.isClockwise = TableDetails.isClockwise ? false : true;
+            isRevers = true;
 
         };
 
@@ -134,7 +134,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
         if (isGameEnd) { // ^ End Game Immediately
 
-            await PROCESS_ACTION.RoundProcessAction(TableDetails);
+            await GAME_ACTIONS.EndRound(tableId);
 
             console.log('End Game Immediately !!!');
             console.log('End Game Immediately !!!');
@@ -157,6 +157,9 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
                 isSkip,
                 skipSeatIndex,
 
+                isRevers,
+                isClockwise: TableDetails.isClockwise,
+
                 totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
                 remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
             };
@@ -166,26 +169,6 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
             await AllUserScore(TableDetails.tableId);
 
         };
-
-        // await BullTimer.AddJob.UserTurn(TableDetails.tableId);
-
-        // const ResData: TurnInfoResInterface = {
-
-        //     currentTurn: TableDetails.currentTurn,
-        //     activeCard: TableDetails.activeCard,
-        //     activeCardType: TableDetails.activeCardType,
-        //     activeCardColor: TableDetails.activeCardColor,
-
-        //     isSkip,
-        //     skipSeatIndex,
-
-        //     totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
-        //     remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
-        // }
-
-        // EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
-
-        // await AllUserScore(TableDetails.tableId);
 
     } catch (error: any) {
         Logger('ChangeUserTurn Error : ', error);
