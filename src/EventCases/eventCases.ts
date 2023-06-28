@@ -7,6 +7,7 @@ import { CONSTANTS } from '../Constants';
 import { ThrowCard } from "../ThrowCard/throwCard";
 import { PickCard } from "../PickCard/pickCard";
 import { KeepCard } from "../KeepCard/keepCard";
+import { LeaveTable } from "../Table/leaveTable";
 
 const EventCases = async (socket: Socket) => {
 
@@ -22,6 +23,7 @@ const EventCases = async (socket: Socket) => {
                 THROW_CARD,
                 PICK_CARD,
                 KEEP_CARD,
+                LEAVE_TABLE,
 
             } = CONSTANTS.EVENTS_NAME;
 
@@ -58,6 +60,11 @@ const EventCases = async (socket: Socket) => {
                     KeepCard(EventName, socket, Data);
                     break;
 
+                case LEAVE_TABLE:
+                    Logger('EventCases LEAVE_TABLE', JSON.stringify({ Data }));
+                    LeaveTable(EventName, socket, Data);
+                    break;
+
                 default:
                     Logger("EventCases Default", JSON.stringify({ Data }));
                     EventEmitter.emit(DEFAULT, { en: EventName, SocketId: socket.id, Data: { "Message": "Unknown Event" } });
@@ -68,7 +75,7 @@ const EventCases = async (socket: Socket) => {
 
     } catch (error) {
         console.log('EventCases Error : ', error);
-    }
-}
+    };
+};
 
 export { EventCases };

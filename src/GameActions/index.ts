@@ -1,5 +1,6 @@
 import { DistributeCards } from './DistributeCards/distributeCards';
 import { EndRound } from './EndRound/endRound';
+import { IsShufflePossible } from './IsShufflePossible/isShufflePossible';
 import { PlusFour } from './PlusFour/plusFour';
 import { PlusTwo } from './PlusTwo/plusTwo';
 import { RandomNumber } from './RandomNumber/randomNumber'
@@ -20,7 +21,7 @@ const GAME_ACTIONS = {
     PlusTwo,
     PlusFour,
     EndRound,
-
+    IsShufflePossible,
 }
 
 export { GAME_ACTIONS };

@@ -11,7 +11,7 @@ const Logger = (Path: string, Data: string) => {
         console.log(`Path : ${Path} >> Data : ${Data}`);
         console.log(new Date(CountryTime));
         console.log('.');
-    }
-}
+    };
+};
 
 export { Logger };

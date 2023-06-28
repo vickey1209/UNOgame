@@ -22,6 +22,7 @@ export = Object.freeze({
     CLOSE_DECK_FILL_ERROR: "Fill Close Deck Error !!!",
     WINNING_DONE: "Already Winning Declared !!!",
     ROUND_SCORE_DONE: "Already Round Score Declared !!!",
-    WAIT_FOR_TURN_INFO: "Wait For Turn Info !!!"
+    WAIT_FOR_TURN_INFO: "Wait For Turn Info !!!",
+    CAN_NOT_ABLE_TO_LEAVE: "Currently You Can't Able To Leave !!!"
 
 });

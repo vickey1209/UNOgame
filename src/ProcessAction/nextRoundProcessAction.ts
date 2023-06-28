@@ -54,8 +54,9 @@ const NextRoundProcessAction = async (Data: any) => {
         TableDetails.closeCardDeck = [];
         TableDetails.openCardDeck = [];
 
-        TableDetails.isLeaveLock = true;
-        TableDetails.isRoundScoreScreen = false;
+        // TableDetails.isLeaveLock = true;
+
+        TableDetails.isScoreScreen = false;
 
         await SetTable(TableDetails.tableId, TableDetails);
 

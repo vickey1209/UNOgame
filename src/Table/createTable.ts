@@ -52,8 +52,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
         const Table: TableInterface = {
 
-            // tableId: 'TABLE',
-            tableId: cryptoRandomString({ length: 24, type: 'hex' }),
+            tableId: 'TABLE',
+            // tableId: cryptoRandomString({ length: 24, type: 'hex' }),
             bootValue: UserDetails.bootValue,
             currentTurn: -1,
             currentRound: -1,
@@ -80,11 +80,15 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
             openCardDeck: [],
 
             isClockwise: true,
+
             isGameStart: false,
-            isWinning: false,
-            isRoundScoreScreen: false,
+            isRoundStart: false,
+            isScoreScreen: false,
+
             isLeaveLock: false,
             isTurnLock: false,
+
+            isWinning: false,
 
         };
 
@@ -110,17 +114,17 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
         UserDetails.tableId = Table.tableId;
         await SetUser(UserDetails.userId, UserDetails);
 
-        await SetEmptyTable(UserDetails.bootValue, UserDetails.playerCount, Table.tableId);
-
         await SetTable(Table.tableId, Table);
 
         await SetUserInTable(UserDetails.userId, UserInTable);
+
+        await SetEmptyTable(UserDetails.bootValue, UserDetails.playerCount, Table.tableId);
 
         return Table;
 
     } catch (error: any) {
         Logger('CreateNewTable Error : ', error);
-    }
+    };
 };
 
 export { CreateTable };

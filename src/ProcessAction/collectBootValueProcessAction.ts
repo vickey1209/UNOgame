@@ -51,7 +51,7 @@ const CollectBootValueProcessAction = async (Data: any) => {
 
         await RemoveLock(Path, Tablelock);
 
-    }
+    };
 };
 
 const CutBootValueFromUser = async (TableDetails: TableInterface) => {
@@ -72,7 +72,7 @@ const CutBootValueFromUser = async (TableDetails: TableInterface) => {
 
     } catch (error: any) {
         Logger('CutBootValueFromUser Error', error);
-    }
+    };
 };
 
 export { CollectBootValueProcessAction };

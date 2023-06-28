@@ -24,7 +24,7 @@ const UserTurn = async (tableId: string) => {
             delay: CONFIG.GamePlay.USER_TURN_TIMER * 1000,
             jobId,
             removeOnComplete: true
-        }
+        };
 
         UserTurnQueue.add({ tableId, currentTurn: TableDetails.currentTurn }, options);
 

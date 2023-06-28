@@ -14,7 +14,7 @@ const CollectBootValueProcess = async (job: Job, done: DoneCallback) => {
 
     } catch (error: any) {
         Logger('CollectBootValueProcess Error : ', error);
-    }
-}
+    };
+};
 
 export { CollectBootValueProcess };

@@ -56,7 +56,7 @@ const SignUp = async (en: string, socket: Socket, Data: SignUpInterface) => {
 
         await RemoveLock(Path, MatchMakingLock);
 
-    }
+    };
 };
 
 const NewUser = async (socket: Socket, Data: SignUpInterface) => {

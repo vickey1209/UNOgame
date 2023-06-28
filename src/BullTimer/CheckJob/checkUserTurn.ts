@@ -11,14 +11,13 @@ const CheckUserTurn = async (tableId: string, currentTurn: number) => {
 
         const Job = await UserTurnQueue.getJob(jobId);
 
-        if (Job) {
-            return Job;
-        }
+        if (Job) { return Job; };
+
         return;
 
     } catch (error: any) {
         Logger('CheckUserTurn Error', error);
-    }
-}
+    };
+};
 
 export { CheckUserTurn };

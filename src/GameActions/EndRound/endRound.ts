@@ -23,6 +23,7 @@ const EndRound = async (tableId: string) => {
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
         await BullTimer.CancelJob.CancelRound(TableDetails.tableId);
+        await BullTimer.CancelJob.CancelTurnInfo(TableDetails.tableId);
         await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
         let RoundScoreArray = [], RoundWiseScore = [];
@@ -61,7 +62,10 @@ const EndRound = async (tableId: string) => {
 
         await SetRoundHistory(TableDetails.tableId, RoundWiseScore);
 
-        TableDetails.isRoundScoreScreen = true;
+        TableDetails.isLeaveLock = true;
+
+        TableDetails.isRoundStart = false;
+        TableDetails.isScoreScreen = true;
 
         await SetTable(TableDetails.tableId, TableDetails);
 
@@ -73,6 +77,9 @@ const EndRound = async (tableId: string) => {
             console.log('3 Round Done !!');
             console.log('3 Round Done !!');
             console.log('3 Round Done !!');
+
+            console.log({ RoundScoreArray });
+
 
         } else {
 

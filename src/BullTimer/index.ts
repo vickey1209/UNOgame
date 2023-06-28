@@ -9,6 +9,6 @@ const BullTimer = {
     CancelJob,
     CheckJob,
     
-}
+};
 
 export { BullTimer };
