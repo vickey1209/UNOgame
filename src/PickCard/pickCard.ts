@@ -51,6 +51,10 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
+        if (UserInTableDetails.lastPickCard !== '') {
+            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.CAN_NOT_ABLE_TO_PICK_CARD } });
+        };
+
         let isPlayableCard = false;
 
         if (TableDetails.numberOfCardToPick === 0) {
@@ -104,7 +108,7 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
         EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: ResData });
 
-        if (!isPlayableCard) {``
+        if (!isPlayableCard) {
 
             await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
