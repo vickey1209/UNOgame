@@ -15,11 +15,11 @@ const UserKeySet = async (UserKey: string) => {
 
     return key;
 
-}
+};
 
 const SetUser = async (UserKey: string, UserData: SignUpInterface) => {
 
-    Logger('SetUser', JSON.stringify({}));
+    Logger('SetUser', JSON.stringify({ UserData }));
 
     const key = await UserKeySet(UserKey);
 
@@ -27,7 +27,7 @@ const SetUser = async (UserKey: string, UserData: SignUpInterface) => {
 
     return UserSet;
 
-}
+};
 
 const GetUser = async (UserKey: string) => {
 
@@ -39,7 +39,7 @@ const GetUser = async (UserKey: string) => {
 
     return User;
 
-}
+};
 
 // ^ User ...
 
@@ -56,7 +56,7 @@ const GetEmptyTable = async (BootValue: number, PlayerCount: number) => {
 
     return EmptyTable;
 
-}
+};
 
 const SetEmptyTable = async (BootValue: number, PlayerCount: number, TableId: string) => {
 
@@ -68,7 +68,7 @@ const SetEmptyTable = async (BootValue: number, PlayerCount: number, TableId: st
 
     return EmptyTable;
 
-}
+};
 
 const DeleteEmptyTable = async (BootValue: number, PlayerCount: number, TableId: string) => {
 
@@ -78,7 +78,7 @@ const DeleteEmptyTable = async (BootValue: number, PlayerCount: number, TableId:
 
     await DeleteData(key);
 
-}
+};
 
 // ^ Empty Table ...
 
@@ -93,11 +93,11 @@ const TableKeySet = async (TableId: string) => {
 
     return key;
 
-}
+};
 
 const SetTable = async (TableId: string, TableData: any) => {
 
-    Logger('SetTable', JSON.stringify({}));
+    Logger('SetTable', JSON.stringify({ TableData }));
 
     const key = await TableKeySet(TableId);
 
@@ -105,7 +105,7 @@ const SetTable = async (TableId: string, TableData: any) => {
 
     return TableSet;
 
-}
+};
 
 const GetTable = async (TableId: string) => {
 
@@ -117,7 +117,7 @@ const GetTable = async (TableId: string) => {
 
     return Table;
 
-}
+};
 
 const DeleteTable = async (TableId: string) => {
 
@@ -127,7 +127,7 @@ const DeleteTable = async (TableId: string) => {
 
     await DeleteData(key);
 
-}
+};
 
 // ^ Table ...
 
@@ -142,11 +142,11 @@ const UserInTableKeySet = async (UserInTableId: string) => {
 
     return key;
 
-}
+};
 
 const SetUserInTable = async (UserInTableId: string, UserInTableData: any) => {
 
-    Logger('SetUserInTable', JSON.stringify({}));
+    Logger('SetUserInTable', JSON.stringify({ UserInTableData }));
 
     const key = await UserInTableKeySet(UserInTableId);
 
@@ -154,7 +154,7 @@ const SetUserInTable = async (UserInTableId: string, UserInTableData: any) => {
 
     return UserInTableSet;
 
-}
+};
 
 const GetUserInTable = async (UserInTableId: string) => {
 
@@ -166,7 +166,7 @@ const GetUserInTable = async (UserInTableId: string) => {
 
     return UserInTableGet;
 
-}
+};
 
 const DeleteUserInTable = async (UserInTableId: string) => {
 
@@ -176,7 +176,7 @@ const DeleteUserInTable = async (UserInTableId: string) => {
 
     await DeleteData(key);
 
-}
+};
 
 // ^ User In Table ...
 
@@ -191,11 +191,11 @@ const RoundHistoryKeySet = async (RoundId: string) => {
 
     return key;
 
-}
+};
 
 const SetRoundHistory = async (RoundId: string, RoundHistoryData: any) => {
 
-    Logger('SetRoundHistory', JSON.stringify({}));
+    Logger('SetRoundHistory', JSON.stringify({ RoundHistoryData }));
 
     const key = await RoundHistoryKeySet(RoundId);
 
@@ -203,7 +203,7 @@ const SetRoundHistory = async (RoundId: string, RoundHistoryData: any) => {
 
     return RoundHistorySet;
 
-}
+};
 
 const GetRoundHistory = async (RoundId: string) => {
 
@@ -215,7 +215,7 @@ const GetRoundHistory = async (RoundId: string) => {
 
     return RoundHistoryGet;
 
-}
+};
 
 const DeleteRoundHistory = async (RoundId: string) => {
 
@@ -225,7 +225,7 @@ const DeleteRoundHistory = async (RoundId: string) => {
 
     await DeleteData(key);
 
-}
+};
 
 // ^ Round History ...
 

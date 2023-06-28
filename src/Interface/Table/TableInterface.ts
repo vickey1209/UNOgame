@@ -17,11 +17,15 @@ export interface TableInterface {
     openCardDeck: Array<string>,
 
     isClockwise: boolean,
+
     isGameStart: boolean,
-    isWinning: boolean,
-    isRoundScoreScreen: boolean,
+    isRoundStart: boolean,
+    isScoreScreen: boolean,
+
     isLeaveLock: boolean,
     isTurnLock: boolean,
+
+    isWinning: boolean,
 
 }
 

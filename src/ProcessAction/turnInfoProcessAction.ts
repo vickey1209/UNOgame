@@ -13,7 +13,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
     const Path = 'TurnInfoProcessAction';
 
-    const { TURN_INFO } = CONSTANTS.EVENTS_NAME;
+    const { TURN_INFO, ROUND_START } = CONSTANTS.EVENTS_NAME;
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
@@ -32,9 +32,20 @@ const TurnInfoProcessAction = async (Data: any) => {
 
         if (TableDetails.isWinning) { throw new Error(CONSTANTS.ERROR_MESSAGES.WINNING_DONE) };
 
-        if (TableDetails.isRoundScoreScreen) { throw new Error(CONSTANTS.ERROR_MESSAGES.ROUND_SCORE_DONE) };
+        if (TableDetails.isScoreScreen) { throw new Error(CONSTANTS.ERROR_MESSAGES.ROUND_SCORE_DONE) };
+
+        if (!TableDetails.isRoundStart) {
+
+            TableDetails.isRoundStart = true;
+
+            await BullTimer.AddJob.Round(TableDetails.tableId);
+
+            EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: TableDetails.tableId, Data: { timer: CONFIG.GamePlay.ROUND_TIMER } });
+
+        };
 
         TableDetails.isTurnLock = false;
+        TableDetails.isLeaveLock = false;
 
         await SetTable(TableDetails.tableId, TableDetails);
 

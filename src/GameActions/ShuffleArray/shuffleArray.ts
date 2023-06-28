@@ -14,7 +14,7 @@ const ShuffleArray = async (NormalArray: Array<any>) => {
 
         NormalArray.splice(RendomNumber, 1);
 
-    }
+    };
 
     return Shuffel;
 

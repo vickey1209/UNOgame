@@ -76,7 +76,7 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
     } catch (error: any) {
         Logger('JoinTable Error : ', error);
-    }
+    };
 };
 
 const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, UserDetails: SignUpInterface) => {
@@ -149,7 +149,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
 
     } catch (error: any) {
         Logger('SeatPlayerOnTable Error : ', error);
-    }
+    };
 };
 
 export { JoinTable };

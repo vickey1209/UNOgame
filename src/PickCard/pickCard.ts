@@ -123,37 +123,4 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
     };
 };
 
-const FillCloseDeck = async (TableDetails: TableInterface) => {
-
-    try {
-
-        Logger("FillCloseDeck", JSON.stringify({ TableDetails }));
-
-        console.log({ TableDetails });
-
-        let sufficientCard = true;
-
-        if (TableDetails.openCardDeck.length < 1) {
-            sufficientCard = false;
-            console.log('FillCloseDeck > TableDetails.openCardDeck.length < 1');
-        };
-
-        let [OneCard, ...OtherCloseDeckCards] = TableDetails.openCardDeck;
-
-        if (OtherCloseDeckCards.length < 1) {
-            sufficientCard = false;
-            console.log('FillCloseDeck > OtherCloseDeckCards.length < 1');
-        };
-
-        console.log({ sufficientCard });
-
-        OtherCloseDeckCards = await GAME_ACTIONS.ShuffleArray(OtherCloseDeckCards);
-
-        return { sufficientCard, OtherCloseDeckCards };
-
-    } catch (error: any) {
-        Logger('FillCloseDeck Error : ', error);
-    };
-}
-
 export { PickCard };

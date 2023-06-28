@@ -88,9 +88,9 @@ const DistributeCards = async (tableId: string) => {
 
         TableDetails.closeCardDeck = ShuffelCard;
 
-        await BullTimer.AddJob.Round(tableId);
+        // await BullTimer.AddJob.Round(tableId);
 
-        EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: tableId, Data: { timer: CONFIG.GamePlay.ROUND_TIMER } });
+        // EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: tableId, Data: { timer: CONFIG.GamePlay.ROUND_TIMER } });
 
         for (let i = 0; i < AllUserSocketId.length; i++) {
 

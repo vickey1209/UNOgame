@@ -11,7 +11,7 @@ const LeaveRoom = async (socket: Socket, RooId: string) => { // * Leave Socket R
 
     } catch (error: any) {
         Logger('LeaveRoom Error : ', error);
-    }
-}
+    };
+};
 
 export { LeaveRoom };

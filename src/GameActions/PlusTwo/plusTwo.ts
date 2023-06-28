@@ -115,7 +115,7 @@ const PlusTwo = async (tableId: string) => {
 
     } catch (error: any) {
         Logger('PlusTwo Error : ', error);
-    }
+    };
 };
 
 export { PlusTwo };

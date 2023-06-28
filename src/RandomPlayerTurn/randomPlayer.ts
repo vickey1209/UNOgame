@@ -34,12 +34,12 @@ const RandomPlayerTurn = async (tableId: string) => {
         } else { TableDetails.currentRound += 1; };
 
         TableDetails.isTurnLock = true;
-        TableDetails.isLeaveLock = false;
+        // TableDetails.isLeaveLock = false;
         TableDetails.currentTurn = RandomPlayerSelect;
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 7);
+        await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 5);
 
         // const ResData: TurnInfoResInterface = {
 
@@ -73,7 +73,7 @@ const RandomPlayerTurn = async (tableId: string) => {
 
     } catch (error: any) {
         Logger('RandomPlayerTurn Error : ', error);
-    }
+    };
 };
 
 export { RandomPlayerTurn };

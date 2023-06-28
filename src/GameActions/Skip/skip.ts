@@ -54,13 +54,13 @@ const Skip = async (tableId: string) => {
             isSkip = true;
             nextTurnSeatIndex = NextTurn;
 
-        }
+        };
 
         return { isSkip, skipSeatIndex, nextTurnSeatIndex };
 
     } catch (error: any) {
         Logger('Skip Error : ', error);
-    }
+    };
 };
 
 export { Skip };

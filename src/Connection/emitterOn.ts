@@ -15,8 +15,8 @@ const SendToSocket = async (EVENT: string, data: any) => {
 
     } catch (error: any) {
         Logger('SendToSocket Error : ', error);
-    }
-}
+    };
+};
 
 const SendToRoom = async (EVENT: string, data: any) => {
 
@@ -30,7 +30,7 @@ const SendToRoom = async (EVENT: string, data: any) => {
 
     } catch (error: any) {
         Logger('SendToRoom Error : ', error);
-    }
+    };
 };
 
 const EmitterON = () => {
@@ -56,6 +56,7 @@ const EmitterON = () => {
             USERS_SCORE,
             ROUND_START,
             ROUND_SCORE,
+            LEAVE_TABLE,
 
         } = CONSTANTS.EVENTS_NAME;
 
@@ -119,9 +120,13 @@ const EmitterON = () => {
             await SendToRoom(ROUND_SCORE, data);
         });
 
+        EventEmitter.on(LEAVE_TABLE, async (data) => {
+            await SendToRoom(LEAVE_TABLE, data);
+        });
+
     } catch (error: any) {
         Logger('EmitterON Error', error);
-    }
+    };
 };
 
 export { EmitterON };

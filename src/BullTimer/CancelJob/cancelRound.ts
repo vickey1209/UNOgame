@@ -11,9 +11,8 @@ const CancelRound = async (tableId: string) => {
 
         const Job = await RoundQueue.getJob(jobId);
 
-        if (Job) {
-            Job.remove();
-        }
+        if (Job) { Job.remove(); };
+        
         return;
 
     } catch (error: any) {

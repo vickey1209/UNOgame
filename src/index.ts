@@ -46,3 +46,27 @@ Initialize();
 // console.log(FinalScore);
 // console.log(new Date());
 // console.log();
+
+// const arr = [444, 444, 22, 22, 22, 1, 2, 1, 2, 1, 1];
+
+// let finalArray: any = [], isAvailable = false;
+
+// for (let i = 0; i < arr.length; i++) {
+
+//     isAvailable = false;
+
+//     if (finalArray.length === 0) {
+
+//         finalArray.push({ [`${arr[i]}`]: 1 });
+
+//     } else {
+
+//         finalArray.forEach((element: any) => { if (Number(Object.keys(element)[0]) === arr[i]) { isAvailable = true }; });
+
+//         if (isAvailable) { finalArray = [...finalArray].map((e: any) => { return Number(Object.keys(e)[0]) === arr[i] ? { ...e, [`${arr[i]}`]: e?.[`${arr[i]}`] + 1 } : e }); }
+//         else { finalArray.push({ [`${arr[i]}`]: 1 }); };
+
+//     };
+// };
+
+// console.log(finalArray);

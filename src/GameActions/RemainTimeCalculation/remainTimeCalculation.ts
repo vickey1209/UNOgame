@@ -28,7 +28,7 @@ const RemainTimeCalculation = async (Job: any) => {
 
     } catch (error: any) {
         Logger('RemainTimeCalculation Error : ', error);
-    }
-}
+    };
+};
 
 export { RemainTimeCalculation };

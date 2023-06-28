@@ -11,7 +11,7 @@ const JoinRoom = async (socket: Socket, RooId: string) => { // * Join Socket Roo
 
     } catch (error: any) {
         Logger('JoinRoom Error : ', error);
-    }
-}
+    };
+};
 
 export { JoinRoom };

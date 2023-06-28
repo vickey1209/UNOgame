@@ -14,7 +14,7 @@ const UserTurnProcess = async (job: Job, done: DoneCallback) => {
 
     } catch (error: any) {
         Logger('UserTurnProcess Error : ', error);
-    }
+    };
 };
 
 export { UserTurnProcess };

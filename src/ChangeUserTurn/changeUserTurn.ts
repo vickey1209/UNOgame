@@ -112,9 +112,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
         if (TableDetails.closeCardDeck.length < 1) {
 
-            const IsShufflePossibleData = await IsShufflePossible(TableDetails.tableId);
-
-            console.log({ IsShufflePossibleData });
+            const IsShufflePossibleData = await GAME_ACTIONS.IsShufflePossible(TableDetails.tableId);
 
             if (!IsShufflePossibleData) { throw new Error(CONSTANTS.ERROR_MESSAGES.CLOSE_DECK_FILL_ERROR) }
 
@@ -178,36 +176,5 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
         Logger('ChangeUserTurn Error : ', error);
     };
 };
-
-const IsShufflePossible = async (tableId: string) => {
-
-    try {
-
-        Logger("IsShufflePossible", JSON.stringify({ tableId }));
-
-        let TableDetails: TableInterface = await GetTable(tableId);
-
-        if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
-
-        let isShuffle = true;
-
-        let cardsForCloseDeckArray = TableDetails.openCardDeck.splice(0, TableDetails.openCardDeck.length - 1);
-
-        if (cardsForCloseDeckArray.length < 1) {
-
-            isShuffle = false;
-
-        } else {
-
-            cardsForCloseDeckArray = await GAME_ACTIONS.ShuffleArray(cardsForCloseDeckArray);
-
-        };
-
-        return { isShuffle, cardsForCloseDeckArray, cardsForOpenDeckArray: TableDetails.openCardDeck };
-
-    } catch (error: any) {
-        Logger('IsShufflePossible Error : ', error);
-    };
-}
 
 export { ChangeUserTurn };

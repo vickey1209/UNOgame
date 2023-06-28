@@ -17,14 +17,14 @@ const ClockWiseTurnChange = async (TableDetails: TableInterface) => {
                 NextTurn += 1;
             } else {
                 break;
-            }
+            };
         };
 
         return NextTurn;
 
     } catch (error: any) {
         Logger('ClockWiseTurnChange Error : ', error);
-    }
+    };
 };
 
 const AntiClockWiseTurnChange = async (TableDetails: TableInterface) => {
@@ -45,14 +45,14 @@ const AntiClockWiseTurnChange = async (TableDetails: TableInterface) => {
                 NextTurn -= 1;
             } else {
                 break;
-            }
+            };
         };
 
         return NextTurn;
 
     } catch (error: any) {
         Logger('AntiClockWiseTurnChange Error : ', error);
-    }
+    };
 };
 
 export { ClockWiseTurnChange, AntiClockWiseTurnChange };
