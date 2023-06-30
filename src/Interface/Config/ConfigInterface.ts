@@ -37,6 +37,7 @@ export interface GamePlayInterface {
     USER_TURN_TIMER: number,
     ROUND_TIMER: number,
     NEXT_ROUND_TIMER: number,
+    RETURN_TO_TABLE_TIMER: number,
 
     DISTRIBUTE_CARDS_LIMIT: number,
     MIN_SPECIAL_CARD: number,
