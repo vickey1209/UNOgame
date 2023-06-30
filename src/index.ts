@@ -1,6 +1,6 @@
 import { Initialize } from "./Connection/init";
 
-// Initialize();
+Initialize();
 
 // const Rounds = [
 //     { userId: "1", roundScore: -121, currentRound: 1 },
@@ -71,62 +71,62 @@ import { Initialize } from "./Connection/init";
 
 // console.log(finalArray);
 
-let RoundScoreArray = [
-    { userId: "1", userName: "Arya", isLeave: false, userScore: -1 },
-    { userId: "12", userName: "Navin", isLeave: false, userScore: 0 },
-    { userId: "123", userName: "Rutvik", isLeave: false, userScore: -10 },
-    { userId: "1234", userName: "Rohit", isLeave: false, userScore: -5 }
-];
+// let RoundScoreArray = [
+//     { userId: "1", userName: "Arya", isLeave: false, userScore: -1 },
+//     { userId: "12", userName: "Navin", isLeave: false, userScore: 0 },
+//     { userId: "123", userName: "Rutvik", isLeave: false, userScore: -10 },
+//     { userId: "1234", userName: "Rohit", isLeave: false, userScore: -5 }
+// ];
 
-let FinalArray: any = [], RankNumber = 1, lastScore = 0;
+// let FinalArray: any = [], RankNumber = 1, lastScore = 0;
 
-RoundScoreArray = RoundScoreArray.sort((a, b) => { return b.userScore - a.userScore; }).sort((a: any, b: any) => { return a.isLeave - b.isLeave; });
+// RoundScoreArray = RoundScoreArray.sort((a, b) => { return b.userScore - a.userScore; }).sort((a: any, b: any) => { return a.isLeave - b.isLeave; });
 
-RoundScoreArray.forEach((Player, Index) => {
+// RoundScoreArray.forEach((Player, Index) => {
 
-    if (Index === 0) { lastScore = Player.userScore; };
+//     if (Index === 0) { lastScore = Player.userScore; };
 
-    if (lastScore === Player.userScore && !Player.isLeave && RankNumber <= 2) {
+//     if (lastScore === Player.userScore && !Player.isLeave && RankNumber <= 2) {
 
-        FinalArray.push({ ...Player, RankNumber });
+//         FinalArray.push({ ...Player, RankNumber });
 
-    } else {
+//     } else {
 
-        RankNumber += 1;
-        lastScore = Player.userScore;
-        FinalArray.push({ ...Player, RankNumber });
+//         RankNumber += 1;
+//         lastScore = Player.userScore;
+//         FinalArray.push({ ...Player, RankNumber });
 
-    };
-});
+//     };
+// });
 
 // console.log("FinalArray");
 // console.log(FinalArray);
 
-const RoundWiseScoreArray = [
+// const RoundWiseScoreArray = [
 
-    { "userId": "1", "roundScore": -97, "currentRound": 1 },
-    { "userId": "12", "roundScore": -115, "currentRound": 1 },
-    { "userId": "123", "roundScore": -113, "currentRound": 1 },
-    { "userId": "1234", "roundScore": -108, "currentRound": 1 },
-    { "userId": "1", "roundScore": -108, "currentRound": 2 },
-    { "userId": "12", "roundScore": -120, "currentRound": 2 },
-    { "userId": "123", "roundScore": -104, "currentRound": 2 },
-    { "userId": "1234", "roundScore": -113, "currentRound": 2 },
-    { "userId": "1", "roundScore": -109, "currentRound": 3 },
-    { "userId": "12", "roundScore": -101, "currentRound": 3 },
-    { "userId": "123", "roundScore": -113, "currentRound": 3 },
-    { "userId": "1234", "roundScore": -101, "currentRound": 3 }
+//     { "userId": "1", "roundScore": -97, "currentRound": 1 },
+//     { "userId": "12", "roundScore": -115, "currentRound": 1 },
+//     { "userId": "123", "roundScore": -113, "currentRound": 1 },
+//     { "userId": "1234", "roundScore": -108, "currentRound": 1 },
+//     { "userId": "1", "roundScore": -108, "currentRound": 2 },
+//     { "userId": "12", "roundScore": -120, "currentRound": 2 },
+//     { "userId": "123", "roundScore": -104, "currentRound": 2 },
+//     { "userId": "1234", "roundScore": -113, "currentRound": 2 },
+//     { "userId": "1", "roundScore": -109, "currentRound": 3 },
+//     { "userId": "12", "roundScore": -101, "currentRound": 3 },
+//     { "userId": "123", "roundScore": -113, "currentRound": 3 },
+//     { "userId": "1234", "roundScore": -101, "currentRound": 3 }
 
-];
+// ];
 
-const SecondFinalScore = [
-    { userId: '12', userName: 'Navin', isLeave: false, userScore: 0, RankNumber: 1 },
-    { userId: '1', userName: 'Arya', isLeave: false, userScore: -1, RankNumber: 2 },
-    { userId: '1234', userName: 'Rohit', isLeave: false, userScore: -5, RankNumber: 3 },
-    { userId: '123', userName: 'Rutvik', isLeave: false, userScore: -10, RankNumber: 4 }
-]
+// const SecondFinalScore = [
+//     { userId: '12', userName: 'Navin', isLeave: false, userScore: 0, RankNumber: 1 },
+//     { userId: '1', userName: 'Arya', isLeave: false, userScore: -1, RankNumber: 2 },
+//     { userId: '1234', userName: 'Rohit', isLeave: false, userScore: -5, RankNumber: 3 },
+//     { userId: '123', userName: 'Rutvik', isLeave: false, userScore: -10, RankNumber: 4 }
+// ]
 
-let FinalRoundWiseScoreArray: any = [];
+// let FinalRoundWiseScoreArray: any = [];
 
 // for (let i = 0; i < SecondFinalScore.length; i++) {
 
@@ -160,41 +160,41 @@ let FinalRoundWiseScoreArray: any = [];
 //     }
 // };
 
-console.time('11')
+// console.time('11')
 
-for (let i = (SecondFinalScore.length - 1); i >= 0; i--) {
+// for (let i = (SecondFinalScore.length - 1); i >= 0; i--) {
 
-    for (let k = (RoundWiseScoreArray.length - 1); k >= 0; k--) {
+//     for (let k = (RoundWiseScoreArray.length - 1); k >= 0; k--) {
 
-        let UserDetailIndex = -1;
+//         let UserDetailIndex = -1;
 
-        const UserDetail = RoundWiseScoreArray.find((element, index) => {
-            UserDetailIndex = index
-            return element.userId === SecondFinalScore[i]?.userId
-        });
+//         const UserDetail = RoundWiseScoreArray.find((element, index) => {
+//             UserDetailIndex = index
+//             return element.userId === SecondFinalScore[i]?.userId
+//         });
 
-        if (UserDetail && UserDetailIndex !== -1) {
-            RoundWiseScoreArray.splice(UserDetailIndex, 1);
-            FinalRoundWiseScoreArray.push(UserDetail);
-        } else {
-            break;
-        };
-    };
-};
+//         if (UserDetail && UserDetailIndex !== -1) {
+//             RoundWiseScoreArray.splice(UserDetailIndex, 1);
+//             FinalRoundWiseScoreArray.push(UserDetail);
+//         } else {
+//             break;
+//         };
+//     };
+// };
 
-for (let i = (SecondFinalScore.length - 1); i >= 0; i--) {
+// for (let i = (SecondFinalScore.length - 1); i >= 0; i--) {
 
-    for (let k = 0; k < RoundWiseScoreArray.length; k++) { if (RoundWiseScoreArray[k].userId === SecondFinalScore[i].userId) { FinalRoundWiseScoreArray.unshift(RoundWiseScoreArray[k]); }; }
-    // for (let k = 0; k < RoundWiseScoreArray.length; k++) { if (RoundWiseScoreArray[k].userId === SecondFinalScore[i].userId) { FinalRoundWiseScoreArray.splice(0, 0, RoundWiseScoreArray[k]); }; }
+//     for (let k = 0; k < RoundWiseScoreArray.length; k++) { if (RoundWiseScoreArray[k].userId === SecondFinalScore[i].userId) { FinalRoundWiseScoreArray.unshift(RoundWiseScoreArray[k]); }; }
+//     // for (let k = 0; k < RoundWiseScoreArray.length; k++) { if (RoundWiseScoreArray[k].userId === SecondFinalScore[i].userId) { FinalRoundWiseScoreArray.splice(0, 0, RoundWiseScoreArray[k]); }; }
 
-};
+// };
 
-FinalRoundWiseScoreArray = FinalRoundWiseScoreArray.reverse().sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
-// FinalRoundWiseScoreArray = FinalRoundWiseScoreArray.sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
+// FinalRoundWiseScoreArray = FinalRoundWiseScoreArray.reverse().sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
+// // FinalRoundWiseScoreArray = FinalRoundWiseScoreArray.sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
 
-console.timeEnd('11')
+// console.timeEnd('11')
 
-console.log(FinalRoundWiseScoreArray);
+// console.log(FinalRoundWiseScoreArray);
 
 
 // for (let i = 0; i < RoundScoreArray.length; i++) {
