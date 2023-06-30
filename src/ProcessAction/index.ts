@@ -1,8 +1,10 @@
 import { CollectBootValueProcessAction } from "./collectBootValueProcessAction";
+import { DisconnectUserProcessAction } from "./disconnectUserProcessAction";
 import { NextRoundProcessAction } from "./nextRoundProcessAction";
 import { RoundProcessAction } from "./roundProcessAction";
 import { TurnInfoProcessAction } from "./turnInfoProcessAction";
 import { UserTurnProcessAction } from "./userTurnProcessAction";
+
 
 const PROCESS_ACTION = {
 
@@ -11,6 +13,7 @@ const PROCESS_ACTION = {
     RoundProcessAction,
     NextRoundProcessAction,
     TurnInfoProcessAction,
+    DisconnectUserProcessAction,
 
 };
 

@@ -60,6 +60,7 @@ const LiveConfig = (): ConfigInterface => {
         USER_TURN_TIMER: 10,
         ROUND_TIMER: 1000,
         NEXT_ROUND_TIMER: 10,
+        RETURN_TO_TABLE_TIMER: 30,
 
         DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,

@@ -87,6 +87,8 @@ const RemoveUserFromTable = async (userId: string, tableId: string) => {
             UserDetails.tableId = '';
             await SetUser(UserDetails.userId, UserDetails);
 
+            await SetTable(TableDetails.tableId, TableDetails);
+
             if (TableDetails.playersArray.length < 1) {
 
                 await DeleteTable(TableDetails.tableId);

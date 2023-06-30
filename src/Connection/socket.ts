@@ -6,6 +6,7 @@ import { createAdapter } from '@socket.io/redis-adapter';
 import { pubClient, subClient } from './redis';
 import { Logger } from '../Logger/logger';
 import { EventCases } from '../EventCases/eventCases';
+import { DisconnectHandler } from '../DisconnectHandler/disconnectHandler';
 
 let io: any;
 
@@ -37,7 +38,8 @@ const SocketConnection = async () => {
 
                 Logger("Disconnect Reason.", JSON.stringify(reason));
 
-                // await DisconnectHandler(socket);
+                await DisconnectHandler(socket);
+                
             });
         });
 

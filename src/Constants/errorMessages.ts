@@ -24,6 +24,7 @@ export = Object.freeze({
     ROUND_SCORE_DONE: "Already Round Score Declared !!!",
     WAIT_FOR_TURN_INFO: "Wait For Turn Info !!!",
     CAN_NOT_ABLE_TO_LEAVE: "Currently You Can't Able To Leave !!!",
-    CAN_NOT_ABLE_TO_PICK_CARD: "Currently You Can't Able To Pick Card !!!"
+    CAN_NOT_ABLE_TO_PICK_CARD: "Currently You Can't Able To Pick Card !!!",
+    USER_IS_ONLINE: 'User Is Currently Online !'
 
 });

@@ -1,4 +1,5 @@
 import { CollectBootValue } from "./collectBoot";
+import { DisconnectUser } from "./disconnectUser";
 import { NextRound } from "./nextRound";
 import { Round } from "./round";
 import { TurnInfo } from "./turnInfo";
@@ -12,6 +13,7 @@ const AddJob = {
     Round,
     NextRound,
     TurnInfo,
+    DisconnectUser,
 
 };
 
