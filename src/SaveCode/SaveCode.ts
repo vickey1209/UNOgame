@@ -52,5 +52,44 @@ for (let i = 0; i < RoundScoreArray.length; i++) { // ^ For ...
 console.log("FinalArray");
 console.log(FinalArray);
 
+let FinalRoundWiseScoreArray: any = [];
+
+const RoundWiseScoreArray = [
+
+    { "userId": "1", "roundScore": -97, "currentRound": 1 },
+    { "userId": "12", "roundScore": -115, "currentRound": 1 },
+    { "userId": "123", "roundScore": -113, "currentRound": 1 },
+    { "userId": "1234", "roundScore": -108, "currentRound": 1 },
+    { "userId": "1", "roundScore": -108, "currentRound": 2 },
+    { "userId": "12", "roundScore": -120, "currentRound": 2 },
+    { "userId": "123", "roundScore": -104, "currentRound": 2 },
+    { "userId": "1234", "roundScore": -113, "currentRound": 2 },
+    { "userId": "1", "roundScore": -109, "currentRound": 3 },
+    { "userId": "12", "roundScore": -101, "currentRound": 3 },
+    { "userId": "123", "roundScore": -113, "currentRound": 3 },
+    { "userId": "1234", "roundScore": -101, "currentRound": 3 }
+
+];
+
+for (let i = (FinalArray.length - 1); i >= 0; i--) {
+
+    for (let k = (RoundWiseScoreArray.length - 1); k >= 0; k--) {
+
+        let UserDetailIndex = -1;
+
+        const UserDetail = RoundWiseScoreArray.find((element, index) => {
+            UserDetailIndex = index
+            return element.userId === FinalArray[i]?.userId
+        });
+
+        if (UserDetail && UserDetailIndex !== -1) {
+            RoundWiseScoreArray.splice(UserDetailIndex, 1);
+            FinalRoundWiseScoreArray.push(UserDetail);
+        } else {
+            break;
+        };
+    };
+};
+
 
 // * Winning Calculation Logic
