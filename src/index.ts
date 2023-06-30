@@ -190,7 +190,7 @@ Initialize();
 // };
 
 // FinalRoundWiseScoreArray = FinalRoundWiseScoreArray.reverse().sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
-// // FinalRoundWiseScoreArray = FinalRoundWiseScoreArray.sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
+// FinalRoundWiseScoreArray = FinalRoundWiseScoreArray.sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
 
 // console.timeEnd('11')
 

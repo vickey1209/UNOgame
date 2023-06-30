@@ -91,5 +91,9 @@ for (let i = (FinalArray.length - 1); i >= 0; i--) {
     };
 };
 
+FinalRoundWiseScoreArray = FinalRoundWiseScoreArray.reverse().sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
+
+console.log(FinalRoundWiseScoreArray);
+
 
 // * Winning Calculation Logic
