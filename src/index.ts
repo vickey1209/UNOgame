@@ -70,3 +70,58 @@ Initialize();
 // };
 
 // console.log(finalArray);
+
+// let RoundScoreArray = [
+//     { userId: "1", userName: "Arya", isLeave: false, userScore: 0 },
+//     { userId: "12", userName: "Navin", isLeave: false, userScore: 0 },
+//     { userId: "123", userName: "Rutvik", isLeave: false, userScore: -10 },
+//     { userId: "1234", userName: "Rohit", isLeave: true, userScore: -10 }
+// ];
+
+// let RankScoreArray: any = [], FinalArray: any = [], RankNumber = 1, lastScore = 0;
+
+// RoundScoreArray = RoundScoreArray.sort((a, b) => { return b.userScore - a.userScore; }).sort((a: any, b: any) => { return a.isLeave - b.isLeave; });
+
+// for (let i = 0; i < RoundScoreArray.length; i++) { if (RoundScoreArray[i].isLeave === false && !RankScoreArray.includes(RoundScoreArray[i].userScore)) { RankScoreArray.push(RoundScoreArray[i].userScore); } };
+
+// RoundScoreArray.forEach((Player, Index) => {
+
+//     if (Index === 0) { lastScore = Player.userScore; };
+
+//     console.log({ Player, Index, lastScore });
+
+//     // if (lastScore === Player.userScore && !Player.isLeave) {
+//     if (lastScore === Player.userScore && !Player.isLeave && RankNumber <= 2) {
+
+//         FinalArray.push({ ...Player, RankNumber });
+
+//     } else {
+
+//         RankNumber += 1;
+//         lastScore = Player.userScore;
+//         FinalArray.push({ ...Player, RankNumber });
+
+//     };
+// });
+
+
+// for (let i = 0; i < RoundScoreArray.length; i++) {
+
+//     if (i === 0) { lastScore = RoundScoreArray[i].userScore; };
+
+//     if (lastScore === RoundScoreArray[i].userScore && RankNumber <= 2) {
+//         // if (lastScore === RoundScoreArray[i].userScore) {
+
+//         FinalArray.push({ ...RoundScoreArray[i], RankNumber });
+
+//     } else {
+
+//         RankNumber += 1;
+//         lastScore = RoundScoreArray[i].userScore;
+//         FinalArray.push({ ...RoundScoreArray[i], RankNumber });
+
+//     }
+// }
+
+// console.log("FinalArray");
+// console.log(FinalArray);
