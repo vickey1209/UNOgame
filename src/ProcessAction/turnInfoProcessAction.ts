@@ -74,11 +74,11 @@ const TurnInfoProcessAction = async (Data: any) => {
         EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
 
 
-        setTimeout(async () => {
+        // setTimeout(async () => {
 
-            if (TableDetails.playersArray[TableDetails.currentTurn].isBot) { await BOT_ACTION.TakeTurn(TableDetails.tableId) };
+        //     if (TableDetails.playersArray[TableDetails.currentTurn].isBot) { await BOT_ACTION.TakeTurn(TableDetails.tableId) };
 
-        }, 2000);
+        // }, 2000);
 
     } catch (error: any) {
 
