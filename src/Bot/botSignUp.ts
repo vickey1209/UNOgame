@@ -13,7 +13,7 @@ const BotSignUp = async () => {
             userName: "Bot",
             userProfile: "No",
             chips: 100,
-            bootValue: 2,
+            bootValue: 1,
             playerCount: 2,
             socketId: '',
             tableId: '',
