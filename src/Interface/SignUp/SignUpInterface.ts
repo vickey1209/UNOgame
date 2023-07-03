@@ -7,6 +7,7 @@ export interface SignUpInterface {
     socketId: string,
     tableId: string,
     bootValue: number,
-    playerCount: number
+    playerCount: number,
+    isBot: boolean
 
 }

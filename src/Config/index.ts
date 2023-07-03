@@ -12,7 +12,7 @@ const Config = () => {
 
         return DevConfig();
 
-    }
+    };
 };
 
 export { Config };

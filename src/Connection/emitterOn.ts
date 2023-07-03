@@ -37,7 +37,7 @@ const EmitterON = () => {
 
     try {
 
-        console.log(`EventEmitter Done !`);
+        console.log(`EmitterON Done !`);
 
         const {
 
@@ -57,6 +57,8 @@ const EmitterON = () => {
             ROUND_START,
             ROUND_SCORE,
             LEAVE_TABLE,
+            UNO,
+
 
         } = CONSTANTS.EVENTS_NAME;
 
@@ -122,6 +124,10 @@ const EmitterON = () => {
 
         EventEmitter.on(LEAVE_TABLE, async (data) => {
             await SendToRoom(LEAVE_TABLE, data);
+        });
+
+        EventEmitter.on(UNO, async (data) => {
+            await SendToRoom(UNO, data);
         });
 
     } catch (error: any) {

@@ -25,6 +25,10 @@ export = Object.freeze({
     WAIT_FOR_TURN_INFO: "Wait For Turn Info !!!",
     CAN_NOT_ABLE_TO_LEAVE: "Currently You Can't Able To Leave !!!",
     CAN_NOT_ABLE_TO_PICK_CARD: "Currently You Can't Able To Pick Card !!!",
-    USER_IS_ONLINE: 'User Is Currently Online !'
+    USER_IS_ONLINE: "User Is Currently Online !",
+    UNO_TURN_LOCK_ERROR: "Turn Is Open During UNO Penalty !!!",
+    NO_UNO_PENALTY: "No Uno Penalty !!!",
+    ALREADY_CLICKED_UNO: "You Already Clicked UNO !!!",
+    UNO_NOT_POSSIBLE: "UNO Not Possible !!!",
 
 });

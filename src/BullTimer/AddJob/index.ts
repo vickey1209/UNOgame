@@ -3,6 +3,7 @@ import { DisconnectUser } from "./disconnectUser";
 import { NextRound } from "./nextRound";
 import { Round } from "./round";
 import { TurnInfo } from "./turnInfo";
+import { UnoClick } from "./unoClick";
 import { UserTurn } from "./userTurn";
 
 
@@ -14,6 +15,7 @@ const AddJob = {
     NextRound,
     TurnInfo,
     DisconnectUser,
+    UnoClick,
 
 };
 

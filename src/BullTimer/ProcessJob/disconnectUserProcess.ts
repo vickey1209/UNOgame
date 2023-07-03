@@ -1,7 +1,8 @@
+import { DoneCallback, Job } from "bull";
 import { Logger } from "../../Logger/logger";
 import { PROCESS_ACTION } from "../../ProcessAction";
 
-const DisconnectUserProcess = async (job: any, done: any) => {
+const DisconnectUserProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 

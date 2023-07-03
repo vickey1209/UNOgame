@@ -3,6 +3,7 @@ import { DisconnectUserProcessAction } from "./disconnectUserProcessAction";
 import { NextRoundProcessAction } from "./nextRoundProcessAction";
 import { RoundProcessAction } from "./roundProcessAction";
 import { TurnInfoProcessAction } from "./turnInfoProcessAction";
+import { UnoClickProcessAction } from "./unoClickProcessAction";
 import { UserTurnProcessAction } from "./userTurnProcessAction";
 
 
@@ -14,6 +15,7 @@ const PROCESS_ACTION = {
     NextRoundProcessAction,
     TurnInfoProcessAction,
     DisconnectUserProcessAction,
+    UnoClickProcessAction,
 
 };
 

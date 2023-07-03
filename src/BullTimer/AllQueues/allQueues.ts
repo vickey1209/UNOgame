@@ -20,6 +20,7 @@ const RoundQueue = new Bull('Round', BullRedisOptions);
 const NextRoundQueue = new Bull('NextRound', BullRedisOptions);
 const TurnInfoQueue = new Bull('TurnInfo', BullRedisOptions);
 const DisconnectUserQueue = new Bull('DisconnectUser', BullRedisOptions);
+const UnoClickQueue = new Bull('UnoClick', BullRedisOptions);
 
 
 export {
@@ -30,5 +31,6 @@ export {
     NextRoundQueue,
     TurnInfoQueue,
     DisconnectUserQueue,
+    UnoClickQueue,
 
 };

@@ -8,6 +8,7 @@ import { ThrowCard } from "../ThrowCard/throwCard";
 import { PickCard } from "../PickCard/pickCard";
 import { KeepCard } from "../KeepCard/keepCard";
 import { LeaveTable } from "../Table/leaveTable";
+import { Uno } from "../Uno/uno";
 
 const EventCases = async (socket: Socket) => {
 
@@ -24,6 +25,7 @@ const EventCases = async (socket: Socket) => {
                 PICK_CARD,
                 KEEP_CARD,
                 LEAVE_TABLE,
+                UNO,
 
             } = CONSTANTS.EVENTS_NAME;
 
@@ -63,6 +65,11 @@ const EventCases = async (socket: Socket) => {
                 case LEAVE_TABLE:
                     Logger('EventCases LEAVE_TABLE', JSON.stringify({ Data }));
                     LeaveTable(EventName, socket, Data);
+                    break;
+
+                case UNO:
+                    Logger('EventCases UNO', JSON.stringify({ Data }));
+                    Uno(EventName, socket, Data);
                     break;
 
                 default:

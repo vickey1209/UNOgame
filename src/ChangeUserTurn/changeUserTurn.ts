@@ -9,7 +9,7 @@ import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { Logger } from "../Logger/logger";
 
-const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
+const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsNumber: number) => {
 
     try {
 
@@ -23,7 +23,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        let isSkip = false, skipSeatIndex = -1, isRevers = false, isGameEnd = false;
+        let isSkip = false, skipSeatIndex = -1, isRevers = false, isGameEnd = false, unoSeatIndex = TableDetails.currentTurn;
 
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
 
@@ -145,7 +145,16 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean) => {
 
         } else {
 
-            await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 0.5);
+            if (isThrow && remainingCardsNumber === 1) { // ^ UNO Bull
+
+                await BullTimer.AddJob.UnoClick(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 0.5, unoSeatIndex);
+
+            } else { // ^ Turn Bull
+
+                await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 0.5);
+
+            };
+
 
             // await BullTimer.AddJob.UserTurn(TableDetails.tableId);
 

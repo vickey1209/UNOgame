@@ -7,7 +7,8 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { CreateTable } from "../Table/createTable";
 
-const SignUp = async (en: string, socket: Socket, Data: SignUpInterface) => {
+const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
+    // const SignUp = async (en: string, socket: Socket, Data: SignUpInterface) => {
 
     const Path = 'SignUp';
 
@@ -72,7 +73,8 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
             userProfile,
             chips,
             bootValue,
-            playerCount
+            playerCount,
+            isBot
 
         } = Data;
 
@@ -85,9 +87,10 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
             socketId: socket.id,
             tableId: '',
             bootValue: bootValue,
-            playerCount
+            playerCount,
+            isBot
 
-        }
+        };
 
         const User = await SetUser(userId, NewUserData);
 
@@ -95,8 +98,8 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
 
     } catch (error: any) {
         Logger('NewUser Error : ', error);
-    }
-}
+    };
+};
 
 
 const UpdateUser = async (socket: Socket, Data: SignUpInterface, AvailableUser: SignUpInterface) => {
@@ -112,7 +115,8 @@ const UpdateUser = async (socket: Socket, Data: SignUpInterface, AvailableUser: 
             userProfile,
             chips,
             bootValue,
-            playerCount
+            playerCount,
+            isBot,
 
         } = Data;
 
@@ -125,9 +129,10 @@ const UpdateUser = async (socket: Socket, Data: SignUpInterface, AvailableUser: 
             socketId: socket.id,
             tableId: AvailableUser.tableId,
             bootValue,
-            playerCount
+            playerCount,
+            isBot
 
-        }
+        };
 
         const User = await SetUser(userId, UpdateUserData);
 
@@ -135,7 +140,7 @@ const UpdateUser = async (socket: Socket, Data: SignUpInterface, AvailableUser: 
 
     } catch (error: any) {
         Logger('UpdateUser Error : ', error);
-    }
-}
+    };
+};
 
 export { SignUp };

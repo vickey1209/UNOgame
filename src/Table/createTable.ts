@@ -9,6 +9,7 @@ import { EventEmitter } from "../Connection/emitter";
 import { JoinTable } from "./joinTable";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
+import { BOT_ACTION } from "../Bot";
 
 const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
@@ -37,6 +38,8 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
         const Table = await CreateNewTable(socket, UserDetails);
 
+        setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 2000);
+
         // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
 
     } catch (error: any) {
@@ -52,8 +55,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
         const Table: TableInterface = {
 
-            // tableId: 'TABLE',
-            tableId: cryptoRandomString({ length: 24, type: 'hex' }),
+            tableId: 'TABLE',
+            // tableId: cryptoRandomString({ length: 24, type: 'hex' }),
             bootValue: UserDetails.bootValue,
             currentTurn: -1,
             currentRound: -1,
@@ -67,7 +70,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
                     userProfile: UserDetails.userProfile,
                     seatIndex: 0,
                     isLeave: false,
-                    isBot: false,
+                    isBot: UserDetails.isBot,
                 }
             ],
 

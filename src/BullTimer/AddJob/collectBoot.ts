@@ -23,7 +23,7 @@ const CollectBootValue = async (tableId: string) => {
 
     } catch (error: any) {
         Logger('CollectBootValue Error : ', error);
-    }
+    };
 };
 
 CollectBootQueue.process(CollectBootValueProcess);

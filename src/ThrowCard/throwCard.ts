@@ -10,7 +10,8 @@ import { BullTimer } from "../BullTimer";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 
-const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) => {
+const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
+    // const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) => {
 
     const Path = 'ThrowCard';
 
@@ -82,7 +83,7 @@ const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) =
 
         EventEmitter.emit(THROW_CARD, { en: THROW_CARD, RoomId: TableDetails.tableId, Data: Data });
 
-        await ChangeUserTurn(TableDetails.tableId, true);
+        await ChangeUserTurn(TableDetails.tableId, true, UserInTableDetails.cardArray.length);
 
     } catch (error: any) {
 

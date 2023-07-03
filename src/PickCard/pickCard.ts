@@ -12,7 +12,8 @@ import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
 import { GAME_ACTIONS } from "../GameActions";
 
-const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => {
+const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
+    // const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => {
 
     const Path = 'PickCard';
 
@@ -36,7 +37,7 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
         if (TableDetails.isTurnLock) {
             return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WAIT_FOR_TURN_INFO } });
         };
-        
+
         if (TableDetails.currentTurn !== Data?.seatIndex) {
             return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
         };
@@ -112,7 +113,7 @@ const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => 
 
             await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
-            await ChangeUserTurn(TableDetails.tableId, false);
+            await ChangeUserTurn(TableDetails.tableId, false, 0);
 
         };
 
