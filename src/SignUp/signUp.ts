@@ -27,6 +27,10 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
             return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: "Provide Valid Data !" } });
         }
 
+        if (Data?.isBot === undefined) {
+            Data.isBot = false
+        }
+
         socket.handshake.auth.userId = Data?.userId;
         socket.handshake.auth.playerCount = Data?.playerCount;
         socket.handshake.auth.bootValue = Data?.bootValue;
