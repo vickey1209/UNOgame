@@ -16,6 +16,7 @@ export = Object.freeze({
     KEEP_CARD: 'KEEP_CARD',
     ROUND_START: 'ROUND_START',
     ROUND_SCORE: 'ROUND_SCORE',
-    LEAVE_TABLE: 'LEAVE_TABLE'
+    LEAVE_TABLE: 'LEAVE_TABLE',
+    UNO: 'UNO'
 
 });

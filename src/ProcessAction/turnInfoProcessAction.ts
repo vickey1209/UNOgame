@@ -1,4 +1,5 @@
 import { AllUserScore } from "../AllUserScore/allUserScore";
+import { BOT_ACTION } from "../Bot";
 import { BullTimer } from "../BullTimer";
 import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
@@ -71,6 +72,13 @@ const TurnInfoProcessAction = async (Data: any) => {
         await BullTimer.AddJob.UserTurn(TableDetails.tableId);
 
         EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+
+
+        setTimeout(async () => {
+
+            if (TableDetails.playersArray[TableDetails.currentTurn].isBot) { await BOT_ACTION.TakeTurn(TableDetails.tableId) };
+
+        }, 2000);
 
     } catch (error: any) {
 

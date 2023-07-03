@@ -107,7 +107,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
-        await ChangeUserTurn(TableDetails.tableId, false);
+        await ChangeUserTurn(TableDetails.tableId, false, 0);
 
     } catch (error: any) {
 

@@ -38,12 +38,14 @@ export interface GamePlayInterface {
     ROUND_TIMER: number,
     NEXT_ROUND_TIMER: number,
     RETURN_TO_TABLE_TIMER: number,
+    UNO_CLICK_TIMER: number,
 
     DISTRIBUTE_CARDS_LIMIT: number,
     MIN_SPECIAL_CARD: number,
     MAX_SPECIAL_CARD: number,
 
     TOTAL_ROUND_NUMBER: number,
+    UNO_PENALTY_NUMBER: number,
 
     ZERO_POINT: number,
     SKIP_POINT: number,

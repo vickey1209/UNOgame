@@ -148,7 +148,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string) => {
 
                     await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
-                    await ChangeUserTurn(TableDetails.tableId, false);
+                    await ChangeUserTurn(TableDetails.tableId, false, 0);
 
                 };
             };
