@@ -91,6 +91,8 @@ const PlusTwo = async (tableId: string) => {
                 };
             };
 
+            UserInTableDetails.isUnoClick = false;
+
             await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
             const ResData: PickCardResInterface = {
