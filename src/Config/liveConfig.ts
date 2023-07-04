@@ -58,7 +58,7 @@ const LiveConfig = (): ConfigInterface => {
 
         GAME_START_TIMER: 4,
         USER_TURN_TIMER: 10,
-        ROUND_TIMER: 120,
+        ROUND_TIMER: 1000,
         NEXT_ROUND_TIMER: 3,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
