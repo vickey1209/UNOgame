@@ -101,6 +101,8 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
         };
 
+        UserInTableDetails.isUnoClick = false;
+
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
         await SetTable(TableDetails.tableId, TableDetails);

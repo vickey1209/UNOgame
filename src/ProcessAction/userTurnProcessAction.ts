@@ -103,6 +103,8 @@ const UserTurnProcessAction = async (Data: any) => {
 
         };
 
+        UserInTableDetails.isUnoClick = false;
+
         await SetTable(TableDetails.tableId, TableDetails);
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
