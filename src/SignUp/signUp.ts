@@ -12,7 +12,7 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
 
     const Path = 'SignUp';
 
-    const { SIGNUP, ERROR } = CONSTANTS.EVENTS_NAME;
+    const { SIGNUP, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
     const { LOCK, EMPTY_TABLE } = CONSTANTS.REDIS_COLLECTION;
 
     const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${Data?.bootValue}:${Data?.playerCount}`;
@@ -24,7 +24,7 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
         Logger('SignUp', JSON.stringify({ Data }));
 
         if (!Data?.bootValue || !Data?.playerCount || !Data?.userId) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: "Provide Valid Data !" } });
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: "Provide Valid Data !" } });
         }
 
         if (Data?.isBot === undefined) {

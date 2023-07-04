@@ -12,6 +12,7 @@ import { LeaveRoom } from "../SocketRooms/leaveRoom";
 import { BullTimer } from "../BullTimer";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { LeaveTableInterface } from "../Interface/LeaveTable/LeaveTableInterface";
+import { Win } from "../Win/win";
 
 const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface) => {
 
@@ -56,7 +57,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string) => {
 
         Logger("RemoveUserFromTable", JSON.stringify({ userId, tableId }));
 
-        const { LEAVE_TABLE, ERROR } = CONSTANTS.EVENTS_NAME;
+        const { LEAVE_TABLE, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
 
         let UserDetails: SignUpInterface = await GetUser(userId);
 
@@ -75,7 +76,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string) => {
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
         if (TableDetails.isLeaveLock || TableDetails.isWinning) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND } });
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.CAN_NOT_ABLE_TO_LEAVE } });
         };
 
         if (!TableDetails.isGameStart) {
@@ -141,6 +142,8 @@ const RemoveUserFromTable = async (userId: string, tableId: string) => {
                 console.log('LeaveTable End Game Immediately !!!');
                 console.log('LeaveTable End Game Immediately !!!');
                 console.log('LeaveTable End Game Immediately !!!');
+
+                await Win(TableDetails.tableId);
 
             } else {
 

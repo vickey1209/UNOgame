@@ -7,6 +7,7 @@ import { GetRoundHistory, GetTable, GetUserInTable, SetRoundHistory, SetTable, S
 import { TableInterface } from "../../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../../Logger/logger";
+import { Win } from "../../Win/win";
 
 const EndRound = async (tableId: string) => {
 
@@ -21,6 +22,8 @@ const EndRound = async (tableId: string) => {
         let TableDetails: TableInterface = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
+
+        if (TableDetails.isWinning) { throw new Error(CONSTANTS.ERROR_MESSAGES.WINNING_DONE) };
 
         await BullTimer.CancelJob.CancelRound(TableDetails.tableId);
         await BullTimer.CancelJob.CancelTurnInfo(TableDetails.tableId);
@@ -78,8 +81,9 @@ const EndRound = async (tableId: string) => {
             console.log('3 Round Done !!');
             console.log('3 Round Done !!');
 
-            console.log({ RoundScoreArray });
+            // console.log({ RoundScoreArray });
 
+            await Win(TableDetails.tableId);
 
         } else {
 
