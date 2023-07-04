@@ -43,7 +43,7 @@ const EmitterON = () => {
 
             TEST,
             DEFAULT,
-            ERROR,
+            ERROR_POPUP,
             SIGNUP,
             JOIN_TABLE,
             NEW_USER,
@@ -70,8 +70,8 @@ const EmitterON = () => {
             await SendToSocket(DEFAULT, data);
         });
 
-        EventEmitter.on(ERROR, async (data) => {
-            await SendToSocket(ERROR, data);
+        EventEmitter.on(ERROR_POPUP, async (data) => {
+            await SendToSocket(ERROR_POPUP, data);
         });
 
         EventEmitter.on(SIGNUP, async (data) => {

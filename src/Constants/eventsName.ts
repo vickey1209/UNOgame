@@ -1,7 +1,7 @@
 export = Object.freeze({
 
     TEST: 'TEST',
-    ERROR: 'ERROR_POPUP',
+    ERROR_POPUP: 'ERROR_POPUP',
     DEFAULT: 'DEFAULT',
     SIGNUP: 'SIGNUP',
     JOIN_TABLE: 'JOIN_TABLE',

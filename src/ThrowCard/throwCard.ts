@@ -15,7 +15,7 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
     const Path = 'ThrowCard';
 
-    const { ERROR, THROW_CARD } = CONSTANTS.EVENTS_NAME;
+    const { ERROR_POPUP, THROW_CARD } = CONSTANTS.EVENTS_NAME;
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
@@ -33,17 +33,17 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
         if (TableDetails.isTurnLock) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WAIT_FOR_TURN_INFO } });
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WAIT_FOR_TURN_INFO } });
         };
 
         if (TableDetails.currentTurn !== Data?.seatIndex) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
         };
 
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === Data?.userId });
 
         if (!UserAvailableInTable) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_TABLE } });
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_TABLE } });
         };
 
         let UserInTableDetails: UserInTableInterface = await GetUserInTable(Data?.userId);
@@ -51,11 +51,11 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
         if (!UserInTableDetails.cardArray.includes(Data?.card)) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_CARD } });
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_CARD } });
         };
 
         if (UserInTableDetails.lastPickCard !== '' && UserInTableDetails.lastPickCard !== Data?.card) {
-            return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.MUST_THROW_PICK_CARD } });
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.MUST_THROW_PICK_CARD } });
         };
 
         if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && Data?.cardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { isWrongCard = false; };
@@ -64,7 +64,7 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
         if (TableDetails.activeCardType === Data?.cardType || TableDetails.activeCardColor === Data?.cardColor) { isWrongCard = false; };
 
-        if (isWrongCard) { return EventEmitter.emit(ERROR, { en: ERROR, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_CARD } }); };
+        if (isWrongCard) { return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_CARD } }); };
 
         TableDetails.activeCard = Data?.card;
         TableDetails.activeCardType = Data?.cardType;
