@@ -39,6 +39,7 @@ const RandomPlayerTurn = async (tableId: string) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
+        // await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 1);
         await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 5);
 
         // const ResData: TurnInfoResInterface = {

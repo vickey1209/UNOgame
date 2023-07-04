@@ -28,6 +28,8 @@ const NextRoundProcessAction = async (Data: any) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
+        if (TableDetails.isWinning) { throw new Error(CONSTANTS.ERROR_MESSAGES.WINNING_DONE) };
+
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
             let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
