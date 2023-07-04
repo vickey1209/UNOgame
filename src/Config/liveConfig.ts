@@ -58,16 +58,16 @@ const LiveConfig = (): ConfigInterface => {
 
         GAME_START_TIMER: 4,
         USER_TURN_TIMER: 10,
-        ROUND_TIMER: 1000,
-        NEXT_ROUND_TIMER: 10,
+        ROUND_TIMER: 120,
+        NEXT_ROUND_TIMER: 3,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
 
-        DISTRIBUTE_CARDS_LIMIT: 7,
+        DISTRIBUTE_CARDS_LIMIT: 4,
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
 
-        TOTAL_ROUND_NUMBER: 1,
+        TOTAL_ROUND_NUMBER: 3,
         UNO_PENALTY_NUMBER: 2,
 
         ZERO_POINT: 10,
