@@ -52,6 +52,7 @@ const KeepCard = async (en: string, socket: Socket, Data: KeepCardInterface) => 
         };
 
         UserInTableDetails.lastPickCard = '';
+        UserInTableDetails.isUnoClick = false;
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
