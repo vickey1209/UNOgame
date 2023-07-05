@@ -58,7 +58,7 @@ const EmitterON = () => {
             ROUND_SCORE,
             LEAVE_TABLE,
             UNO,
-
+            TURN_MISSED,
 
         } = CONSTANTS.EVENTS_NAME;
 
@@ -128,6 +128,10 @@ const EmitterON = () => {
 
         EventEmitter.on(UNO, async (data) => {
             await SendToRoom(UNO, data);
+        });
+
+        EventEmitter.on(TURN_MISSED, async (data) => {
+            await SendToRoom(TURN_MISSED, data);
         });
 
     } catch (error: any) {

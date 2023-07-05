@@ -107,9 +107,9 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        const ResData: PickCardResInterface = { ...Data, pickCards, isPlayableCard };
+        const PickCardResData: PickCardResInterface = { ...Data, pickCards, isPlayableCard };
 
-        EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: ResData });
+        EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
         if (!isPlayableCard) {
 

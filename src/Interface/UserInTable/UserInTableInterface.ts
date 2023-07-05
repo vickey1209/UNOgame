@@ -4,6 +4,7 @@ export interface UserInTableInterface {
     tableId: string,
     seatIndex: number,
     userScore: number,
+    turnMissCount: number,
     isBot: boolean,
     isUnoClick: boolean,
     lastPickCard: string,

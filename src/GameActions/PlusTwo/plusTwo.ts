@@ -95,7 +95,7 @@ const PlusTwo = async (tableId: string) => {
 
             await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
-            const ResData: PickCardResInterface = {
+            const PickCardResData: PickCardResInterface = {
 
                 userId: UserInTableDetails.userId,
                 tableId: UserInTableDetails.tableId,
@@ -105,7 +105,7 @@ const PlusTwo = async (tableId: string) => {
 
             };
 
-            EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: ResData });
+            EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
             let SkipData = await GAME_ACTIONS.Skip(TableDetails.tableId);
 

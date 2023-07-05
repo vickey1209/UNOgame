@@ -50,7 +50,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        const ResData: TurnInfoResInterface = {
+        const TurnInfoResData: TurnInfoResInterface = {
 
             currentTurn: TableDetails.currentTurn,
             activeCard: TableDetails.activeCard,
@@ -71,7 +71,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
         await BullTimer.AddJob.UserTurn(TableDetails.tableId);
 
-        EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
+        EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: TurnInfoResData });
 
 
         // setTimeout(async () => {

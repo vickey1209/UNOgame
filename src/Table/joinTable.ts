@@ -64,9 +64,9 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
                     await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
 
-                    const ResData = { timer: CONFIG.GamePlay.GAME_START_TIMER };
+                    const GameStartResData = { timer: CONFIG.GamePlay.GAME_START_TIMER };
 
-                    EventEmitter.emit(GAME_START, { en: GAME_START, Data: ResData, RoomId: TableDetails.tableId });
+                    EventEmitter.emit(GAME_START, { en: GAME_START, Data: GameStartResData, RoomId: TableDetails.tableId });
 
                     await BullTimer.AddJob.CollectBootValue(TableDetails.tableId);
 
@@ -116,13 +116,14 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
             tableId: TableDetails.tableId,
             seatIndex: NumberOfSeatAvailable[0],
             userScore: 0,
+            turnMissCount: 0,
             isBot: false,
             isUnoClick: false,
             lastPickCard: '',
             lastThrowCard: '',
             cardArray: [],
 
-        }
+        };
 
         socket.handshake.auth.tableId = TableDetails?.tableId;
         socket.handshake.auth.seatIndex = NumberOfSeatAvailable[0];
@@ -134,7 +135,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
             TableDetails.isGameStart = true;
             TableDetails.isLeaveLock = true;
 
-        }
+        };
 
         UserDetails.tableId = TableDetails.tableId;
         await SetUser(UserDetails.userId, UserDetails);

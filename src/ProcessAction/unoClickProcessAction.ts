@@ -119,9 +119,9 @@ const UnoClickProcessAction = async (Data: any) => {
 
                 const { userId, tableId, seatIndex } = UserInTableDetails;
 
-                const ResData: PickCardResInterface = { userId, tableId, seatIndex, pickCards, isPlayableCard };
+                const PickCardResData: PickCardResInterface = { userId, tableId, seatIndex, pickCards, isPlayableCard };
 
-                EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: ResData });
+                EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
                 await BullTimer.AddJob.TurnInfo(TableDetails.tableId, Data?.isSkip, Data?.skipSeatIndex, Data?.isRevers, Data?.delayNumber);
 
