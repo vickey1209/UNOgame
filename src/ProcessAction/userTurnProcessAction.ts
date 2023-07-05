@@ -1,4 +1,5 @@
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
+import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
@@ -7,13 +8,14 @@ import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterf
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
+import { RemoveUserFromTable } from "../Table/leaveTable";
 
 const UserTurnProcessAction = async (Data: any) => {
 
     const Path = 'UserTurnProcessAction';
 
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
-    const { PICK_CARD } = CONSTANTS.EVENTS_NAME;
+    const { PICK_CARD, TURN_MISSED } = CONSTANTS.EVENTS_NAME;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
 
@@ -22,6 +24,8 @@ const UserTurnProcessAction = async (Data: any) => {
     try {
 
         Logger("UserTurnProcessAction", JSON.stringify(Data));
+
+        const CONFIG = Config();
 
         const tableId = Data?.tableId;
         const currentTurn = Data?.currentTurn;
@@ -89,7 +93,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
             };
 
-            const ResData: PickCardResInterface = {
+            const PickCardResData: PickCardResInterface = {
 
                 userId: UserInTableDetails.userId,
                 tableId: UserInTableDetails.tableId,
@@ -99,17 +103,30 @@ const UserTurnProcessAction = async (Data: any) => {
 
             };
 
-            EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: ResData });
+            EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
         };
 
         UserInTableDetails.isUnoClick = false;
+        UserInTableDetails.turnMissCount += 1;
 
         await SetTable(TableDetails.tableId, TableDetails);
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
-        await ChangeUserTurn(TableDetails.tableId, false, 0);
+        const TurnMissResData = { userId: UserInTableDetails.userId, tableId: UserInTableDetails.tableId, seatIndex: UserInTableDetails.seatIndex, };
+
+        EventEmitter.emit(TURN_MISSED, { en: TURN_MISSED, Data: TurnMissResData, RoomId: TableDetails.tableId });
+
+        // if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
+
+        //     await RemoveUserFromTable(UserInTableDetails.userId, TableDetails.tableId);
+
+        // } else {
+
+            await ChangeUserTurn(TableDetails.tableId, false, 0);
+
+        // };
 
     } catch (error: any) {
 

@@ -43,6 +43,7 @@ export interface GamePlayInterface {
     DISTRIBUTE_CARDS_LIMIT: number,
     MIN_SPECIAL_CARD: number,
     MAX_SPECIAL_CARD: number,
+    TURN_TIMEOUT_COUNT: number,
 
     TOTAL_ROUND_NUMBER: number,
     UNO_PENALTY_NUMBER: number,

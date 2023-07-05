@@ -24,7 +24,7 @@ const DistributeCards = async (tableId: string) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        const PowerCardNumber = 10;
+        const PowerCardNumber = 3;
         // const PowerCardNumber = await GAME_ACTIONS.RandomNumber(CONFIG.GamePlay.MIN_SPECIAL_CARD, CONFIG.GamePlay.MAX_SPECIAL_CARD);
 
         let AllUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.ALL_UNO_CARDS));
@@ -94,7 +94,7 @@ const DistributeCards = async (tableId: string) => {
 
         for (let i = 0; i < AllUserSocketId.length; i++) {
 
-            const ResData: MyCardsResInterface = {
+            const MyCardsResData: MyCardsResInterface = {
 
                 activeCard: TableDetails.activeCard,
                 openCardDeck: TableDetails.openCardDeck,
@@ -102,7 +102,7 @@ const DistributeCards = async (tableId: string) => {
 
             };
 
-            EventEmitter.emit(MY_CARDS, { en: MY_CARDS, SocketId: AllUserSocketId[i].socketId, Data: ResData });
+            EventEmitter.emit(MY_CARDS, { en: MY_CARDS, SocketId: AllUserSocketId[i].socketId, Data: MyCardsResData });
         };
 
         await SetTable(TableDetails.tableId, TableDetails);

@@ -63,9 +63,10 @@ const LiveConfig = (): ConfigInterface => {
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
 
-        DISTRIBUTE_CARDS_LIMIT: 15,
+        DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
+        TURN_TIMEOUT_COUNT: 3,
 
         TOTAL_ROUND_NUMBER: 3,
         UNO_PENALTY_NUMBER: 2,

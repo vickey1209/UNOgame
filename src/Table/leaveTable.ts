@@ -100,9 +100,9 @@ const RemoveUserFromTable = async (userId: string, tableId: string) => {
 
             };
 
-            const ResData = { userId, tableId, seatIndex: UserInTableDetails.seatIndex };
+            const LeaveTableResData = { userId, tableId, seatIndex: UserInTableDetails.seatIndex };
 
-            EventEmitter.emit(LEAVE_TABLE, { en: LEAVE_TABLE, RoomId: TableDetails.tableId, Data: ResData });
+            EventEmitter.emit(LEAVE_TABLE, { en: LEAVE_TABLE, RoomId: TableDetails.tableId, Data: LeaveTableResData });
 
             const socket = io.sockets.sockets.get(UserDetails.socketId); // * Find User Socket
 
@@ -124,9 +124,9 @@ const RemoveUserFromTable = async (userId: string, tableId: string) => {
 
             await SetTable(TableDetails.tableId, TableDetails);
 
-            const ResData = { userId, tableId, seatIndex: UserInTableDetails.seatIndex };
+            const LeaveTableResData = { userId, tableId, seatIndex: UserInTableDetails.seatIndex };
 
-            EventEmitter.emit(LEAVE_TABLE, { en: LEAVE_TABLE, RoomId: TableDetails.tableId, Data: ResData });
+            EventEmitter.emit(LEAVE_TABLE, { en: LEAVE_TABLE, RoomId: TableDetails.tableId, Data: LeaveTableResData });
 
             const socket = io.sockets.sockets.get(UserDetails.socketId); // * Find User Socket
 
