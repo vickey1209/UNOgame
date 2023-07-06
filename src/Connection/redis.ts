@@ -50,7 +50,7 @@ const RedisConnection = async () => {
 
     } catch (error) {
         console.log('RedisConnection Error : ', error);
-    }
-}
+    };
+};
 
 export { RedisConnection, redisClient, pubClient, subClient };
