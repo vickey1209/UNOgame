@@ -56,6 +56,8 @@ const NextRoundProcessAction = async (Data: any) => {
         TableDetails.closeCardDeck = [];
         TableDetails.openCardDeck = [];
 
+        TableDetails.currentRound += 1;
+
         // TableDetails.isLeaveLock = true;
 
         TableDetails.isScoreScreen = false;

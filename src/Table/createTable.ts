@@ -55,11 +55,11 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
         const Table: TableInterface = {
 
-            tableId: 'TABLE',
-            // tableId: cryptoRandomString({ length: 24, type: 'hex' }),
+            // tableId: 'TABLE',
+            tableId: cryptoRandomString({ length: 24, type: 'hex' }),
             bootValue: UserDetails.bootValue,
             currentTurn: -1,
-            currentRound: -1,
+            currentRound: 1,
             maxPlayers: UserDetails.playerCount,
 
             playersArray: [

@@ -27,11 +27,11 @@ const RandomPlayerTurn = async (tableId: string) => {
 
         const RandomPlayerSelect = await GAME_ACTIONS.RandomNumber(0, (TableDetails.playersArray.length - 1));
 
-        if (TableDetails.currentRound === -1) {
+        // if (TableDetails.currentRound === -1) {
 
-            TableDetails.currentRound = 1;
+        //     TableDetails.currentRound = 1;
 
-        } else { TableDetails.currentRound += 1; };
+        // } else { TableDetails.currentRound += 1; };
 
         TableDetails.isTurnLock = true;
         // TableDetails.isLeaveLock = false;
