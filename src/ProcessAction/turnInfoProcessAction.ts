@@ -5,9 +5,11 @@ import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
-import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
+import { GAME_ACTIONS } from "../GameActions";
+import { GetTable, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
+import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
 
 const TurnInfoProcessAction = async (Data: any) => {
@@ -48,6 +50,19 @@ const TurnInfoProcessAction = async (Data: any) => {
         TableDetails.isTurnLock = false;
         TableDetails.isLeaveLock = false;
 
+        // const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.seatIndex === TableDetails.currentTurn });
+
+        // if (!UserAvailableInTable) { throw new Error(CONSTANTS.ERROR_MESSAGES.WRONG_TABLE); };
+
+        let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[TableDetails.currentTurn]?.userId);
+        // let UserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
+
+        if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
+
+        const isThrowPossible = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
+
+        if (isThrowPossible === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.IS_POSSIBLE_THROW_ERROR); };
+
         await SetTable(TableDetails.tableId, TableDetails);
 
         const TurnInfoResData: TurnInfoResInterface = {
@@ -62,6 +77,8 @@ const TurnInfoProcessAction = async (Data: any) => {
 
             isRevers: Data?.isRevers,
             isClockwise: TableDetails.isClockwise,
+
+            isThrowPossible, 
 
             totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
             remainingTime: CONFIG.GamePlay.USER_TURN_TIMER

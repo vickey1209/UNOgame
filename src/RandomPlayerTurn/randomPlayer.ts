@@ -4,9 +4,10 @@ import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
-import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
+import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
 
 const RandomPlayerTurn = async (tableId: string) => {

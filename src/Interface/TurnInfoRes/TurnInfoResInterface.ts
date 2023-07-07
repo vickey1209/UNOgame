@@ -11,6 +11,8 @@ export interface TurnInfoResInterface {
     isRevers: boolean,
     isClockwise: boolean,
 
+    isThrowPossible: boolean,
+
     totalTime: number,
     remainingTime: number,
 
