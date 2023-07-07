@@ -1,6 +1,7 @@
 import { DistributeCards } from './DistributeCards/distributeCards';
 import { EndRound } from './EndRound/endRound';
 import { IsShufflePossible } from './IsShufflePossible/isShufflePossible';
+import { IsThrowPossible } from './IsThrowPossible/isThrowPossible';
 import { PlusFour } from './PlusFour/plusFour';
 import { PlusTwo } from './PlusTwo/plusTwo';
 import { RandomNumber } from './RandomNumber/randomNumber'
@@ -8,6 +9,7 @@ import { RemainTimeCalculation } from './RemainTimeCalculation/remainTimeCalcula
 import { ShuffleArray } from './ShuffleArray/shuffleArray';
 import { Skip } from './Skip/skip';
 import { ClockWiseTurnChange, AntiClockWiseTurnChange } from './TurnChange/turnChange';
+
 
 const GAME_ACTIONS = {
 
@@ -22,6 +24,8 @@ const GAME_ACTIONS = {
     PlusFour,
     EndRound,
     IsShufflePossible,
-}
+    IsThrowPossible,
+
+};
 
 export { GAME_ACTIONS };

@@ -114,7 +114,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
-        const TurnMissResData = { userId: UserInTableDetails.userId, tableId: UserInTableDetails.tableId, seatIndex: UserInTableDetails.seatIndex, };
+        const TurnMissResData = { userId: UserInTableDetails.userId, tableId: UserInTableDetails.tableId, seatIndex: UserInTableDetails.seatIndex };
 
         EventEmitter.emit(TURN_MISSED, { en: TURN_MISSED, Data: TurnMissResData, RoomId: TableDetails.tableId });
 

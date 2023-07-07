@@ -1,12 +1,10 @@
-import { AllUserScore } from "../AllUserScore/allUserScore";
 import { BullTimer } from "../BullTimer";
 import { Config } from "../Config";
-import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
-import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
-import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
+import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
 
 const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsNumber: number) => {
@@ -17,7 +15,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
 
         const CONFIG = Config();
 
-        const { TURN_INFO } = CONSTANTS.EVENTS_NAME;
+        const { TURN_INFO, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -154,30 +152,6 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
                 await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 0.5);
 
             };
-
-
-            // await BullTimer.AddJob.UserTurn(TableDetails.tableId);
-
-            // const ResData: TurnInfoResInterface = {
-
-            //     currentTurn: TableDetails.currentTurn,
-            //     activeCard: TableDetails.activeCard,
-            //     activeCardType: TableDetails.activeCardType,
-            //     activeCardColor: TableDetails.activeCardColor,
-
-            //     isSkip,
-            //     skipSeatIndex,
-
-            //     isRevers,
-            //     isClockwise: TableDetails.isClockwise,
-
-            //     totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
-            //     remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
-            // };
-
-            // EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: ResData });
-
-            // await AllUserScore(TableDetails.tableId);
 
         };
 

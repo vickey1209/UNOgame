@@ -52,7 +52,7 @@ const LiveConfig = (): ConfigInterface => {
 
     const GamePlay = {
 
-        LOG: true,
+        LOG: false,
 
         PLUS_ON_PLUS: true,
 
