@@ -29,14 +29,42 @@ const EndRound = async (tableId: string) => {
         await BullTimer.CancelJob.CancelTurnInfo(TableDetails.tableId);
         await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
-        let RoundScoreArray = [], RoundWiseScore = [];
+        let RoundScoreArray: any = [], RoundWiseScore = [];
+
+        let AllRoundScore = [];
 
         const RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
 
-        if (RoundHistoryDetails) { RoundWiseScore = RoundHistoryDetails };
+        if (RoundHistoryDetails) { AllRoundScore = RoundHistoryDetails };
+        // if (RoundHistoryDetails) { RoundScoreArray = RoundHistoryDetails };
+        // if (RoundHistoryDetails) { RoundWiseScore = RoundHistoryDetails };
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
+            // const { currentRound } = TableDetails
+            // const { userId, userName, userProfile, isLeave } = TableDetails.playersArray[i];
+
+            // let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
+
+            // if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
+
+            // const Score = await CheckUserScore(UserInTableDetails);
+
+            // if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
+
+            // UserInTableDetails.userScore += (-Math.abs(Score.totalScore));
+
+            // const { userScore } = UserInTableDetails;
+            // // const { cardArray, userScore } = UserInTableDetails;
+
+            // RoundScoreArray.push({ userId, userName, userProfile, isLeave, userScore, currentRound, ...Score });
+            // // RoundScoreArray.push({ userId, userName, userProfile, isLeave, userScore, cardArray });
+
+            // // RoundWiseScore.push({ userId, roundScore: (-Math.abs(Score.totalScore)), currentRound: TableDetails.currentRound });
+
+            // await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
+
+            const { currentRound } = TableDetails;
             const { userId, userName, userProfile, isLeave } = TableDetails.playersArray[i];
 
             let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
@@ -50,20 +78,18 @@ const EndRound = async (tableId: string) => {
             UserInTableDetails.userScore += (-Math.abs(Score.totalScore));
 
             const { userScore } = UserInTableDetails;
-            // const { cardArray, userScore } = UserInTableDetails;
 
-            RoundScoreArray.push({ userId, userName, userProfile, isLeave, userScore, ...Score });
-            // RoundScoreArray.push({ userId, userName, userProfile, isLeave, userScore, cardArray });
-
-            RoundWiseScore.push({ userId, roundScore: (-Math.abs(Score.totalScore)), currentRound: TableDetails.currentRound });
+            RoundScoreArray.push({ userId, userName, userProfile, isLeave, userScore, currentRound, ...Score });
 
             await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
         };
 
-        RoundScoreArray = RoundScoreArray.sort((a: any, b: any) => { return b.userScore - a.userScore; });
+        RoundScoreArray = RoundScoreArray.sort((a: any, b: any) => { return b.userScore - a.userScore; }).sort((a: any, b: any) => { return a.isLeave - b.isLeave; });
 
-        await SetRoundHistory(TableDetails.tableId, RoundWiseScore);
+        AllRoundScore.push({ roundScore: RoundScoreArray });
+
+        await SetRoundHistory(TableDetails.tableId, AllRoundScore);
 
         TableDetails.isLeaveLock = true;
 
@@ -89,7 +115,8 @@ const EndRound = async (tableId: string) => {
 
             await BullTimer.AddJob.NextRound(TableDetails.tableId);
 
-            EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScore: RoundScoreArray } });
+            EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { AllRoundScore } });
+            // EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScore: RoundScoreArray } });
 
         };
 

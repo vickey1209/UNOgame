@@ -42,7 +42,7 @@ const Win = async (tableId: string) => {
 
         };
 
-        let FinalArray: any = [], rankNumber = 1, lastScore = 0, RoundWiseScoreArray = [];;
+        let FinalArray: any = [], rankNumber = 1, lastScore = 0, RoundWiseScoreArray: any = [];
 
         CurrentRoundScoreArray = CurrentRoundScoreArray.sort((a, b) => { return b.userScore - a.userScore; }).sort((a: any, b: any) => { return a.isLeave - b.isLeave; });
 
@@ -68,31 +68,79 @@ const Win = async (tableId: string) => {
 
         let RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
 
-        if (RoundHistoryDetails) {
+        console.log({ RoundHistoryDetails });
 
-            for (let i = (FinalArray.length - 1); i >= 0; i--) {
+        let test: any = [];
 
-                for (let k = (RoundHistoryDetails.length - 1); k >= 0; k--) {
+        for (let i = 0; i < RoundHistoryDetails.length; i++) {
 
-                    let UserDetailIndex = -1;
+            console.log({ a: RoundHistoryDetails[i] });
 
-                    const UserDetail = RoundHistoryDetails.find((element: any, index: any) => {
-                        UserDetailIndex = index
-                        return element.userId === FinalArray[i]?.userId
-                    });
+            for (let k = 0; k < RoundHistoryDetails[i].roundScore.length; k++) {
 
-                    if (UserDetail && UserDetailIndex !== -1) {
-                        RoundHistoryDetails.splice(UserDetailIndex, 1);
-                        RoundWiseScoreArray.push(UserDetail);
-                    } else {
-                        break;
-                    };
-                };
-            };
+                test.push(RoundHistoryDetails[i].roundScore[k]);
 
-            // RoundWiseScoreArray = RoundWiseScoreArray.reverse().sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
+            }
 
         };
+
+        console.log({ test });
+
+        if (test.length) {
+
+            for (let i = 0; i < FinalArray.length; i++) {
+
+                // for (let k = (test.length - 1); k >= 0; k--) {
+
+                //     let UserDetailIndex = -1;
+
+                //     const UserDetail = test.find((element: any, index: any) => {
+                //         UserDetailIndex = index
+                //         return element.userId === FinalArray[i]?.userId
+                //     });
+
+                //     if (UserDetail) {
+
+                //         RoundWiseScoreArray.push(UserDetail);
+                //         test.splice(UserDetailIndex, 1);
+
+                //     } else { break }
+                // };
+
+                const OneUser = test.filter((e: any) => { return e.userId === FinalArray[i]?.userId });
+
+                OneUser.forEach((element: any) => { RoundWiseScoreArray.push(element) });
+
+            };
+
+        };
+
+
+        // if (RoundHistoryDetails) {
+
+        //     for (let i = (FinalArray.length - 1); i >= 0; i--) {
+
+        //         for (let k = (RoundHistoryDetails.length - 1); k >= 0; k--) {
+
+        //             let UserDetailIndex = -1;
+
+        //             const UserDetail = RoundHistoryDetails.find((element: any, index: any) => {
+        //                 UserDetailIndex = index
+        //                 return element.userId === FinalArray[i]?.userId
+        //             });
+
+        //             if (UserDetail && UserDetailIndex !== -1) {
+        //                 RoundHistoryDetails.splice(UserDetailIndex, 1);
+        //                 RoundWiseScoreArray.push(UserDetail);
+        //             } else {
+        //                 break;
+        //             };
+        //         };
+        //     };
+
+        //     // RoundWiseScoreArray = RoundWiseScoreArray.reverse().sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
+
+        // };
 
         console.log({ RoundWiseScoreArray });
 

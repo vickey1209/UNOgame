@@ -35,7 +35,7 @@ const RedLockConnction = async () => {
         console.log('RedLock Connected !');
 
     } catch (error: any) {
-        console.log('RedLockConnction Error : ', error);
+        console.log(`RedLockConnction Error : ${new Date()}`, error);
     }
 }
 
