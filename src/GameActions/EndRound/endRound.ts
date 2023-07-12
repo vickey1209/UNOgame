@@ -9,7 +9,7 @@ import { UserInTableInterface } from "../../Interface/UserInTable/UserInTableInt
 import { Logger } from "../../Logger/logger";
 import { Win } from "../../Win/win";
 
-const EndRound = async (tableId: string) => {
+const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
 
     try {
 
@@ -17,7 +17,7 @@ const EndRound = async (tableId: string) => {
 
         const CONFIG = Config();
 
-        const { ROUND_SCORE } = CONSTANTS.EVENTS_NAME;
+        const { ROUND_SCORE, TIMES_UP } = CONSTANTS.EVENTS_NAME;
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -98,25 +98,43 @@ const EndRound = async (tableId: string) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
+        // if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {
+
+        //     console.log('3 Round Done !!');
+        //     console.log('3 Round Done !!');
+        //     console.log('3 Round Done !!');
+        //     console.log('3 Round Done !!');
+        //     console.log('3 Round Done !!');
+        //     console.log('3 Round Done !!');
+
+        //     // console.log({ RoundScoreArray });
+
+        //     await Win(TableDetails.tableId);
+
+        // } else {
+
+        //     await BullTimer.AddJob.NextRound(TableDetails.tableId);
+
+        //     EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, AllRoundScore } });
+        //     // EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScore: RoundScoreArray } });
+
+        // };
+
         if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {
 
-            console.log('3 Round Done !!');
-            console.log('3 Round Done !!');
-            console.log('3 Round Done !!');
-            console.log('3 Round Done !!');
-            console.log('3 Round Done !!');
-            console.log('3 Round Done !!');
-
-            // console.log({ RoundScoreArray });
-
             await Win(TableDetails.tableId);
+
+        } else if (isRoundTimeEnd) {
+
+            await BullTimer.AddJob.TimesUp(TableDetails.tableId);
+
+            EventEmitter.emit(TIMES_UP, { en: TIMES_UP, RoomId: TableDetails.tableId, Data: {} });
 
         } else {
 
             await BullTimer.AddJob.NextRound(TableDetails.tableId);
 
             EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, AllRoundScore } });
-            // EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScore: RoundScoreArray } });
 
         };
 

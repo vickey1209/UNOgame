@@ -39,6 +39,7 @@ export interface GamePlayInterface {
     NEXT_ROUND_TIMER: number,
     RETURN_TO_TABLE_TIMER: number,
     UNO_CLICK_TIMER: number,
+    TIMES_UP_DELAY_TIMER: number,
 
     DISTRIBUTE_CARDS_LIMIT: number,
     MIN_SPECIAL_CARD: number,

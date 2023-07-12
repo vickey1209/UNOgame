@@ -20,6 +20,7 @@ export = Object.freeze({
     UNO: 'UNO',
     TURN_MISSED: 'TURN_MISSED',
     ALERT: 'ALERT',
-    REJOIN: 'REJOIN'
+    REJOIN: 'REJOIN',
+    TIMES_UP: 'TIMES_UP'
 
 });
