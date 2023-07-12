@@ -19,7 +19,7 @@ const UnoClick = async (tableId: string, isSkip: boolean, skipSeatIndex: number,
             removeOnComplete: true
         };
 
-        UnoClickQueue.add({ tableId, isSkip, skipSeatIndex, isRevers, delayNumber, unoSeatIndex }, options);
+        await UnoClickQueue.add({ tableId, isSkip, skipSeatIndex, isRevers, delayNumber, unoSeatIndex }, options);
 
     } catch (error: any) {
         Logger('UnoClick Error : ', error);

@@ -26,11 +26,11 @@ const UserTurn = async (tableId: string) => {
             removeOnComplete: true
         };
 
-        UserTurnQueue.add({ tableId, currentTurn: TableDetails.currentTurn }, options);
+        await UserTurnQueue.add({ tableId, currentTurn: TableDetails.currentTurn }, options);
 
     } catch (error: any) {
         Logger('UserTurn Error : ', error);
-    }
+    };
 };
 
 UserTurnQueue.process(UserTurnProcess);

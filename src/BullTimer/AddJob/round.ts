@@ -1,7 +1,4 @@
 import { Config } from "../../Config";
-import { CONSTANTS } from "../../Constants";
-import { GetTable } from "../../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../../Interface/Table/TableInterface";
 import { Logger } from "../../Logger/logger";
 import { RoundQueue } from "../AllQueues/allQueues";
 import { RoundProcess } from "../ProcessJob/roundProcess";
@@ -14,10 +11,6 @@ const Round = async (tableId: string) => {
 
         const CONFIG = Config();
 
-        let TableDetails: TableInterface = await GetTable(tableId);
-
-        if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
-
         const jobId = `${tableId}`;
 
         const options = {
@@ -26,7 +19,7 @@ const Round = async (tableId: string) => {
             removeOnComplete: true
         };
 
-        RoundQueue.add({ tableId }, options);
+        await RoundQueue.add({ tableId }, options);
 
     } catch (error: any) {
         Logger('Round Error : ', error);

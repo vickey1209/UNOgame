@@ -61,7 +61,8 @@ const EmitterON = () => {
             TURN_MISSED,
             ALERT,
             REJOIN,
-            TIMES_UP
+            TIMES_UP,
+            WINNER_DECLARE
 
         } = CONSTANTS.EVENTS_NAME;
 
@@ -147,6 +148,10 @@ const EmitterON = () => {
 
         EventEmitter.on(TIMES_UP, async (data) => {
             await SendToRoom(TIMES_UP, data);
+        });
+
+        EventEmitter.on(WINNER_DECLARE, async (data) => {
+            await SendToRoom(WINNER_DECLARE, data);
         });
 
     } catch (error: any) {

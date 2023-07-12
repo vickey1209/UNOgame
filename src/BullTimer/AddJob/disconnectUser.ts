@@ -19,7 +19,7 @@ const DisconnectUser = async (userId: string, tableId: string, bootValue: number
             removeOnComplete: true
         };
 
-        DisconnectUserQueue.add({ userId, tableId, bootValue, playerCount }, options);
+        await DisconnectUserQueue.add({ userId, tableId, bootValue, playerCount }, options);
 
     } catch (error: any) {
         Logger('DisconnectUser Error : ', error);

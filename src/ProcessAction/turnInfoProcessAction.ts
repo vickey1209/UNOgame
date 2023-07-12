@@ -43,7 +43,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
             await BullTimer.AddJob.Round(TableDetails.tableId);
 
-            EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: TableDetails.tableId, Data: { timer: CONFIG.GamePlay.ROUND_TIMER } });
+            EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: TableDetails.tableId, Data: { timer: CONFIG.GamePlay.ROUND_TIMER, currentRound: TableDetails.currentRound } });
 
         };
 
@@ -73,7 +73,7 @@ const TurnInfoProcessAction = async (Data: any) => {
             isRevers: Data?.isRevers,
             isClockwise: TableDetails.isClockwise,
 
-            isThrowPossible, 
+            isThrowPossible,
 
             totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
             remainingTime: CONFIG.GamePlay.USER_TURN_TIMER

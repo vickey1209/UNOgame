@@ -16,7 +16,7 @@ const TurnInfo = async (tableId: string, isSkip: boolean, skipSeatIndex: number,
             removeOnComplete: true
         };
 
-        TurnInfoQueue.add({ tableId, isSkip, skipSeatIndex, isRevers }, options);
+        await TurnInfoQueue.add({ tableId, isSkip, skipSeatIndex, isRevers }, options);
 
     } catch (error: any) {
         Logger('TurnInfo Error : ', error);

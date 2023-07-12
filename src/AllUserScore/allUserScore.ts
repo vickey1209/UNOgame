@@ -30,7 +30,7 @@ const AllUserScore = async (tableId: string) => {
 
             if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
 
-            ScoreResData.allUserScore.push({ userScore: Score.totalScore, seatIndex: UserInTableDetails.seatIndex, cardsLength: UserInTableDetails.cardArray.length });
+            ScoreResData.allUserScore.push({ userScore: Math.abs(Score.totalScore), seatIndex: UserInTableDetails.seatIndex, cardsLength: UserInTableDetails.cardArray.length });
 
         };
 
@@ -183,6 +183,8 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
             };
         };
+
+        totalScore = -Math.abs(totalScore);
 
         return { totalScore, simple, special, zero, wildColorChange, wildPlusFour };
 
