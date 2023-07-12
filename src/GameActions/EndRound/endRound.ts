@@ -115,7 +115,7 @@ const EndRound = async (tableId: string) => {
 
             await BullTimer.AddJob.NextRound(TableDetails.tableId);
 
-            EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { AllRoundScore } });
+            EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, AllRoundScore } });
             // EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScore: RoundScoreArray } });
 
         };
