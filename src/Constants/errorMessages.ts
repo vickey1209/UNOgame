@@ -30,6 +30,7 @@ export = Object.freeze({
     NO_UNO_PENALTY: "No Uno Penalty !!!",
     ALREADY_CLICKED_UNO: "You Already Clicked UNO !!!",
     UNO_NOT_POSSIBLE: "UNO Not Possible !!!",
-    IS_POSSIBLE_THROW_ERROR:"Possible Throw Card Return Error !!!"
+    IS_POSSIBLE_THROW_ERROR: "Possible Throw Card Return Error !!!",
+    LAST_GAME_FINISHED: "The Last Game That You Played Doesn't Exist Anymore !!!"
 
 });

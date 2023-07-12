@@ -59,6 +59,8 @@ const EmitterON = () => {
             LEAVE_TABLE,
             UNO,
             TURN_MISSED,
+            ALERT,
+            REJOIN
 
         } = CONSTANTS.EVENTS_NAME;
 
@@ -133,6 +135,16 @@ const EmitterON = () => {
         EventEmitter.on(TURN_MISSED, async (data) => {
             await SendToRoom(TURN_MISSED, data);
         });
+
+        EventEmitter.on(REJOIN, async (data) => {
+            await SendToSocket(REJOIN, data);
+        });
+
+        EventEmitter.on(ALERT, async (data) => {
+            await SendToSocket(ALERT, data);
+        });
+
+        
 
     } catch (error: any) {
         Logger('EmitterON Error', error);

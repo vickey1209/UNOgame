@@ -50,12 +50,7 @@ const TurnInfoProcessAction = async (Data: any) => {
         TableDetails.isTurnLock = false;
         TableDetails.isLeaveLock = false;
 
-        // const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.seatIndex === TableDetails.currentTurn });
-
-        // if (!UserAvailableInTable) { throw new Error(CONSTANTS.ERROR_MESSAGES.WRONG_TABLE); };
-
         let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[TableDetails.currentTurn]?.userId);
-        // let UserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
