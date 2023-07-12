@@ -65,7 +65,7 @@ const EndRound = async (tableId: string) => {
             // await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
             const { currentRound } = TableDetails;
-            const { userId, userName, userProfile, isLeave } = TableDetails.playersArray[i];
+            const { userId, userName, userProfile, isLeave, seatIndex } = TableDetails.playersArray[i];
 
             let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
 
@@ -79,7 +79,7 @@ const EndRound = async (tableId: string) => {
 
             const { userScore } = UserInTableDetails;
 
-            RoundScoreArray.push({ userId, userName, userProfile, isLeave, userScore, currentRound, ...Score });
+            RoundScoreArray.push({ userId, userName, userProfile, isLeave, seatIndex, userScore, currentRound, ...Score });
 
             await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
