@@ -10,6 +10,7 @@ import { JoinTable } from "./joinTable";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { BOT_ACTION } from "../Bot";
+import { Config } from "../Config";
 
 const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
@@ -44,7 +45,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
     } catch (error: any) {
         Logger('CreateTable Error : ', error);
-    }
+    };
 };
 
 const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
@@ -53,6 +54,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
         Logger('CreateNewTable', JSON.stringify({ UserDetails }));
 
+        const CONFIG = Config();
+
         const Table: TableInterface = {
 
             // tableId: 'TABLE',
@@ -60,6 +63,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
             bootValue: UserDetails.bootValue,
             currentTurn: -1,
             currentRound: 1,
+            totalRounds: CONFIG.GamePlay.TOTAL_ROUND_NUMBER,
             maxPlayers: UserDetails.playerCount,
 
             playersArray: [

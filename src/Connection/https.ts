@@ -39,6 +39,7 @@ const HttpsConnection = async () => {
 
         };
 
+        app.get('/', (req, res) => { res.send('Oops !!!'); });
         app.get('/test', (req, res) => { res.send('UNO !!!'); });
 
     } catch (error) {

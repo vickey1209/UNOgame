@@ -4,6 +4,7 @@ export interface TableInterface {
     bootValue: number,
     currentTurn: number,
     currentRound: number,
+    totalRounds: number,
     maxPlayers: number,
 
     playersArray: Array<PlayersArrayInterface>,

@@ -26,7 +26,7 @@ const NextRound = async (tableId: string) => {
             removeOnComplete: true
         };
 
-        NextRoundQueue.add({ tableId }, options);
+        await NextRoundQueue.add({ tableId }, options);
 
     } catch (error: any) {
         Logger('NextRound Error : ', error);

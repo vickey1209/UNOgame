@@ -75,6 +75,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
 
             if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
 
+            // UserInTableDetails.userScore += Math.abs(Score.totalScore)
             UserInTableDetails.userScore += (-Math.abs(Score.totalScore));
 
             const { userScore } = UserInTableDetails;

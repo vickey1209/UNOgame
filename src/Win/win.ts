@@ -1,5 +1,6 @@
 import { CheckUserScore } from "../AllUserScore/allUserScore";
 import { BullTimer } from "../BullTimer";
+import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
 import { GetRoundHistory, GetTable, GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
@@ -11,6 +12,8 @@ const Win = async (tableId: string) => {
     try {
 
         Logger("Win", JSON.stringify({ tableId }));
+
+        const { WINNER_DECLARE } = CONSTANTS.EVENTS_NAME;
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -42,9 +45,9 @@ const Win = async (tableId: string) => {
 
         };
 
-        let FinalArray: any = [], rankNumber = 1, lastScore = 0, RoundWiseScoreArray: any = [];
-
         CurrentRoundScoreArray = CurrentRoundScoreArray.sort((a, b) => { return b.userScore - a.userScore; }).sort((a: any, b: any) => { return a.isLeave - b.isLeave; });
+
+        let FinalArray: any = [], rankNumber = 1, lastScore = 0/* , price = 0, RoundWiseScoreArray: any = [], previousScore: any = []; */
 
         for (let i = 0; i < CurrentRoundScoreArray.length; i++) { // ^ For ...
 
@@ -53,97 +56,44 @@ const Win = async (tableId: string) => {
             if (lastScore === CurrentRoundScoreArray[i].userScore && rankNumber <= 2) {
                 // if (lastScore === CurrentRoundScoreArray[i].userScore) {
 
-                FinalArray.push({ ...CurrentRoundScoreArray[i], rankNumber });
+                FinalArray.push({ ...CurrentRoundScoreArray[i], rankNumber, price: 0, previousScore: 0 });
 
             } else {
 
                 rankNumber += 1;
                 lastScore = CurrentRoundScoreArray[i].userScore;
-                FinalArray.push({ ...CurrentRoundScoreArray[i], rankNumber });
+                FinalArray.push({ ...CurrentRoundScoreArray[i], rankNumber, price: 0, previousScore: 0 });
 
             };
         };
 
-        console.log({ FinalArray });
+        let UserWiseRoundHistory: any = [];
 
         let RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
 
-        console.log({ RoundHistoryDetails });
-
-        let test: any = [];
-
         for (let i = 0; i < RoundHistoryDetails.length; i++) {
-
-            console.log({ a: RoundHistoryDetails[i] });
 
             for (let k = 0; k < RoundHistoryDetails[i].roundScore.length; k++) {
 
-                test.push(RoundHistoryDetails[i].roundScore[k]);
-
-            }
-
-        };
-
-        console.log({ test });
-
-        if (test.length) {
-
-            for (let i = 0; i < FinalArray.length; i++) {
-
-                // for (let k = (test.length - 1); k >= 0; k--) {
-
-                //     let UserDetailIndex = -1;
-
-                //     const UserDetail = test.find((element: any, index: any) => {
-                //         UserDetailIndex = index
-                //         return element.userId === FinalArray[i]?.userId
-                //     });
-
-                //     if (UserDetail) {
-
-                //         RoundWiseScoreArray.push(UserDetail);
-                //         test.splice(UserDetailIndex, 1);
-
-                //     } else { break }
-                // };
-
-                const OneUser = test.filter((e: any) => { return e.userId === FinalArray[i]?.userId });
-
-                OneUser.forEach((element: any) => { RoundWiseScoreArray.push(element) });
+                UserWiseRoundHistory.push(RoundHistoryDetails[i].roundScore[k]);
 
             };
 
         };
 
+        if (UserWiseRoundHistory.length) {
 
-        // if (RoundHistoryDetails) {
+            for (let i = 0; i < FinalArray.length; i++) {
 
-        //     for (let i = (FinalArray.length - 1); i >= 0; i--) {
+                const OneUser = UserWiseRoundHistory.filter((e: any) => { return e.userId === FinalArray[i]?.userId });
 
-        //         for (let k = (RoundHistoryDetails.length - 1); k >= 0; k--) {
+                OneUser.forEach((element: any) => { FinalArray[i]?.previousScore.push(element?.totalScore) });
 
-        //             let UserDetailIndex = -1;
+            };
 
-        //             const UserDetail = RoundHistoryDetails.find((element: any, index: any) => {
-        //                 UserDetailIndex = index
-        //                 return element.userId === FinalArray[i]?.userId
-        //             });
+        };
 
-        //             if (UserDetail && UserDetailIndex !== -1) {
-        //                 RoundHistoryDetails.splice(UserDetailIndex, 1);
-        //                 RoundWiseScoreArray.push(UserDetail);
-        //             } else {
-        //                 break;
-        //             };
-        //         };
-        //     };
-
-        //     // RoundWiseScoreArray = RoundWiseScoreArray.reverse().sort((a: any, b: any) => { return a.currentRound - b.currentRound; });
-
-        // };
-
-        console.log({ RoundWiseScoreArray });
-
+        EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: TableDetails.tableId, Data: { winningArray: FinalArray } });
 
     } catch (error: any) {
         Logger('Win Error : ', error);
