@@ -29,15 +29,18 @@ const RedLockConnction = async () => {
         });
 
         redLock.on('error', (error: any) => {
-            console.log('RedLock > ', error);
+
+            const CurrentDate = new Date();
+            console.log(`RedLock > ${CurrentDate} > ${CurrentDate.getMilliseconds()}`, error);
+
         });
 
         console.log('RedLock Connected !');
 
     } catch (error: any) {
         console.log('RedLockConnction Error : ', error);
-    }
-}
+    };
+};
 
 const ApplyLock = async (Path: string, LockId: string) => {
 
@@ -51,7 +54,7 @@ const ApplyLock = async (Path: string, LockId: string) => {
 
     } catch (error: any) {
         Logger('ApplyLock Error : ', error);
-    }
+    };
 };
 
 const RemoveLock = async (Path: string, Lock: any) => {
@@ -64,7 +67,7 @@ const RemoveLock = async (Path: string, Lock: any) => {
 
     } catch (error: any) {
         Logger('RemoveLock Error : ', error);
-    }
-}
+    };
+};
 
 export { RedLockConnction, ApplyLock, RemoveLock };

@@ -6,6 +6,7 @@ import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { CreateTable } from "../Table/createTable";
+import { RejoinTable } from "../Table/rejoinTable";
 
 const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
     // const SignUp = async (en: string, socket: Socket, Data: SignUpInterface) => {
@@ -25,11 +26,9 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
 
         if (!Data?.bootValue || !Data?.playerCount || !Data?.userId) {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: "Provide Valid Data !" } });
-        }
+        };
 
-        if (Data?.isBot === undefined) {
-            Data.isBot = false
-        }
+        if (Data?.isBot === undefined) { Data.isBot = false };
 
         socket.handshake.auth.userId = Data?.userId;
         socket.handshake.auth.playerCount = Data?.playerCount;
@@ -43,6 +42,9 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
             // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             await CreateTable(socket, Data);
+            // Data.tableId = UserData?.tableId ? UserData?.tableId : '';
+
+            // await RejoinTable(socket, Data);
 
         } else {
 
@@ -50,6 +52,9 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
             // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             await CreateTable(socket, Data);
+            // Data.tableId = UserData?.tableId ? UserData?.tableId : '';
+
+            // await RejoinTable(socket, Data);
 
         };
 
@@ -82,7 +87,7 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
 
         } = Data;
 
-        const NewUserData = {
+        const NewUserData: SignUpInterface = {
 
             userId,
             userName: userName,
@@ -124,7 +129,7 @@ const UpdateUser = async (socket: Socket, Data: SignUpInterface, AvailableUser: 
 
         } = Data;
 
-        const UpdateUserData = {
+        const UpdateUserData: SignUpInterface = {
 
             userId,
             userName,
