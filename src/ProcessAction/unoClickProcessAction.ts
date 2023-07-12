@@ -113,7 +113,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
             if (isGameEnd) {
 
-                await GAME_ACTIONS.EndRound(TableDetails.tableId);
+                await GAME_ACTIONS.EndRound(TableDetails.tableId, false);
 
             } else {
 

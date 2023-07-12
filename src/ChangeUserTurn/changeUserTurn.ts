@@ -132,7 +132,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
 
         if (isGameEnd) { // ^ End Game Immediately
 
-            await GAME_ACTIONS.EndRound(tableId);
+            await GAME_ACTIONS.EndRound(tableId, false);
 
             console.log('End Game Immediately !!!');
             console.log('End Game Immediately !!!');

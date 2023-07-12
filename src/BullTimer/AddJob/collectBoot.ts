@@ -19,7 +19,7 @@ const CollectBootValue = async (tableId: string) => {
             removeOnComplete: true
         };
 
-        CollectBootQueue.add({ tableId }, options);
+        await CollectBootQueue.add({ tableId }, options);
 
     } catch (error: any) {
         Logger('CollectBootValue Error : ', error);

@@ -60,7 +60,8 @@ const EmitterON = () => {
             UNO,
             TURN_MISSED,
             ALERT,
-            REJOIN
+            REJOIN,
+            TIMES_UP
 
         } = CONSTANTS.EVENTS_NAME;
 
@@ -144,7 +145,9 @@ const EmitterON = () => {
             await SendToSocket(ALERT, data);
         });
 
-        
+        EventEmitter.on(TIMES_UP, async (data) => {
+            await SendToRoom(TIMES_UP, data);
+        });
 
     } catch (error: any) {
         Logger('EmitterON Error', error);
