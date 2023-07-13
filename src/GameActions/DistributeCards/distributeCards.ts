@@ -42,10 +42,16 @@ const DistributeCards = async (tableId: string) => {
             for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
 
                 if (PowerCardNumber > j) {
-
+                    
                     const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SpecialUnoCards.length - 1));
+                    let Card = SpecialUnoCards[RendomNumber];
 
-                    const Card = SpecialUnoCards[RendomNumber];
+                    // if(TableDetails.botPriority === CONSTANTS.BOT_PRIORITY.HARD){
+                    //     const priorityNumber = await GAME_ACTIONS.RandomNumber(0, 100);
+                    //     if(priorityNumber <= CONSTANTS.BOT_PRIORITY.HARD_PERCENT){
+                    //         Card
+                    //     }
+                    // }
 
                     UserInTableDetails.cardArray.push(Card);
 

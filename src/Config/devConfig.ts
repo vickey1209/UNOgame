@@ -37,8 +37,8 @@ const DevConfig = (): ConfigInterface => {
 
         GAME_START_TIMER: 4,
         USER_TURN_TIMER: 60,
-        ROUND_TIMER: 1,
-        NEXT_ROUND_TIMER: 1,
+        ROUND_TIMER: 240,
+        NEXT_ROUND_TIMER: 10,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
         TIMES_UP_DELAY_TIMER:2,

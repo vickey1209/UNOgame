@@ -11,6 +11,7 @@ import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterf
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
 import { GAME_ACTIONS } from "../GameActions";
+import { ThrowCard } from "../ThrowCard/throwCard";
 
 const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
     // const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => {
@@ -117,7 +118,23 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
             await ChangeUserTurn(TableDetails.tableId, false, 0);
 
-        };
+        }else if(UserAvailableInTable.isBot && isPlayableCard){
+
+            const Fake_Data = {
+
+                card:UserInTableDetails.lastPickCard, //playableCard,
+                cardType:UserInTableDetails.lastPickCard.split('-')[1], //playableCard.split('-')[1],
+                cardColor:UserInTableDetails.lastPickCard.split('-')[0], //playableCard.split('-')[0],
+                cardIndex: 0,
+
+                userId: UserInTableDetails.userId,
+                tableId: UserInTableDetails.tableId,
+                seatIndex: UserInTableDetails.seatIndex
+
+            };
+
+            await ThrowCard('THROW_CARD', socket, Fake_Data);
+        }
 
     } catch (error: any) {
 

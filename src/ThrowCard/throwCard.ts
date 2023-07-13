@@ -10,6 +10,7 @@ import { BullTimer } from "../BullTimer";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { GAME_ACTIONS } from "../GameActions";
+import { Uno } from "../Uno/uno";
 
 const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
     // const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) => {
@@ -112,6 +113,10 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
         //     await GAME_ACTIONS.EndRound(TableDetails.tableId);
 
         // };
+
+        if(UserAvailableInTable.isBot && UserInTableDetails.cardArray.length === 1){
+            await Uno(en,socket,{"userId":UserInTableDetails.userId,"tableId":UserInTableDetails.tableId,"seatIndex":UserInTableDetails.seatIndex})
+        }
 
         if (UserInTableDetails.cardArray.length < 1) { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }
         else { await ChangeUserTurn(TableDetails.tableId, true, UserInTableDetails.cardArray.length); };
