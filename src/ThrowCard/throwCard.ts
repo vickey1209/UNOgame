@@ -63,7 +63,6 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
         if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && TableDetails.numberOfCardToPick === 0) { isWrongCard = false; };
         // if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && TableDetails.activeCardType !== CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR && TableDetails.numberOfCardToPick === 0) { isWrongCard = false; };
-        // if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && TableDetails.activeCardType !== CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { isWrongCard = false; };
 
         if (TableDetails.numberOfCardToPick === 0) {
 
@@ -74,15 +73,6 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
             if (TableDetails.activeCardType === Data?.cardType) { isWrongCard = false; };
 
         };
-
-
-        // if (TableDetails.numberOfCardToPick !== 0 && Data?.card.split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) {
-
-        // };
-
-        // if ((TableDetails.activeCardType === Data?.cardType || TableDetails.activeCardColor === Data?.cardColor) && TableDetails.numberOfCardToPick === 0) { isWrongCard = false; };
-
-        // if (TableDetails.activeCardType === Data?.cardType || TableDetails.activeCardColor === Data?.cardColor) { isWrongCard = false; };
 
         if (isWrongCard) { return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_CARD } }); };
 
@@ -102,16 +92,6 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
         await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
         EventEmitter.emit(THROW_CARD, { en: THROW_CARD, RoomId: TableDetails.tableId, Data: Data });
-
-        // if (UserInTableDetails.cardArray.length) {
-
-        //     await ChangeUserTurn(TableDetails.tableId, true, UserInTableDetails.cardArray.length);
-
-        // } else {
-
-        //     await GAME_ACTIONS.EndRound(TableDetails.tableId);
-
-        // };
 
         if (UserInTableDetails.cardArray.length < 1) { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }
         else { await ChangeUserTurn(TableDetails.tableId, true, UserInTableDetails.cardArray.length); };

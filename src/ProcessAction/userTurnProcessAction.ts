@@ -108,13 +108,14 @@ const UserTurnProcessAction = async (Data: any) => {
         };
 
         UserInTableDetails.isUnoClick = false;
-        UserInTableDetails.turnMissCount += 1;
+
+        if (UserInTableDetails.turnMissCount !== 3) { UserInTableDetails.turnMissCount += 1; };
 
         await SetTable(TableDetails.tableId, TableDetails);
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
-        const TurnMissResData = { userId: UserInTableDetails.userId, tableId: UserInTableDetails.tableId, seatIndex: UserInTableDetails.seatIndex };
+        const TurnMissResData = { userId: UserInTableDetails.userId, tableId: UserInTableDetails.tableId, seatIndex: UserInTableDetails.seatIndex, turnMissCount: UserInTableDetails.turnMissCount };
 
         EventEmitter.emit(TURN_MISSED, { en: TURN_MISSED, Data: TurnMissResData, RoomId: TableDetails.tableId });
 
@@ -124,7 +125,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         // } else {
 
-            await ChangeUserTurn(TableDetails.tableId, false, 0);
+        await ChangeUserTurn(TableDetails.tableId, false, 0);
 
         // };
 

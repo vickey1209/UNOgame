@@ -1,10 +1,8 @@
 import { BullTimer } from "../BullTimer";
-import { Config } from "../Config";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
-import { GetTable, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
 
 const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsNumber: number) => {
@@ -12,10 +10,6 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
     try {
 
         Logger("ChangeUserTurn", JSON.stringify({ tableId }));
-
-        const CONFIG = Config();
-
-        const { TURN_INFO, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -127,7 +121,6 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
         };
 
         TableDetails.isTurnLock = true;
-        TableDetails.numberOfCardToPick = 4;
 
         await SetTable(TableDetails.tableId, TableDetails);
 

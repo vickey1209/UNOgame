@@ -111,14 +111,13 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
         EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
-        // if (!isPlayableCard) {
+        if (!isPlayableCard) {
 
-        await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
+            await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
-        await ChangeUserTurn(TableDetails.tableId, false, 0.5);
-        // await ChangeUserTurn(TableDetails.tableId, false, 0);
+            await ChangeUserTurn(TableDetails.tableId, false, 0);
 
-        // };
+        };
 
     } catch (error: any) {
 
