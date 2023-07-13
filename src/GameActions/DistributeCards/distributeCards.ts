@@ -39,8 +39,8 @@ const DistributeCards = async (tableId: string) => {
 
             const UserDetails: SignUpInterface = await GetUser(TableDetails.playersArray[i].userId);
 
-            for (let j = 0; j < 10; j++) {
-            // for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
+            for (let j = 0; j < 7; j++) {
+                // for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
 
                 if (PowerCardNumber > j) {
 
@@ -90,6 +90,10 @@ const DistributeCards = async (tableId: string) => {
         ShuffelCard.splice(0, 1);
 
         TableDetails.closeCardDeck = ShuffelCard;
+
+        console.log({ TableDetails });
+        console.log(TableDetails.closeCardDeck);
+        console.log(TableDetails.closeCardDeck.length);
 
         // await BullTimer.AddJob.Round(tableId);
 
