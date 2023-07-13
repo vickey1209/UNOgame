@@ -39,7 +39,7 @@ const DistributeCards = async (tableId: string) => {
 
             const UserDetails: SignUpInterface = await GetUser(TableDetails.playersArray[i].userId);
 
-            for (let j = 0; j < 50; j++) {
+            for (let j = 0; j < 10; j++) {
             // for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
 
                 if (PowerCardNumber > j) {
