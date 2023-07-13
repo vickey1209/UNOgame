@@ -224,3 +224,30 @@ Initialize();
 
 // console.log("FinalArray");
 // console.log(FinalArray);
+
+
+// const FirstArray: any = [{}, {}];
+
+// let PushData: any = [];
+
+// FirstArray.forEach((e: any) => { e.PushData = PushData })
+
+// console.log('First Log > ', { FirstArray });
+
+// for (let i = 0; i < FirstArray.length; i++) {
+
+//     console.log("FirstArray : ", i);
+    
+
+//     const PushData2 = [1, 2, 3];
+
+//     PushData2.forEach((e: any,index) => {
+
+//         console.log(i, e ,index);
+
+//         FirstArray[i].PushData.push(e)
+//     })
+
+// }
+
+// console.log('Second Log > ', FirstArray);
