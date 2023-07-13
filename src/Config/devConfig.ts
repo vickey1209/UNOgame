@@ -31,7 +31,7 @@ const DevConfig = (): ConfigInterface => {
 
     const GamePlay = {
 
-        LOG: true,
+        LOG: false,
 
         PLUS_ON_PLUS: true,
 

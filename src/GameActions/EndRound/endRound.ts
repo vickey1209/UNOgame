@@ -76,12 +76,10 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
             if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
 
             // ! --------------
-            // UserInTableDetails.userScore += Math.abs(Score.totalScore)
-            UserInTableDetails.userScore += (-Math.abs(Score.totalScore));
 
-            Score.totalScore = UserInTableDetails.userScore;
+            UserInTableDetails.userScore = Score.totalScore;
 
-            RoundScoreArray.push({ userId, userName, userProfile, isLeave, seatIndex, userScore: (-Math.abs(Score.totalScore)), currentRound, ...Score });
+            RoundScoreArray.push({ userId, userName, userProfile, isLeave, seatIndex, userScore: Score.currentRoundScore, currentRound, ...Score });
 
             // ! --------------
 

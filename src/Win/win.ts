@@ -35,9 +35,9 @@ const Win = async (tableId: string) => {
 
             if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-            const Score = await CheckUserScore(UserInTableDetails);
+            // const Score = await CheckUserScore(UserInTableDetails);
 
-            if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
+            // if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
 
             const { userScore } = UserInTableDetails;
 

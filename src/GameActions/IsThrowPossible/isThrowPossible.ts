@@ -36,6 +36,8 @@ const IsThrowPossible = async (UserInTableDetails: UserInTableInterface, TableDe
 
         };
 
+        console.log(new Date());
+
         console.log({ isThrowPossible });
 
         return isThrowPossible;
