@@ -39,11 +39,13 @@ const DistributeCards = async (tableId: string) => {
 
             const UserDetails: SignUpInterface = await GetUser(TableDetails.playersArray[i].userId);
 
-            for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
+            for (let j = 0; j < 50; j++) {
+            // for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
 
                 if (PowerCardNumber > j) {
 
-                    const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SpecialUnoCards.length - 1));
+                    const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (AllUnoCards.length - 1));
+                    // const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SpecialUnoCards.length - 1));
 
                     const Card = SpecialUnoCards[RendomNumber];
 
@@ -55,7 +57,8 @@ const DistributeCards = async (tableId: string) => {
 
                 } else {
 
-                    const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SimpleUnoCards.length - 1));
+                    const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (AllUnoCards.length - 1));
+                    // const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SimpleUnoCards.length - 1));
 
                     const Card = SimpleUnoCards[RendomNumber];
 
@@ -75,8 +78,8 @@ const DistributeCards = async (tableId: string) => {
 
         TableDetails.playersArray = TableDetails.playersArray.sort((a, b) => { return a.seatIndex - b.seatIndex });
 
-        const ShuffelCard = await GAME_ACTIONS.ShuffleArray(SimpleUnoCards);
-        // const ShuffelCard = await GAME_ACTIONS.ShuffleArray(AllUnoCards);
+        // const ShuffelCard = await GAME_ACTIONS.ShuffleArray(SimpleUnoCards);
+        const ShuffelCard = await GAME_ACTIONS.ShuffleArray(AllUnoCards);
 
         TableDetails.openCardDeck.push(ShuffelCard[0]);
 

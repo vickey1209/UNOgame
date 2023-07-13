@@ -28,6 +28,8 @@ const IsShufflePossible = async (tableId: string) => {
 
         };
 
+        console.log({ isShuffle, cardsForCloseDeckArray, cardsForOpenDeckArray: TableDetails.openCardDeck });
+
         return { isShuffle, cardsForCloseDeckArray, cardsForOpenDeckArray: TableDetails.openCardDeck };
 
     } catch (error: any) {
