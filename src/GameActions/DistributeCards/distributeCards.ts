@@ -47,7 +47,7 @@ const DistributeCards = async (tableId: string) => {
                     const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (AllUnoCards.length - 1));
                     // const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SpecialUnoCards.length - 1));
 
-                    const Card = SpecialUnoCards[RendomNumber];
+                    const Card = AllUnoCards[RendomNumber];
 
                     UserInTableDetails.cardArray.push(Card);
 
@@ -60,7 +60,7 @@ const DistributeCards = async (tableId: string) => {
                     const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (AllUnoCards.length - 1));
                     // const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SimpleUnoCards.length - 1));
 
-                    const Card = SimpleUnoCards[RendomNumber];
+                    const Card = AllUnoCards[RendomNumber];
 
                     UserInTableDetails.cardArray.push(Card);
 
