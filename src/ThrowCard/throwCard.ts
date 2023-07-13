@@ -61,7 +61,8 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
         if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && Data?.cardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { isWrongCard = false; };
 
-        if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && TableDetails.activeCardType !== CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR && TableDetails.numberOfCardToPick === 0) { isWrongCard = false; };
+        if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && TableDetails.numberOfCardToPick === 0) { isWrongCard = false; };
+        // if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && TableDetails.activeCardType !== CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR && TableDetails.numberOfCardToPick === 0) { isWrongCard = false; };
         // if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && TableDetails.activeCardType !== CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { isWrongCard = false; };
 
         if (TableDetails.numberOfCardToPick === 0) {
