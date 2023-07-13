@@ -127,6 +127,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
         };
 
         TableDetails.isTurnLock = true;
+        TableDetails.numberOfCardToPick = 4;
 
         await SetTable(TableDetails.tableId, TableDetails);
 
