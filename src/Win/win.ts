@@ -56,13 +56,13 @@ const Win = async (tableId: string) => {
             if (lastScore === CurrentRoundScoreArray[i].userScore && rankNumber <= 2) {
                 // if (lastScore === CurrentRoundScoreArray[i].userScore) {
 
-                FinalArray.push({ ...CurrentRoundScoreArray[i], rankNumber, price: 0, previousScore: 0 });
+                FinalArray.push({ ...CurrentRoundScoreArray[i], rankNumber, price: 0, previousScore: [] });
 
             } else {
 
                 rankNumber += 1;
                 lastScore = CurrentRoundScoreArray[i].userScore;
-                FinalArray.push({ ...CurrentRoundScoreArray[i], rankNumber, price: 0, previousScore: 0 });
+                FinalArray.push({ ...CurrentRoundScoreArray[i], rankNumber, price: 0, previousScore: [] });
 
             };
         };
