@@ -62,7 +62,8 @@ const EmitterON = () => {
             ALERT,
             REJOIN,
             TIMES_UP,
-            WINNER_DECLARE
+            WINNER_DECLARE,
+            ROUND_HISTORY
 
         } = CONSTANTS.EVENTS_NAME;
 
@@ -152,6 +153,10 @@ const EmitterON = () => {
 
         EventEmitter.on(WINNER_DECLARE, async (data) => {
             await SendToRoom(WINNER_DECLARE, data);
+        });
+
+        EventEmitter.on(ROUND_HISTORY, async (data) => {
+            await SendToRoom(ROUND_HISTORY, data);
         });
 
     } catch (error: any) {

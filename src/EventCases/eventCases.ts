@@ -9,6 +9,7 @@ import { PickCard } from "../PickCard/pickCard";
 import { KeepCard } from "../KeepCard/keepCard";
 import { LeaveTable } from "../Table/leaveTable";
 import { Uno } from "../Uno/uno";
+import { RoundHistory } from "../RoundHistory/roundHistory";
 
 const EventCases = async (socket: Socket) => {
 
@@ -26,6 +27,7 @@ const EventCases = async (socket: Socket) => {
                 KEEP_CARD,
                 LEAVE_TABLE,
                 UNO,
+                ROUND_HISTORY,
 
             } = CONSTANTS.EVENTS_NAME;
 
@@ -70,6 +72,11 @@ const EventCases = async (socket: Socket) => {
                 case UNO:
                     Logger('EventCases UNO', JSON.stringify({ Data }));
                     Uno(EventName, socket, Data);
+                    break;
+
+                case ROUND_HISTORY:
+                    Logger('EventCases ROUND_HISTORY', JSON.stringify({ Data }));
+                    RoundHistory(EventName, socket, Data);
                     break;
 
                 default:
