@@ -156,7 +156,7 @@ const EmitterON = () => {
         });
 
         EventEmitter.on(ROUND_HISTORY, async (data) => {
-            await SendToRoom(ROUND_HISTORY, data);
+            await SendToSocket(ROUND_HISTORY, data);
         });
 
     } catch (error: any) {
