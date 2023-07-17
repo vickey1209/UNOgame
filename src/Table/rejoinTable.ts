@@ -21,7 +21,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
     const { ALERT, JOIN_TABLE, REJOIN } = CONSTANTS.EVENTS_NAME;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
-    if (Data?.tableId !== '') { Tablelock = await ApplyLock(Path, TablelockId); }
+    if (Data?.tableId !== '') { Tablelock = await ApplyLock(Path, TablelockId); };
 
     try {
 

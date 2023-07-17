@@ -13,7 +13,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
     try {
 
-        const Path = 'LeaveTable';
+        const Path = 'DisconnectHandler';
 
         Logger("DisconnectHandler", JSON.stringify({}));
 

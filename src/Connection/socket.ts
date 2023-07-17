@@ -45,7 +45,7 @@ const SocketConnection = async () => {
 
     } catch (error) {
         console.log('SocketConnection Error : ', error);
-    }
+    };
 };
 
 export { SocketConnection, io };

@@ -35,6 +35,12 @@ const Win = async (tableId: string) => {
 
             if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
+            const Score = await CheckUserScore(UserInTableDetails);
+
+            if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
+
+            UserInTableDetails.userScore = Score.totalScore;
+
             const { userScore } = UserInTableDetails;
 
             CurrentRoundScoreArray.push({ userId, userName, userProfile, userScore, isLeave });
@@ -63,27 +69,31 @@ const Win = async (tableId: string) => {
             };
         };
 
-        let UserWiseRoundHistory: any = [];
-
         let RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
+        
+        if (RoundHistoryDetails.length) {
+            
+            let UserWiseRoundHistory: any = [];
 
-        for (let i = 0; i < RoundHistoryDetails.length; i++) {
+            for (let i = 0; i < RoundHistoryDetails.length; i++) {
 
-            for (let k = 0; k < RoundHistoryDetails[i].roundScore.length; k++) {
+                for (let k = 0; k < RoundHistoryDetails[i].roundScore.length; k++) {
 
-                UserWiseRoundHistory.push(RoundHistoryDetails[i].roundScore[k]);
+                    UserWiseRoundHistory.push(RoundHistoryDetails[i].roundScore[k]);
+
+                };
 
             };
 
-        };
+            if (UserWiseRoundHistory.length) {
 
-        if (UserWiseRoundHistory.length) {
+                for (let i = 0; i < FinalArray.length; i++) {
 
-            for (let i = 0; i < FinalArray.length; i++) {
+                    const OneUser = UserWiseRoundHistory.filter((e: any) => { return e.userId === FinalArray[i]?.userId });
 
-                const OneUser = UserWiseRoundHistory.filter((e: any) => { return e.userId === FinalArray[i]?.userId });
+                    OneUser.forEach((element: any) => { FinalArray[i]?.previousScore.push(element?.currentRoundScore) });
 
-                OneUser.forEach((element: any) => { FinalArray[i]?.previousScore.push(element?.currentRoundScore) });
+                };
 
             };
 
