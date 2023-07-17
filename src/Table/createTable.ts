@@ -58,8 +58,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
         const Table: TableInterface = {
 
-            // tableId: 'TABLE',
-            tableId: cryptoRandomString({ length: 24, type: 'hex' }),
+            tableId: 'TABLE',
+            // tableId: cryptoRandomString({ length: 24, type: 'hex' }),
             bootValue: UserDetails.bootValue,
             currentTurn: -1,
             currentRound: 1,
@@ -70,7 +70,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
                 {
                     userId: UserDetails.userId,
-                    userName: UserDetails.userName,
+                    userName: 'First',
+                    // userName: UserDetails.userName,
                     userProfile: UserDetails.userProfile,
                     seatIndex: 0,
                     isLeave: false,
@@ -96,6 +97,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
             isTurnLock: false,
 
             isWinning: false,
+
+            disconnectedUsers: []
 
         };
 

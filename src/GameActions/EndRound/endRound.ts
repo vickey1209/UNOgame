@@ -69,8 +69,6 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
         TableDetails.isRoundStart = false;
         TableDetails.isScoreScreen = true;
 
-        // TableDetails.playersArray[0].isLeave = true; // ! Remove ..........
-
         await SetTable(TableDetails.tableId, TableDetails);
 
         if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {

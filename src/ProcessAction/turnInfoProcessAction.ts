@@ -11,6 +11,7 @@ import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
+import { RemoveUserFromTable } from "../Table/leaveTable";
 
 const TurnInfoProcessAction = async (Data: any) => {
 
@@ -85,6 +86,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
         EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: TurnInfoResData });
 
+        if (TableDetails.disconnectedUsers.length) { await GAME_ACTIONS.RemoveDisconnectedUsers(TableDetails.tableId); };
 
         // setTimeout(async () => {
 
