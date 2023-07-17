@@ -109,7 +109,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
             isLeave: false,
             isBot: UserDetails.isBot,
 
-        }
+        };
 
         const UserInTable: UserInTableInterface = {
 
