@@ -83,7 +83,7 @@ const Win = async (tableId: string) => {
 
                 const OneUser = UserWiseRoundHistory.filter((e: any) => { return e.userId === FinalArray[i]?.userId });
 
-                OneUser.forEach((element: any) => { FinalArray[i]?.previousScore.push(element?.totalScore) });
+                OneUser.forEach((element: any) => { FinalArray[i]?.previousScore.push(element?.currentRoundScore) });
 
             };
 
