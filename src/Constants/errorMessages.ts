@@ -33,5 +33,6 @@ export = Object.freeze({
     IS_POSSIBLE_THROW_ERROR: "Possible Throw Card Return Error !!!",
     LAST_GAME_FINISHED: "The Last Game That You Played Doesn't Exist Anymore !!!",
     ROUND_HISTORY_ERROR: "Score Board Is Not Generated !!!",
+    INVALID_CARD_COLOR: "Invalid Card Color !!!",
 
 });
