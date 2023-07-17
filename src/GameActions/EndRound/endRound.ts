@@ -39,8 +39,6 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-        
-
             const { currentRound } = TableDetails;
             const { userId, userName, userProfile, isLeave, seatIndex } = TableDetails.playersArray[i];
 
@@ -70,6 +68,8 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
 
         TableDetails.isRoundStart = false;
         TableDetails.isScoreScreen = true;
+
+        // TableDetails.playersArray[0].isLeave = true; // ! Remove ..........
 
         await SetTable(TableDetails.tableId, TableDetails);
 
