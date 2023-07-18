@@ -36,33 +36,8 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
         const RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
 
         if (RoundHistoryDetails) { AllRoundScore = RoundHistoryDetails };
-        // if (RoundHistoryDetails) { RoundScoreArray = RoundHistoryDetails };
-        // if (RoundHistoryDetails) { RoundWiseScore = RoundHistoryDetails };
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
-
-            // const { currentRound } = TableDetails
-            // const { userId, userName, userProfile, isLeave } = TableDetails.playersArray[i];
-
-            // let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
-
-            // if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
-
-            // const Score = await CheckUserScore(UserInTableDetails);
-
-            // if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
-
-            // UserInTableDetails.userScore += (-Math.abs(Score.totalScore));
-
-            // const { userScore } = UserInTableDetails;
-            // // const { cardArray, userScore } = UserInTableDetails;
-
-            // RoundScoreArray.push({ userId, userName, userProfile, isLeave, userScore, currentRound, ...Score });
-            // // RoundScoreArray.push({ userId, userName, userProfile, isLeave, userScore, cardArray });
-
-            // // RoundWiseScore.push({ userId, roundScore: (-Math.abs(Score.totalScore)), currentRound: TableDetails.currentRound });
-
-            // await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
             const { currentRound } = TableDetails;
             const { userId, userName, userProfile, isLeave, seatIndex } = TableDetails.playersArray[i];
@@ -75,12 +50,9 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
 
             if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
 
-            // UserInTableDetails.userScore += Math.abs(Score.totalScore)
-            UserInTableDetails.userScore += (-Math.abs(Score.totalScore));
+            UserInTableDetails.userScore = Score.totalScore;
 
-            const { userScore } = UserInTableDetails;
-
-            RoundScoreArray.push({ userId, userName, userProfile, isLeave, seatIndex, userScore, currentRound, ...Score });
+            RoundScoreArray.push({ userId, userName, userProfile, isLeave, seatIndex, userScore: Score.currentRoundScore, currentRound, ...Score });
 
             await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
@@ -98,28 +70,6 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
         TableDetails.isScoreScreen = true;
 
         await SetTable(TableDetails.tableId, TableDetails);
-
-        // if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {
-
-        //     console.log('3 Round Done !!');
-        //     console.log('3 Round Done !!');
-        //     console.log('3 Round Done !!');
-        //     console.log('3 Round Done !!');
-        //     console.log('3 Round Done !!');
-        //     console.log('3 Round Done !!');
-
-        //     // console.log({ RoundScoreArray });
-
-        //     await Win(TableDetails.tableId);
-
-        // } else {
-
-        //     await BullTimer.AddJob.NextRound(TableDetails.tableId);
-
-        //     EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, AllRoundScore } });
-        //     // EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScore: RoundScoreArray } });
-
-        // };
 
         if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {
 

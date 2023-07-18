@@ -30,7 +30,7 @@ const AllUserScore = async (tableId: string) => {
 
             if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
 
-            ScoreResData.allUserScore.push({ userScore: Math.abs(Score.totalScore), seatIndex: UserInTableDetails.seatIndex, cardsLength: UserInTableDetails.cardArray.length });
+            ScoreResData.allUserScore.push({ userScore: Math.abs(Score.currentRoundScore), seatIndex: UserInTableDetails.seatIndex, cardsLength: UserInTableDetails.cardArray.length });
 
         };
 
@@ -49,71 +49,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
         const CONFIG = Config();
 
-        // let totalScore = 0,
-        //     simpleCardsPoint = 0, specialCardsPoint = 0, wildColorChangePoints = 0, wildPlusFourPoints = 0,
-        //     simpleCards = [], specialCards = [], wildColorChangeCards = [], wildPlusFourCards = [];
-
-        // for (let i = 0; i < UserInTableDetails.cardArray.length; i++) {
-
-        //     if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) {
-
-        //         totalScore += CONFIG.GamePlay.PUSE_FOUR_POINT;
-        //         wildPlusFourPoints += CONFIG.GamePlay.PUSE_FOUR_POINT;
-        //         // specialCardsPoint += CONFIG.GamePlay.PUSE_FOUR_POINT;
-
-        //         // specialCards.push(UserInTableDetails.cardArray[i]);
-        //         wildPlusFourCards.push(UserInTableDetails.cardArray[i]);
-
-        //     } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) {
-
-        //         totalScore += CONFIG.GamePlay.COLOR_CHANGE_POINT;
-        //         wildColorChangePoints += CONFIG.GamePlay.COLOR_CHANGE_POINT;
-        //         // specialCardsPoint += CONFIG.GamePlay.COLOR_CHANGE_POINT;
-
-        //         // specialCards.push(UserInTableDetails.cardArray[i]);
-        //         wildColorChangeCards.push(UserInTableDetails.cardArray[i]);
-
-        //     } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) {
-
-        //         totalScore += CONFIG.GamePlay.PUSE_TWO_POINT;
-        //         specialCardsPoint += CONFIG.GamePlay.PUSE_TWO_POINT;
-
-        //         specialCards.push(UserInTableDetails.cardArray[i]);
-
-        //     } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS) {
-
-        //         totalScore += CONFIG.GamePlay.REVERS_POINT;
-        //         specialCardsPoint += CONFIG.GamePlay.REVERS_POINT;
-
-        //         specialCards.push(UserInTableDetails.cardArray[i]);
-
-        //     } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.SKIP) {
-
-        //         totalScore += CONFIG.GamePlay.SKIP_POINT;
-        //         specialCardsPoint += CONFIG.GamePlay.SKIP_POINT;
-
-        //         specialCards.push(UserInTableDetails.cardArray[i]);
-
-        //     } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.ZERO) {
-
-        //         totalScore += CONFIG.GamePlay.ZERO_POINT;
-        //         simpleCardsPoint += CONFIG.GamePlay.ZERO_POINT;
-
-        //         simpleCards.push(UserInTableDetails.cardArray[i]);
-
-        //     } else {
-
-        //         totalScore += Number(UserInTableDetails.cardArray[i].split("-")[1]);
-        //         simpleCardsPoint += Number(UserInTableDetails.cardArray[i].split("-")[1]);
-
-        //         simpleCards.push(UserInTableDetails.cardArray[i]);
-
-        //     };
-        // };
-
-        // return { totalScore, simpleCardsPoint, specialCardsPoint, wildColorChangePoints, wildPlusFourPoints, simpleCards, specialCards, wildColorChangeCards, wildPlusFourCards };
-
-        let totalScore: any = 0,
+        let totalScore: any = 0, currentRoundScore: any = 0,
             simple: any = { Cards: [], Score: 0 },
             zero: any = { Cards: [], Score: 0 },
             special: any = { Cards: [], Score: 0 },
@@ -124,7 +60,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
             if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) {
 
-                totalScore += CONFIG.GamePlay.PUSE_FOUR_POINT;
+                currentRoundScore += CONFIG.GamePlay.PUSE_FOUR_POINT;
 
                 wildPlusFour.Score += CONFIG.GamePlay.PUSE_FOUR_POINT;
 
@@ -132,7 +68,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) {
 
-                totalScore += CONFIG.GamePlay.COLOR_CHANGE_POINT;
+                currentRoundScore += CONFIG.GamePlay.COLOR_CHANGE_POINT;
 
                 wildColorChange.Score += CONFIG.GamePlay.COLOR_CHANGE_POINT;
 
@@ -140,7 +76,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) {
 
-                totalScore += CONFIG.GamePlay.PUSE_TWO_POINT;
+                currentRoundScore += CONFIG.GamePlay.PUSE_TWO_POINT;
 
                 special.Score += CONFIG.GamePlay.PUSE_TWO_POINT;
 
@@ -149,7 +85,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS) {
 
-                totalScore += CONFIG.GamePlay.REVERS_POINT;
+                currentRoundScore += CONFIG.GamePlay.REVERS_POINT;
 
                 special.Score += CONFIG.GamePlay.REVERS_POINT;
 
@@ -158,7 +94,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.SKIP) {
 
-                totalScore += CONFIG.GamePlay.SKIP_POINT;
+                currentRoundScore += CONFIG.GamePlay.SKIP_POINT;
 
                 special.Score += CONFIG.GamePlay.SKIP_POINT;
 
@@ -167,7 +103,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.ZERO) {
 
-                totalScore += CONFIG.GamePlay.ZERO_POINT;
+                currentRoundScore += CONFIG.GamePlay.ZERO_POINT;
 
                 zero.Score += CONFIG.GamePlay.ZERO_POINT;
 
@@ -175,7 +111,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
             } else {
 
-                totalScore += Number(UserInTableDetails.cardArray[i].split("-")[1]);
+                currentRoundScore += Number(UserInTableDetails.cardArray[i].split("-")[1]);
 
                 simple.Score += Number(UserInTableDetails.cardArray[i].split("-")[1]);
 
@@ -184,9 +120,11 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
             };
         };
 
-        totalScore = -Math.abs(totalScore);
+        currentRoundScore = (-Math.abs(currentRoundScore));
 
-        return { totalScore, simple, special, zero, wildColorChange, wildPlusFour };
+        totalScore = UserInTableDetails.userScore + currentRoundScore;
+
+        return { totalScore, currentRoundScore, simple, special, zero, wildColorChange, wildPlusFour };
 
     } catch (error: any) {
         Logger('CheckUserScore Error : ', error);

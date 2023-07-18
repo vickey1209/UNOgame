@@ -18,20 +18,33 @@ const DistributeCards = async (tableId: string) => {
 
         const CONFIG = Config();
 
-        const { MY_CARDS, ROUND_START } = CONSTANTS.EVENTS_NAME;
+        const { MY_CARDS } = CONSTANTS.EVENTS_NAME;
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        const PowerCardNumber = 3;
-        // const PowerCardNumber = await GAME_ACTIONS.RandomNumber(CONFIG.GamePlay.MIN_SPECIAL_CARD, CONFIG.GamePlay.MAX_SPECIAL_CARD);
+        const PowerCardNumber = await GAME_ACTIONS.RandomNumber(CONFIG.GamePlay.MIN_SPECIAL_CARD, CONFIG.GamePlay.MAX_SPECIAL_CARD);
 
         let AllUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.ALL_UNO_CARDS));
         let SimpleUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.SIMPLE_UNO_CARDS));
         let SpecialUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.SPECIAL_UNO_CARDS));
 
         const AllUserSocketId = [];
+
+        const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SimpleUnoCards.length - 1));
+
+        const Card = SimpleUnoCards[RendomNumber];
+
+        TableDetails.openCardDeck.push(Card);
+
+        TableDetails.activeCard = Card;
+        TableDetails.activeCardType = Card.split("-")[1];
+        TableDetails.activeCardColor = Card.split("-")[0];
+
+        if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
+        if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
+        if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
@@ -81,22 +94,17 @@ const DistributeCards = async (tableId: string) => {
 
         TableDetails.playersArray = TableDetails.playersArray.sort((a, b) => { return a.seatIndex - b.seatIndex });
 
-        const ShuffelCard = await GAME_ACTIONS.ShuffleArray(SimpleUnoCards);
-        // const ShuffelCard = await GAME_ACTIONS.ShuffleArray(AllUnoCards);
+        const ShuffelCard = await GAME_ACTIONS.ShuffleArray(AllUnoCards);
 
-        TableDetails.openCardDeck.push(ShuffelCard[0]);
+        // TableDetails.openCardDeck.push(ShuffelCard[0]);
 
-        TableDetails.activeCard = ShuffelCard[0];
-        TableDetails.activeCardType = ShuffelCard[0].split("-")[1];
-        TableDetails.activeCardColor = ShuffelCard[0].split("-")[0];
+        // TableDetails.activeCard = ShuffelCard[0];
+        // TableDetails.activeCardType = ShuffelCard[0].split("-")[1];
+        // TableDetails.activeCardColor = ShuffelCard[0].split("-")[0];
 
-        ShuffelCard.splice(0, 1);
+        // ShuffelCard.splice(0, 1);
 
         TableDetails.closeCardDeck = ShuffelCard;
-
-        // await BullTimer.AddJob.Round(tableId);
-
-        // EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: tableId, Data: { timer: CONFIG.GamePlay.ROUND_TIMER } });
 
         for (let i = 0; i < AllUserSocketId.length; i++) {
 
@@ -117,7 +125,7 @@ const DistributeCards = async (tableId: string) => {
 
     } catch (error: any) {
         Logger('DistributeCards Error : ', error);
-    }
-}
+    };
+};
 
 export { DistributeCards };

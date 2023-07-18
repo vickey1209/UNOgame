@@ -28,6 +28,8 @@ export interface TableInterface {
 
     isWinning: boolean,
 
+    disconnectedUsers: Array<string>
+
 }
 
 export interface PlayersArrayInterface {

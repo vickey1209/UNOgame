@@ -1,18 +1,18 @@
 import { Socket } from "socket.io";
 import { Logger } from "../Logger/logger";
-import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
+import { ApplyLock, RemoveLock } from "../Connection/redlock";
+import { RoundHistoryInterface } from "../Interface/RoundHistory/RoundHistoryInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
-import { GetTable, GetUserInTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetRoundHistory, GetTable, GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { EventEmitter } from "../Connection/emitter";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
-import { UnoInterface } from "../Interface/Uno/UnoInterface";
 
-const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
+const RoundHistory = async (en: string, socket: Socket, Data: RoundHistoryInterface) => {
 
-    const Path = 'Uno';
+    const Path = 'RoundHistory';
 
-    const { ERROR_POPUP, UNO } = CONSTANTS.EVENTS_NAME;
+    const { ERROR_POPUP, ROUND_HISTORY } = CONSTANTS.EVENTS_NAME;
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
@@ -21,7 +21,7 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
 
     try {
 
-        Logger("Uno", JSON.stringify({ Data }));
+        Logger("RoundHistory", JSON.stringify({ Data }));
 
         let TableDetails: TableInterface = await GetTable(Data?.tableId);
 
@@ -37,23 +37,21 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-        if (UserInTableDetails.cardArray.length !== 1) {
-            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.UNO_NOT_POSSIBLE } });
+        const RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
+
+        if (RoundHistoryDetails.length) {
+
+            EventEmitter.emit(ROUND_HISTORY, { en: ROUND_HISTORY, SocketId: socket.id, Data: { isHistoryAvailable: true } });
+
+        } else {
+
+            EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.ROUND_HISTORY_ERROR } });
+
         };
-
-        if (UserInTableDetails.isUnoClick) {
-            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.ALREADY_CLICKED_UNO } });
-        };
-
-        UserInTableDetails.isUnoClick = true;
-
-        await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
-
-        EventEmitter.emit(UNO, { en: UNO, RoomId: TableDetails.tableId, Data });
 
     } catch (error: any) {
 
-        Logger('Uno Error : ', error);
+        Logger('RoundHistory Error : ', error);
 
     } finally {
 
@@ -62,4 +60,4 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
     };
 };
 
-export { Uno };
+export { RoundHistory };

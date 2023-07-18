@@ -70,7 +70,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
                 {
                     userId: UserDetails.userId,
-                    userName: UserDetails.userName,
+                    userName: 'First',
+                    // userName: UserDetails.userName,
                     userProfile: UserDetails.userProfile,
                     seatIndex: 0,
                     isLeave: false,
@@ -96,6 +97,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
             isTurnLock: false,
 
             isWinning: false,
+
+            disconnectedUsers: []
 
         };
 

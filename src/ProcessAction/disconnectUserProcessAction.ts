@@ -1,7 +1,7 @@
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { io } from "../Connection/socket";
 import { CONSTANTS } from "../Constants";
-import { GetTable, GetUser } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetUser, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { Logger } from "../Logger/logger";
@@ -42,7 +42,19 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        await RemoveUserFromTable(userId, tableId);
+        if (TableDetails.isLeaveLock) {
+
+            TableDetails.disconnectedUsers.push(UserDetails.userId);
+
+            await SetTable(TableDetails.tableId, TableDetails);
+
+        } else {
+
+            await RemoveUserFromTable(userId, tableId);
+
+        };
+
+        // await RemoveUserFromTable(userId, tableId);
 
     } catch (error: any) {
 

@@ -22,6 +22,16 @@ const RandomPlayerTurn = async (tableId: string) => {
         TableDetails.isTurnLock = true;
         TableDetails.currentTurn = RandomPlayerSelect;
 
+        if (TableDetails.playersArray[RandomPlayerSelect].isLeave) {
+
+            let NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
+
+            if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+
+            TableDetails.currentTurn = NextTurn;
+
+        };
+
         await SetTable(TableDetails.tableId, TableDetails);
 
         // await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 1);
