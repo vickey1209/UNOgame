@@ -142,6 +142,21 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
                 seatIndex: UserInTableDetails.seatIndex
 
             };
+            if(UserInTableDetails.lastPickCard.slice(0, 4) === "W-CH" || UserInTableDetails.lastPickCard.slice(1, 6) === "-D4C-"){
+                let resRedCards = UserInTableDetails.cardArray.filter(item => new RegExp("R-" , 'i').test(item));
+                let resGreenCards = UserInTableDetails.cardArray.filter(item => new RegExp("G-" , 'i').test(item));
+                let resYelloCards = UserInTableDetails.cardArray.filter(item => new RegExp("Y-" , 'i').test(item));
+                let resBlueCards = UserInTableDetails.cardArray.filter(item => new RegExp("B-" , 'i').test(item));
+                if(resRedCards.length === 0){
+                    Fake_Data.cardColor = "R";
+                }else if(resGreenCards.length === 0){
+                    Fake_Data.cardColor = "G";
+                }else if(resYelloCards.length === 0){
+                    Fake_Data.cardColor = "Y";
+                }else if(resBlueCards.length === 0){
+                    Fake_Data.cardColor = "B";
+                }
+            }
 
             await ThrowCard('THROW_CARD', socket, Fake_Data);
         }

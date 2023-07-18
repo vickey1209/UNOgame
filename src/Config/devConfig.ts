@@ -48,7 +48,7 @@ const DevConfig = (): ConfigInterface => {
         MAX_SPECIAL_CARD: 3,
         TURN_TIMEOUT_COUNT: 2,
 
-        TOTAL_ROUND_NUMBER: 3,
+        TOTAL_ROUND_NUMBER: 2,
         UNO_PENALTY_NUMBER: 2,
 
         ZERO_POINT: 10,
