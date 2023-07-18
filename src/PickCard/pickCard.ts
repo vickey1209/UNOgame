@@ -70,11 +70,12 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
                 const PickCardType = TableDetails.closeCardDeck[0].split("-")[1];
 
                 if (
+
                     (pickCards[0].split("-")[1] === TableDetails.activeCardType || pickCards[0].split("-")[0] === TableDetails.activeCardColor) ||
 
                     (PickCardColor === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && PickCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) ||
 
-                    (PickCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE && TableDetails.numberOfCardToPick === 0)
+                    (PickCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE)
 
                 ) {
 
