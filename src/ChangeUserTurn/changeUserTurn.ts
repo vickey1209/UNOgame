@@ -35,6 +35,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
 
             PlusFourData.pickCards.forEach(element => { TableDetails.closeCardDeck.splice(TableDetails.closeCardDeck.indexOf(element), 1); });
 
+            if (!PlusFourData.isPenaltyFreeCard) { isSkip = PlusFourData.isSkip, skipSeatIndex = PlusFourData.skipSeatIndex };
+
         } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO && isThrow) { // ^ +2 Card !
 
             const PlusTwoData = await GAME_ACTIONS.PlusTwo(TableDetails.tableId);
@@ -45,6 +47,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
             TableDetails.numberOfCardToPick = PlusTwoData.penaltyNumber;
 
             PlusTwoData.pickCards.forEach(element => { TableDetails.closeCardDeck.splice(TableDetails.closeCardDeck.indexOf(element), 1); });
+
+            if (!PlusTwoData.isPenaltyFreeCard) { isSkip = PlusTwoData.isSkip, skipSeatIndex = PlusTwoData.skipSeatIndex };
 
         } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.SKIP && isThrow) { // ^ Skip Card !
 
