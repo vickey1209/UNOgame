@@ -49,7 +49,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         if (!CurrentTurnUser) { throw new Error(CONSTANTS.ERROR_MESSAGES.ARRAY_FIND_ERROR) };
 
-        const UserDetails: SignUpInterface = await GetUser(Data?.userId);
+        const UserDetails: SignUpInterface = await GetUser(CurrentTurnUser?.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
@@ -123,12 +123,6 @@ const UserTurnProcessAction = async (Data: any) => {
         const TurnMissResData = { userId: UserInTableDetails.userId, tableId: UserInTableDetails.tableId, seatIndex: UserInTableDetails.seatIndex, turnMissCount: UserInTableDetails.turnMissCount };
 
         EventEmitter.emit(TURN_MISSED, { en: TURN_MISSED, Data: TurnMissResData, RoomId: TableDetails.tableId });
-
-        // if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
-
-        //     EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.TURN_SKIP_LIMIT_REACHED } });
-
-        // };
 
         if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
 
