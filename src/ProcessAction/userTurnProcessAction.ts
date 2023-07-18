@@ -3,8 +3,9 @@ import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
-import { GetTable, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
+import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
@@ -15,7 +16,7 @@ const UserTurnProcessAction = async (Data: any) => {
     const Path = 'UserTurnProcessAction';
 
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
-    const { PICK_CARD, TURN_MISSED } = CONSTANTS.EVENTS_NAME;
+    const { PICK_CARD, TURN_MISSED, ALERT } = CONSTANTS.EVENTS_NAME;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
 
@@ -47,6 +48,10 @@ const UserTurnProcessAction = async (Data: any) => {
         const CurrentTurnUser = TableDetails.playersArray.find(e => { return e.seatIndex === TableDetails.currentTurn });
 
         if (!CurrentTurnUser) { throw new Error(CONSTANTS.ERROR_MESSAGES.ARRAY_FIND_ERROR) };
+
+        const UserDetails: SignUpInterface = await GetUser(Data?.userId);
+
+        if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
         let UserInTableDetails: UserInTableInterface = await GetUserInTable(CurrentTurnUser?.userId);
 
@@ -121,13 +126,21 @@ const UserTurnProcessAction = async (Data: any) => {
 
         // if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
 
-        //     await RemoveUserFromTable(UserInTableDetails.userId, TableDetails.tableId);
-
-        // } else {
-
-        await ChangeUserTurn(TableDetails.tableId, false, 0);
+        //     EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.TURN_SKIP_LIMIT_REACHED } });
 
         // };
+
+        if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
+
+            EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.TURN_SKIP_LIMIT_REACHED } });
+
+            await RemoveUserFromTable(UserInTableDetails.userId, TableDetails.tableId);
+
+        } else {
+
+            await ChangeUserTurn(TableDetails.tableId, false, 0);
+
+        };
 
     } catch (error: any) {
 

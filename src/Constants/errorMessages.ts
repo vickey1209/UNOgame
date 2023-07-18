@@ -34,5 +34,6 @@ export = Object.freeze({
     LAST_GAME_FINISHED: "The Last Game That You Played Doesn't Exist Anymore !!!",
     ROUND_HISTORY_ERROR: "Score Board Is Not Generated !!!",
     INVALID_CARD_COLOR: "Invalid Card Color !!!",
+    TURN_SKIP_LIMIT_REACHED: "Your Turn Skip Limit Reach !!!",
 
 });
