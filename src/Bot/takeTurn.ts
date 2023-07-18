@@ -143,11 +143,16 @@ async function findActiveCard(userCardArray:any, tableData:any){
     let a = user_card;
     let term = last_moved_card; // search term (regex pattern)
     if(last_moved_card=="W-" /*|| last_moved_card=="D4"*/){
-        term = tableData.activeCard.slice(0, 4)//last_moved_card+"-"
+        term = '----';//tableData.activeCard.slice(0, 4)//last_moved_card+"-"
     }
     // Search for card color
     let card = a.filter((item:string) => new RegExp(term , 'i').test(item));
     
+    if (card.length > 0) {
+        card = card.sort(function(a:string, b:string){return Number(a[2]) - Number(b[2])})
+        card = card.reverse();
+    }
+
     // Search for wild card
     let card_wild = a.filter((item:string) => new RegExp("W-CH" , 'i').test(item));
     
@@ -224,6 +229,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
         console.log(" findActiveCard findActiveCard 4: ",tableData.robotType);
         // tableData.robotType="high";
         let card_bot_wild = [];
+        let nextPlayerCardArray = [];
         if(tableData.robotType==CONSTANTS.BOT_PRIORITY.EASY){
             return_data.card=uniqueArray[0];
         }else if(tableData.robotType==CONSTANTS.BOT_PRIORITY.HARD){
@@ -264,7 +270,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
                 const UserAvailableInTable = tableData.playersArray.find((e:any) => { return e.seatIndex === nextTurn });
 
                 let UserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
-
+                nextPlayerCardArray = UserInTableDetails.cardArray;
                 let D4C_CardInNextPlayerCard = UserInTableDetails.cardArray.filter(item => new RegExp("D4C-" , 'i').test(item));
                 let D2C_CardInNextPlayerCard = UserInTableDetails.cardArray.filter(item => new RegExp("-D2C-" , 'i').test(item));
                 if(D4C_CardInNextPlayerCard.length > 0){
@@ -276,17 +282,31 @@ async function findActiveCard(userCardArray:any, tableData:any){
                 }
 
                 if(card_bot_wild.length > 0 && D4C_CardInNextPlayerCard.length === 0){
-                    let resRedCards = UserInTableDetails.cardArray.filter(item => new RegExp("R-" , 'i').test(item));
-                    let resGreenCards = UserInTableDetails.cardArray.filter(item => new RegExp("G-" , 'i').test(item));
-                    let resYelloCards = UserInTableDetails.cardArray.filter(item => new RegExp("Y-" , 'i').test(item));
-                    let resBlueCards = UserInTableDetails.cardArray.filter(item => new RegExp("B-" , 'i').test(item));
-                    if(resRedCards.length === 0){
+                    let resRedCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("R-" , 'i').test(item));
+                    let resGreenCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("G-" , 'i').test(item));
+                    let resYelloCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("Y-" , 'i').test(item));
+                    let resBlueCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("B-" , 'i').test(item));
+
+                    let resRedCardsCurrentPLayer = UserInTableDetails.cardArray.filter(item => new RegExp("R-" , 'i').test(item));
+                    let resGreenCardsCurrentPLayer = UserInTableDetails.cardArray.filter(item => new RegExp("G-" , 'i').test(item));
+                    let resYelloCardsCurrentPLayer = UserInTableDetails.cardArray.filter(item => new RegExp("Y-" , 'i').test(item));
+                    let resBlueCardsCurrentPLayer = UserInTableDetails.cardArray.filter(item => new RegExp("B-" , 'i').test(item));
+
+                    if(resRedCardsNextPayer.length === 0 && resRedCardsCurrentPLayer.length > 0){
                         color_index = 0;
-                    }else if(resGreenCards.length === 0){
+                    }else if(resGreenCardsNextPayer.length === 0  && resGreenCardsCurrentPLayer.length > 0){
                         color_index = 1;
-                    }else if(resYelloCards.length === 0){
+                    }else if(resYelloCardsNextPayer.length === 0  && resYelloCardsCurrentPLayer.length > 0){
                         color_index = 2;
-                    }else if(resBlueCards.length === 0){
+                    }else if(resBlueCardsNextPayer.length === 0  && resBlueCardsCurrentPLayer.length > 0){
+                        color_index = 3;
+                    }else if(resRedCardsNextPayer.length === 0){
+                        color_index = 0;
+                    }else if(resGreenCardsNextPayer.length === 0){
+                        color_index = 1;
+                    }else if(resYelloCardsNextPayer.length === 0){
+                        color_index = 2;
+                    }else if(resBlueCardsNextPayer.length === 0){
                         color_index = 3;
                     }
                 }else{
@@ -331,15 +351,15 @@ async function findActiveCard(userCardArray:any, tableData:any){
         }else if(card_bot_w2c.length > 0){
             return_data.card=card_bot_w2c[0];
             return_data.C_C=card_bot_w2c[0][0];
+        }else if(card_bot_wild.length > 0){
+            return_data.card=card_bot_wild[0];
+            return_data.C_C=color_array[color_index];
         }else if(card_bot_skip.length > 0){
             return_data.card=card_bot_skip[0];
             return_data.C_C=card_bot_skip[0][0];
         }else if(card_bot_reverse.length > 0){
             return_data.card=card_bot_reverse[0];
             return_data.C_C=card_bot_reverse[0][0];
-        }else if(card_bot_wild.length > 0){
-            return_data.card=card_bot_wild[0];
-            return_data.C_C=color_array[color_index];
         }else{
             let chk__card=uniqueArray[0].slice(0, 4);
             if(chk__card=="W-D4"){
