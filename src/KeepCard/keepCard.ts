@@ -58,7 +58,7 @@ const KeepCard = async (en: string, socket: Socket, Data: KeepCardInterface) => 
 
         await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
-        await ChangeUserTurn(TableDetails.tableId, false, 0);
+        await ChangeUserTurn(TableDetails.tableId, false, false, 0);
 
     } catch (error: any) {
 

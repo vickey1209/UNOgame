@@ -31,7 +31,7 @@ const UserTurnProcessAction = async (Data: any) => {
         const tableId = Data?.tableId;
         const currentTurn = Data?.currentTurn;
 
-        let pickCards: Array<string> = [];
+        let pickCards: Array<string> = [], isPick = false;
 
         if (!tableId || currentTurn === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
 
@@ -62,6 +62,8 @@ const UserTurnProcessAction = async (Data: any) => {
             UserInTableDetails.lastPickCard = '';
 
         } else {
+
+            isPick = true;
 
             if (TableDetails.numberOfCardToPick === 0) {
 
@@ -94,7 +96,7 @@ const UserTurnProcessAction = async (Data: any) => {
                     };
                 };
 
-                TableDetails.numberOfCardToPick = 0;
+                // TableDetails.numberOfCardToPick = 0;
 
             };
 
@@ -132,7 +134,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         } else {
 
-            await ChangeUserTurn(TableDetails.tableId, false, 0);
+            await ChangeUserTurn(TableDetails.tableId, false, isPick, 0);
 
         };
 

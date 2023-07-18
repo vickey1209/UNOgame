@@ -98,7 +98,7 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
         EventEmitter.emit(THROW_CARD, { en: THROW_CARD, RoomId: TableDetails.tableId, Data: Data });
 
         if (UserInTableDetails.cardArray.length < 1) { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }
-        else { await ChangeUserTurn(TableDetails.tableId, true, UserInTableDetails.cardArray.length); };
+        else { await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length); };
 
     } catch (error: any) {
 
