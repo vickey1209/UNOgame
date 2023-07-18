@@ -108,7 +108,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
                 };
             };
 
-            TableDetails.numberOfCardToPick = 0;
+            // TableDetails.numberOfCardToPick = 0;
 
         };
 
@@ -126,7 +126,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
             await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
-            await ChangeUserTurn(TableDetails.tableId, false, 0);
+            await ChangeUserTurn(TableDetails.tableId, false, true, 0);
 
         };
 

@@ -5,7 +5,7 @@ import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { Logger } from "../Logger/logger";
 
-const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsNumber: number) => {
+const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean, remainingCardsNumber: number) => {
 
     try {
 
@@ -21,6 +21,14 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
 
             TableDetails.isClockwise = TableDetails.isClockwise ? false : true;
             isRevers = true;
+
+        };
+
+        if (isPick && TableDetails.numberOfCardToPick !== 0) {
+
+            isSkip = true, skipSeatIndex = TableDetails.currentTurn;
+
+            TableDetails.numberOfCardToPick = 0;
 
         };
 
