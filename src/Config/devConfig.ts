@@ -54,8 +54,8 @@ const DevConfig = (): ConfigInterface => {
         ZERO_POINT: 10,
         SKIP_POINT: 20,
         REVERS_POINT: 20,
-        PUSE_TWO_POINT: 20,
-        PUSE_FOUR_POINT: 50,
+        PLUS_TWO_POINT: 20,
+        PLUS_FOUR_POINT: 50,
         COLOR_CHANGE_POINT: 35,
 
     };

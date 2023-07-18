@@ -52,7 +52,7 @@ export interface GamePlayInterface {
     ZERO_POINT: number,
     SKIP_POINT: number,
     REVERS_POINT: number,
-    PUSE_TWO_POINT: number,
-    PUSE_FOUR_POINT: number,
+    PLUS_TWO_POINT: number,
+    PLUS_FOUR_POINT: number,
     COLOR_CHANGE_POINT: number,
 }
