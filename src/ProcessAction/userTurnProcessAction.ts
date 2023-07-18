@@ -3,8 +3,9 @@ import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
-import { GetTable, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
+import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
@@ -15,7 +16,7 @@ const UserTurnProcessAction = async (Data: any) => {
     const Path = 'UserTurnProcessAction';
 
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
-    const { PICK_CARD, TURN_MISSED } = CONSTANTS.EVENTS_NAME;
+    const { PICK_CARD, TURN_MISSED, ALERT } = CONSTANTS.EVENTS_NAME;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
 
@@ -30,7 +31,7 @@ const UserTurnProcessAction = async (Data: any) => {
         const tableId = Data?.tableId;
         const currentTurn = Data?.currentTurn;
 
-        let pickCards: Array<string> = [];
+        let pickCards: Array<string> = [], isPick = false;
 
         if (!tableId || currentTurn === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
 
@@ -48,6 +49,10 @@ const UserTurnProcessAction = async (Data: any) => {
 
         if (!CurrentTurnUser) { throw new Error(CONSTANTS.ERROR_MESSAGES.ARRAY_FIND_ERROR) };
 
+        const UserDetails: SignUpInterface = await GetUser(CurrentTurnUser?.userId);
+
+        if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
+
         let UserInTableDetails: UserInTableInterface = await GetUserInTable(CurrentTurnUser?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
@@ -57,6 +62,8 @@ const UserTurnProcessAction = async (Data: any) => {
             UserInTableDetails.lastPickCard = '';
 
         } else {
+
+            isPick = true;
 
             if (TableDetails.numberOfCardToPick === 0) {
 
@@ -89,7 +96,7 @@ const UserTurnProcessAction = async (Data: any) => {
                     };
                 };
 
-                TableDetails.numberOfCardToPick = 0;
+                // TableDetails.numberOfCardToPick = 0;
 
             };
 
@@ -119,15 +126,17 @@ const UserTurnProcessAction = async (Data: any) => {
 
         EventEmitter.emit(TURN_MISSED, { en: TURN_MISSED, Data: TurnMissResData, RoomId: TableDetails.tableId });
 
-        // if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
+        if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
 
-        //     await RemoveUserFromTable(UserInTableDetails.userId, TableDetails.tableId);
+            EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.TURN_SKIP_LIMIT_REACHED } });
 
-        // } else {
+            await RemoveUserFromTable(UserInTableDetails.userId, TableDetails.tableId);
 
-        await ChangeUserTurn(TableDetails.tableId, false, 0);
+        } else {
 
-        // };
+            await ChangeUserTurn(TableDetails.tableId, false, isPick, 0);
+
+        };
 
     } catch (error: any) {
 

@@ -75,6 +75,8 @@ const PlusFour = async (tableId: string) => {
 
         } else {
 
+            isPenaltyFreeCard = false;
+
             if (forLimit === 0) { forLimit = 4 };
 
             for (let i = 0; i < forLimit; i++) {

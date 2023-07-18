@@ -5,7 +5,7 @@ import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { Logger } from "../Logger/logger";
 
-const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsNumber: number) => {
+const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean, remainingCardsNumber: number) => {
 
     try {
 
@@ -24,6 +24,14 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
 
         };
 
+        if (isPick && TableDetails.numberOfCardToPick !== 0) {
+
+            isSkip = true, skipSeatIndex = TableDetails.currentTurn;
+
+            TableDetails.numberOfCardToPick = 0;
+
+        };
+
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR && isThrow) { // ^ +4 Wild Card !
 
             const PlusFourData = await GAME_ACTIONS.PlusFour(TableDetails.tableId);
@@ -35,6 +43,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
 
             PlusFourData.pickCards.forEach(element => { TableDetails.closeCardDeck.splice(TableDetails.closeCardDeck.indexOf(element), 1); });
 
+            if (!PlusFourData.isPenaltyFreeCard) { isSkip = PlusFourData.isSkip, skipSeatIndex = PlusFourData.skipSeatIndex };
+
         } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO && isThrow) { // ^ +2 Card !
 
             const PlusTwoData = await GAME_ACTIONS.PlusTwo(TableDetails.tableId);
@@ -45,6 +55,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, remainingCardsN
             TableDetails.numberOfCardToPick = PlusTwoData.penaltyNumber;
 
             PlusTwoData.pickCards.forEach(element => { TableDetails.closeCardDeck.splice(TableDetails.closeCardDeck.indexOf(element), 1); });
+
+            if (!PlusTwoData.isPenaltyFreeCard) { isSkip = PlusTwoData.isSkip, skipSeatIndex = PlusTwoData.skipSeatIndex };
 
         } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.SKIP && isThrow) { // ^ Skip Card !
 
