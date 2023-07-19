@@ -148,15 +148,24 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
                 let resGreenCards = UserInTableDetails.cardArray.filter(item => new RegExp("G-" , 'i').test(item));
                 let resYelloCards = UserInTableDetails.cardArray.filter(item => new RegExp("Y-" , 'i').test(item));
                 let resBlueCards = UserInTableDetails.cardArray.filter(item => new RegExp("B-" , 'i').test(item));
-                if(resRedCards.length === 0){
-                    Fake_Data.cardColor = "R";
-                }else if(resGreenCards.length === 0){
-                    Fake_Data.cardColor = "G";
-                }else if(resYelloCards.length === 0){
-                    Fake_Data.cardColor = "Y";
-                }else if(resBlueCards.length === 0){
-                    Fake_Data.cardColor = "B";
-                }
+                let color_array=["R","G","Y","B"];
+                let masterArray = [resRedCards,resGreenCards,resYelloCards,resBlueCards];
+                var indexOfLongestArray = masterArray.reduce((acc, arr, idx) => {
+                    console.log(acc, idx, JSON.stringify([arr, masterArray[acc]]))
+                    return arr.length > masterArray[acc].length ? idx : acc
+                }, 0)
+                    
+                Fake_Data.cardColor = color_array[indexOfLongestArray]; 
+
+                // if(resRedCards.length === 0){
+                //     Fake_Data.cardColor = "R";
+                // }else if(resGreenCards.length === 0){
+                //     Fake_Data.cardColor = "G";
+                // }else if(resYelloCards.length === 0){
+                //     Fake_Data.cardColor = "Y";
+                // }else if(resBlueCards.length === 0){
+                //     Fake_Data.cardColor = "B";
+                // }
             }
 
             await ThrowCard('THROW_CARD', socket, Fake_Data);
