@@ -167,7 +167,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
                 //     Fake_Data.cardColor = "B";
                 // }
             }
-
+            // await BullTimer.AddJob.BotCardThrow({eventName : "THROW_CARD",socket,delayNumber:1,Fake_Data})
             await ThrowCard('THROW_CARD', socket, Fake_Data);
         }
 

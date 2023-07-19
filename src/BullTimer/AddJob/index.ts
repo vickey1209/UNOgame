@@ -6,7 +6,7 @@ import { TimesUp } from "./timesUp";
 import { TurnInfo } from "./turnInfo";
 import { UnoClick } from "./unoClick";
 import { UserTurn } from "./userTurn";
-
+import { BotCardThrow } from "./botCardThrow";
 
 const AddJob = {
 
@@ -18,6 +18,7 @@ const AddJob = {
     DisconnectUser,
     UnoClick,
     TimesUp,
+    BotCardThrow
 
 };
 
