@@ -81,26 +81,28 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
                 const GameStartJob = await BullTimer.CheckJob.CheckCollectBootValue(TableDetails.tableId);
                 const RoundScreenJob = await BullTimer.CheckJob.CheckNextRound(TableDetails.tableId);
 
-                let RemainingUserTurnTimer: any = 0, RemainingRoundTimer: any = 0, RemainingGameStartTimer: any = 0, RemainingRoundScreenTimer: any = 0;
+                let RemainingUserTurnTimer: any = 0, RemainingRoundTimer: any = 0, RemainingGameStartTimer: any = 0, RemainingScoreScreenTimer: any = 0;
 
                 if (RoundJob) { RemainingRoundTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundJob); };
                 if (UserTurnJob) { RemainingUserTurnTimer = await GAME_ACTIONS.RemainTimeCalculation(UserTurnJob); };
                 if (GameStartJob) { RemainingGameStartTimer = await GAME_ACTIONS.RemainTimeCalculation(GameStartJob); };
-                if (RoundScreenJob) { RemainingRoundScreenTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundScreenJob); };
+                if (RoundScreenJob) { RemainingScoreScreenTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundScreenJob); };
 
                 const RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
 
                 const RejoinResData = {
 
                     table: {
+
                         tableId, bootValue, currentTurn,
                         currentRound, maxPlayers, playersArray,
                         activeCard, activeCardType, activeCardColor,
                         isClockwise, isGameStart, isRoundStart, isWinning, isScoreScreen,
-                        RemainingRoundTimer, RemainingGameStartTimer, RemainingRoundScreenTimer
+                        RemainingRoundTimer, RemainingGameStartTimer, RemainingScoreScreenTimer, RemainingUserTurnTimer,
+
                     },
 
-                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray, RemainingUserTurnTimer },
+                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray },
 
                     allRoundScore: RoundHistoryDetails.length ? RoundHistoryDetails : [],
 
