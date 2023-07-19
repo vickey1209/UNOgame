@@ -81,8 +81,6 @@ const PlusFour = async (tableId: string) => {
 
             for (let i = 0; i < forLimit; i++) {
 
-                // if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
-
                 if (TableDetails.closeCardDeck.length) {
 
                     UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);

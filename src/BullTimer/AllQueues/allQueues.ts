@@ -24,7 +24,6 @@ const UnoClickQueue = new Bull('UnoClick', BullRedisOptions);
 const TimesUpQueue = new Bull('TimesUp', BullRedisOptions);
 const BotCardThrowQueue = new Bull('BotCardThrow', BullRedisOptions);
 
-
 export {
 
     CollectBootQueue,

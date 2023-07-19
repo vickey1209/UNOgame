@@ -2,7 +2,7 @@ import { CheckUserScore } from "../AllUserScore/allUserScore";
 import { BullTimer } from "../BullTimer";
 import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
-import { GetRoundHistory, GetTable, GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetRoundHistory, GetTable, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
@@ -70,9 +70,9 @@ const Win = async (tableId: string) => {
         };
 
         let RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
-        
+
         if (RoundHistoryDetails.length) {
-            
+
             let UserWiseRoundHistory: any = [];
 
             for (let i = 0; i < RoundHistoryDetails.length; i++) {
@@ -98,6 +98,11 @@ const Win = async (tableId: string) => {
             };
 
         };
+
+        TableDetails.isWinning = true;
+        TableDetails.winningArray = FinalArray;
+
+        await SetTable(TableDetails.tableId, TableDetails);
 
         EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: TableDetails.tableId, Data: { winningArray: FinalArray } });
 

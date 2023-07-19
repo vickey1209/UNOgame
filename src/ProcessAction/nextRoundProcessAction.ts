@@ -58,8 +58,6 @@ const NextRoundProcessAction = async (Data: any) => {
 
         TableDetails.currentRound += 1;
 
-        // TableDetails.isLeaveLock = true;
-
         TableDetails.isScoreScreen = false;
 
         await SetTable(TableDetails.tableId, TableDetails);

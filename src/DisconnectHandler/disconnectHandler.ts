@@ -15,7 +15,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
         const Path = 'DisconnectHandler';
 
-        Logger("DisconnectHandler", JSON.stringify({}));
+        Logger("DisconnectHandler", JSON.stringify({ SocketData: socket.handshake.auth }));
 
         const userId = socket.handshake.auth?.userId;
         const playerCount = socket.handshake.auth?.playerCount;
@@ -45,7 +45,6 @@ const DisconnectHandler = async (socket: Socket) => {
 
         };
 
-        // ! Bull ...........
         await BullTimer.CancelJob.CancelDisconnectUser(UserDetails.userId);
 
         if (UserDetails.tableId !== '') {
@@ -93,7 +92,6 @@ const DisconnectHandler = async (socket: Socket) => {
                 return;
             };
 
-            // ! Bull ...........
             await BullTimer.AddJob.DisconnectUser(UserDetails.userId, UserDetails.tableId, UserDetails.bootValue, UserDetails.playerCount);
 
             await RemoveLock(Path, Tablelock);

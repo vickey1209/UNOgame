@@ -44,7 +44,7 @@ const HttpsConnection = async () => {
 
     } catch (error) {
         console.log('HttpsConnection Error : ', error);
-    }
-}
+    };
+};
 
 export { HttpsConnection, httpsServer };

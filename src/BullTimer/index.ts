@@ -1,7 +1,6 @@
 import { AddJob } from "./AddJob";
-import { CancelJob } from "./CancelJob";
 import { CheckJob } from "./CheckJob";
-
+import { CancelJob } from "./CancelJob";
 
 const BullTimer = {
 

@@ -14,19 +14,19 @@ import { ClockWiseTurnChange, AntiClockWiseTurnChange } from './TurnChange/turnC
 
 const GAME_ACTIONS = {
 
-    RandomNumber,
-    DistributeCards,
-    ShuffleArray,
-    ClockWiseTurnChange,
-    AntiClockWiseTurnChange,
-    RemainTimeCalculation,
     Skip,
     PlusTwo,
     PlusFour,
     EndRound,
-    IsShufflePossible,
+    RandomNumber,
+    ShuffleArray,
     IsThrowPossible,
+    DistributeCards,
+    IsShufflePossible,
+    ClockWiseTurnChange,
+    RemainTimeCalculation,
     RemoveDisconnectedUsers,
+    AntiClockWiseTurnChange,
 
 };
 

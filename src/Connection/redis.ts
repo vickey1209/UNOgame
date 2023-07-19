@@ -18,7 +18,7 @@ const RedisConnection = async () => {
             },
             password: CONFIG.Redis.REDIS_PASSWORD,
             database: CONFIG.Redis.REDIS_DATABASE_NUMBER
-        }
+        };
 
         const PubSubRedisOptions: any = {
 
@@ -27,7 +27,7 @@ const RedisConnection = async () => {
             password: CONFIG.PubSubRedis.PUBSUB_REDIS_PASSWORD,
             db: CONFIG.PubSubRedis.PUBSUB_REDIS_DATABASE_NUMBER
 
-        }
+        };
 
         pubClient = new IORedis(PubSubRedisOptions);
         subClient = new IORedis(PubSubRedisOptions);

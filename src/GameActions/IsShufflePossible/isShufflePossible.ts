@@ -18,17 +18,8 @@ const IsShufflePossible = async (tableId: string) => {
 
         let cardsForCloseDeckArray = TableDetails.openCardDeck.splice(0, TableDetails.openCardDeck.length - 1);
 
-        if (cardsForCloseDeckArray.length < 1) {
-
-            isShuffle = false;
-
-        } else {
-
-            cardsForCloseDeckArray = await GAME_ACTIONS.ShuffleArray(cardsForCloseDeckArray);
-
-        };
-
-        console.log({ isShuffle, cardsForCloseDeckArray, cardsForOpenDeckArray: TableDetails.openCardDeck });
+        if (cardsForCloseDeckArray.length < 1) { isShuffle = false; }
+        else { cardsForCloseDeckArray = await GAME_ACTIONS.ShuffleArray(cardsForCloseDeckArray); };
 
         return { isShuffle, cardsForCloseDeckArray, cardsForOpenDeckArray: TableDetails.openCardDeck };
 

@@ -1,4 +1,3 @@
-import { Socket } from "socket.io";
 import { Logger } from "../Logger/logger";
 import { CONSTANTS } from "../Constants";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
@@ -13,7 +12,6 @@ import { GAME_ACTIONS } from "../GameActions";
 import { Uno } from "../Uno/uno";
 
 const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
-    // const ThrowCard = async (en: string, socket: Socket, Data: ThrowCardInterface) => {
 
     const Path = 'ThrowCard';
 
@@ -67,7 +65,6 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
         if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && Data?.cardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { isWrongCard = false; };
 
         if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && TableDetails.numberOfCardToPick === 0) { isWrongCard = false; };
-        // if (Data?.card.split("-")[0] === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && TableDetails.activeCardType !== CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR && TableDetails.numberOfCardToPick === 0) { isWrongCard = false; };
 
         if (TableDetails.numberOfCardToPick === 0) {
 

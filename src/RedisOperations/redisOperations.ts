@@ -12,8 +12,8 @@ const SetData = async (key: string, data: object) => {
 
     } catch (error: any) {
         Logger('SetData Error', error);
-    }
-}
+    };
+};
 
 const GetData = async (key: string) => {
 
@@ -28,8 +28,8 @@ const GetData = async (key: string) => {
 
     } catch (error: any) {
         Logger('GetData Error', error);
-    }
-}
+    };
+};
 
 const DeleteData = async (key: string) => {
 
@@ -40,8 +40,8 @@ const DeleteData = async (key: string) => {
 
     } catch (error: any) {
         Logger('DeleteData Error', error);
-    }
-}
+    };
+};
 
 const RPush = async (key: string, data: any) => {
 
@@ -52,8 +52,8 @@ const RPush = async (key: string, data: any) => {
 
     } catch (error: any) {
         Logger('RPush Error', error);
-    }
-}
+    };
+};
 
 const LRange = async (key: string, start: number, end: number) => {
 
@@ -64,8 +64,8 @@ const LRange = async (key: string, start: number, end: number) => {
 
     } catch (error: any) {
         Logger('LRange Error', error);
-    }
-}
+    };
+};
 
 const AllKeys = async (key: string) => {
 
@@ -80,7 +80,7 @@ const AllKeys = async (key: string) => {
 
     } catch (error: any) {
         Logger('AllKeys Error', error);
-    }
-}
+    };
+};
 
 export { SetData, GetData, DeleteData, RPush, LRange, AllKeys };

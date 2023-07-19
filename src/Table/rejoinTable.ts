@@ -3,7 +3,7 @@ import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
-import { GetTable, GetUser, GetUserInTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
+import { GetRoundHistory, GetTable, GetUser, GetUserInTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
@@ -18,7 +18,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
     let Tablelock;
 
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
-    const { ALERT, JOIN_TABLE, REJOIN } = CONSTANTS.EVENTS_NAME;
+    const { ALERT, JOIN_TABLE, REJOIN, WINNER_DECLARE } = CONSTANTS.EVENTS_NAME;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
     if (Data?.tableId !== '') { Tablelock = await ApplyLock(Path, TablelockId); };
@@ -51,6 +51,17 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
         };
 
+        if (TableDetails && TableDetails.isWinning) {
+
+            EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: UserDetails.socketId, Data: { winningArray: TableDetails.winningArray } });
+
+            UserDetails.tableId = '';
+            await SetUser(UserDetails.userId, UserDetails);
+
+            return;
+
+        };
+
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === UserDetails.userId });
 
         let UserInTableDetails: UserInTableInterface = await GetUserInTable(UserDetails.userId);
@@ -63,22 +74,35 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 const { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray } = UserInTableDetails;
 
-                const { tableId, bootValue, currentTurn, currentRound, maxPlayers, playersArray, activeCard, activeCardType, activeCardColor, isClockwise, isGameStart } = TableDetails;
+                const { tableId, bootValue, currentTurn, currentRound, maxPlayers, playersArray, activeCard, activeCardType, activeCardColor, isClockwise, isGameStart, isRoundStart, isScoreScreen, isWinning } = TableDetails;
 
                 const RoundJob = await BullTimer.CheckJob.CheckRound(TableDetails.tableId);
                 const UserTurnJob = await BullTimer.CheckJob.CheckUserTurn(tableId, currentTurn);
                 const GameStartJob = await BullTimer.CheckJob.CheckCollectBootValue(TableDetails.tableId);
+                const RoundScreenJob = await BullTimer.CheckJob.CheckNextRound(TableDetails.tableId);
 
-                let RemainingUserTurnTimer: any = 0, RemainingRoundTimer: any = 0, RemainingGameStartTimer: any = 0;
+                let RemainingUserTurnTimer: any = 0, RemainingRoundTimer: any = 0, RemainingGameStartTimer: any = 0, RemainingRoundScreenTimer: any = 0;
 
+                if (RoundJob) { RemainingRoundTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundJob); };
                 if (UserTurnJob) { RemainingUserTurnTimer = await GAME_ACTIONS.RemainTimeCalculation(UserTurnJob); };
                 if (GameStartJob) { RemainingGameStartTimer = await GAME_ACTIONS.RemainTimeCalculation(GameStartJob); };
-                if (RoundJob) { RemainingRoundTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundJob); };
+                if (RoundScreenJob) { RemainingRoundScreenTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundScreenJob); };
+
+                const RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
 
                 const RejoinResData = {
 
-                    table: { tableId, bootValue, currentTurn, currentRound, maxPlayers, playersArray, activeCard, activeCardType, activeCardColor, isClockwise, isGameStart, RemainingRoundTimer, RemainingGameStartTimer },
-                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray, RemainingUserTurnTimer }
+                    table: {
+                        tableId, bootValue, currentTurn,
+                        currentRound, maxPlayers, playersArray,
+                        activeCard, activeCardType, activeCardColor,
+                        isClockwise, isGameStart, isRoundStart, isWinning, isScoreScreen,
+                        RemainingRoundTimer, RemainingGameStartTimer, RemainingRoundScreenTimer
+                    },
+
+                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray, RemainingUserTurnTimer },
+
+                    allRoundScore: RoundHistoryDetails.length ? RoundHistoryDetails : [],
 
                 };
 

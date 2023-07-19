@@ -1,7 +1,4 @@
 import { Config } from "../../Config";
-import { CONSTANTS } from "../../Constants";
-import { GetTable } from "../../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../../Interface/Table/TableInterface";
 import { Logger } from "../../Logger/logger";
 import { NextRoundQueue } from "../AllQueues/allQueues";
 import { NextRoundProcess } from "../ProcessJob/nextRoundProcess";
@@ -13,10 +10,6 @@ const NextRound = async (tableId: string) => {
         Logger("NextRound", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
-
-        let TableDetails: TableInterface = await GetTable(tableId);
-
-        if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
         const jobId = `${tableId}`;
 

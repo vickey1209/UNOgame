@@ -77,7 +77,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
                 if (TableDetails.isClockwise) {
 
-                    let NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
+                    const NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
 
                     if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
@@ -85,7 +85,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
                 } else {
 
-                    let NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
+                    const NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
 
                     if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
@@ -98,7 +98,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (TableDetails.isClockwise) {
 
-                let NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
+                const NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
 
                 if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
@@ -106,7 +106,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             } else {
 
-                let NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
+                const NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
 
                 if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
@@ -151,11 +151,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (isThrow && remainingCardsNumber === 1) { // ^ UNO Bull
 
-                await BullTimer.AddJob.UnoClick(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 0.5, unoSeatIndex);
+                await BullTimer.AddJob.UnoClick(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 2, unoSeatIndex);
 
             } else { // ^ Turn Bull
 
-                await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 0.5);
+                await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 2);
 
             };
 

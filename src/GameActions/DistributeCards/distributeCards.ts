@@ -1,5 +1,4 @@
 import { GAME_ACTIONS } from "..";
-import { BullTimer } from "../../BullTimer";
 import { Config } from "../../Config";
 import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
@@ -109,14 +108,6 @@ const DistributeCards = async (tableId: string) => {
         TableDetails.playersArray = TableDetails.playersArray.sort((a, b) => { return a.seatIndex - b.seatIndex });
 
         const ShuffelCard = await GAME_ACTIONS.ShuffleArray(AllUnoCards);
-
-        // TableDetails.openCardDeck.push(ShuffelCard[0]);
-
-        // TableDetails.activeCard = ShuffelCard[0];
-        // TableDetails.activeCardType = ShuffelCard[0].split("-")[1];
-        // TableDetails.activeCardColor = ShuffelCard[0].split("-")[0];
-
-        // ShuffelCard.splice(0, 1);
 
         TableDetails.closeCardDeck = ShuffelCard;
 

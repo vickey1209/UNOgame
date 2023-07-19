@@ -19,21 +19,19 @@ const EventCases = async (socket: Socket) => {
 
             const {
 
+                UNO,
                 TEST,
-                DEFAULT,
                 SIGNUP,
-                THROW_CARD,
+                DEFAULT,
                 PICK_CARD,
                 KEEP_CARD,
+                THROW_CARD,
                 LEAVE_TABLE,
-                UNO,
                 ROUND_HISTORY,
 
             } = CONSTANTS.EVENTS_NAME;
 
-            if (typeof Front_Side_Data === "string") {
-                Front_Side_Data = JSON.parse(Front_Side_Data);
-            };
+            if (typeof Front_Side_Data === "string") { Front_Side_Data = JSON.parse(Front_Side_Data); };
 
             const Data = Front_Side_Data.data;
 

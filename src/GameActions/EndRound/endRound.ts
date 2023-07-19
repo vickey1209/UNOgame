@@ -29,9 +29,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
         await BullTimer.CancelJob.CancelTurnInfo(TableDetails.tableId);
         await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
-        let RoundScoreArray: any = [], RoundWiseScore = [];
-
-        let AllRoundScore = [];
+        let RoundScoreArray: any = [], AllRoundScore: any = [];
 
         const RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
 
@@ -85,7 +83,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
 
             await BullTimer.AddJob.NextRound(TableDetails.tableId);
 
-            EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, AllRoundScore } });
+            EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, allRoundScore: AllRoundScore } });
 
         };
 
