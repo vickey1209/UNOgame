@@ -68,7 +68,7 @@ const CutBootValueFromUser = async (TableDetails: TableInterface) => {
 
             await SetUser(TableDetails.playersArray[i].userId, UserDetails);
 
-        }
+        };
 
     } catch (error: any) {
         Logger('CutBootValueFromUser Error', error);

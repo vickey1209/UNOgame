@@ -30,7 +30,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
         let TableDetails: TableInterface = await GetTable(Data?.tableId);
 
-        let pickCards: Array<string> = [];
+        let pickCards: Array<string> = [], isPlayableCard = false;
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -56,11 +56,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.CAN_NOT_ABLE_TO_PICK_CARD } });
         };
 
-        let isPlayableCard = false;
-
         if (TableDetails.numberOfCardToPick === 0) {
-
-            // if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
 
             if (TableDetails.closeCardDeck.length) {
 
@@ -95,8 +91,6 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
             for (let i = 0; i < TableDetails.numberOfCardToPick; i++) {
 
-                // if (TableDetails.closeCardDeck.length < 1) { throw new Error(CONSTANTS.ERROR_MESSAGES.NOT_ENOUGH_CARDS) };
-
                 if (TableDetails.closeCardDeck.length) {
 
                     UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
@@ -107,8 +101,6 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
                 };
             };
-
-            // TableDetails.numberOfCardToPick = 0;
 
         };
 

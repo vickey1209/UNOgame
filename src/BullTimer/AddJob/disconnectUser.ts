@@ -3,13 +3,13 @@ import { Logger } from "../../Logger/logger";
 import { DisconnectUserQueue } from "../AllQueues/allQueues";
 import { DisconnectUserProcess } from "../ProcessJob/disconnectUserProcess";
 
-const CONFIG = Config();
-
 const DisconnectUser = async (userId: string, tableId: string, bootValue: number, playerCount: number) => {
 
     try {
 
         Logger("DisconnectUser", JSON.stringify({ userId }));
+
+        const CONFIG = Config();
 
         const jobId = `${userId}`;
 

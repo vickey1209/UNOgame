@@ -10,14 +10,14 @@ import { UserTurnProcessAction } from "./userTurnProcessAction";
 
 const PROCESS_ACTION = {
 
-    CollectBootValueProcessAction,
-    UserTurnProcessAction,
     RoundProcessAction,
-    NextRoundProcessAction,
-    TurnInfoProcessAction,
-    DisconnectUserProcessAction,
-    UnoClickProcessAction,
     TimesUpProcessAction,
+    UserTurnProcessAction,
+    TurnInfoProcessAction,
+    UnoClickProcessAction,
+    NextRoundProcessAction,
+    DisconnectUserProcessAction,
+    CollectBootValueProcessAction,
 
 };
 

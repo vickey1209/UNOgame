@@ -39,15 +39,8 @@ const RoundHistory = async (en: string, socket: Socket, Data: RoundHistoryInterf
 
         const RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
 
-        if (RoundHistoryDetails.length) {
-
-            EventEmitter.emit(ROUND_HISTORY, { en: ROUND_HISTORY, SocketId: socket.id, Data: { isHistoryAvailable: true } });
-
-        } else {
-
-            EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.ROUND_HISTORY_ERROR } });
-
-        };
+        if (RoundHistoryDetails.length) { EventEmitter.emit(ROUND_HISTORY, { en: ROUND_HISTORY, SocketId: socket.id, Data: { isHistoryAvailable: true } }); }
+        else { EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.ROUND_HISTORY_ERROR } }); };
 
     } catch (error: any) {
 

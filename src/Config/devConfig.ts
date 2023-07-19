@@ -31,15 +31,15 @@ const DevConfig = (): ConfigInterface => {
 
     const GamePlay = {
 
-        LOG: true,
+        LOG: false,
 
         PLUS_ON_PLUS: true,
 
         GAME_START_TIMER: 4,
-        USER_TURN_TIMER: 100,
-        ROUND_TIMER: 10000,
-        NEXT_ROUND_TIMER: 10,
-        RETURN_TO_TABLE_TIMER: 10,
+        USER_TURN_TIMER: 20,
+        ROUND_TIMER: 1,
+        NEXT_ROUND_TIMER: 50,
+        RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
         TIMES_UP_DELAY_TIMER:2,
 

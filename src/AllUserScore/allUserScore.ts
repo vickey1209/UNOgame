@@ -90,7 +90,6 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
                 special.Cards.push(UserInTableDetails.cardArray[i]);
 
-
             } else if (UserInTableDetails.cardArray[i].split("-")[1] === CONSTANTS.UNO_CARDS.CARDS_TYPE.SKIP) {
 
                 currentRoundScore += CONFIG.GamePlay.SKIP_POINT;

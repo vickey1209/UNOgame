@@ -1,12 +1,9 @@
 import { Config } from "../../Config";
-import { CONSTANTS } from "../../Constants";
-import { GetTable } from "../../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../../Interface/Table/TableInterface";
 import { Logger } from "../../Logger/logger";
 import { UserTurnQueue } from "../AllQueues/allQueues";
 import { UserTurnProcess } from "../ProcessJob/userTurnProcess";
 
-const UserTurn = async (tableId: string) => {
+const UserTurn = async (tableId: string, currentTurn: number) => {
 
     try {
 
@@ -14,11 +11,7 @@ const UserTurn = async (tableId: string) => {
 
         const CONFIG = Config();
 
-        let TableDetails: TableInterface = await GetTable(tableId);
-
-        if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
-
-        const jobId = `${tableId}:${TableDetails.currentTurn}`;
+        const jobId = `${tableId}:${currentTurn}`;
 
         const options = {
             delay: CONFIG.GamePlay.USER_TURN_TIMER * 1000,
@@ -26,7 +19,7 @@ const UserTurn = async (tableId: string) => {
             removeOnComplete: true
         };
 
-        await UserTurnQueue.add({ tableId, currentTurn: TableDetails.currentTurn }, options);
+        await UserTurnQueue.add({ tableId, currentTurn }, options);
 
     } catch (error: any) {
         Logger('UserTurn Error : ', error);

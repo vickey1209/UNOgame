@@ -70,9 +70,9 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
                     await BullTimer.AddJob.CollectBootValue(TableDetails.tableId);
 
-                }
-            }
-        }
+                };
+            };
+        };
 
     } catch (error: any) {
         Logger('JoinTable Error : ', error);

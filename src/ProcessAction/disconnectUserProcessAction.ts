@@ -42,6 +42,8 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
+        if (TableDetails.isWinning) { throw new Error(CONSTANTS.ERROR_MESSAGES.WINNING_DONE) };
+
         if (TableDetails.isLeaveLock) {
 
             TableDetails.disconnectedUsers.push(UserDetails.userId);
@@ -53,8 +55,6 @@ const DisconnectUserProcessAction = async (Data: any) => {
             await RemoveUserFromTable(userId, tableId);
 
         };
-
-        // await RemoveUserFromTable(userId, tableId);
 
     } catch (error: any) {
 

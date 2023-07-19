@@ -17,6 +17,6 @@ const HttpConnection = async () => {
     const PORT = CONFIG.ServerPort;
     httpServer.listen(PORT, () => { console.log(`Server listening on port ${PORT} !`); });
 
-}
+};
 
 export { HttpConnection, httpServer };

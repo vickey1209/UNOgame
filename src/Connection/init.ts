@@ -45,7 +45,7 @@ const Initialize = async () => {
 
     } catch (error) {
         console.log('Initialize Error : ', error);
-    }
-}
+    };
+};
 
 export { Initialize };

@@ -20,7 +20,6 @@ const IsThrowPossible = async (UserInTableDetails: UserInTableInterface, TableDe
             if (OneCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR && OneCardColor === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD) { isThrowPossible = true };
 
             if (OneCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE && TableDetails.numberOfCardToPick === 0) { isThrowPossible = true };
-            // if (OneCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE && OneCardColor === CONSTANTS.UNO_CARDS.CARDS_TYPE.WILD_CARD && TableDetails.numberOfCardToPick === 0) { isThrowPossible = true };
 
             if (TableDetails.numberOfCardToPick === 0) {
 
