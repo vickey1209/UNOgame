@@ -78,11 +78,7 @@ const UnoClickProcessAction = async (Data: any) => {
                     TableDetails.closeCardDeck = IsShufflePossibleData.cardsForCloseDeckArray;
                     TableDetails.openCardDeck = IsShufflePossibleData.cardsForOpenDeckArray;
 
-                } else {
-
-                    isGameEnd = true;
-
-                };
+                } else { isGameEnd = true; };
 
                 if (TableDetails.closeCardDeck.length > CONFIG.GamePlay.UNO_PENALTY_NUMBER) {
 
@@ -98,11 +94,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
                     isGameEnd = false;
 
-                } else {
-
-                    isGameEnd = true;
-
-                };
+                } else { isGameEnd = true; };
             };
 
             UserInTableDetails.isUnoClick = false;

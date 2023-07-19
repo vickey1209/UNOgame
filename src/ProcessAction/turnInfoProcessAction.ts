@@ -1,5 +1,4 @@
 import { AllUserScore } from "../AllUserScore/allUserScore";
-import { BOT_ACTION } from "../Bot";
 import { BullTimer } from "../BullTimer";
 import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
@@ -11,7 +10,6 @@ import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
-import { RemoveUserFromTable } from "../Table/leaveTable";
 
 const TurnInfoProcessAction = async (Data: any) => {
 
@@ -78,21 +76,16 @@ const TurnInfoProcessAction = async (Data: any) => {
 
             totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
             remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
+
         };
 
         await AllUserScore(TableDetails.tableId);
 
-        await BullTimer.AddJob.UserTurn(TableDetails.tableId);
+        await BullTimer.AddJob.UserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
         EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: TurnInfoResData });
 
         if (TableDetails.disconnectedUsers.length) { await GAME_ACTIONS.RemoveDisconnectedUsers(TableDetails.tableId); };
-
-        // setTimeout(async () => {
-
-        //     if (TableDetails.playersArray[TableDetails.currentTurn].isBot) { await BOT_ACTION.TakeTurn(TableDetails.tableId) };
-
-        // }, 2000);
 
     } catch (error: any) {
 

@@ -16,7 +16,7 @@ const RedLockConnction = async () => {
             port: CONFIG.Redis.REDIS_PORT,
             password: CONFIG.Redis.REDIS_PASSWORD,
             db: CONFIG.Redis.REDIS_DATABASE_NUMBER
-        }
+        };
 
         const redisClient = new Redis(redisDetails);
 

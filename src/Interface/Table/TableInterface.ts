@@ -29,6 +29,7 @@ export interface TableInterface {
     isWinning: boolean,
 
     disconnectedUsers: Array<string>
+    winningArray: Array<WinningArrayInterface>
 
 }
 
@@ -40,5 +41,18 @@ export interface PlayersArrayInterface {
     seatIndex: number,
     isLeave: boolean,
     isBot: boolean,
+
+}
+
+export interface WinningArrayInterface {
+
+    userId: string,
+    userName: string,
+    userProfile: string,
+    userScore: number,
+    isLeave: boolean,
+    rankNumber: number,
+    price: number,
+    previousScore: Array<number>
 
 }

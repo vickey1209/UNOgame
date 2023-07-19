@@ -7,7 +7,7 @@ const SendToSocket = async (EVENT: string, data: any) => {
 
     try {
 
-        let { en, SocketId, Data } = data;
+        const { en, SocketId, Data } = data;
 
         Logger("SendToSocket", JSON.stringify({ EVENT, Data }));
 
@@ -22,7 +22,7 @@ const SendToRoom = async (EVENT: string, data: any) => {
 
     try {
 
-        let { en, RoomId, Data } = data;
+        const { en, RoomId, Data } = data;
 
         Logger("SendToRoom", JSON.stringify({ EVENT, Data }));
 
@@ -41,123 +41,86 @@ const EmitterON = () => {
 
         const {
 
+            UNO,
             TEST,
-            DEFAULT,
-            ERROR_POPUP,
+            ALERT,
             SIGNUP,
-            JOIN_TABLE,
-            NEW_USER,
-            GAME_START,
-            COLLECT_BOOT,
+            REJOIN,
+            DEFAULT,
             MY_CARDS,
-            TURN_INFO,
-            THROW_CARD,
+            NEW_USER,
+            TIMES_UP,
             PICK_CARD,
+            TURN_INFO,
+            JOIN_TABLE,
+            GAME_START,
+            THROW_CARD,
             USERS_SCORE,
             ROUND_START,
             ROUND_SCORE,
             LEAVE_TABLE,
-            UNO,
             TURN_MISSED,
-            ALERT,
-            REJOIN,
-            TIMES_UP,
+            ERROR_POPUP,
+            COLLECT_BOOT,
+            ROUND_HISTORY,
             WINNER_DECLARE,
-            ROUND_HISTORY
 
         } = CONSTANTS.EVENTS_NAME;
 
-        EventEmitter.on(TEST, async (data) => {
-            await SendToSocket(TEST, data);
-        });
+        // * SendToSocket ....
 
-        EventEmitter.on(DEFAULT, async (data) => {
-            await SendToSocket(DEFAULT, data);
-        });
+        EventEmitter.on(TEST, async (data) => { await SendToSocket(TEST, data); });
 
-        EventEmitter.on(ERROR_POPUP, async (data) => {
-            await SendToSocket(ERROR_POPUP, data);
-        });
+        EventEmitter.on(ALERT, async (data) => { await SendToSocket(ALERT, data); });
 
-        EventEmitter.on(SIGNUP, async (data) => {
-            await SendToSocket(SIGNUP, data);
-        });
+        EventEmitter.on(REJOIN, async (data) => { await SendToSocket(REJOIN, data); });
 
-        EventEmitter.on(JOIN_TABLE, async (data) => {
-            await SendToSocket(JOIN_TABLE, data);
-        });
+        EventEmitter.on(SIGNUP, async (data) => { await SendToSocket(SIGNUP, data); });
 
-        EventEmitter.on(NEW_USER, async (data) => {
-            await SendToRoom(NEW_USER, data);
-        });
+        EventEmitter.on(DEFAULT, async (data) => { await SendToSocket(DEFAULT, data); });
 
-        EventEmitter.on(GAME_START, async (data) => {
-            await SendToRoom(GAME_START, data);
-        });
+        EventEmitter.on(MY_CARDS, async (data) => { await SendToSocket(MY_CARDS, data); });
 
-        EventEmitter.on(COLLECT_BOOT, async (data) => {
-            await SendToRoom(COLLECT_BOOT, data);
-        });
+        EventEmitter.on(JOIN_TABLE, async (data) => { await SendToSocket(JOIN_TABLE, data); });
 
-        EventEmitter.on(MY_CARDS, async (data) => {
-            await SendToSocket(MY_CARDS, data);
-        });
+        EventEmitter.on(ERROR_POPUP, async (data) => { await SendToSocket(ERROR_POPUP, data); });
 
-        EventEmitter.on(TURN_INFO, async (data) => {
-            await SendToRoom(TURN_INFO, data);
-        });
+        EventEmitter.on(ROUND_HISTORY, async (data) => { await SendToSocket(ROUND_HISTORY, data); });
 
-        EventEmitter.on(THROW_CARD, async (data) => {
-            await SendToRoom(THROW_CARD, data);
-        });
+        // * SendToSocket ....
 
-        EventEmitter.on(PICK_CARD, async (data) => {
-            await SendToRoom(PICK_CARD, data);
-        });
 
-        EventEmitter.on(USERS_SCORE, async (data) => {
-            await SendToRoom(USERS_SCORE, data);
-        });
+        // * SendToRoom ....
 
-        EventEmitter.on(ROUND_START, async (data) => {
-            await SendToRoom(ROUND_START, data);
-        });
+        EventEmitter.on(UNO, async (data) => { await SendToRoom(UNO, data); });
 
-        EventEmitter.on(ROUND_SCORE, async (data) => {
-            await SendToRoom(ROUND_SCORE, data);
-        });
+        EventEmitter.on(TIMES_UP, async (data) => { await SendToRoom(TIMES_UP, data); });
 
-        EventEmitter.on(LEAVE_TABLE, async (data) => {
-            await SendToRoom(LEAVE_TABLE, data);
-        });
+        EventEmitter.on(NEW_USER, async (data) => { await SendToRoom(NEW_USER, data); });
 
-        EventEmitter.on(UNO, async (data) => {
-            await SendToRoom(UNO, data);
-        });
+        EventEmitter.on(PICK_CARD, async (data) => { await SendToRoom(PICK_CARD, data); });
 
-        EventEmitter.on(TURN_MISSED, async (data) => {
-            await SendToRoom(TURN_MISSED, data);
-        });
+        EventEmitter.on(TURN_INFO, async (data) => { await SendToRoom(TURN_INFO, data); });
 
-        EventEmitter.on(REJOIN, async (data) => {
-            await SendToSocket(REJOIN, data);
-        });
+        EventEmitter.on(THROW_CARD, async (data) => { await SendToRoom(THROW_CARD, data); });
 
-        EventEmitter.on(ALERT, async (data) => {
-            await SendToSocket(ALERT, data);
-        });
+        EventEmitter.on(GAME_START, async (data) => { await SendToRoom(GAME_START, data); });
 
-        EventEmitter.on(TIMES_UP, async (data) => {
-            await SendToRoom(TIMES_UP, data);
-        });
+        EventEmitter.on(USERS_SCORE, async (data) => { await SendToRoom(USERS_SCORE, data); });
 
-        EventEmitter.on(WINNER_DECLARE, async (data) => {
-            await SendToRoom(WINNER_DECLARE, data);
-        });
+        EventEmitter.on(ROUND_START, async (data) => { await SendToRoom(ROUND_START, data); });
 
-        EventEmitter.on(ROUND_HISTORY, async (data) => {
-            await SendToSocket(ROUND_HISTORY, data);
-        });
+        EventEmitter.on(ROUND_SCORE, async (data) => { await SendToRoom(ROUND_SCORE, data); });
+
+        EventEmitter.on(LEAVE_TABLE, async (data) => { await SendToRoom(LEAVE_TABLE, data); });
+
+        EventEmitter.on(TURN_MISSED, async (data) => { await SendToRoom(TURN_MISSED, data); });
+
+        EventEmitter.on(COLLECT_BOOT, async (data) => { await SendToRoom(COLLECT_BOOT, data); });
+
+        EventEmitter.on(WINNER_DECLARE, async (data) => { await SendToRoom(WINNER_DECLARE, data); });
+
+        // * SendToRoom ....
 
     } catch (error: any) {
         Logger('EmitterON Error', error);

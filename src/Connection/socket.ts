@@ -38,7 +38,7 @@ const SocketConnection = async () => {
 
                 Logger("Disconnect Reason.", JSON.stringify(reason));
 
-                // await DisconnectHandler(socket);
+                await DisconnectHandler(socket);
                 
             });
         });

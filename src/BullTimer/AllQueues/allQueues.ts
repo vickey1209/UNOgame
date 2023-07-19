@@ -23,7 +23,6 @@ const DisconnectUserQueue = new Bull('DisconnectUser', BullRedisOptions);
 const UnoClickQueue = new Bull('UnoClick', BullRedisOptions);
 const TimesUpQueue = new Bull('TimesUp', BullRedisOptions);
 
-
 export {
 
     CollectBootQueue,
