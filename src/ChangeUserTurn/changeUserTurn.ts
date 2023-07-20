@@ -24,6 +24,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         };
 
+        console.log('');
+        console.log('First One');
+        console.log({ turnInfoDelay });
+        console.log('');
+
         if (isPick && TableDetails.numberOfCardToPick !== 0) {
 
             turnInfoDelay += (TableDetails.numberOfCardToPick * 0.7);
@@ -46,6 +51,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             turnInfoDelay += (PlusFourData.pickCards.length * 0.7);
 
+            console.log('');
+            console.log('+4');
+            console.log({ turnInfoDelay });
+            console.log('');
+
             // if (PlusFourData.penaltyNumber === 0) { turnInfoDelay += (TableDetails.numberOfCardToPick * 0.7); };
             // else { }
 
@@ -67,6 +77,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
             turnInfoDelay += 1.30;
 
             turnInfoDelay += (PlusTwoData.pickCards.length * 0.7);
+
+            console.log('');
+            console.log('+2');
+            console.log({ turnInfoDelay });
+            console.log('');
 
             // if (PlusTwoData.penaltyNumber === 0) { turnInfoDelay += (TableDetails.numberOfCardToPick * 0.7); };
 
@@ -150,6 +165,15 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             };
         };
+
+        console.log('');
+
+        console.log('Last One');
+
+        console.log({ turnInfoDelay });
+
+        console.log('');
+
 
         TableDetails.isTurnLock = true;
 
