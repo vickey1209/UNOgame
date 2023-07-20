@@ -109,7 +109,7 @@ const PlusTwo = async (tableId: string) => {
 
                 EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
-            }, 1.30 * 1000);
+            }, 1 * 1000);
 
             // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 

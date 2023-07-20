@@ -15,7 +15,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        let isSkip = false, skipSeatIndex = -1, isRevers = false, isGameEnd = false, unoSeatIndex = TableDetails.currentTurn, turnInfoDelay = isPick ? 0.7 : 0;
+        let isSkip = false, skipSeatIndex = -1, isRevers = false, isGameEnd = false, unoSeatIndex = TableDetails.currentTurn, turnInfoDelay = 0;
 
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
 
@@ -31,7 +31,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (isPick && TableDetails.numberOfCardToPick !== 0) {
 
-            turnInfoDelay += (TableDetails.numberOfCardToPick * 0.7);
+            turnInfoDelay += (TableDetails.numberOfCardToPick * 0.5);
 
             isSkip = true, skipSeatIndex = TableDetails.currentTurn;
 
@@ -47,9 +47,9 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             // turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
 
-            turnInfoDelay += 4;
+            turnInfoDelay += 3;
 
-            turnInfoDelay += (PlusFourData.pickCards.length * 0.7);
+            turnInfoDelay += (PlusFourData.pickCards.length * 0.5);
 
             console.log('');
             console.log('+4');
@@ -74,9 +74,9 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             // turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
 
-            turnInfoDelay += 1.30;
+            turnInfoDelay += 1;
 
-            turnInfoDelay += (PlusTwoData.pickCards.length * 0.7);
+            turnInfoDelay += (PlusTwoData.pickCards.length * 0.5);
 
             console.log('');
             console.log('+2');
