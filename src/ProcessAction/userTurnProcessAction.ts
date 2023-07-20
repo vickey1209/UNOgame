@@ -1,3 +1,4 @@
+import { BullTimer } from "../BullTimer";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
@@ -104,7 +105,9 @@ const UserTurnProcessAction = async (Data: any) => {
 
             };
 
-            EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
+            await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, 0, PickCardResData);
+
+            // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
         };
 

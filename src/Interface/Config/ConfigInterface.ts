@@ -55,4 +55,10 @@ export interface GamePlayInterface {
     PLUS_TWO_POINT: number,
     PLUS_FOUR_POINT: number,
     COLOR_CHANGE_POINT: number,
+
+    DELAY_FOR_SINGLE_PICK: number,
+    DELAY_FOR_PLUS_FOUR: number,
+    DELAY_FOR_PLUS_TWO: number,
+    DELAY_FOR_COLOR_CHANGE: number
+
 }
