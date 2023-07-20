@@ -42,7 +42,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
 
-            turnInfoDelay += 2;
+            turnInfoDelay += 4;
 
             TableDetails.currentTurn = PlusFourData.nextTurnSeatIndex;
             TableDetails.numberOfCardToPick = PlusFourData.penaltyNumber;
@@ -59,7 +59,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
 
-            turnInfoDelay += 1;
+            turnInfoDelay += 1.30;
 
             TableDetails.currentTurn = PlusTwoData.nextTurnSeatIndex;
             TableDetails.numberOfCardToPick = PlusTwoData.penaltyNumber;
