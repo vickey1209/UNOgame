@@ -10,6 +10,7 @@ import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
+import { BOT_ACTION } from "../Bot";
 
 const TurnInfoProcessAction = async (Data: any) => {
 
@@ -86,6 +87,84 @@ const TurnInfoProcessAction = async (Data: any) => {
         EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: TurnInfoResData });
 
         if (TableDetails.disconnectedUsers.length) { await GAME_ACTIONS.RemoveDisconnectedUsers(TableDetails.tableId); };
+
+        if (TableDetails.playersArray[TableDetails.currentTurn].isBot) { 
+
+            const RoundJob = await BullTimer.CheckJob.CheckRound(TableDetails.tableId);
+            let RemainingRoundTimer: any = 0;
+            if (RoundJob) { RemainingRoundTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundJob); };
+
+
+            let nextTurn:any = null ;
+            if (TableDetails.isClockwise) {
+
+                nextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
+
+                if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+
+            } else {
+
+                nextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
+
+                if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+
+            };
+            const UserAvailableInTable: any = TableDetails.playersArray.find((e:any) => { return e.seatIndex === nextTurn });
+
+            let nextPlayerUserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable.userId);
+            // let nextPlayerCardArray = nextPlayerUserInTableDetails.cardArray;
+
+            if(UserInTableDetails.cardArray.length < nextPlayerUserInTableDetails.cardArray.length && RemainingRoundTimer < CONFIG.GamePlay.USER_TURN_TIMER && TableDetails.botPriority === CONSTANTS.BOT_PRIORITY.HARD){
+
+                // Search for draw 4 card
+                let card_bot_w4c = UserInTableDetails.cardArray.filter(item => new RegExp("D4C-" , 'i').test(item));
+
+                // // Search for draw 2 card
+                // let card_bot_w2c = UserInTableDetails.cardArray.filter(item => new RegExp("-D2C-" , 'i').test(item));
+
+                // // Search for skip card
+                // let card_bot_skip = UserInTableDetails.cardArray.filter(item => new RegExp("-S-" , 'i').test(item));
+    
+                // // Search for reverse card
+                // let card_bot_reverse = UserInTableDetails.cardArray.filter(item => new RegExp("-RE-" , 'i').test(item));
+    
+                // Search for wild card
+                let card_bot_wild = UserInTableDetails.cardArray.filter(item => new RegExp("W-CH" , 'i').test(item));
+                let lastRemainingRoundTimer = RemainingRoundTimer - 5;
+                if(card_bot_w4c.length > 0 && lastRemainingRoundTimer > 5){
+                    setTimeout(async () => {
+                        await BOT_ACTION.TakeTurn(TableDetails.tableId)
+                    }, lastRemainingRoundTimer * 1000);
+                }else if(card_bot_wild.length > 0 && lastRemainingRoundTimer > 5){
+                    setTimeout(async () => {
+                        await BOT_ACTION.TakeTurn(TableDetails.tableId)
+                    }, lastRemainingRoundTimer * 1000);
+                }else if(UserInTableDetails.cardArray.length === 1){
+                    let isPlayableCard = false, playableCard = '';
+
+                    for (let i = 0; i < UserInTableDetails.cardArray.length; i++) {
+                        if (UserInTableDetails.cardArray[i].split("-")[1] === TableDetails.activeCardType || UserInTableDetails.cardArray[i].split("-")[0] === TableDetails.activeCardColor) {
+                            playableCard = UserInTableDetails.cardArray[i];
+                            isPlayableCard = true;
+                            break;
+                        };
+                    };
+                    if(isPlayableCard){
+                        setTimeout(async () => {
+                            await BOT_ACTION.TakeTurn(TableDetails.tableId)
+                        }, 2000);
+                    }
+                    
+                }
+                
+            }else{
+                setTimeout(async () => {
+                    await BOT_ACTION.TakeTurn(TableDetails.tableId)
+                }, 2000);
+            }
+
+                
+        };
 
     } catch (error: any) {
 

@@ -9,7 +9,7 @@ const BotCardThrow = async (data:any) => {
         Logger("BotCardThrow", JSON.stringify(data));
 
         const jobId = `${data.Fake_Data.tableId}:BotThrow`;
-
+        Logger("BotCardThrow jobId : ", jobId);
         const options = {
             delay: data.delayNumber * 1000,
             jobId,

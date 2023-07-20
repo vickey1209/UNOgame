@@ -6,6 +6,8 @@ import { Logger } from "../Logger/logger";
 import { PickCard } from "../PickCard/pickCard";
 import { ThrowCard } from "../ThrowCard/throwCard";
 import { GAME_ACTIONS } from "../GameActions";
+import { BullTimer } from "../BullTimer";
+import { Config } from "../Config";
 
 const TakeTurn = async (tableId: string) => {
 
@@ -44,6 +46,7 @@ const TakeTurn = async (tableId: string) => {
 
         let detailsOfActiveCard = await findActiveCard(UserInTableDetails.cardArray,
             {
+                tableId:TableDetails.tableId,
                 activeCard:TableDetails.activeCard,
                 cardNumber:TableDetails.activeCardType,
                 currentTurnSeatIndex:TableDetails.currentTurn,
@@ -129,7 +132,7 @@ const TakeTurn = async (tableId: string) => {
 
 
 async function findActiveCard(userCardArray:any, tableData:any){
-
+    const CONFIG = Config();
     console.log(" findActiveCard findActiveCard : ", userCardArray,tableData);
     let user_card = userCardArray;
     let last_moved_card = tableData.activeCard;
@@ -271,23 +274,32 @@ async function findActiveCard(userCardArray:any, tableData:any){
 
                 let UserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
                 nextPlayerCardArray = UserInTableDetails.cardArray;
-                let D4C_CardInNextPlayerCard = UserInTableDetails.cardArray.filter(item => new RegExp("D4C-" , 'i').test(item));
-                let D2C_CardInNextPlayerCard = UserInTableDetails.cardArray.filter(item => new RegExp("-D2C-" , 'i').test(item));
-                if(D4C_CardInNextPlayerCard.length > 0){
+                // let D4C_CardInNextPlayerCard = UserInTableDetails.cardArray.filter(item => new RegExp("D4C-" , 'i').test(item));
+                // let D2C_CardInNextPlayerCard = UserInTableDetails.cardArray.filter(item => new RegExp("-D2C-" , 'i').test(item));
+                // if(D4C_CardInNextPlayerCard.length > 0){
+                //     card_bot_w4c = []
+                //     card_bot_w2c = [];
+                // }else if(D2C_CardInNextPlayerCard.length > 0 && UserInTableDetails.cardArray.length){
+                //     // card_bot_w4c = [];
+                //     card_bot_w2c = [];
+                // }
+
+                const RoundJob = await BullTimer.CheckJob.CheckRound(tableData.tableId);
+                let RemainingRoundTimer: any = 0;
+                if (RoundJob) { RemainingRoundTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundJob); };
+                let userActionCardThrowRandom = await GAME_ACTIONS.RandomNumber(2,4);
+
+                // if(CONFIG.GamePlay.USER_TURN_TIMER < )
+
+                if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && RemainingRoundTimer > CONFIG.GamePlay.USER_TURN_TIMER + 30 /*UserInTableDetails.cardArray.length > userActionCardThrowRandom*/){
                     card_bot_w4c = []
                     card_bot_w2c = [];
-                }else if(D2C_CardInNextPlayerCard.length > 0 && UserInTableDetails.cardArray.length){
-                    // card_bot_w4c = [];
+                }else if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && UserInTableDetails.cardArray.length > userActionCardThrowRandom){
+                    card_bot_w4c = []
                     card_bot_w2c = [];
                 }
 
-                let userActionCard= await GAME_ACTIONS.RandomNumber(2,4);
-                if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && UserInTableDetails.cardArray.length > userActionCard){
-                    card_bot_w4c = []
-                    card_bot_w2c = [];
-                }
-
-                if(card_bot_wild.length > 0 && D4C_CardInNextPlayerCard.length === 0){
+                if(card_bot_wild.length > 0 /*&& D4C_CardInNextPlayerCard.length === 0*/){
                     // let resRedCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("R-" , 'i').test(item));
                     // let resGreenCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("G-" , 'i').test(item));
                     // let resYelloCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("Y-" , 'i').test(item));
@@ -384,15 +396,22 @@ async function findActiveCard(userCardArray:any, tableData:any){
             return_data.card=card_bot_reverse[0];
             return_data.C_C=card_bot_reverse[0][0];
         }else{
-            let chk__card=uniqueArray[0].slice(0, 4);
-            if(chk__card=="W-D4"){
-                return_data.C_C=color_array[color_index];  
-            }else if(chk__card=="W-CH"){
-                return_data.C_C=color_array[color_index];  
+
+            let zeroNumberCard = uniqueArray.filter(item => new RegExp("-0-" , 'i').test(item));
+            if(zeroNumberCard.length > 0 ){
+                return_data.C_C=zeroNumberCard[0][0];
+                return_data.card=zeroNumberCard[0];
             }else{
-                return_data.C_C=uniqueArray[0][0];
-            }
-            return_data.card=uniqueArray[0];
+                let chk__card=uniqueArray[0].slice(0, 4);
+                if(chk__card=="W-D4"){
+                    return_data.C_C=color_array[color_index];  
+                }else if(chk__card=="W-CH"){
+                    return_data.C_C=color_array[color_index];  
+                }else{
+                    return_data.C_C=uniqueArray[0][0];
+                }
+                return_data.card=uniqueArray[0];
+            } 
         }
   
         //Set UNO button clicking flag for robot

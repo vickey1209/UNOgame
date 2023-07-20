@@ -131,7 +131,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
                 cardIndex: 0,
 
                 userId: UserInTableDetails.userId,
-                tableId: UserInTableDetails.tableId,
+                tableId: TableDetails.tableId,
                 seatIndex: UserInTableDetails.seatIndex
 
             };
@@ -159,8 +159,8 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
                 //     Fake_Data.cardColor = "B";
                 // }
             }
-            // await BullTimer.AddJob.BotCardThrow({eventName : "THROW_CARD",socket,delayNumber:1,Fake_Data})
-            await ThrowCard('THROW_CARD', socket, Fake_Data);
+            await BullTimer.AddJob.BotCardThrow({eventName : "THROW_CARD",socket,delayNumber:2,Fake_Data})
+            // await ThrowCard('THROW_CARD', socket, Fake_Data);
         }
 
     } catch (error: any) {
