@@ -167,7 +167,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
         };
 
         if (isPick && turnInfoDelay === 0) { turnInfoDelay = 0.5 };
-        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = 2 };
+        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE && isThrow) { turnInfoDelay = 2 };
 
         console.log('');
 
