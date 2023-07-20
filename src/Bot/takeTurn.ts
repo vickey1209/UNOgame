@@ -281,7 +281,8 @@ async function findActiveCard(userCardArray:any, tableData:any){
                     card_bot_w2c = [];
                 }
 
-                if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && UserInTableDetails.cardArray.length > 4){
+                let userActionCard= await GAME_ACTIONS.RandomNumber(2,4);
+                if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && UserInTableDetails.cardArray.length > userActionCard){
                     card_bot_w4c = []
                     card_bot_w2c = [];
                 }
