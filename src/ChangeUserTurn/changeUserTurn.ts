@@ -15,7 +15,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        let isSkip = false, skipSeatIndex = -1, isRevers = false, isGameEnd = false, unoSeatIndex = TableDetails.currentTurn;
+        let isSkip = false, skipSeatIndex = -1, isRevers = false, isGameEnd = false, unoSeatIndex = TableDetails.currentTurn, turnInfoDelay = 0;
 
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
 
@@ -25,6 +25,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
         };
 
         if (isPick && TableDetails.numberOfCardToPick !== 0) {
+
+            turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
 
             isSkip = true, skipSeatIndex = TableDetails.currentTurn;
 
@@ -38,18 +40,26 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (!PlusFourData) { throw new Error(CONSTANTS.ERROR_MESSAGES.PLUS_4_ERROR) };
 
+            turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
+
+            turnInfoDelay += 2;
+
             TableDetails.currentTurn = PlusFourData.nextTurnSeatIndex;
             TableDetails.numberOfCardToPick = PlusFourData.penaltyNumber;
 
             PlusFourData.pickCards.forEach(element => { TableDetails.closeCardDeck.splice(TableDetails.closeCardDeck.indexOf(element), 1); });
 
-            if (!PlusFourData.isPenaltyFreeCard) { isSkip = PlusFourData.isSkip, skipSeatIndex = PlusFourData.skipSeatIndex };
+            if (!PlusFourData.isPenaltyFreeCard) { isSkip = PlusFourData.isSkip, skipSeatIndex = PlusFourData.skipSeatIndex  };
 
         } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO && isThrow) { // ^ +2 Card !
 
             const PlusTwoData = await GAME_ACTIONS.PlusTwo(TableDetails.tableId);
 
             if (!PlusTwoData) { throw new Error(CONSTANTS.ERROR_MESSAGES.PLUS_2_ERROR) };
+
+            turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
+
+            turnInfoDelay += 1;
 
             TableDetails.currentTurn = PlusTwoData.nextTurnSeatIndex;
             TableDetails.numberOfCardToPick = PlusTwoData.penaltyNumber;
@@ -151,11 +161,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (isThrow && remainingCardsNumber === 1) { // ^ UNO Bull
 
-                await BullTimer.AddJob.UnoClick(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 2, unoSeatIndex);
+                await BullTimer.AddJob.UnoClick(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, turnInfoDelay, unoSeatIndex);
 
             } else { // ^ Turn Bull
 
-                await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 2);
+                await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, turnInfoDelay);
 
             };
 
