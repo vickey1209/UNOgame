@@ -52,7 +52,7 @@ const LiveConfig = (): ConfigInterface => {
 
     const GamePlay = {
 
-        LOG: true,
+        LOG: false,
 
         PLUS_ON_PLUS: true,
 
@@ -62,7 +62,7 @@ const LiveConfig = (): ConfigInterface => {
         NEXT_ROUND_TIMER: 10,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
-        TIMES_UP_DELAY_TIMER:2,
+        TIMES_UP_DELAY_TIMER: 2,
 
         DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,
