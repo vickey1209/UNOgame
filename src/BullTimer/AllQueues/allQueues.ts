@@ -22,6 +22,7 @@ const TurnInfoQueue = new Bull('TurnInfo', BullRedisOptions);
 const DisconnectUserQueue = new Bull('DisconnectUser', BullRedisOptions);
 const UnoClickQueue = new Bull('UnoClick', BullRedisOptions);
 const TimesUpQueue = new Bull('TimesUp', BullRedisOptions);
+const PickCardQueue = new Bull('PickCard', BullRedisOptions);
 
 export {
 
@@ -32,6 +33,7 @@ export {
     TurnInfoQueue,
     DisconnectUserQueue,
     UnoClickQueue,
-    TimesUpQueue
+    TimesUpQueue,
+    PickCardQueue,
 
 };

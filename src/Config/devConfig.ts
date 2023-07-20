@@ -37,11 +37,11 @@ const DevConfig = (): ConfigInterface => {
 
         GAME_START_TIMER: 4,
         USER_TURN_TIMER: 20,
-        ROUND_TIMER: 1,
+        ROUND_TIMER: 500,
         NEXT_ROUND_TIMER: 50,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
-        TIMES_UP_DELAY_TIMER:2,
+        TIMES_UP_DELAY_TIMER: 2,
 
         DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,
@@ -57,6 +57,11 @@ const DevConfig = (): ConfigInterface => {
         PLUS_TWO_POINT: 20,
         PLUS_FOUR_POINT: 50,
         COLOR_CHANGE_POINT: 35,
+
+        DELAY_FOR_SINGLE_PICK: 0.5,
+        DELAY_FOR_PLUS_FOUR: 3,
+        DELAY_FOR_PLUS_TWO: 1,
+        DELAY_FOR_COLOR_CHANGE: 2,
 
     };
 

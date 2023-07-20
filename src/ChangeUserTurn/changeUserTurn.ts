@@ -1,4 +1,5 @@
 import { BullTimer } from "../BullTimer";
+import { Config } from "../Config";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
@@ -10,6 +11,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
     try {
 
         Logger("ChangeUserTurn", JSON.stringify({ tableId }));
+
+        const CONFIG = Config();
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -24,14 +27,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         };
 
-        console.log('');
-        console.log('First One');
-        console.log({ turnInfoDelay });
-        console.log('');
+
 
         if (isPick && TableDetails.numberOfCardToPick !== 0) {
 
-            turnInfoDelay += (TableDetails.numberOfCardToPick * 0.5);
+            turnInfoDelay += (TableDetails.numberOfCardToPick * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK);
 
             isSkip = true, skipSeatIndex = TableDetails.currentTurn;
 
@@ -45,19 +45,9 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (!PlusFourData) { throw new Error(CONSTANTS.ERROR_MESSAGES.PLUS_4_ERROR) };
 
-            // turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
+            turnInfoDelay += CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR;
 
-            turnInfoDelay += 3;
-
-            turnInfoDelay += (PlusFourData.pickCards.length * 0.5);
-
-            console.log('');
-            console.log('+4');
-            console.log({ turnInfoDelay });
-            console.log('');
-
-            // if (PlusFourData.penaltyNumber === 0) { turnInfoDelay += (TableDetails.numberOfCardToPick * 0.7); };
-            // else { }
+            turnInfoDelay += (PlusFourData.pickCards.length * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK);
 
             TableDetails.currentTurn = PlusFourData.nextTurnSeatIndex;
             TableDetails.numberOfCardToPick = PlusFourData.penaltyNumber;
@@ -72,18 +62,9 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (!PlusTwoData) { throw new Error(CONSTANTS.ERROR_MESSAGES.PLUS_2_ERROR) };
 
-            // turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
+            turnInfoDelay += CONFIG.GamePlay.DELAY_FOR_PLUS_TWO;
 
-            turnInfoDelay += 1;
-
-            turnInfoDelay += (PlusTwoData.pickCards.length * 0.5);
-
-            console.log('');
-            console.log('+2');
-            console.log({ turnInfoDelay });
-            console.log('');
-
-            // if (PlusTwoData.penaltyNumber === 0) { turnInfoDelay += (TableDetails.numberOfCardToPick * 0.7); };
+            turnInfoDelay += (PlusTwoData.pickCards.length * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK);
 
             TableDetails.currentTurn = PlusTwoData.nextTurnSeatIndex;
             TableDetails.numberOfCardToPick = PlusTwoData.penaltyNumber;
@@ -166,17 +147,9 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
             };
         };
 
-        if (isPick && turnInfoDelay === 0) { turnInfoDelay = 0.5 };
-        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE && isThrow) { turnInfoDelay = 2 };
+        if (isPick && turnInfoDelay === 0) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK };
 
-        console.log('');
-
-        console.log('Last One');
-
-        console.log({ turnInfoDelay });
-
-        console.log('');
-
+        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE && isThrow) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE };
 
         TableDetails.isTurnLock = true;
 
