@@ -26,7 +26,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (isPick && TableDetails.numberOfCardToPick !== 0) {
 
-            turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
+            turnInfoDelay += (TableDetails.numberOfCardToPick * 0.7);
 
             isSkip = true, skipSeatIndex = TableDetails.currentTurn;
 
@@ -40,16 +40,19 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (!PlusFourData) { throw new Error(CONSTANTS.ERROR_MESSAGES.PLUS_4_ERROR) };
 
-            turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
+            // turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
 
             turnInfoDelay += 4;
+
+            if (PlusFourData.penaltyNumber === 0) { turnInfoDelay += (TableDetails.numberOfCardToPick * 0.7); };
+            // else { }
 
             TableDetails.currentTurn = PlusFourData.nextTurnSeatIndex;
             TableDetails.numberOfCardToPick = PlusFourData.penaltyNumber;
 
             PlusFourData.pickCards.forEach(element => { TableDetails.closeCardDeck.splice(TableDetails.closeCardDeck.indexOf(element), 1); });
 
-            if (!PlusFourData.isPenaltyFreeCard) { isSkip = PlusFourData.isSkip, skipSeatIndex = PlusFourData.skipSeatIndex  };
+            if (!PlusFourData.isPenaltyFreeCard) { isSkip = PlusFourData.isSkip, skipSeatIndex = PlusFourData.skipSeatIndex };
 
         } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO && isThrow) { // ^ +2 Card !
 
@@ -57,9 +60,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (!PlusTwoData) { throw new Error(CONSTANTS.ERROR_MESSAGES.PLUS_2_ERROR) };
 
-            turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
+            // turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
 
             turnInfoDelay += 1.30;
+
+            if (PlusTwoData.penaltyNumber === 0) { turnInfoDelay += (TableDetails.numberOfCardToPick * 0.7); };
 
             TableDetails.currentTurn = PlusTwoData.nextTurnSeatIndex;
             TableDetails.numberOfCardToPick = PlusTwoData.penaltyNumber;
