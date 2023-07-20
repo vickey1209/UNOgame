@@ -47,7 +47,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             // turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
 
-            turnInfoDelay += 4;
+            turnInfoDelay += 3;
 
             turnInfoDelay += (PlusFourData.pickCards.length * 0.5);
 
@@ -74,7 +74,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             // turnInfoDelay += (TableDetails.numberOfCardToPick * 0.9);
 
-            turnInfoDelay += 1.30;
+            turnInfoDelay += 1;
 
             turnInfoDelay += (PlusTwoData.pickCards.length * 0.5);
 

@@ -109,7 +109,7 @@ const PlusFour = async (tableId: string) => {
 
                 EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
-            }, 4 * 1000);
+            }, 3 * 1000);
 
             let SkipData = await GAME_ACTIONS.Skip(TableDetails.tableId);
 
