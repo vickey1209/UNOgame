@@ -105,7 +105,13 @@ const PlusTwo = async (tableId: string) => {
 
             };
 
-            EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
+            setTimeout(() => {
+
+                EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
+
+            }, 1 * 1000);
+
+            // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
             let SkipData = await GAME_ACTIONS.Skip(TableDetails.tableId);
 
