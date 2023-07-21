@@ -59,7 +59,7 @@ const DevConfig = (): ConfigInterface => {
         COLOR_CHANGE_POINT: 35,
 
         DELAY_FOR_SINGLE_PICK: 0.5,
-        DELAY_FOR_PLUS_FOUR: 3,
+        DELAY_FOR_PLUS_FOUR: 2.5,
         DELAY_FOR_PLUS_TWO: 1,
         DELAY_FOR_COLOR_CHANGE: 2,
 
