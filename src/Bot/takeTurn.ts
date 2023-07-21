@@ -9,7 +9,7 @@ import { GAME_ACTIONS } from "../GameActions";
 import { BullTimer } from "../BullTimer";
 import { Config } from "../Config";
 
-const TakeTurn = async (tableId: string) => {
+const TakeTurn = async (tableId: string) => { 
 
     try {
 
