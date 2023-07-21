@@ -11,6 +11,7 @@ import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterf
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
 import { GAME_ACTIONS } from "../GameActions";
+import { ThrowCard } from "../ThrowCard/throwCard";
 
 const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
     // const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => {
@@ -122,7 +123,47 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
             await ChangeUserTurn(TableDetails.tableId, false, true, 0);
 
-        };
+        }else if(UserAvailableInTable.isBot && isPlayableCard){
+
+            const Fake_Data = {
+
+                card:UserInTableDetails.lastPickCard, //playableCard,
+                cardType:UserInTableDetails.lastPickCard.split('-')[1], //playableCard.split('-')[1],
+                cardColor:UserInTableDetails.lastPickCard.split('-')[0], //playableCard.split('-')[0],
+                cardIndex: 0,
+
+                userId: UserInTableDetails.userId,
+                tableId: TableDetails.tableId,
+                seatIndex: UserInTableDetails.seatIndex
+
+            };
+            if(UserInTableDetails.lastPickCard.slice(0, 4) === "W-CH" || UserInTableDetails.lastPickCard.slice(1, 6) === "-D4C-"){
+                let resRedCards = UserInTableDetails.cardArray.filter(item => new RegExp("R-" , 'i').test(item));
+                let resGreenCards = UserInTableDetails.cardArray.filter(item => new RegExp("G-" , 'i').test(item));
+                let resYelloCards = UserInTableDetails.cardArray.filter(item => new RegExp("Y-" , 'i').test(item));
+                let resBlueCards = UserInTableDetails.cardArray.filter(item => new RegExp("B-" , 'i').test(item));
+                let color_array=["R","G","Y","B"];
+                let masterArray = [resRedCards,resGreenCards,resYelloCards,resBlueCards];
+                var indexOfLongestArray = masterArray.reduce((acc, arr, idx) => {
+                    console.log(acc, idx, JSON.stringify([arr, masterArray[acc]]))
+                    return arr.length > masterArray[acc].length ? idx : acc
+                }, 0)
+                    
+                Fake_Data.cardColor = color_array[indexOfLongestArray]; 
+
+                // if(resRedCards.length === 0){
+                //     Fake_Data.cardColor = "R";
+                // }else if(resGreenCards.length === 0){
+                //     Fake_Data.cardColor = "G";
+                // }else if(resYelloCards.length === 0){
+                //     Fake_Data.cardColor = "Y";
+                // }else if(resBlueCards.length === 0){
+                //     Fake_Data.cardColor = "B";
+                // }
+            }
+            await BullTimer.AddJob.BotCardThrow({eventName : "THROW_CARD",socket,delayNumber:2,Fake_Data})
+            // await ThrowCard('THROW_CARD', socket, Fake_Data);
+        }
 
     } catch (error: any) {
 

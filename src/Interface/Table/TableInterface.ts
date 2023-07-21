@@ -6,7 +6,7 @@ export interface TableInterface {
     currentRound: number,
     totalRounds: number,
     maxPlayers: number,
-
+    botPriority: string,
     playersArray: Array<PlayersArrayInterface>,
 
     numberOfCardToPick: number
