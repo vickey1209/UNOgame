@@ -20,14 +20,24 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         let isSkip = false, skipSeatIndex = -1, isRevers = false, isGameEnd = false, unoSeatIndex = TableDetails.currentTurn, turnInfoDelay = 0;
 
+        if (remainingCardsNumber === 0) {
+
+            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_TWO };
+            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR };
+            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE };
+
+            await GAME_ACTIONS.EndRound(tableId, false, turnInfoDelay);
+
+            return;
+
+        };
+
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
 
             TableDetails.isClockwise = TableDetails.isClockwise ? false : true;
             isRevers = true;
 
         };
-
-
 
         if (isPick && TableDetails.numberOfCardToPick !== 0) {
 
@@ -45,7 +55,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (!PlusFourData) { throw new Error(CONSTANTS.ERROR_MESSAGES.PLUS_4_ERROR) };
 
-            turnInfoDelay += CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR;
+            turnInfoDelay += turnInfoDelay
 
             turnInfoDelay += (PlusFourData.pickCards.length * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK);
 
@@ -157,7 +167,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (isGameEnd) { // ^ End Game Immediately
 
-            await GAME_ACTIONS.EndRound(tableId, false);
+            await GAME_ACTIONS.EndRound(tableId, false, turnInfoDelay);
 
             console.log('End Game Immediately !!!');
             console.log('End Game Immediately !!!');

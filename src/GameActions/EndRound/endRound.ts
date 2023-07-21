@@ -9,7 +9,7 @@ import { UserInTableInterface } from "../../Interface/UserInTable/UserInTableInt
 import { Logger } from "../../Logger/logger";
 import { Win } from "../../Win/win";
 
-const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
+const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: number) => {
 
     try {
 
@@ -81,9 +81,11 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean) => {
 
         } else {
 
-            await BullTimer.AddJob.NextRound(TableDetails.tableId);
+            await BullTimer.AddJob.RoundScoreDelay(TableDetails.tableId, delayNumber);
 
-            EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, allRoundScore: AllRoundScore } });
+            // await BullTimer.AddJob.NextRound(TableDetails.tableId);
+
+            // EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, allRoundScore: AllRoundScore } });
 
         };
 

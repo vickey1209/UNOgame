@@ -27,7 +27,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
         const CONFIG = Config();
 
-        let pickCards: Array<string> = [], isGameEnd = false, isPlayableCard = false;
+        let pickCards: Array<string> = [], isGameEnd = false, isPlayableCard = false, delayNumber = 0;
 
         let TableDetails: TableInterface = await GetTable(Data?.tableId);
 
@@ -103,9 +103,11 @@ const UnoClickProcessAction = async (Data: any) => {
 
             await SetTable(TableDetails.tableId, TableDetails);
 
+            delayNumber = pickCards.length * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK;
+
             if (isGameEnd) {
 
-                await GAME_ACTIONS.EndRound(TableDetails.tableId, false);
+                await GAME_ACTIONS.EndRound(TableDetails.tableId, false, delayNumber);
 
             } else {
 
@@ -113,7 +115,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
                 const PickCardResData: PickCardResInterface = { userId, tableId, seatIndex, pickCards, isPlayableCard };
 
-                await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, 0, PickCardResData);
+                await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, delayNumber, PickCardResData);
 
                 // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 

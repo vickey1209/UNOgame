@@ -7,7 +7,8 @@ import { BotCardThrow } from "./botCardThrow";
 import { NextRound } from "./nextRound";
 import { CollectBootValue } from "./collectBoot";
 import { DisconnectUser } from "./disconnectUser";
-import { PickCardDelay } from "./pickCard";
+import { PickCardDelay } from "./pickCardDelay";
+import { RoundScoreDelay } from "./roundScoreDelay";
 
 const AddJob = {
 
@@ -21,6 +22,7 @@ const AddJob = {
     TimesUp,
     BotCardThrow,
     PickCardDelay,
+    RoundScoreDelay,
 
 };
 

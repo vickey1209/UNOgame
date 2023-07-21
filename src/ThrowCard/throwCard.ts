@@ -95,26 +95,14 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
         EventEmitter.emit(THROW_CARD, { en: THROW_CARD, RoomId: TableDetails.tableId, Data: Data });
 
-        // if (UserInTableDetails.cardArray.length) {
-
-        //     await ChangeUserTurn(TableDetails.tableId, true, UserInTableDetails.cardArray.length);
-
-        // } else {
-
-        //     await GAME_ACTIONS.EndRound(TableDetails.tableId);
-
-        // };
-
         if (UserAvailableInTable.isBot && UserInTableDetails.cardArray.length === 1) {
             await Uno(en, socket, { "userId": UserInTableDetails.userId, "tableId": UserInTableDetails.tableId, "seatIndex": UserInTableDetails.seatIndex })
         }
 
-        // setTimeout(async () => { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }, 1000);
+        await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length);
 
-        if (UserInTableDetails.cardArray.length < 1) { setTimeout(async () => { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }, 1000); }
-        else { await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length); };
-
-        // await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length); 
+        // if (UserInTableDetails.cardArray.length < 1) { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }
+        // else { await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length); };
 
     } catch (error: any) {
 

@@ -99,19 +99,11 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
 
         }
 
-        let str = 'Rutvik-Devarsh';
-
-        if (TableDetails.playersArray.length === 1) {
-            str = str.split('-')[1]
-        } else {
-            str = str.split('-')[0]
-        };
-
         const PlayerForPlayerArray: PlayersArrayInterface = {
 
             userId: UserDetails.userId,
-            // userName: 'Second',
-            userName: UserDetails.isBot ? 'Bot' : `${str}`,
+            userName: 'Second',
+            // userName: UserDetails.userName,
             userProfile: UserDetails.userProfile,
             seatIndex: NumberOfSeatAvailable[0],
             isLeave: false,
