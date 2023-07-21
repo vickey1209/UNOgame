@@ -1,6 +1,6 @@
 import { Logger } from "../../Logger/logger";
 import { RoundScoreDelayQueue } from "../AllQueues/allQueues";
-import { PickCardDelayProcess } from "../ProcessJob/pickCardDelayProcess";
+import { RoundScoreDelayProcess } from "../ProcessJob/roundScoreDelayProcess";
 
 const RoundScoreDelay = async (tableId: string, delayNumber: number) => {
 
@@ -23,6 +23,6 @@ const RoundScoreDelay = async (tableId: string, delayNumber: number) => {
     };
 };
 
-RoundScoreDelayQueue.process(PickCardDelayProcess);
+RoundScoreDelayQueue.process(RoundScoreDelayProcess);
 
 export { RoundScoreDelay };
