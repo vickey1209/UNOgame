@@ -1,4 +1,5 @@
 import { GAME_ACTIONS } from "..";
+import { BullTimer } from "../../BullTimer";
 import { Config } from "../../Config";
 import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
@@ -105,7 +106,13 @@ const PlusTwo = async (tableId: string) => {
 
             };
 
-            EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
+            await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, CONFIG.GamePlay.DELAY_FOR_PLUS_TWO, PickCardResData);
+
+            // setTimeout(() => {
+
+            //     EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
+
+            // }, CONFIG.GamePlay.DELAY_FOR_PLUS_TWO * 1000);
 
             let SkipData = await GAME_ACTIONS.Skip(TableDetails.tableId);
 

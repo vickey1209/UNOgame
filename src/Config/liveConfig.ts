@@ -52,7 +52,7 @@ const LiveConfig = (): ConfigInterface => {
 
     const GamePlay = {
 
-        LOG: true,
+        LOG: false,
 
         PLUS_ON_PLUS: true,
 
@@ -62,7 +62,7 @@ const LiveConfig = (): ConfigInterface => {
         NEXT_ROUND_TIMER: 10,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
-        TIMES_UP_DELAY_TIMER:2,
+        TIMES_UP_DELAY_TIMER: 2,
 
         DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,
@@ -78,6 +78,11 @@ const LiveConfig = (): ConfigInterface => {
         PLUS_TWO_POINT: 20,
         PLUS_FOUR_POINT: 50,
         COLOR_CHANGE_POINT: 35,
+
+        DELAY_FOR_SINGLE_PICK: 0.5,
+        DELAY_FOR_PLUS_FOUR: 3,
+        DELAY_FOR_PLUS_TWO: 1,
+        DELAY_FOR_COLOR_CHANGE: 2,
 
     };
 

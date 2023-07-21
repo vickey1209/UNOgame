@@ -1,4 +1,5 @@
 import { BullTimer } from "../BullTimer";
+import { Config } from "../Config";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
@@ -11,11 +12,13 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         Logger("ChangeUserTurn", JSON.stringify({ tableId }));
 
+        const CONFIG = Config();
+
         let TableDetails: TableInterface = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        let isSkip = false, skipSeatIndex = -1, isRevers = false, isGameEnd = false, unoSeatIndex = TableDetails.currentTurn;
+        let isSkip = false, skipSeatIndex = -1, isRevers = false, isGameEnd = false, unoSeatIndex = TableDetails.currentTurn, turnInfoDelay = 0;
 
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
 
@@ -24,7 +27,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         };
 
+
+
         if (isPick && TableDetails.numberOfCardToPick !== 0) {
+
+            turnInfoDelay += (TableDetails.numberOfCardToPick * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK);
 
             isSkip = true, skipSeatIndex = TableDetails.currentTurn;
 
@@ -38,6 +45,10 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (!PlusFourData) { throw new Error(CONSTANTS.ERROR_MESSAGES.PLUS_4_ERROR) };
 
+            turnInfoDelay += CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR;
+
+            turnInfoDelay += (PlusFourData.pickCards.length * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK);
+
             TableDetails.currentTurn = PlusFourData.nextTurnSeatIndex;
             TableDetails.numberOfCardToPick = PlusFourData.penaltyNumber;
 
@@ -50,6 +61,10 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
             const PlusTwoData = await GAME_ACTIONS.PlusTwo(TableDetails.tableId);
 
             if (!PlusTwoData) { throw new Error(CONSTANTS.ERROR_MESSAGES.PLUS_2_ERROR) };
+
+            turnInfoDelay += CONFIG.GamePlay.DELAY_FOR_PLUS_TWO;
+
+            turnInfoDelay += (PlusTwoData.pickCards.length * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK);
 
             TableDetails.currentTurn = PlusTwoData.nextTurnSeatIndex;
             TableDetails.numberOfCardToPick = PlusTwoData.penaltyNumber;
@@ -132,6 +147,10 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
             };
         };
 
+        if (isPick && turnInfoDelay === 0) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK };
+
+        if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE && isThrow) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE };
+
         TableDetails.isTurnLock = true;
 
         await SetTable(TableDetails.tableId, TableDetails);
@@ -151,11 +170,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (isThrow && remainingCardsNumber === 1) { // ^ UNO Bull
 
-                await BullTimer.AddJob.UnoClick(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 2, unoSeatIndex);
+                await BullTimer.AddJob.UnoClick(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, turnInfoDelay, unoSeatIndex);
 
             } else { // ^ Turn Bull
 
-                await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 2);
+                await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, turnInfoDelay);
 
             };
 

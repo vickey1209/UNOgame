@@ -113,7 +113,9 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
         const PickCardResData: PickCardResInterface = { ...Data, pickCards, isPlayableCard };
 
-        EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
+        // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
+
+        await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, 0, PickCardResData);
 
         if (!isPlayableCard) {
 
