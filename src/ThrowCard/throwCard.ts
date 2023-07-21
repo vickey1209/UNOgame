@@ -105,12 +105,16 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
         // };
 
-        if(UserAvailableInTable.isBot && UserInTableDetails.cardArray.length === 1){
-            await Uno(en,socket,{"userId":UserInTableDetails.userId,"tableId":UserInTableDetails.tableId,"seatIndex":UserInTableDetails.seatIndex})
+        if (UserAvailableInTable.isBot && UserInTableDetails.cardArray.length === 1) {
+            await Uno(en, socket, { "userId": UserInTableDetails.userId, "tableId": UserInTableDetails.tableId, "seatIndex": UserInTableDetails.seatIndex })
         }
 
-        if (UserInTableDetails.cardArray.length < 1) { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }
+        // setTimeout(async () => { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }, 1000);
+
+        if (UserInTableDetails.cardArray.length < 1) { setTimeout(async () => { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }, 1000); }
         else { await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length); };
+
+        // await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length); 
 
     } catch (error: any) {
 

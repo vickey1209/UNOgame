@@ -99,17 +99,21 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
 
         }
 
+        let num = 0
+
         const PlayerForPlayerArray: PlayersArrayInterface = {
 
             userId: UserDetails.userId,
-            userName: 'Second',
-            // userName: UserDetails.userName,
+            // userName: 'Second',
+            userName: UserDetails.isBot ? 'Bot' : `${num}`,
             userProfile: UserDetails.userProfile,
             seatIndex: NumberOfSeatAvailable[0],
             isLeave: false,
             isBot: UserDetails.isBot,
 
         };
+
+        num++;
 
         const UserInTable: UserInTableInterface = {
 
