@@ -23,12 +23,13 @@ const DistributeCards = async (tableId: string) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        const PowerCardNumber = 4
-        // const PowerCardNumber = await GAME_ACTIONS.RandomNumber(CONFIG.GamePlay.MIN_SPECIAL_CARD, CONFIG.GamePlay.MAX_SPECIAL_CARD);
+        // const PowerCardNumber = 7
+        const PowerCardNumber = await GAME_ACTIONS.RandomNumber(CONFIG.GamePlay.MIN_SPECIAL_CARD, CONFIG.GamePlay.MAX_SPECIAL_CARD);
 
-        let AllUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.ALL_UNO_CARDS));
-        let SimpleUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.SIMPLE_UNO_CARDS));
-        let SpecialUnoCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.SPECIAL_UNO_CARDS));
+        let AllUnoCards = await shuffleDeck(JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.ALL_UNO_CARDS)));
+        let SimpleUnoCards = await shuffleDeck(JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.SIMPLE_UNO_CARDS)));
+        let SpecialUnoCards = await shuffleDeck(JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.SPECIAL_UNO_CARDS)));
+        // let botHardCards = JSON.parse(JSON.stringify(CONSTANTS.UNO_CARDS.BOT_HARD_CARDS));
 
         const AllUserSocketId = [];
 
@@ -45,6 +46,7 @@ const DistributeCards = async (tableId: string) => {
         if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
         if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
         if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
+        // if (botHardCards.includes(Card)) { botHardCards.splice(botHardCards.indexOf(Card), 1); };
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
@@ -55,16 +57,31 @@ const DistributeCards = async (tableId: string) => {
             for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
 
                 if (PowerCardNumber > j) {
-
+                    
                     const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SpecialUnoCards.length - 1));
+                    let Card = SpecialUnoCards[RendomNumber];
 
-                    const Card = SpecialUnoCards[RendomNumber];
+                    // if(TableDetails.botPriority === CONSTANTS.BOT_PRIORITY.HARD && TableDetails.playersArray[i].isBot && botHardCards.length > 0){
+                    //     const priorityNumber = await GAME_ACTIONS.RandomNumber(0, 100);
+                    //     if(priorityNumber <= CONSTANTS.BOT_PRIORITY.HARD_PERCENT){
+                    //         const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (botHardCards.length - 1));
+                    //         Card = botHardCards[RendomNumber];
+                    //     }
+                    // }else if(!TableDetails.playersArray[i].isBot && botHardCards.length > 0){
+                    //     const priorityNumber = await GAME_ACTIONS.RandomNumber(0, 100);
+                    //     if(priorityNumber > CONSTANTS.BOT_PRIORITY.HARD_PERCENT){
+                    //         const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (botHardCards.length - 1));
+                    //         Card = botHardCards[RendomNumber];
+                    //     }
+                    // }
 
                     UserInTableDetails.cardArray.push(Card);
 
                     if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
                     if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
                     if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
+                    // if (botHardCards.includes(Card)) { botHardCards.splice(botHardCards.indexOf(Card), 1); };
+
 
                 } else {
 
@@ -77,6 +94,8 @@ const DistributeCards = async (tableId: string) => {
                     if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
                     if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
                     if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
+                    // if (botHardCards.includes(Card)) { botHardCards.splice(botHardCards.indexOf(Card), 1); };
+
 
                 };
             };
@@ -113,5 +132,16 @@ const DistributeCards = async (tableId: string) => {
         Logger('DistributeCards Error : ', error);
     };
 };
-
+const shuffleDeck  = async (deck: Array<string>) => {
+    for (let i = 0; i < deck.length; i++) {
+        // picks the random number between 0 and length of the deck
+        let shuffle = Math.floor(Math.random() * (deck.length));
+        
+        //uses 3 buckets method to swap cards
+        let temp = deck[i]; //holds one card in temp variable
+        deck[i] = deck[shuffle]; 
+        deck[shuffle] = temp; 
+      }
+    return deck;  
+}
 export { DistributeCards };

@@ -31,14 +31,14 @@ const DevConfig = (): ConfigInterface => {
 
     const GamePlay = {
 
-        LOG: false,
+        LOG: true,
 
         PLUS_ON_PLUS: true,
 
         GAME_START_TIMER: 4,
         USER_TURN_TIMER: 20,
-        ROUND_TIMER: 500,
-        NEXT_ROUND_TIMER: 50,
+        ROUND_TIMER: 240,
+        NEXT_ROUND_TIMER: 10,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
         TIMES_UP_DELAY_TIMER: 2,
@@ -48,7 +48,7 @@ const DevConfig = (): ConfigInterface => {
         MAX_SPECIAL_CARD: 3,
         TURN_TIMEOUT_COUNT: 2,
 
-        TOTAL_ROUND_NUMBER: 3,
+        TOTAL_ROUND_NUMBER: 2,
         UNO_PENALTY_NUMBER: 2,
 
         ZERO_POINT: 10,

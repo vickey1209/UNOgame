@@ -9,6 +9,7 @@ import { BullTimer } from "../BullTimer";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { GAME_ACTIONS } from "../GameActions";
+import { Uno } from "../Uno/uno";
 
 const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
@@ -93,6 +94,20 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
         await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
 
         EventEmitter.emit(THROW_CARD, { en: THROW_CARD, RoomId: TableDetails.tableId, Data: Data });
+
+        // if (UserInTableDetails.cardArray.length) {
+
+        //     await ChangeUserTurn(TableDetails.tableId, true, UserInTableDetails.cardArray.length);
+
+        // } else {
+
+        //     await GAME_ACTIONS.EndRound(TableDetails.tableId);
+
+        // };
+
+        if(UserAvailableInTable.isBot && UserInTableDetails.cardArray.length === 1){
+            await Uno(en,socket,{"userId":UserInTableDetails.userId,"tableId":UserInTableDetails.tableId,"seatIndex":UserInTableDetails.seatIndex})
+        }
 
         if (UserInTableDetails.cardArray.length < 1) { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }
         else { await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length); };

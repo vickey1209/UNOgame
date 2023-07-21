@@ -1,4 +1,5 @@
 import ALL_UNO_CARDS from './allUnoCards';
+import BOT_HARD_CARDS from './botHardCards';
 import SIMPLE_UNO_CARDS from './simpleUnoCards';
 import SPECIAL_UNO_CARDS from './specialUnoCards';
 import CARDS_TYPE from './cardsType'
@@ -11,6 +12,7 @@ const UNO_CARDS = Object.freeze({
     SPECIAL_UNO_CARDS,
     CARDS_TYPE,
     CARDS_COLOR,
+    BOT_HARD_CARDS
 
 });
 

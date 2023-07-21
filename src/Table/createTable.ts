@@ -39,7 +39,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
         const Table = await CreateNewTable(socket, UserDetails);
 
-        // setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 2000);
+        setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 2000);
 
         // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
 
@@ -65,7 +65,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
             currentRound: 1,
             totalRounds: CONFIG.GamePlay.TOTAL_ROUND_NUMBER,
             maxPlayers: UserDetails.playerCount,
-
+            botPriority: CONSTANTS.BOT_PRIORITY.HARD,
             playersArray: [
 
                 {
