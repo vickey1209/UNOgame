@@ -14,7 +14,7 @@ const BotSignUp = async () => {
             userProfile: "No",
             chips: 100,
             bootValue: 1,
-            playerCount: 2,
+            playerCount: 3,
             socketId: '',
             tableId: '',
             isBot: true

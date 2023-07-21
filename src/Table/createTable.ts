@@ -39,6 +39,8 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
         const Table = await CreateNewTable(socket, UserDetails);
 
+        setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 10000);
+
         // setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 2000);
 
         // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
