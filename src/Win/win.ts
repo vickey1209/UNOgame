@@ -2,7 +2,7 @@ import { CheckUserScore } from "../AllUserScore/allUserScore";
 import { BullTimer } from "../BullTimer";
 import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
-import { DeleteTable, DeleteUserInTable, GetRoundHistory, GetTable, GetUser, GetUserInTable, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
+import { DeleteRoundHistory, DeleteTable, DeleteUserInTable, GetRoundHistory, GetTable, GetUser, GetUserInTable, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
@@ -106,6 +106,8 @@ const Win = async (tableId: string) => {
         await SetTable(TableDetails.tableId, TableDetails);
 
         await DeleteTable(TableDetails.tableId);
+
+        await DeleteRoundHistory(TableDetails.tableId);
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
