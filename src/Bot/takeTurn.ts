@@ -8,6 +8,7 @@ import { ThrowCard } from "../ThrowCard/throwCard";
 import { GAME_ACTIONS } from "../GameActions";
 import { BullTimer } from "../BullTimer";
 import { Config } from "../Config";
+import { getUserScore } from "../AllUserScore/allUserScore";
 
 const TakeTurn = async (tableId: string) => { 
 
@@ -44,7 +45,7 @@ const TakeTurn = async (tableId: string) => {
 
         // console.log({ isPlayableCard, playableCard, avtiveCard: TableDetails.activeCard });
 
-        let detailsOfActiveCard = await findActiveCard(UserInTableDetails.cardArray,
+        let detailsOfActiveCard = await findActiveCard(UserInTableDetails.cardArray,UserInTableDetails,
             {
                 tableId:TableDetails.tableId,
                 activeCard:TableDetails.activeCard,
@@ -131,7 +132,7 @@ const TakeTurn = async (tableId: string) => {
 };
 
 
-async function findActiveCard(userCardArray:any, tableData:any){
+async function findActiveCard(userCardArray:any,UserInTableDetails:any, tableData:any){
     const CONFIG = Config();
     console.log(" findActiveCard findActiveCard : ", userCardArray,tableData);
     let user_card = userCardArray;
@@ -272,14 +273,14 @@ async function findActiveCard(userCardArray:any, tableData:any){
                 };
                 const UserAvailableInTable = tableData.playersArray.find((e:any) => { return e.seatIndex === nextTurn });
 
-                let UserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
-                nextPlayerCardArray = UserInTableDetails.cardArray;
-                // let D4C_CardInNextPlayerCard = UserInTableDetails.cardArray.filter(item => new RegExp("D4C-" , 'i').test(item));
-                // let D2C_CardInNextPlayerCard = UserInTableDetails.cardArray.filter(item => new RegExp("-D2C-" , 'i').test(item));
+                let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
+                nextPlayerCardArray = nextUserInTableDetails.cardArray;
+                // let D4C_CardInNextPlayerCard = nextUserInTableDetails.cardArray.filter(item => new RegExp("D4C-" , 'i').test(item));
+                // let D2C_CardInNextPlayerCard = nextUserInTableDetails.cardArray.filter(item => new RegExp("-D2C-" , 'i').test(item));
                 // if(D4C_CardInNextPlayerCard.length > 0){
                 //     card_bot_w4c = []
                 //     card_bot_w2c = [];
-                // }else if(D2C_CardInNextPlayerCard.length > 0 && UserInTableDetails.cardArray.length){
+                // }else if(D2C_CardInNextPlayerCard.length > 0 && nextUserInTableDetails.cardArray.length){
                 //     // card_bot_w4c = [];
                 //     card_bot_w2c = [];
                 // }
@@ -291,57 +292,70 @@ async function findActiveCard(userCardArray:any, tableData:any){
 
                 // if(CONFIG.GamePlay.USER_TURN_TIMER < )
 
-                if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && RemainingRoundTimer > CONFIG.GamePlay.USER_TURN_TIMER + 30 /*UserInTableDetails.cardArray.length > userActionCardThrowRandom*/){
+                if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && RemainingRoundTimer > CONFIG.GamePlay.USER_TURN_TIMER + 30 /*nextUserInTableDetails.cardArray.length > userActionCardThrowRandom*/){
                     card_bot_w4c = []
                     card_bot_w2c = [];
-                }else if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && UserInTableDetails.cardArray.length > userActionCardThrowRandom){
+                }else if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && nextUserInTableDetails.cardArray.length > userActionCardThrowRandom){
                     card_bot_w4c = []
                     card_bot_w2c = [];
                 }
 
                 if(card_bot_wild.length > 0 /*&& D4C_CardInNextPlayerCard.length === 0*/){
-                    // let resRedCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("R-" , 'i').test(item));
-                    // let resGreenCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("G-" , 'i').test(item));
-                    // let resYelloCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("Y-" , 'i').test(item));
-                    // let resBlueCardsNextPayer = UserInTableDetails.cardArray.filter(item => new RegExp("B-" , 'i').test(item));
+                    // let resRedCardsNextPlayer = nextUserInTableDetails.cardArray.filter(item => new RegExp("R-" , 'i').test(item));
+                    // let resGreenCardsNextPlayer = nextUserInTableDetails.cardArray.filter(item => new RegExp("G-" , 'i').test(item));
+                    // let resYelloCardsNextPlayer = nextUserInTableDetails.cardArray.filter(item => new RegExp("Y-" , 'i').test(item));
+                    // let resBlueCardsNextPlayer = nextUserInTableDetails.cardArray.filter(item => new RegExp("B-" , 'i').test(item));
 
-                    let resRedCardsCurrentPLayer = user_card.filter((item:string) => new RegExp("R-" , 'i').test(item));
-                    let resGreenCardsCurrentPLayer = user_card.filter((item:string) => new RegExp("G-" , 'i').test(item));
-                    let resYelloCardsCurrentPLayer = user_card.filter((item:string) => new RegExp("Y-" , 'i').test(item));
-                    let resBlueCardsCurrentPLayer = user_card.filter((item:string) => new RegExp("B-" , 'i').test(item));
-
-                    let masterArray = [resRedCardsCurrentPLayer,resGreenCardsCurrentPLayer,resYelloCardsCurrentPLayer,resBlueCardsCurrentPLayer];
-                    var indexOfLongestArray = masterArray.reduce((acc, arr, idx) => {
-                        console.log(acc, idx, JSON.stringify([arr, masterArray[acc]]))
+                    let resRedCardsCurrentPlayer = user_card.filter((item:string) => new RegExp("R-" , 'i').test(item));
+                    let resGreenCardsCurrentPlayer = user_card.filter((item:string) => new RegExp("G-" , 'i').test(item));
+                    let resYelloCardsCurrentPlayer = user_card.filter((item:string) => new RegExp("Y-" , 'i').test(item));
+                    let resBlueCardsCurrentPlayer = user_card.filter((item:string) => new RegExp("B-" , 'i').test(item));
+                    console.log("resRedCardsCurrentPlayer :", resRedCardsCurrentPlayer ," resGreenCardsCurrentPlayer :", resGreenCardsCurrentPlayer ," resYelloCardsCurrentPlayer :", resYelloCardsCurrentPlayer , "resBlueCardsCurrentPlayer :", resBlueCardsCurrentPlayer );
+                    let masterArray = [resRedCardsCurrentPlayer,resGreenCardsCurrentPlayer,resYelloCardsCurrentPlayer,resBlueCardsCurrentPlayer];
+                    console.log("masterArray :", masterArray );
+                    // let indexOld =
+                    let indexOfLongestArray = await masterArray.reduce(async (acc, arr, idx) => {
+                    // let indexOfLongestArray = await masterArray.reduce(async (acc, arr, idx) => {
+                        console.log("acc : ", acc , "idx :", idx , "arr :", arr);
+                        // let userScoreOld = await getUserScore(arr);
+                        // let userScoreNew = await getUserScore(await acc.acc);
+                        // console.log("userScoreOld :", userScoreOld , "userScoreNew : ", userScoreNew );
+                        // if(userScoreOld && userScoreNew && userScoreOld.currentRoundScore > userScoreNew.currentRoundScore){
+                        //     indexOld = idx;
+                        //     indexOld = idx;
+                        //     return {arr,idx};
+                        // }else{
+                        //     return {acc:acc.acc,idx:indexOld};
+                        // }
                         return arr.length > masterArray[acc].length ? idx : acc
-                    }, 0)
-                      
+                    })
+                    console.log("indexOfLongestArray :", indexOfLongestArray );
                     color_index = indexOfLongestArray 
-                    // if(resRedCardsCurrentPLayer.length === 0){
+                    // if(resRedCardsCurrentPlayer.length === 0){
                     //     color_index = 0;
-                    // }else if(resGreenCardsCurrentPLayer.length === 0){
+                    // }else if(resGreenCardsCurrentPlayer.length === 0){
                     //     color_index = 1;
-                    // }else if(resYelloCardsCurrentPLayer.length === 0){
+                    // }else if(resYelloCardsCurrentPlayer.length === 0){
                     //     color_index = 2;
-                    // }else if(resBlueCardsCurrentPLayer.length === 0){
+                    // }else if(resBlueCardsCurrentPlayer.length === 0){
                     //     color_index = 3;
                     // }
 
-                    // if(resRedCardsNextPayer.length === 0 && resRedCardsCurrentPLayer.length > 0){
+                    // if(resRedCardsNextPlayer.length === 0 && resRedCardsCurrentPlayer.length > 0){
                     //     color_index = 0;
-                    // }else if(resGreenCardsNextPayer.length === 0  && resGreenCardsCurrentPLayer.length > 0){
+                    // }else if(resGreenCardsNextPlayer.length === 0  && resGreenCardsCurrentPlayer.length > 0){
                     //     color_index = 1;
-                    // }else if(resYelloCardsNextPayer.length === 0  && resYelloCardsCurrentPLayer.length > 0){
+                    // }else if(resYelloCardsNextPlayer.length === 0  && resYelloCardsCurrentPlayer.length > 0){
                     //     color_index = 2;
-                    // }else if(resBlueCardsNextPayer.length === 0  && resBlueCardsCurrentPLayer.length > 0){
+                    // }else if(resBlueCardsNextPlayer.length === 0  && resBlueCardsCurrentPlayer.length > 0){
                     //     color_index = 3;
-                    // }else if(resRedCardsNextPayer.length === 0){
+                    // }else if(resRedCardsNextPlayer.length === 0){
                     //     color_index = 0;
-                    // }else if(resGreenCardsNextPayer.length === 0){
+                    // }else if(resGreenCardsNextPlayer.length === 0){
                     //     color_index = 1;
-                    // }else if(resYelloCardsNextPayer.length === 0){
+                    // }else if(resYelloCardsNextPlayer.length === 0){
                     //     color_index = 2;
-                    // }else if(resBlueCardsNextPayer.length === 0){
+                    // }else if(resBlueCardsNextPlayer.length === 0){
                     //     color_index = 3;
                     // }
                 }else{
