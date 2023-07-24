@@ -22,9 +22,14 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (remainingCardsNumber < 1 && isThrow) {
 
-            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_TWO };
-            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR };
-            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE };
+            // if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_TWO };
+            // if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR };
+            // if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE };
+
+            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_TWO; }
+            else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR; }
+            else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE; }
+            else { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK; };
 
             await GAME_ACTIONS.EndRound(tableId, false, turnInfoDelay);
 
@@ -33,6 +38,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
         };
 
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
+
+            turnInfoDelay += CONFIG.GamePlay.DELAY_FOR_REVERS;
 
             TableDetails.isClockwise = TableDetails.isClockwise ? false : true;
             isRevers = true;
@@ -55,7 +62,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (!PlusFourData) { throw new Error(CONSTANTS.ERROR_MESSAGES.PLUS_4_ERROR) };
 
-            turnInfoDelay += turnInfoDelay
+            turnInfoDelay += CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR;
 
             turnInfoDelay += (PlusFourData.pickCards.length * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK);
 
@@ -121,6 +128,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         } else { // ^ Normal Cards
 
+            if (isThrow) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK };
+
             if (TableDetails.isClockwise) {
 
                 const NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
@@ -139,7 +148,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
             };
         };
 
-        if (TableDetails.closeCardDeck.length < 1) {
+        if (TableDetails.closeCardDeck.length < 1 || TableDetails.closeCardDeck.length < TableDetails.numberOfCardToPick) {
 
             const IsShufflePossibleData = await GAME_ACTIONS.IsShufflePossible(TableDetails.tableId);
 

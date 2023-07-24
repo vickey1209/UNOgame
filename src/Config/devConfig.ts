@@ -36,7 +36,7 @@ const DevConfig = (): ConfigInterface => {
         PLUS_ON_PLUS: true,
 
         GAME_START_TIMER: 4,
-        USER_TURN_TIMER: 20,
+        USER_TURN_TIMER: 200,
         ROUND_TIMER: 240,
         NEXT_ROUND_TIMER: 10,
         RETURN_TO_TABLE_TIMER: 30,
@@ -62,6 +62,7 @@ const DevConfig = (): ConfigInterface => {
         DELAY_FOR_PLUS_FOUR: 2.2,
         DELAY_FOR_PLUS_TWO: 1,
         DELAY_FOR_COLOR_CHANGE: 2,
+        DELAY_FOR_REVERS: 1,
 
     };
 

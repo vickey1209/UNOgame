@@ -11,6 +11,7 @@ import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { BOT_ACTION } from "../Bot";
 import { Config } from "../Config";
+import { CardScoring } from "../CardScoring/cardScoring";
 
 const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
@@ -42,6 +43,8 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
         setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 2000);
 
         // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
+
+        await CardScoring(socket);
 
     } catch (error: any) {
         Logger('CreateTable Error : ', error);

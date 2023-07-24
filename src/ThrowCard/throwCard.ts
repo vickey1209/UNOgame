@@ -97,7 +97,7 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
         if (UserAvailableInTable.isBot && UserInTableDetails.cardArray.length === 1) {
             await Uno(en, socket, { "userId": UserInTableDetails.userId, "tableId": UserInTableDetails.tableId, "seatIndex": UserInTableDetails.seatIndex })
-        }
+        };
 
         await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length);
 

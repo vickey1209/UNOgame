@@ -37,6 +37,8 @@ const GetUser = async (UserKey: string) => {
 
     const User = await GetData(key);
 
+    Logger('GetUser return : ', JSON.stringify({ User }));
+
     return User;
 
 };
@@ -53,6 +55,8 @@ const GetEmptyTable = async (BootValue: number, PlayerCount: number) => {
     const key = `${EMPTY_TABLE}:${BootValue}:${PlayerCount}:*`;
 
     const EmptyTable: Array<string> = await AllKeys(key);
+
+    Logger('GetEmptyTable return : ', JSON.stringify({ EmptyTable }));
 
     return EmptyTable;
 
@@ -115,6 +119,8 @@ const GetTable = async (TableId: string) => {
 
     const Table = await GetData(key);
 
+    Logger('GetTable return : ', JSON.stringify({ Table }));
+
     return Table;
 
 };
@@ -164,6 +170,8 @@ const GetUserInTable = async (UserInTableId: string) => {
 
     const UserInTableGet = await GetData(key);
 
+    Logger('GetUserInTable return : ', JSON.stringify({ UserInTableGet }));
+
     return UserInTableGet;
 
 };
@@ -212,6 +220,8 @@ const GetRoundHistory = async (RoundId: string) => {
     const key = await RoundHistoryKeySet(RoundId);
 
     const RoundHistoryGet = await GetData(key);
+
+    Logger('GetRoundHistory return : ', JSON.stringify({ GetRoundHistory }));
 
     return RoundHistoryGet;
 

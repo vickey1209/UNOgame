@@ -2,7 +2,8 @@ import { CheckUserScore } from "../AllUserScore/allUserScore";
 import { BullTimer } from "../BullTimer";
 import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
-import { GetRoundHistory, GetTable, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
+import { DeleteRoundHistory, DeleteTable, DeleteUserInTable, GetRoundHistory, GetTable, GetUser, GetUserInTable, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
+import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
@@ -103,6 +104,22 @@ const Win = async (tableId: string) => {
         TableDetails.winningArray = FinalArray;
 
         await SetTable(TableDetails.tableId, TableDetails);
+
+        await DeleteTable(TableDetails.tableId);
+
+        await DeleteRoundHistory(TableDetails.tableId);
+
+        for (let i = 0; i < TableDetails.playersArray.length; i++) {
+
+            await DeleteUserInTable(TableDetails.playersArray[i].userId);
+
+            let UserDetails: SignUpInterface = await GetUser(TableDetails.playersArray[i].userId);
+
+            UserDetails.tableId = '';
+
+            await SetUser(TableDetails.playersArray[i].userId, UserDetails);
+
+        };
 
         EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: TableDetails.tableId, Data: { winningArray: FinalArray } });
 

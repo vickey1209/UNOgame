@@ -7,6 +7,7 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { CreateTable } from "../Table/createTable";
 import { RejoinTable } from "../Table/rejoinTable";
+import { BullTimer } from "../BullTimer";
 
 const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
     // const SignUp = async (en: string, socket: Socket, Data: SignUpInterface) => {
@@ -38,25 +39,27 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
 
         const UserDetails: SignUpInterface = await GetUser(Data.userId);
 
+        await BullTimer.CancelJob.CancelDisconnectUser(Data.userId);
+
         if (UserDetails) {
 
             const UserData = await UpdateUser(socket, Data, UserDetails);
             // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
-            await CreateTable(socket, Data);
-            // Data.tableId = UserData?.tableId ? UserData?.tableId : '';
+            // await CreateTable(socket, Data);
+            Data.tableId = UserData?.tableId ? UserData?.tableId : '';
 
-            // await RejoinTable(socket, Data);
+            await RejoinTable(socket, Data);
 
         } else {
 
             const UserData = await NewUser(socket, Data);
             // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
-            await CreateTable(socket, Data);
-            // Data.tableId = UserData?.tableId ? UserData?.tableId : '';
+            // await CreateTable(socket, Data);
+            Data.tableId = UserData?.tableId ? UserData?.tableId : '';
 
-            // await RejoinTable(socket, Data);
+            await RejoinTable(socket, Data);
 
         };
 
