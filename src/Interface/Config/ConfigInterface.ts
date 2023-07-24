@@ -59,6 +59,7 @@ export interface GamePlayInterface {
     DELAY_FOR_SINGLE_PICK: number,
     DELAY_FOR_PLUS_FOUR: number,
     DELAY_FOR_PLUS_TWO: number,
-    DELAY_FOR_COLOR_CHANGE: number
+    DELAY_FOR_COLOR_CHANGE: number,
+    DELAY_FOR_REVERS: number,
 
 }

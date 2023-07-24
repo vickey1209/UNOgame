@@ -39,6 +39,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
 
+            turnInfoDelay += CONFIG.GamePlay.DELAY_FOR_REVERS;
+
             TableDetails.isClockwise = TableDetails.isClockwise ? false : true;
             isRevers = true;
 

@@ -52,7 +52,7 @@ const DevConfig = (): ConfigInterface => {
         UNO_PENALTY_NUMBER: 2,
 
         ZERO_POINT: 10,
-        SKIP_POINT: 20, 
+        SKIP_POINT: 20,
         REVERS_POINT: 20,
         PLUS_TWO_POINT: 20,
         PLUS_FOUR_POINT: 50,
@@ -62,6 +62,7 @@ const DevConfig = (): ConfigInterface => {
         DELAY_FOR_PLUS_FOUR: 2.2,
         DELAY_FOR_PLUS_TWO: 1,
         DELAY_FOR_COLOR_CHANGE: 2,
+        DELAY_FOR_REVERS: 1,
 
     };
 
