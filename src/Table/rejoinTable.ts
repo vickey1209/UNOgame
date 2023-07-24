@@ -1,3 +1,4 @@
+import { AllUserScore } from "../AllUserScore/allUserScore";
 import { BullTimer } from "../BullTimer";
 import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
@@ -72,9 +73,9 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
             if (TableDetails.isGameStart) {
 
-                const { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray } = UserInTableDetails;
+                const { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray }: any = UserInTableDetails;
 
-                const { tableId, bootValue, currentTurn, currentRound, maxPlayers, playersArray, activeCard, activeCardType, activeCardColor, isClockwise, isGameStart, isRoundStart, isScoreScreen, isWinning } = TableDetails;
+                let { tableId, bootValue, currentTurn, currentRound, totalRounds, maxPlayers, playersArray, activeCard, activeCardType, activeCardColor, isClockwise, isGameStart, isRoundStart, isScoreScreen, isWinning }: any = TableDetails;
 
                 const RoundJob = await BullTimer.CheckJob.CheckRound(TableDetails.tableId);
                 const UserTurnJob = await BullTimer.CheckJob.CheckUserTurn(tableId, currentTurn);
@@ -90,12 +91,22 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 const RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
 
+                for (let i = 0; i < TableDetails.playersArray.length; i++) {
+
+                    const SingleUserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
+
+                    const { turnMissCount, isUnoClick } = SingleUserInTableDetails;
+
+                    playersArray[i] = { ...playersArray[i], turnMissCount, isUnoClick, cardsLength: SingleUserInTableDetails.cardArray.length };
+
+                };
+
                 const RejoinResData = {
 
                     table: {
 
                         tableId, bootValue, currentTurn,
-                        currentRound, maxPlayers, playersArray,
+                        currentRound, totalRounds, maxPlayers, playersArray,
                         activeCard, activeCardType, activeCardColor,
                         isClockwise, isGameStart, isRoundStart, isWinning, isScoreScreen,
                         RemainingRoundTimer, RemainingGameStartTimer, RemainingScoreScreenTimer, RemainingUserTurnTimer,
@@ -108,9 +119,12 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 };
 
+                EventEmitter.emit(REJOIN, { en: REJOIN, SocketId: UserDetails.socketId, Data: RejoinResData });
+
                 await JoinRoom(socket, TableDetails.tableId);
 
-                EventEmitter.emit(REJOIN, { en: REJOIN, SocketId: UserDetails.socketId, Data: RejoinResData });
+                await AllUserScore(TableDetails.tableId);
+
 
             } else {
 
