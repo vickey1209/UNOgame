@@ -22,9 +22,14 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (remainingCardsNumber < 1 && isThrow) {
 
-            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_TWO };
-            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR };
-            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE };
+            // if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_TWO };
+            // if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR };
+            // if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE };
+
+            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_TWO; }
+            else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR; }
+            else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE; }
+            else { turnInfoDelay = 0.7; };
 
             await GAME_ACTIONS.EndRound(tableId, false, turnInfoDelay);
 

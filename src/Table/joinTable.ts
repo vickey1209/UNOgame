@@ -10,6 +10,7 @@ import { PlayersArrayInterface, TableInterface } from "../Interface/Table/TableI
 import { BullTimer } from "../BullTimer";
 import { Config } from "../Config";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
+import { CardScoring } from "../CardScoring/cardScoring";
 
 const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
@@ -55,6 +56,8 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
                 };
 
                 // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: TableDetails });
+
+                await CardScoring(socket);
 
                 await JoinRoom(socket, TableDetails.tableId);
 
