@@ -62,6 +62,7 @@ const EmitterON = () => {
             TURN_MISSED,
             ERROR_POPUP,
             COLLECT_BOOT,
+            CARD_SCORING,
             ROUND_HISTORY,
             WINNER_DECLARE,
 
@@ -84,6 +85,8 @@ const EmitterON = () => {
         EventEmitter.on(JOIN_TABLE, async (data) => { await SendToSocket(JOIN_TABLE, data); });
 
         EventEmitter.on(ERROR_POPUP, async (data) => { await SendToSocket(ERROR_POPUP, data); });
+        
+        EventEmitter.on(CARD_SCORING, async (data) => { await SendToSocket(CARD_SCORING, data); });
 
         EventEmitter.on(ROUND_HISTORY, async (data) => { await SendToSocket(ROUND_HISTORY, data); });
 
