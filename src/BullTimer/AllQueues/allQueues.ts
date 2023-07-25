@@ -25,6 +25,7 @@ const TimesUpQueue = new Bull('TimesUp', BullRedisOptions);
 const BotCardThrowQueue = new Bull('BotCardThrow', BullRedisOptions);
 const PickCardDelayQueue = new Bull('PickCardDelay', BullRedisOptions);
 const RoundScoreDelayQueue = new Bull('RoundScoreDelay', BullRedisOptions);
+const GameEndQueue = new Bull('GameEnd', BullRedisOptions);
 
 export {
 
@@ -39,5 +40,6 @@ export {
     BotCardThrowQueue,
     PickCardDelayQueue,
     RoundScoreDelayQueue,
+    GameEndQueue,
 
 };
