@@ -12,6 +12,7 @@ import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterf
 import { BOT_ACTION } from "../Bot";
 import { Config } from "../Config";
 import { CardScoring } from "../CardScoring/cardScoring";
+import { BullTimer } from "../BullTimer";
 
 const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
@@ -40,7 +41,13 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
         const Table = await CreateNewTable(socket, UserDetails);
 
-        setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 2000);
+        // setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 2000);
+
+        await BullTimer.AddJob.BotSignup({
+            playerCount:Table?.maxPlayers,
+            bootValue:Table?.bootValue,
+            delayNumber: 2,
+            tableId : Table?.tableId })
 
         // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
 

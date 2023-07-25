@@ -25,6 +25,8 @@ const TimesUpQueue = new Bull('TimesUp', BullRedisOptions);
 const BotCardThrowQueue = new Bull('BotCardThrow', BullRedisOptions);
 const PickCardDelayQueue = new Bull('PickCardDelay', BullRedisOptions);
 const RoundScoreDelayQueue = new Bull('RoundScoreDelay', BullRedisOptions);
+const BotSignupQueue = new Bull('BotSignup', BullRedisOptions);
+const BotTurnQueue = new Bull('BotTurn', BullRedisOptions);
 
 export {
 
@@ -39,5 +41,7 @@ export {
     BotCardThrowQueue,
     PickCardDelayQueue,
     RoundScoreDelayQueue,
+    BotSignupQueue,
+    BotTurnQueue,
 
 };

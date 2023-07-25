@@ -28,8 +28,7 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
         const EmptyTableList: Array<string> = await GetEmptyTable(Data?.bootValue, Data?.playerCount);
 
-        if (!EmptyTableList) {
-
+        if (!EmptyTableList && !Data.isBot) {
             await CreateTable(socket, Data);
             return;
 
@@ -73,7 +72,13 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
                     await BullTimer.AddJob.CollectBootValue(TableDetails.tableId);
 
-                };
+                }else{
+                    await BullTimer.AddJob.BotSignup({
+                        playerCount:TableDetails.maxPlayers,
+                        bootValue:TableDetails.bootValue,
+                        delayNumber: 2,
+                        tableId : TableDetails.tableId })
+                }
             };
         };
 

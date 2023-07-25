@@ -17,8 +17,6 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
     const { SIGNUP, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
     const { LOCK, EMPTY_TABLE } = CONSTANTS.REDIS_COLLECTION;
 
-    Data.playerCount = 2;
-
     const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${Data?.bootValue}:${Data?.playerCount}`;
 
     const MatchMakingLock = await ApplyLock(Path, MatchMakingId);

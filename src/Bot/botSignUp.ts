@@ -1,7 +1,7 @@
 import { Logger } from "../Logger/logger";
 import { SignUp } from "../SignUp/signUp";
 
-const BotSignUp = async () => {
+const BotSignUp = async (data:any) => {
 
     try {
 
@@ -13,8 +13,8 @@ const BotSignUp = async () => {
             userName: "Bot",
             userProfile: "No",
             chips: 100,
-            bootValue: 1,
-            playerCount: 4,
+            bootValue:  data.bootValue,
+            playerCount: data.playerCount,
             socketId: '',
             tableId: '',
             isBot: true
