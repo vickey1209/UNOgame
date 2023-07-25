@@ -11,6 +11,7 @@ import { PickCardDelay } from "./pickCardDelay";
 import { RoundScoreDelay } from "./roundScoreDelay";
 import { BotSignup } from "./botSignup";
 import { BotTurn } from "./botTurn";
+import { GameEnd } from "./gameEnd";
 
 const AddJob = {
 
@@ -27,6 +28,7 @@ const AddJob = {
     RoundScoreDelay,
     BotSignup,
     BotTurn,
+    GameEnd,
 
 };
 

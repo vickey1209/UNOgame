@@ -30,9 +30,6 @@ const SocketConnection = async () => {
 
             NumberOfSocketsOnServer = io.of("/").sockets.size;
             NumberOfSocketsOnRoom = io.sockets.adapter.rooms.get('TABLE')?.size ? io.sockets.adapter.rooms.get('TABLE')?.size : 0;
-            
-            // console.log({ NumberOfSocketsOnServer });
-            // console.log({ NumberOfSocketsOnRoom });
 
             Logger("SocketConnection", JSON.stringify(socket.id));
 
@@ -41,8 +38,6 @@ const SocketConnection = async () => {
             socket.on('disconnect', async (reason: any) => {
 
                 NumberOfSocketsOnServer = io.of("/").sockets.size;
-
-                // console.log({ NumberOfSocketsOnServer });
 
                 await socket.disconnect();
 

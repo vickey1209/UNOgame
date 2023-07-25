@@ -27,6 +27,7 @@ const PickCardDelayQueue = new Bull('PickCardDelay', BullRedisOptions);
 const RoundScoreDelayQueue = new Bull('RoundScoreDelay', BullRedisOptions);
 const BotSignupQueue = new Bull('BotSignup', BullRedisOptions);
 const BotTurnQueue = new Bull('BotTurn', BullRedisOptions);
+const GameEndQueue = new Bull('GameEnd', BullRedisOptions);
 
 export {
 
@@ -43,5 +44,6 @@ export {
     RoundScoreDelayQueue,
     BotSignupQueue,
     BotTurnQueue,
+    GameEndQueue,
 
 };

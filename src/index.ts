@@ -237,7 +237,7 @@ Initialize();
 // for (let i = 0; i < FirstArray.length; i++) {
 
 //     console.log("FirstArray : ", i);
-    
+
 
 //     const PushData2 = [1, 2, 3];
 
@@ -251,3 +251,30 @@ Initialize();
 // }
 
 // console.log('Second Log > ', FirstArray);
+
+// const FirstArray: any = [
+
+//     { un: "98**98**75", phn: "9824980375", unique_id: "2307810987", cd: "2023-07-22T12:23:56.445Z", bonusType: "SignUp Bonus", addedBonus: 40, bonusBalance: 4.96, usedBonus: 35.04, issueDate: "2023-07-22T12:23:56.445Z", validTill: "2023-07-29T12:23:56.445Z", status: "Active" },
+//     { un: "98**98**75", phn: "9824980375", unique_id: "2307810987", cd: "2023-07-22T12:23:56.445Z", bonusType: "AddCash Bonus", addedBonus: 100, transactionId: "ATBT1ELEXW", bonusBalance: 100, usedBonus: -50, issueDate: "2023-07-22T13:07:37.938Z", validTill: "2023-07-25T13:07:37.938Z", status: "Active" },
+//     { un: "98**98**75", phn: "9824980375", unique_id: "2307810987", cd: "2023-07-22T12:23:56.445Z", bonusType: "SignUp Bonus", addedBonus: 40, bonusBalance: 4.96, usedBonus: 35.04, issueDate: "2023-07-22T12:23:56.445Z", validTill: "2023-07-29T12:23:56.445Z", status: "Active" },
+//     { un: "98**98**75", phn: "9824980375", unique_id: "2307810987", cd: "2023-07-22T12:23:56.445Z", bonusType: "AddCash Bonus", addedBonus: 100, transactionId: "ejUmX7wILo", bonusBalance: 100, usedBonus: -50, issueDate: "2023-07-22T16:49:06.166Z", validTill: "2023-07-25T16:49:06.166Z", status: "Active" },
+//     { un: "98**98**75", phn: "9824980375", unique_id: "2307810987", cd: "2023-07-22T12:23:56.445Z", bonusType: "SignUp Bonus", addedBonus: 40, bonusBalance: 4.96, usedBonus: 35.04, issueDate: "2023-07-22T12:23:56.445Z", validTill: "2023-07-29T12:23:56.445Z", status: "Active" },
+//     { un: "98**98**75", phn: "9824980375", unique_id: "2307810987", cd: "2023-07-22T12:23:56.445Z", bonusType: "AddCash Bonus", addedBonus: 100, transactionId: "XLhdTCDnbp", bonusBalance: 100, usedBonus: -50, issueDate: "2023-07-24T12:53:27.349Z", validTill: "2023-07-27T12:53:27.349Z", status: "Active" }
+
+// ];
+
+// const SecondArray: any = [];
+
+// FirstArray.forEach((element: any) => {
+
+//     if (
+
+//         !SecondArray.find((e: any) => { return e.bonusType === element.bonusType }) ||
+//         !SecondArray.find((e: any) => { return e.unique_id === element.unique_id }) ||
+//         !SecondArray.find((e: any) => { return e.transactionId === element.transactionId })
+
+//     ) { SecondArray.push(element) };
+
+// });
+
+// console.log({ SecondArray });

@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@socket.io/redis-adapter": "^7.1.0",
-    "@types/node": "^18.11.18",
+    "@types/node": "^18.17.0",
     "bull": "^4.10.2",
     "crypto-random-string": "^3.3.1",
     "dotenv": "^16.0.3",
