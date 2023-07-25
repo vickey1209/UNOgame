@@ -89,6 +89,11 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
                 if (GameStartJob) { RemainingGameStartTimer = await GAME_ACTIONS.RemainTimeCalculation(GameStartJob); };
                 if (RoundScreenJob) { RemainingScoreScreenTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundScreenJob); };
 
+                const SelfUserInTableData = TableDetails.playersArray.find((player) => { return player.userId === UserDetails.userId });
+
+                socket.handshake.auth.tableId = TableDetails?.tableId;
+                socket.handshake.auth.seatIndex = SelfUserInTableData?.seatIndex;
+
                 const RoundHistoryDetails = await GetRoundHistory(TableDetails.tableId);
 
                 for (let i = 0; i < TableDetails.playersArray.length; i++) {
@@ -127,6 +132,11 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
 
             } else {
+
+                const SelfUserInTableData = TableDetails.playersArray.find((player) => { return player.userId === UserDetails.userId });
+
+                socket.handshake.auth.tableId = TableDetails?.tableId;
+                socket.handshake.auth.seatIndex = SelfUserInTableData?.seatIndex;
 
                 await JoinRoom(socket, TableDetails.tableId);
 
