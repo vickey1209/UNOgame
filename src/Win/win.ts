@@ -105,21 +105,7 @@ const Win = async (tableId: string) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        await DeleteTable(TableDetails.tableId);
-
-        await DeleteRoundHistory(TableDetails.tableId);
-
-        for (let i = 0; i < TableDetails.playersArray.length; i++) {
-
-            await DeleteUserInTable(TableDetails.playersArray[i].userId);
-
-            let UserDetails: SignUpInterface = await GetUser(TableDetails.playersArray[i].userId);
-
-            UserDetails.tableId = '';
-
-            await SetUser(TableDetails.playersArray[i].userId, UserDetails);
-
-        };
+        await BullTimer.AddJob.GameEnd(TableDetails.tableId);
 
         EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: TableDetails.tableId, Data: { winningArray: FinalArray } });
 

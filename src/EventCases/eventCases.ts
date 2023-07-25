@@ -10,6 +10,7 @@ import { KeepCard } from "../KeepCard/keepCard";
 import { LeaveTable } from "../Table/leaveTable";
 import { Uno } from "../Uno/uno";
 import { RoundHistory } from "../RoundHistory/roundHistory";
+import { WinConfirmation } from "../WinConfirmation/winConfirmation";
 
 const EventCases = async (socket: Socket) => {
 
@@ -28,6 +29,7 @@ const EventCases = async (socket: Socket) => {
                 THROW_CARD,
                 LEAVE_TABLE,
                 ROUND_HISTORY,
+                WIN_CONFIRMATION,
 
             } = CONSTANTS.EVENTS_NAME;
 
@@ -75,6 +77,11 @@ const EventCases = async (socket: Socket) => {
                 case ROUND_HISTORY:
                     Logger('EventCases ROUND_HISTORY', JSON.stringify({ Data }));
                     RoundHistory(EventName, socket, Data);
+                    break;
+
+                case WIN_CONFIRMATION:
+                    Logger('EventCases WIN_CONFIRMATION', JSON.stringify({ Data }));
+                    WinConfirmation(EventName, socket, Data);
                     break;
 
                 default:

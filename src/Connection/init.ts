@@ -41,7 +41,8 @@ const Initialize = async () => {
                 EmitterON(),
 
             ]);
-        }
+
+        };
 
     } catch (error) {
         console.log('Initialize Error : ', error);

@@ -9,6 +9,7 @@ import { CollectBootValue } from "./collectBoot";
 import { DisconnectUser } from "./disconnectUser";
 import { PickCardDelay } from "./pickCardDelay";
 import { RoundScoreDelay } from "./roundScoreDelay";
+import { GameEnd } from "./gameEnd";
 
 const AddJob = {
 
@@ -23,6 +24,7 @@ const AddJob = {
     BotCardThrow,
     PickCardDelay,
     RoundScoreDelay,
+    GameEnd,
 
 };
 

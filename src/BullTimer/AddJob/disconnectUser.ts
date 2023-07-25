@@ -7,7 +7,7 @@ const DisconnectUser = async (userId: string, tableId: string, bootValue: number
 
     try {
 
-        Logger("DisconnectUser", JSON.stringify({ userId }));
+        Logger("DisconnectUser", JSON.stringify({ userId, tableId, bootValue, playerCount }));
 
         const CONFIG = Config();
 

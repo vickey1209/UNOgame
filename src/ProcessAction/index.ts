@@ -1,5 +1,6 @@
 import { CollectBootValueProcessAction } from "./collectBootValueProcessAction";
 import { DisconnectUserProcessAction } from "./disconnectUserProcessAction";
+import { GameEndProcessAction } from "./endGameProcessAction";
 import { NextRoundProcessAction } from "./nextRoundProcessAction";
 import { PickCardDelayProcessAction } from "./pickCardDelayProcessAction";
 import { RoundProcessAction } from "./roundProcessAction";
@@ -13,14 +14,15 @@ const PROCESS_ACTION = {
 
     RoundProcessAction,
     TimesUpProcessAction,
+    GameEndProcessAction,
     UserTurnProcessAction,
     TurnInfoProcessAction,
     UnoClickProcessAction,
     NextRoundProcessAction,
-    DisconnectUserProcessAction,
-    CollectBootValueProcessAction,
     PickCardDelayProcessAction,
+    DisconnectUserProcessAction,
     RoundScoreDelayProcessAction,
+    CollectBootValueProcessAction,
 
 };
 
