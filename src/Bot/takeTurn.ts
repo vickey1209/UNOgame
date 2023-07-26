@@ -13,7 +13,7 @@ import { getUserScore } from "../AllUserScore/allUserScore";
 const TakeTurn = async (tableId: string) => { 
 
     try {
-
+ 
         Logger("TakeTurn", JSON.stringify({ tableId }));
 
         let TableDetails: TableInterface = await GetTable(tableId);
