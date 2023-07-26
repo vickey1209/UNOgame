@@ -178,12 +178,25 @@ async function findActiveCard(userCardArray:any, tableData:any){
         flag=true;
     }
 
-    if(tableData.activeCard.slice(2, 5) === "D2C" && card_draw.length === 0 && card_w4c.length === 0 && card_wild.length === 0){
+    if(tableData.activeCard.slice(2, 5) === "D2C" && card_draw.length === 0 && card_w4c.length === 0){
         flag= false;
-    }else if(tableData.activeCard.slice(2, 5) === "D4C" && card_w4c.length === 0 && card_wild.length === 0){
+    }else if(tableData.activeCard.slice(2, 5) === "D4C" && card_w4c.length === 0){
         flag= false;
+    }else if(tableData.activeCard.slice(2, 5) === "D2C" && (card_draw.length > 0 || card_w4c.length  > 0)){
+        card = [];
+        card_wild = [];
+        card_no = [];
+        card_reverse = [];
+        card_skip = [];
+    }else if(tableData.activeCard.slice(2, 5) === "D4C" && card_w4c.length > 0){
+        card = [];
+        card_wild = [];
+        card_no = [];
+        card_reverse = [];
+        card_skip = [];
+        card_draw = [];
     }
-    console.log(" findActiveCard findActiveCard 2: ");
+    console.log(" findActiveCard findActiveCard 2: ",card," card_wild: ",card_wild, " card_w4c :" ,card_w4c," card_no : ",card_no," card_reverse : ",card_reverse," card_skip : ",card_skip," card_draw : ",card_draw);
     let active_card=card.concat(card_wild);
     active_card=active_card.concat(card_w4c);
     active_card=active_card.concat(card_no);
@@ -191,15 +204,16 @@ async function findActiveCard(userCardArray:any, tableData:any){
     active_card=active_card.concat(card_skip);
     active_card=active_card.concat(card_draw);
     
-    console.log(" findActiveCard findActiveCard 3: ");
-    
     let uniqueArray=[];
     for(let i=0; i < active_card.length; i++){
         if(uniqueArray.indexOf(active_card[i]) === -1) {
             uniqueArray.push(active_card[i]);
         }
     }
-    let return_data={flag:flag,si:tableData.currentTurnSeatIndex,card:"",C_C:"",forcefully_throw_card: false,UNO_button:false}
+
+    console.log(" findActiveCard findActiveCard 3: ",active_card, uniqueArray);
+
+    let return_data={flag:flag,si:tableData.currentTurnSeatIndex,card:"",C_C:""}
     let color_array=["R","G","Y","B"];
     let color_index= await GAME_ACTIONS.RandomNumber(0,color_array.length-1);
     if(flag==true){
@@ -309,11 +323,12 @@ async function findActiveCard(userCardArray:any, tableData:any){
         }else{
 
             let zeroNumberCard = uniqueArray.filter(item => new RegExp("-0-" , 'i').test(item));
-            if(zeroNumberCard.length > 0 ){
+            if(zeroNumberCard.length > 0 && tableData.robotType==CONSTANTS.BOT_PRIORITY.HARD){
                 return_data.C_C=zeroNumberCard[0][0];
                 return_data.card=zeroNumberCard[0];
             }else{
                 let chk__card=uniqueArray[0].slice(0, 4);
+                console.log(" findActiveCard chk__card : ",chk__card);
                 if(chk__card=="W-D4"){
                     return_data.C_C=color_array[color_index];  
                 }else if(chk__card=="W-CH"){
@@ -325,10 +340,6 @@ async function findActiveCard(userCardArray:any, tableData:any){
             } 
         }
   
-        //Set UNO button clicking flag for robot
-        if(user_card.length==2){
-            return_data.UNO_button=true;
-        }
     }
     return return_data; 
   }
