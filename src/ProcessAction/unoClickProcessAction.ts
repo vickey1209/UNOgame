@@ -115,7 +115,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
                 const PickCardResData: PickCardResInterface = { userId, tableId, seatIndex, pickCards, isPlayableCard };
 
-                await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, delayNumber, PickCardResData);
+                await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, 0, PickCardResData);
 
                 // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
