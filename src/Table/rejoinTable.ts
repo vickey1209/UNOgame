@@ -139,7 +139,6 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 await AllUserScore(TableDetails.tableId);
 
-
             } else {
 
                 const SelfUserInTableData = TableDetails.playersArray.find((player) => { return player.userId === UserDetails.userId });

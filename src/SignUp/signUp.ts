@@ -45,9 +45,14 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
             // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             // await CreateTable(socket, Data);
-            Data.tableId = UserData?.tableId ? UserData?.tableId : '';
+            // Data.tableId = UserData?.tableId ? UserData?.tableId : '';
 
-            await RejoinTable(socket, Data);
+            // await RejoinTable(socket, Data);
+
+
+            if (!UserData) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
+
+            await RejoinTable(socket, UserData);
 
         } else {
 
@@ -55,9 +60,14 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
             // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             // await CreateTable(socket, Data);
-            Data.tableId = UserData?.tableId ? UserData?.tableId : '';
+            // Data.tableId = UserData?.tableId ? UserData?.tableId : '';
 
-            await RejoinTable(socket, Data);
+            // await RejoinTable(socket, Data);
+
+
+            if (!UserData) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
+
+            await RejoinTable(socket, UserData);
 
         };
 
@@ -93,12 +103,12 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
         const NewUserData: SignUpInterface = {
 
             userId,
-            userName: userName,
+            userName,
             userProfile,
             chips,
             socketId: socket.id,
             tableId: '',
-            bootValue: bootValue,
+            bootValue,
             playerCount,
             isBot
 
