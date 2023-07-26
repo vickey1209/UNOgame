@@ -119,7 +119,8 @@ const UnoClickProcessAction = async (Data: any) => {
 
                 // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
-                await BullTimer.AddJob.TurnInfo(TableDetails.tableId, Data?.isSkip, Data?.skipSeatIndex, Data?.isRevers, Data?.delayNumber);
+                await BullTimer.AddJob.TurnInfo(TableDetails.tableId, Data?.isSkip, Data?.skipSeatIndex, Data?.isRevers, delayNumber);
+                // await BullTimer.AddJob.TurnInfo(TableDetails.tableId, Data?.isSkip, Data?.skipSeatIndex, Data?.isRevers, Data?.delayNumber);
 
             };
         };
