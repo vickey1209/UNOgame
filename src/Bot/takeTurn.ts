@@ -38,6 +38,7 @@ const TakeTurn = async (tableId: string) => {
                 isClockwise:TableDetails.isClockwise,
                 currentTurn:TableDetails.currentTurn,
                 playersArray:TableDetails.playersArray,
+                activeCardColor:TableDetails.activeCardColor,
             })
 
         console.log(" TakeTurn detailsOfActiveCard : ", detailsOfActiveCard);
@@ -124,8 +125,10 @@ async function findActiveCard(userCardArray:any, tableData:any){
     last_moved_card= (last_moved_card)?last_moved_card.slice(0, 2):"";
 
     let term = last_moved_card; // search term (regex pattern)
-    if(last_moved_card=="W-"){
+    if(tableData.activeCard.slice(2, 5) === "D2C" || tableData.activeCard.slice(2, 5) === "D4C"){
         term = '----';
+    }else{
+        term = tableData.activeCardColor+"-";
     }
     // Search for card color
     let card = user_card.filter((item:string) => new RegExp(term , 'i').test(item));
@@ -197,9 +200,11 @@ async function findActiveCard(userCardArray:any, tableData:any){
         card_draw = [];
     }
     console.log(" findActiveCard findActiveCard 2: ",card," card_wild: ",card_wild, " card_w4c :" ,card_w4c," card_no : ",card_no," card_reverse : ",card_reverse," card_skip : ",card_skip," card_draw : ",card_draw);
+    
+    card=card_no.concat(card);
     let active_card=card.concat(card_wild);
     active_card=active_card.concat(card_w4c);
-    active_card=active_card.concat(card_no);
+    // active_card=active_card.concat(card_no);
     active_card=active_card.concat(card_reverse);
     active_card=active_card.concat(card_skip);
     active_card=active_card.concat(card_draw);
