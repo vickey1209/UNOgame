@@ -216,6 +216,33 @@ async function findActiveCard(userCardArray:any, tableData:any){
         }
     }
 
+    let nextTurn:any = null ;
+    if (tableData.isClockwise) {
+
+        nextTurn = await GAME_ACTIONS.ClockWiseTurnChange(tableData);
+
+        if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+
+    } else {
+
+        nextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(tableData);
+
+        if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+
+    };
+
+    const UserAvailableInTable = tableData.playersArray.find((e:any) => { return e.seatIndex === nextTurn });
+
+    let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
+    if(tableData.robotType==CONSTANTS.BOT_PRIORITY.EASY){
+        let botPickPriority = await GAME_ACTIONS.RandomNumber(0,10);
+        let botPickPriorityBaseOnOpponentCards = await GAME_ACTIONS.RandomNumber(1,5);
+        if(botPickPriority > 4 && nextUserInTableDetails.cardArray.length < botPickPriorityBaseOnOpponentCards){
+            flag = false; 
+        }
+    }
+    
+
     console.log(" findActiveCard findActiveCard 3: ",active_card, uniqueArray);
 
     let return_data={flag:flag,si:tableData.currentTurnSeatIndex,card:"",C_C:""}
@@ -252,23 +279,23 @@ async function findActiveCard(userCardArray:any, tableData:any){
             }else if(tableData.activeCard.slice(2, 5) === "D2C" && (card_bot_w4c.length > 0 || card_bot_w2c.length > 0)){
 
             }else if(card_bot_w2c.length > 0 || card_bot_w4c.length > 0 || card_bot_wild.length > 0){
-                let nextTurn:any = null ;
-                if (tableData.isClockwise) {
+                // let nextTurn:any = null ;
+                // if (tableData.isClockwise) {
 
-                    nextTurn = await GAME_ACTIONS.ClockWiseTurnChange(tableData);
+                //     nextTurn = await GAME_ACTIONS.ClockWiseTurnChange(tableData);
 
-                    if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+                //     if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
-                } else {
+                // } else {
 
-                    nextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(tableData);
+                //     nextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(tableData);
 
-                    if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+                //     if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
-                };
-                const UserAvailableInTable = tableData.playersArray.find((e:any) => { return e.seatIndex === nextTurn });
+                // };
+                // const UserAvailableInTable = tableData.playersArray.find((e:any) => { return e.seatIndex === nextTurn });
 
-                let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
+                // let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
                 // let D4C_CardInNextPlayerCard = nextUserInTableDetails.cardArray.filter(item => new RegExp("D4C-" , 'i').test(item));
                 // let D2C_CardInNextPlayerCard = nextUserInTableDetails.cardArray.filter(item => new RegExp("-D2C-" , 'i').test(item));
                 // if(D4C_CardInNextPlayerCard.length > 0){
