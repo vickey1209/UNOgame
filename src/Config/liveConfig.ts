@@ -65,7 +65,7 @@ const LiveConfig = (): ConfigInterface => {
         TIMES_UP_DELAY_TIMER: 2,
         END_GAME_TIMER: 30,
 
-        DISTRIBUTE_CARDS_LIMIT: 7,
+        DISTRIBUTE_CARDS_LIMIT: 3,
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
         TURN_TIMEOUT_COUNT: 3,
