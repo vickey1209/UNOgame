@@ -7,7 +7,7 @@ const PickCardDelay = async (tableId: string, delayNumber: number, PickCardResDa
 
     try {
 
-        Logger("PickCardDelay", JSON.stringify({ tableId, PickCardResData }));
+        Logger("PickCardDelay", JSON.stringify({ tableId, delayNumber, PickCardResData }));
 
         const jobId = `${tableId}`;
 

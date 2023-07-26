@@ -189,6 +189,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             if (isThrow && remainingCardsNumber === 1) { // ^ UNO Bull
 
+                // turnInfoDelay += CONFIG.GamePlay.DELAU_FOR_UNO;
+
                 await BullTimer.AddJob.UnoClick(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, turnInfoDelay, unoSeatIndex);
 
             } else { // ^ Turn Bull
