@@ -85,6 +85,7 @@ const LiveConfig = (): ConfigInterface => {
         DELAY_FOR_PLUS_TWO: 1,
         DELAY_FOR_COLOR_CHANGE: 2,
         DELAY_FOR_REVERS: 1,
+        DELAU_FOR_UNO: 2,
 
     };
 
