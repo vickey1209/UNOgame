@@ -62,6 +62,6 @@ export interface GamePlayInterface {
     DELAY_FOR_PLUS_TWO: number,
     DELAY_FOR_COLOR_CHANGE: number,
     DELAY_FOR_REVERS: number,
-    DELAU_FOR_UNO: number,
+    DELAY_FOR_UNO: number,
 
 }
