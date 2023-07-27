@@ -98,6 +98,8 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
                 if (GameStartJob) { RemainingGameStartTimer = await GAME_ACTIONS.RemainTimeCalculation(GameStartJob); };
                 if (RoundScreenJob) { RemainingScoreScreenTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundScreenJob); };
 
+                if (RemainingScoreScreenTimer < CONFIG.GamePlay.GAME_START_TIMER && RemainingGameStartTimer === 0 && isScoreScreen) { RemainingGameStartTimer = RemainingScoreScreenTimer };
+
                 const SelfUserInTableData = TableDetails.playersArray.find((player) => { return player.userId === UserDetails.userId });
 
                 socket.handshake.auth.tableId = TableDetails?.tableId;

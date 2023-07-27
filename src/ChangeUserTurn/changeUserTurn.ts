@@ -178,13 +178,6 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             await GAME_ACTIONS.EndRound(tableId, false, turnInfoDelay);
 
-            console.log('End Game Immediately !!!');
-            console.log('End Game Immediately !!!');
-            console.log('End Game Immediately !!!');
-            console.log('End Game Immediately !!!');
-            console.log('End Game Immediately !!!');
-            console.log('End Game Immediately !!!');
-
         } else {
 
             if (isThrow && remainingCardsNumber === 1) { // ^ UNO Bull
