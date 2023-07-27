@@ -31,7 +31,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
         const CONFIG = Config();
 
-        const UserDetails: SignUpInterface = await GetUser(Data?.userId);
+        let UserDetails: SignUpInterface = await GetUser(Data?.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
