@@ -52,6 +52,7 @@ const EmitterON = () => {
             TIMES_UP,
             PICK_CARD,
             TURN_INFO,
+            HEART_BEAT,
             JOIN_TABLE,
             GAME_START,
             THROW_CARD,
@@ -73,19 +74,21 @@ const EmitterON = () => {
         EventEmitter.on(TEST, async (data) => { await SendToSocket(TEST, data); });
 
         EventEmitter.on(ALERT, async (data) => { await SendToSocket(ALERT, data); });
-
+        
         EventEmitter.on(REJOIN, async (data) => { await SendToSocket(REJOIN, data); });
-
+        
         EventEmitter.on(SIGNUP, async (data) => { await SendToSocket(SIGNUP, data); });
-
+        
         EventEmitter.on(DEFAULT, async (data) => { await SendToSocket(DEFAULT, data); });
-
+        
         EventEmitter.on(MY_CARDS, async (data) => { await SendToSocket(MY_CARDS, data); });
 
         EventEmitter.on(JOIN_TABLE, async (data) => { await SendToSocket(JOIN_TABLE, data); });
+        
+        EventEmitter.on(HEART_BEAT, async (data) => { await SendToSocket(HEART_BEAT, data); });
 
         EventEmitter.on(ERROR_POPUP, async (data) => { await SendToSocket(ERROR_POPUP, data); });
-        
+
         EventEmitter.on(CARD_SCORING, async (data) => { await SendToSocket(CARD_SCORING, data); });
 
         EventEmitter.on(ROUND_HISTORY, async (data) => { await SendToSocket(ROUND_HISTORY, data); });

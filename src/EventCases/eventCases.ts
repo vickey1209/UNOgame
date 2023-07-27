@@ -26,6 +26,7 @@ const EventCases = async (socket: Socket) => {
                 DEFAULT,
                 PICK_CARD,
                 KEEP_CARD,
+                HEART_BEAT,
                 THROW_CARD,
                 LEAVE_TABLE,
                 ROUND_HISTORY,
@@ -42,6 +43,11 @@ const EventCases = async (socket: Socket) => {
                 case TEST:
                     Logger('EventCases TEST', JSON.stringify({ Data }));
                     EventEmitter.emit(TEST, { en: EventName, SocketId: socket.id, Data });
+                    break;
+
+                case HEART_BEAT:
+                    Logger('EventCases HEART_BEAT', JSON.stringify({ Data }));
+                    EventEmitter.emit(HEART_BEAT, { en: EventName, SocketId: socket.id, Data });
                     break;
 
                 case SIGNUP:
