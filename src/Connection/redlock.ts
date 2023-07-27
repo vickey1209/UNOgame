@@ -61,7 +61,7 @@ const RemoveLock = async (Path: string, Lock: any) => {
     // return;
     try {
 
-        Logger("RemoveLock", JSON.stringify({ Path }));
+        Logger("RemoveLock", JSON.stringify({ Path, LockId: Lock?.resources }));
 
         await Lock.release();
 
