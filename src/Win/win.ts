@@ -105,6 +105,8 @@ const Win = async (tableId: string) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
+        for (let i = 0; i < TableDetails.playersArray.length; i++) { await DeleteUserInTable(TableDetails.playersArray[i].userId) };
+
         await BullTimer.AddJob.GameEnd(TableDetails.tableId);
 
         EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: TableDetails.tableId, Data: { winningArray: FinalArray } });
