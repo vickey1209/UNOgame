@@ -136,13 +136,6 @@ const RemoveUserFromTable = async (userId: string, tableId: string) => {
 
             if (PlayersAvailableInTable.length < 2) {
 
-                console.log('LeaveTable End Game Immediately !!!');
-                console.log('LeaveTable End Game Immediately !!!');
-                console.log('LeaveTable End Game Immediately !!!');
-                console.log('LeaveTable End Game Immediately !!!');
-                console.log('LeaveTable End Game Immediately !!!');
-                console.log('LeaveTable End Game Immediately !!!');
-
                 await Win(TableDetails.tableId);
 
             } else {
