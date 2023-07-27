@@ -252,8 +252,10 @@ async function findActiveCard(userCardArray:any, tableData:any){
                 let chk__card=uniqueArray[0].slice(0, 4);
                 console.log(" findActiveCard chk__card : ",chk__card);
                 if(chk__card=="W-D4"){
+                    color_index = await findPointAndColorWiseCards(userCardArray,color_index)
                     return_data.C_C=color_array[color_index];  
                 }else if(chk__card=="W-CH"){
+                    color_index = await findPointAndColorWiseCards(userCardArray,color_index)
                     return_data.C_C=color_array[color_index];  
                 }else{
                     return_data.C_C=uniqueArray[0][0];
