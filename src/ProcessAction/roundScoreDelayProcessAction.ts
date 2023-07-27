@@ -9,7 +9,6 @@ import { Logger } from "../Logger/logger";
 
 const RoundScoreDelayProcessAction = async (Data: any) => {
 
-
     const Path = 'RoundScoreDelayProcessAction';
 
     const { ROUND_SCORE } = CONSTANTS.EVENTS_NAME;
