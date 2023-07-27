@@ -236,7 +236,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
     let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
     if(tableData.robotType==CONSTANTS.BOT_PRIORITY.EASY){
         let botPickPriority = await GAME_ACTIONS.RandomNumber(0,10);
-        let botPickPriorityBaseOnOpponentCards = await GAME_ACTIONS.RandomNumber(1,5);
+        let botPickPriorityBaseOnOpponentCards = await GAME_ACTIONS.RandomNumber(2,5);
         if(botPickPriority > 4 && nextUserInTableDetails.cardArray.length < botPickPriorityBaseOnOpponentCards){
             flag = false; 
         }
