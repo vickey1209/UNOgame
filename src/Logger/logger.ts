@@ -6,10 +6,11 @@ const Logger = (Path: string, Data: string) => {
 
     if (CONFIG.GamePlay.LOG) {
 
-        const CountryTime = new Date().toLocaleString("en-US", { timeZone: 'Asia/Calcutta' });
+        // const CountryTime = new Date().toLocaleString("en-US", { timeZone: 'Asia/Calcutta' });
+        // console.log(new Date(CountryTime));
 
         console.log(`Path : ${Path} >> Data : ${Data}`);
-        console.log(new Date(CountryTime));
+        console.log(new Date());
         console.log('.');
     };
 };
