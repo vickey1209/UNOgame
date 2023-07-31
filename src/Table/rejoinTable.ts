@@ -1,5 +1,6 @@
 import { AllUserScore } from "../AllUserScore/allUserScore";
 import { BullTimer } from "../BullTimer";
+import { CardScoring } from "../CardScoring/cardScoring";
 import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
@@ -137,6 +138,8 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 EventEmitter.emit(REJOIN, { en: REJOIN, SocketId: UserDetails.socketId, Data: RejoinResData });
 
+                await CardScoring(socket);
+
                 await JoinRoom(socket, TableDetails.tableId);
 
                 await AllUserScore(TableDetails.tableId);
@@ -151,6 +154,8 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
                 await JoinRoom(socket, TableDetails.tableId);
 
                 EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: UserDetails.socketId, Data: TableDetails });
+
+                await CardScoring(socket);
 
             };
 
