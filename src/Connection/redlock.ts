@@ -30,9 +30,10 @@ const RedLockConnction = async () => {
 
         redLock.on('error', (error: any) => {
 
-            const CurrentDate = new Date();
-            console.log(`RedLock > ${CurrentDate} > ${CurrentDate.getMilliseconds()}`, error);
-
+            console.log(`RedLock > `, error);
+            console.log(new Date());
+            console.log('.');
+            
         });
 
         console.log('RedLock Connected !');
