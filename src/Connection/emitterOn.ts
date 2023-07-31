@@ -74,18 +74,25 @@ const EmitterON = () => {
         EventEmitter.on(TEST, async (data) => { await SendToSocket(TEST, data); });
 
         EventEmitter.on(ALERT, async (data) => { await SendToSocket(ALERT, data); });
-        
+
         EventEmitter.on(REJOIN, async (data) => { await SendToSocket(REJOIN, data); });
-        
+
         EventEmitter.on(SIGNUP, async (data) => { await SendToSocket(SIGNUP, data); });
-        
+
         EventEmitter.on(DEFAULT, async (data) => { await SendToSocket(DEFAULT, data); });
-        
+
         EventEmitter.on(MY_CARDS, async (data) => { await SendToSocket(MY_CARDS, data); });
 
         EventEmitter.on(JOIN_TABLE, async (data) => { await SendToSocket(JOIN_TABLE, data); });
-        
-        EventEmitter.on(HEART_BEAT, async (data) => { await SendToSocket(HEART_BEAT, data); });
+
+        EventEmitter.on(HEART_BEAT, async (data) => {
+
+            const { en, SocketId, Data } = data;
+
+            io.to(SocketId).emit(HEART_BEAT, JSON.stringify({ en, Data }));
+
+        });
+        // EventEmitter.on(HEART_BEAT, async (data) => { await SendToSocket(HEART_BEAT, data); });
 
         EventEmitter.on(ERROR_POPUP, async (data) => { await SendToSocket(ERROR_POPUP, data); });
 
