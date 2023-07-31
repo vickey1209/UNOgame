@@ -80,7 +80,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
                 {
                     userId: UserDetails.userId,
-                    userName: 'First',
+                    userName: UserDetails.userId.slice(0, 6),
                     // userName: UserDetails.userName,
                     userProfile: UserDetails.userProfile,
                     seatIndex: 0,

@@ -72,7 +72,7 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
                     await BullTimer.AddJob.CollectBootValue(TableDetails.tableId);
 
-                }else{
+                } else {
                     // await BullTimer.AddJob.BotSignup({
                     //     playerCount:TableDetails.maxPlayers,
                     //     bootValue:TableDetails.bootValue,
@@ -110,7 +110,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
         const PlayerForPlayerArray: PlayersArrayInterface = {
 
             userId: UserDetails.userId,
-            userName: 'Second',
+            userName: UserDetails.userId.slice(0, 6),
             // userName: UserDetails.userName,
             userProfile: UserDetails.userProfile,
             seatIndex: NumberOfSeatAvailable[0],

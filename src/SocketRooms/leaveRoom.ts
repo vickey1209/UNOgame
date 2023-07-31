@@ -1,5 +1,6 @@
 import { Socket } from "socket.io"
 import { Logger } from "../Logger/logger";
+import { CONSTANTS } from "../Constants";
 
 const LeaveRoom = async (socket: Socket, RooId: string) => { // * Leave Socket Room
 
@@ -7,7 +8,8 @@ const LeaveRoom = async (socket: Socket, RooId: string) => { // * Leave Socket R
 
         Logger("LeaveRoom", RooId);
 
-        await socket.leave(RooId);
+        if (socket && socket?.leave) { await socket.leave(RooId); }
+        else { throw new Error(CONSTANTS.ERROR_MESSAGES.SOCKET_ROOM_ERROR) };
 
     } catch (error: any) {
         Logger('LeaveRoom Error : ', error);
