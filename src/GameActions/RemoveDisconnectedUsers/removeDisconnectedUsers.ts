@@ -16,7 +16,7 @@ const RemoveDisconnectedUsers = async (tableId: string) => {
 
         for (let i = 0; i < TableDetails.disconnectedUsers.length; i++) {
 
-            await RemoveUserFromTable(TableDetails.playersArray[i].userId, TableDetails.tableId);
+            await RemoveUserFromTable(TableDetails.playersArray[i].userId, TableDetails.tableId, false);
 
         };
 

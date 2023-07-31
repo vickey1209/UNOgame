@@ -37,7 +37,7 @@ const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface)
 
         const { userId, tableId } = Data;
 
-        await RemoveUserFromTable(userId, tableId);
+        await RemoveUserFromTable(userId, tableId, true);
 
     } catch (error: any) {
 
@@ -51,7 +51,7 @@ const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface)
     };
 };
 
-const RemoveUserFromTable = async (userId: string, tableId: string) => {
+const RemoveUserFromTable = async (userId: string, tableId: string, selfLeave: boolean) => {
 
     try {
 
@@ -85,7 +85,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string) => {
 
             TableDetails.playersArray.splice(PlayerIndexInArray, 1);
 
-            UserDetails.tableId = '';
+            UserDetails.tableId = selfLeave ? '' : 'Disconneted Or Turn Miss';
             await SetUser(UserDetails.userId, UserDetails);
 
             await SetTable(TableDetails.tableId, TableDetails);
@@ -119,7 +119,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string) => {
                 ]
             };
 
-            UserDetails.tableId = '';
+            UserDetails.tableId = selfLeave ? '' : 'Disconneted Or Turn Miss';
             await SetUser(UserDetails.userId, UserDetails);
 
             await SetTable(TableDetails.tableId, TableDetails);

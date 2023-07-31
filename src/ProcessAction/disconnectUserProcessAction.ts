@@ -52,7 +52,7 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
         } else {
 
-            await RemoveUserFromTable(userId, tableId);
+            await RemoveUserFromTable(userId, tableId, false);
 
         };
 

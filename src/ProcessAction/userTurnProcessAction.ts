@@ -127,7 +127,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
             EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.TURN_SKIP_LIMIT_REACHED } });
 
-            await RemoveUserFromTable(UserInTableDetails.userId, TableDetails.tableId);
+            await RemoveUserFromTable(UserInTableDetails.userId, TableDetails.tableId, false);
 
         } else {
 
