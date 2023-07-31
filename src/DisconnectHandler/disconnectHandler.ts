@@ -99,7 +99,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
             if (!TableDetails.isGameStart) {
 
-                await RemoveUserFromTable(UserDetails.userId, UserDetails.tableId, false);
+                await RemoveUserFromTable(UserDetails.userId, UserDetails.tableId, true);
 
                 // await RemoveLock(Path, Tablelock);
                 // await RemoveLock(Path, MatchMakingLock);
