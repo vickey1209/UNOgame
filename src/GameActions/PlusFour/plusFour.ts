@@ -108,12 +108,6 @@ const PlusFour = async (tableId: string) => {
 
             await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR, PickCardResData);
 
-            // setTimeout(() => {
-
-            //     EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
-
-            // }, CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR * 1000);
-
             let SkipData = await GAME_ACTIONS.Skip(TableDetails.tableId);
 
             if (!SkipData) { throw new Error(CONSTANTS.ERROR_MESSAGES.SKIP_ERROR) };
