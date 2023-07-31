@@ -33,7 +33,7 @@ const RedLockConnction = async () => {
             console.log(`RedLock > `, error);
             console.log(new Date());
             console.log('.');
-            
+
         });
 
         console.log('RedLock Connected !');
@@ -44,7 +44,7 @@ const RedLockConnction = async () => {
 };
 
 const ApplyLock = async (Path: string, LockId: string) => {
-    return;
+    // return;
     try {
 
         Logger("ApplyLock", JSON.stringify({ Path, LockId }));
@@ -59,10 +59,10 @@ const ApplyLock = async (Path: string, LockId: string) => {
 };
 
 const RemoveLock = async (Path: string, Lock: any) => {
-    return;
+    // return;
     try {
 
-        Logger("RemoveLock", JSON.stringify({ Path, LockId: Lock?.resources }));
+        Logger("RemoveLock", JSON.stringify({ Path, LockId: Lock?.resources ? Lock?.resources[0] : Lock?.resources }));
 
         await Lock.release();
 

@@ -35,5 +35,6 @@ export = Object.freeze({
     ROUND_HISTORY_ERROR: "Score Board Is Not Generated !!!",
     INVALID_CARD_COLOR: "Invalid Card Color !!!",
     TURN_SKIP_LIMIT_REACHED: "Your Turn Skip Limit Reach !!!",
+    SOCKET_ROOM_ERROR: "Socket Room Error !!!",
 
 });
