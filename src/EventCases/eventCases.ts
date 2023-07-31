@@ -46,7 +46,7 @@ const EventCases = async (socket: Socket) => {
                     break;
 
                 case HEART_BEAT:
-                    // Logger('EventCases HEART_BEAT', JSON.stringify({ Data }));
+                    Logger('EventCases HEART_BEAT', JSON.stringify({ Data }));
                     EventEmitter.emit(HEART_BEAT, { en: EventName, SocketId: socket.id, Data });
                     break;
 
