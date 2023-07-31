@@ -73,11 +73,11 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
                     await BullTimer.AddJob.CollectBootValue(TableDetails.tableId);
 
                 }else{
-                    await BullTimer.AddJob.BotSignup({
-                        playerCount:TableDetails.maxPlayers,
-                        bootValue:TableDetails.bootValue,
-                        delayNumber: 2,
-                        tableId : TableDetails.tableId })
+                    // await BullTimer.AddJob.BotSignup({
+                    //     playerCount:TableDetails.maxPlayers,
+                    //     bootValue:TableDetails.bootValue,
+                    //     delayNumber: 2,
+                    //     tableId : TableDetails.tableId })
                 }
             };
         };

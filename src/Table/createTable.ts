@@ -43,11 +43,11 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
         // setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 2000);
 
-        await BullTimer.AddJob.BotSignup({
-            playerCount:Table?.maxPlayers,
-            bootValue:Table?.bootValue,
-            delayNumber: 2,
-            tableId : Table?.tableId })
+        // await BullTimer.AddJob.BotSignup({
+        //     playerCount:Table?.maxPlayers,
+        //     bootValue:Table?.bootValue,
+        //     delayNumber: 2,
+        //     tableId : Table?.tableId })
 
         // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
 
