@@ -112,33 +112,19 @@ const TurnInfoProcessAction = async (Data: any) => {
             const UserAvailableInTable: any = TableDetails.playersArray.find((e:any) => { return e.seatIndex === nextTurn });
 
             let nextPlayerUserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable.userId);
-            // let nextPlayerCardArray = nextPlayerUserInTableDetails.cardArray;
 
             if(UserInTableDetails.cardArray.length < nextPlayerUserInTableDetails.cardArray.length && RemainingRoundTimer < CONFIG.GamePlay.USER_TURN_TIMER && TableDetails.botPriority === CONSTANTS.BOT_PRIORITY.HARD){
 
                 // Search for draw 4 card
                 let card_bot_w4c = UserInTableDetails.cardArray.filter(item => new RegExp("D4C-" , 'i').test(item));
-
-                // // Search for draw 2 card
-                // let card_bot_w2c = UserInTableDetails.cardArray.filter(item => new RegExp("-D2C-" , 'i').test(item));
-
-                // // Search for skip card
-                // let card_bot_skip = UserInTableDetails.cardArray.filter(item => new RegExp("-S-" , 'i').test(item));
-    
-                // // Search for reverse card
-                // let card_bot_reverse = UserInTableDetails.cardArray.filter(item => new RegExp("-RE-" , 'i').test(item));
     
                 // Search for wild card
                 let card_bot_wild = UserInTableDetails.cardArray.filter(item => new RegExp("W-CH" , 'i').test(item));
                 let lastRemainingRoundTimer = RemainingRoundTimer - 5;
                 if(card_bot_w4c.length > 0 && lastRemainingRoundTimer > 5){
-                    setTimeout(async () => {
-                        await BOT_ACTION.TakeTurn(TableDetails.tableId)
-                    }, lastRemainingRoundTimer * 1000);
+                    await BullTimer.AddJob.BotTurn({ delayNumber: lastRemainingRoundTimer, tableId : TableDetails.tableId })
                 }else if(card_bot_wild.length > 0 && lastRemainingRoundTimer > 5){
-                    setTimeout(async () => {
-                        await BOT_ACTION.TakeTurn(TableDetails.tableId)
-                    }, lastRemainingRoundTimer * 1000);
+                    await BullTimer.AddJob.BotTurn({ delayNumber: lastRemainingRoundTimer, tableId : TableDetails.tableId })
                 }else if(UserInTableDetails.cardArray.length === 1){
                     let isPlayableCard = false, playableCard = '';
 
@@ -150,17 +136,13 @@ const TurnInfoProcessAction = async (Data: any) => {
                         };
                     };
                     if(isPlayableCard){
-                        setTimeout(async () => {
-                            await BOT_ACTION.TakeTurn(TableDetails.tableId)
-                        }, 2000);
+                        await BullTimer.AddJob.BotTurn({ delayNumber: 2, tableId : TableDetails.tableId })
                     }
                     
                 }
                 
             }else{
-                setTimeout(async () => {
-                    await BOT_ACTION.TakeTurn(TableDetails.tableId)
-                }, 2000);
+                await BullTimer.AddJob.BotTurn({ delayNumber: 2, tableId : TableDetails.tableId })
             }
 
                 

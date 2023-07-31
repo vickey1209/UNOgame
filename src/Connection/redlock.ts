@@ -44,7 +44,7 @@ const RedLockConnction = async () => {
 };
 
 const ApplyLock = async (Path: string, LockId: string) => {
-    // return;
+    return;
     try {
 
         Logger("ApplyLock", JSON.stringify({ Path, LockId }));
@@ -59,7 +59,7 @@ const ApplyLock = async (Path: string, LockId: string) => {
 };
 
 const RemoveLock = async (Path: string, Lock: any) => {
-    // return;
+    return;
     try {
 
         Logger("RemoveLock", JSON.stringify({ Path, LockId: Lock?.resources }));
