@@ -36,7 +36,7 @@ const RoundScoreDelayProcessAction = async (Data: any) => {
 
         await BullTimer.AddJob.NextRound(TableDetails.tableId);
 
-        EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, AllRoundScore } });
+        EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, allRoundScore: AllRoundScore } });
 
     } catch (error: any) {
 
