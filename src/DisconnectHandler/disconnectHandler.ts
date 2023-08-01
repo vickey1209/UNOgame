@@ -40,6 +40,8 @@ const DisconnectHandler = async (socket: Socket) => {
 
         await BullTimer.CancelJob.CancelDisconnectUser(UserDetails.userId);
 
+        if (UserDetails.tableId === CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IS_ALREADY_DISCONNECTED_OR_TURN_MISSED); };
+
         if (UserDetails.tableId !== '') {
 
             let TableDetails: TableInterface = await GetTable(UserDetails?.tableId);
