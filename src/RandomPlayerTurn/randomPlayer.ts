@@ -1,4 +1,5 @@
 import { BullTimer } from "../BullTimer";
+import { Config } from "../Config";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
@@ -10,6 +11,8 @@ const RandomPlayerTurn = async (tableId: string) => {
     try {
 
         Logger('RandomPlayerTurn', JSON.stringify({ tableId }));
+
+        const CONFIG = Config();
 
         let isSkip = false, skipSeatIndex = -1, isRevers = false;
 
@@ -35,7 +38,7 @@ const RandomPlayerTurn = async (tableId: string) => {
         await SetTable(TableDetails.tableId, TableDetails);
 
         // await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 1);
-        await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 5);
+        await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, CONFIG.GamePlay.DELAY_FOR_CARD_DISTRIBUTION);
 
     } catch (error: any) {
         Logger('RandomPlayerTurn Error : ', error);

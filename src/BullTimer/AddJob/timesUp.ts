@@ -14,7 +14,7 @@ const TimesUp = async (tableId: string) => {
         const jobId = `${tableId}`;
 
         const options = {
-            delay: CONFIG.GamePlay.TIMES_UP_DELAY_TIMER * 1000,
+            delay: CONFIG.GamePlay.DELAY_FOR_TIMES_UP * 1000,
             jobId,
             removeOnComplete: true
         };

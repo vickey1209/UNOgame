@@ -39,7 +39,7 @@ export interface GamePlayInterface {
     NEXT_ROUND_TIMER: number,
     RETURN_TO_TABLE_TIMER: number,
     UNO_CLICK_TIMER: number,
-    TIMES_UP_DELAY_TIMER: number,
+    // TIMES_UP_DELAY_TIMER: number,
     GAME_END_TIMER: number,
 
     DISTRIBUTE_CARDS_LIMIT: number,
@@ -63,5 +63,7 @@ export interface GamePlayInterface {
     DELAY_FOR_COLOR_CHANGE: number,
     DELAY_FOR_REVERS: number,
     DELAY_FOR_UNO: number,
+    DELAY_FOR_CARD_DISTRIBUTION: number,
+    DELAY_FOR_TIMES_UP: number,
 
 }
