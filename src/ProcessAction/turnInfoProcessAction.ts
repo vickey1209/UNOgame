@@ -100,13 +100,15 @@ const TurnInfoProcessAction = async (Data: any) => {
 
                 nextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
 
-                if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+                if (nextTurn === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+                // if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
             } else {
 
                 nextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
 
-                if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+                if (nextTurn === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+                // if (!nextTurn && nextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
             };
             const UserAvailableInTable: any = TableDetails.playersArray.find((e:any) => { return e.seatIndex === nextTurn });
