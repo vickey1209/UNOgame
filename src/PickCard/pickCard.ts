@@ -22,15 +22,19 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
     const { PICK_CARD, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
-    const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
+    const userId = socket.handshake.auth?.userId;
+    const tableId = socket.handshake.auth?.tableId;
+    const seatIndex = socket.handshake.auth?.seatIndex;
+
+    const TablelockId = `${LOCK}:${TABLES}:${tableId}`;
 
     const Tablelock = await ApplyLock(Path, TablelockId);
 
     try {
 
-        Logger("PickCard", JSON.stringify({ Data }));
+        Logger("PickCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
-        let TableDetails: TableInterface = await GetTable(Data?.tableId);
+        let TableDetails: TableInterface = await GetTable(tableId);
 
         let pickCards: Array<string> = [], isPlayableCard = false;
 
@@ -40,17 +44,17 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WAIT_FOR_TURN_INFO } });
         };
 
-        if (TableDetails.currentTurn !== Data?.seatIndex) {
+        if (TableDetails.currentTurn !== seatIndex) {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
         };
 
-        const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === Data?.userId });
+        const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === userId });
 
         if (!UserAvailableInTable) {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_TABLE } });
         };
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(Data?.userId);
+        let UserInTableDetails: UserInTableInterface = await GetUserInTable(userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -137,10 +141,10 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
             };
             if (UserInTableDetails.lastPickCard.slice(0, 4) === "W-CH" || UserInTableDetails.lastPickCard.slice(1, 6) === "-D4C-") {
-                let color_array=["R","G","Y","B"];
-                let color_index= await GAME_ACTIONS.RandomNumber(0,color_array.length-1);
+                let color_array = ["R", "G", "Y", "B"];
+                let color_index = await GAME_ACTIONS.RandomNumber(0, color_array.length - 1);
 
-                color_index = await findPointAndColorWiseCards(UserInTableDetails.cardArray,color_index)
+                color_index = await findPointAndColorWiseCards(UserInTableDetails.cardArray, color_index)
 
                 Fake_Data.cardColor = color_array[color_index];
             }

@@ -16,7 +16,7 @@ const EventCases = async (socket: Socket) => {
 
     try {
 
-        socket.onAny((EventName, Front_Side_Data, ack) => {
+        socket.onAny(async (EventName, Front_Side_Data, ack) => {
 
             const {
 
@@ -52,42 +52,42 @@ const EventCases = async (socket: Socket) => {
 
                 case SIGNUP:
                     Logger('EventCases SIGNUP', JSON.stringify({ Data }));
-                    SignUp(EventName, socket, Data);
+                    await SignUp(EventName, socket, Data);
                     break;
 
                 case THROW_CARD:
                     Logger('EventCases THROW_CARD', JSON.stringify({ Data }));
-                    ThrowCard(EventName, socket, Data);
+                    await ThrowCard(EventName, socket, Data);
                     break;
 
                 case PICK_CARD:
                     Logger('EventCases PICK_CARD', JSON.stringify({ Data }));
-                    PickCard(EventName, socket, Data);
+                    await PickCard(EventName, socket, Data);
                     break;
 
                 case KEEP_CARD:
                     Logger('EventCases KEEP_CARD', JSON.stringify({ Data }));
-                    KeepCard(EventName, socket, Data);
+                    await KeepCard(EventName, socket, Data);
                     break;
 
                 case LEAVE_TABLE:
                     Logger('EventCases LEAVE_TABLE', JSON.stringify({ Data }));
-                    LeaveTable(EventName, socket, Data);
+                    await LeaveTable(EventName, socket, Data);
                     break;
 
                 case UNO:
                     Logger('EventCases UNO', JSON.stringify({ Data }));
-                    Uno(EventName, socket, Data);
+                    await Uno(EventName, socket, Data);
                     break;
 
                 case ROUND_HISTORY:
                     Logger('EventCases ROUND_HISTORY', JSON.stringify({ Data }));
-                    RoundHistory(EventName, socket, Data);
+                    await RoundHistory(EventName, socket, Data);
                     break;
 
                 case WIN_CONFIRMATION:
                     Logger('EventCases WIN_CONFIRMATION', JSON.stringify({ Data }));
-                    WinConfirmation(EventName, socket, Data);
+                    await WinConfirmation(EventName, socket, Data);
                     break;
 
                 default:
@@ -96,6 +96,7 @@ const EventCases = async (socket: Socket) => {
                     break;
 
             };
+
         });
 
     } catch (error) {

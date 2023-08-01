@@ -28,44 +28,19 @@ const DisconnectHandler = async (socket: Socket) => {
 
     try {
 
-        // const Path = 'DisconnectHandler';
-
         Logger("DisconnectHandler", JSON.stringify({ SocketData: socket.handshake.auth }));
-
-        // const userId = socket.handshake.auth?.userId;
-        // const playerCount = socket.handshake.auth?.playerCount;
-        // const bootValue = socket.handshake.auth?.bootValue;
-
-        // const { LOCK, EMPTY_TABLE, TABLES } = CONSTANTS.REDIS_COLLECTION;
-
-        // const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${bootValue}:${playerCount}`;
-
-        // const MatchMakingLock = await ApplyLock(Path, MatchMakingId);
 
         let UserDetails: SignUpInterface = await GetUser(userId);
 
-        if (!UserDetails) {
-
-            // await RemoveLock(Path, MatchMakingLock);
-            throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND);
-
-        };
+        if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
         const IsUserOnline = io.sockets.sockets.get(UserDetails.socketId); // * Find User Socket
 
-        if (IsUserOnline) {
-
-            // await RemoveLock(Path, MatchMakingLock);
-            throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IS_ONLINE);
-
-        };
+        if (IsUserOnline) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IS_ONLINE); };
 
         await BullTimer.CancelJob.CancelDisconnectUser(UserDetails.userId);
 
         if (UserDetails.tableId !== '') {
-
-            // const TablelockId = `${LOCK}:${TABLES}:${UserDetails?.tableId}`;
-            // const Tablelock = await ApplyLock(Path, TablelockId);
 
             let TableDetails: TableInterface = await GetTable(UserDetails?.tableId);
 
@@ -73,9 +48,6 @@ const DisconnectHandler = async (socket: Socket) => {
 
                 UserDetails.tableId = '';
                 await SetUser(userId, UserDetails);
-
-                // await RemoveLock(Path, Tablelock);
-                // await RemoveLock(Path, MatchMakingLock);
 
                 return;
             };
@@ -91,9 +63,6 @@ const DisconnectHandler = async (socket: Socket) => {
 
                 await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
 
-                // await RemoveLock(Path, Tablelock);
-                // await RemoveLock(Path, MatchMakingLock);
-
                 return;
             };
 
@@ -101,18 +70,12 @@ const DisconnectHandler = async (socket: Socket) => {
 
                 await RemoveUserFromTable(UserDetails.userId, UserDetails.tableId, true);
 
-                // await RemoveLock(Path, Tablelock);
-                // await RemoveLock(Path, MatchMakingLock);
-
                 return;
             };
 
             await BullTimer.AddJob.DisconnectUser(UserDetails.userId, UserDetails.tableId, UserDetails.bootValue, UserDetails.playerCount);
 
-            // await RemoveLock(Path, Tablelock);
-            // await RemoveLock(Path, MatchMakingLock);
-
-        } else { /* await RemoveLock(Path, MatchMakingLock); */ };
+        };
 
     } catch (error: any) {
 

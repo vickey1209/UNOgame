@@ -7,15 +7,17 @@ const WinConfirmation = async (en: string, socket: Socket, Data: any) => {
 
     try {
 
-        Logger("WinConfirmation", JSON.stringify({ Data }));
+        Logger("WinConfirmation", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
-        let UserDetails: SignUpInterface = await GetUser(Data.userId);
+        const userId = socket.handshake.auth?.userId;
+
+        let UserDetails: SignUpInterface = await GetUser(userId);
 
         if (UserDetails) {
 
             UserDetails.tableId = '';
 
-            await SetUser(Data.userId, UserDetails);
+            await SetUser(userId, UserDetails);
 
         };
 

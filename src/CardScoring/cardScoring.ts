@@ -8,7 +8,7 @@ const CardScoring = async (socket: Socket) => {
 
     try {
 
-        Logger("CardScoring", JSON.stringify({}));
+        Logger("CardScoring", JSON.stringify({ SocketData: socket.handshake.auth }));
 
         const CONFIG = Config();
 

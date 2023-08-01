@@ -18,14 +18,14 @@ const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface)
 
     const Path = 'LeaveTable';
 
-    // const userId = socket.handshake.auth?.userId;
-    // const tableId = socket.handshake.auth?.tableId;
+    const userId = socket.handshake.auth?.userId;
+    const tableId = socket.handshake.auth?.tableId;
     const playerCount = socket.handshake.auth?.playerCount;
     const bootValue = socket.handshake.auth?.bootValue;
 
     const { LOCK, EMPTY_TABLE, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
-    const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
+    const TablelockId = `${LOCK}:${TABLES}:${tableId}`;
     const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${bootValue}:${playerCount}`;
 
     const Tablelock = await ApplyLock(Path, TablelockId);
@@ -33,9 +33,7 @@ const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface)
 
     try {
 
-        Logger("LeaveTable", JSON.stringify({ Data }));
-
-        const { userId, tableId } = Data;
+        Logger("LeaveTable", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
         await RemoveUserFromTable(userId, tableId, true);
 
@@ -85,7 +83,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, selfLeave: b
 
             TableDetails.playersArray.splice(PlayerIndexInArray, 1);
 
-            UserDetails.tableId = selfLeave ? '' : 'Disconneted Or Turn Miss';
+            UserDetails.tableId = selfLeave ? '' : CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
             await SetUser(UserDetails.userId, UserDetails);
 
             await SetTable(TableDetails.tableId, TableDetails);
@@ -119,7 +117,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, selfLeave: b
                 ]
             };
 
-            UserDetails.tableId = selfLeave ? '' : 'Disconneted Or Turn Miss';
+            UserDetails.tableId = selfLeave ? '' : CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
             await SetUser(UserDetails.userId, UserDetails);
 
             await SetTable(TableDetails.tableId, TableDetails);

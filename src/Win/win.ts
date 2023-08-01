@@ -76,25 +76,39 @@ const Win = async (tableId: string) => {
 
             let UserWiseRoundHistory: any = [];
 
-            for (let i = 0; i < RoundHistoryDetails.length; i++) {
+            // for (let i = 0; i < RoundHistoryDetails.length; i++) {
 
-                for (let k = 0; k < RoundHistoryDetails[i].roundScore.length; k++) {
+            //     for (let k = 0; k < RoundHistoryDetails[i].roundScore.length; k++) {
 
-                    UserWiseRoundHistory.push(RoundHistoryDetails[i].roundScore[k]);
+            //         UserWiseRoundHistory.push(RoundHistoryDetails[i].roundScore[k]);
 
-                };
+            //     };
 
-            };
+            // };
+
+            RoundHistoryDetails.forEach((FirstLoopElement: any, FirstLoopIndex: any) => {
+
+                FirstLoopElement.roundScore.forEach((SecondLoopElement: any, SecondLoopIndex: any) => { UserWiseRoundHistory.push(RoundHistoryDetails[FirstLoopIndex].roundScore[SecondLoopIndex]) });
+
+            });
 
             if (UserWiseRoundHistory.length) {
 
-                for (let i = 0; i < FinalArray.length; i++) {
+                // for (let i = 0; i < FinalArray.length; i++) {
 
-                    const OneUser = UserWiseRoundHistory.filter((e: any) => { return e.userId === FinalArray[i]?.userId });
+                //     const OneUser = UserWiseRoundHistory.filter((e: any) => { return e.userId === FinalArray[i]?.userId });
 
-                    OneUser.forEach((element: any) => { FinalArray[i]?.previousScore.push(element?.currentRoundScore) });
+                //     OneUser.forEach((element: any) => { FinalArray[i]?.previousScore.push(element?.currentRoundScore) });
 
-                };
+                // };
+
+                FinalArray.forEach((FirstLoopElement: any, FirstLoopIndex: any) => {
+
+                    const OneUser = UserWiseRoundHistory.filter((e: any) => { return e.userId === FinalArray[FirstLoopIndex]?.userId });
+
+                    OneUser.forEach((element: any) => { FinalArray[FirstLoopIndex]?.previousScore.push(element?.currentRoundScore) });
+
+                });
 
             };
 
