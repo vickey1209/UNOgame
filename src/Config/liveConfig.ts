@@ -62,7 +62,7 @@ const LiveConfig = (): ConfigInterface => {
         NEXT_ROUND_TIMER: 10,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
-        TIMES_UP_DELAY_TIMER: 2,
+        // TIMES_UP_DELAY_TIMER: 2,
         GAME_END_TIMER: 30,
 
         DISTRIBUTE_CARDS_LIMIT: 7,
@@ -86,6 +86,8 @@ const LiveConfig = (): ConfigInterface => {
         DELAY_FOR_COLOR_CHANGE: 2,
         DELAY_FOR_REVERS: 1,
         DELAY_FOR_UNO: 2,
+        DELAY_FOR_CARD_DISTRIBUTION: 5.5,
+        DELAY_FOR_TIMES_UP: 2
 
     };
 

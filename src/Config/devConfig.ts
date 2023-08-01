@@ -65,6 +65,8 @@ const DevConfig = (): ConfigInterface => {
         DELAY_FOR_COLOR_CHANGE: 2,
         DELAY_FOR_REVERS: 1,
         DELAY_FOR_UNO: 2,
+        DELAY_FOR_CARD_DISTRIBUTION: 5.5,
+        DELAY_FOR_TIMES_UP: 2,
 
     };
 
