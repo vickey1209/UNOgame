@@ -28,7 +28,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
         if (UserDetails.chips < Data.bootValue) {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.ENOUGH_CHIPS } });
-        }
+        };
 
         const EmptyTableList = await GetEmptyTable(Data?.bootValue, Data?.playerCount);
 

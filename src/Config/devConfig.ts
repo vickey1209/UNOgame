@@ -51,6 +51,8 @@ const DevConfig = (): ConfigInterface => {
 
         TOTAL_ROUND_NUMBER: 2,
         UNO_PENALTY_NUMBER: 2,
+        PLUS_TWO_PENALTY_NUMBER: 2,
+        PLUS_FOUR_PENALTY_NUMBER: 4,
 
         ZERO_POINT: 10,
         SKIP_POINT: 20,
@@ -65,7 +67,7 @@ const DevConfig = (): ConfigInterface => {
         DELAY_FOR_COLOR_CHANGE: 2,
         DELAY_FOR_REVERS: 1,
         DELAY_FOR_UNO: 2,
-        DELAY_FOR_CARD_DISTRIBUTION: 5.5,
+        DELAY_FOR_CARD_DISTRIBUTION: 5,
         DELAY_FOR_TIMES_UP: 2,
 
     };

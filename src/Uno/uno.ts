@@ -15,25 +15,28 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
     const { ERROR_POPUP, UNO } = CONSTANTS.EVENTS_NAME;
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
-    const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
+    const userId = socket.handshake.auth?.userId;
+    const tableId = socket.handshake.auth?.tableId;
+
+    const TablelockId = `${LOCK}:${TABLES}:${tableId}`;
 
     const Tablelock = await ApplyLock(Path, TablelockId);
 
     try {
 
-        Logger("Uno", JSON.stringify({ Data }));
+        Logger("Uno", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
-        let TableDetails: TableInterface = await GetTable(Data?.tableId);
+        let TableDetails: TableInterface = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === Data?.userId });
+        const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === userId });
 
         if (!UserAvailableInTable) {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_TABLE } });
         };
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(Data?.userId);
+        let UserInTableDetails: UserInTableInterface = await GetUserInTable(userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

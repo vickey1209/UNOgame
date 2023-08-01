@@ -49,6 +49,8 @@ export interface GamePlayInterface {
 
     TOTAL_ROUND_NUMBER: number,
     UNO_PENALTY_NUMBER: number,
+    PLUS_TWO_PENALTY_NUMBER: number,
+    PLUS_FOUR_PENALTY_NUMBER: number,
 
     ZERO_POINT: number,
     SKIP_POINT: number,
