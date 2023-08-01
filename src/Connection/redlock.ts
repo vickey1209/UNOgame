@@ -47,14 +47,14 @@ const ApplyLock = async (Path: string, LockId: string) => {
     // return;
     try {
 
-        Logger("ApplyLock", JSON.stringify({ Path, LockId }));
+        await Logger("ApplyLock", JSON.stringify({ Path, LockId }));
 
         const Lock = await redLock.acquire([LockId], 2 * 1000);
 
         return Lock;
 
     } catch (error: any) {
-        Logger('ApplyLock Error : ', error);
+        await Logger('ApplyLock Error : ', error);
     };
 };
 
@@ -62,12 +62,12 @@ const RemoveLock = async (Path: string, Lock: any) => {
     // return;
     try {
 
-        Logger("RemoveLock", JSON.stringify({ Path, LockId: Lock?.resources ? Lock?.resources[0] : Lock?.resources }));
+        await Logger("RemoveLock", JSON.stringify({ Path, LockId: Lock?.resources ? Lock?.resources[0] : Lock?.resources }));
 
         await Lock.release();
 
     } catch (error: any) {
-        Logger('RemoveLock Error : ', error);
+        await Logger('RemoveLock Error : ', error);
     };
 };
 

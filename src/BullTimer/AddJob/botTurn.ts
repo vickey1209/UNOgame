@@ -6,10 +6,10 @@ const BotTurn = async (data:any) => {
 
     try {
 
-        Logger("BotTurn", JSON.stringify(data));
+        await Logger("BotTurn", JSON.stringify(data));
 
         const jobId = `${data.tableId}:BotTurn`;
-        Logger("BotTurn jobId : ", jobId);
+        await Logger("BotTurn jobId : ", jobId);
         const options = {
             delay: data.delayNumber * 1000,
             jobId,
@@ -19,7 +19,7 @@ const BotTurn = async (data:any) => {
         await BotTurnQueue.add(data, options);
 
     } catch (error: any) {
-        Logger('BotTurn Error : ', error);
+        await Logger('BotTurn Error : ', error);
     };
 };
 

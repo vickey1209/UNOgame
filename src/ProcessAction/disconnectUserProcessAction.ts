@@ -26,7 +26,7 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("DisconnectUserProcessAction", JSON.stringify(Data));
+        await Logger("DisconnectUserProcessAction", JSON.stringify(Data));
 
         if (userId === undefined || tableId === undefined || bootValue === undefined || playerCount === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
 
@@ -58,7 +58,7 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('DisconnectUserProcessAction Error : ', error);
+        await Logger('DisconnectUserProcessAction Error : ', error);
 
     } finally {
 

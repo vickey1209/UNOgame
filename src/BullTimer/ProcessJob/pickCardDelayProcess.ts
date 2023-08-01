@@ -6,14 +6,14 @@ const PickCardDelayProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger('PickCardDelayProcess', JSON.stringify(job.data));
+        await Logger('PickCardDelayProcess', JSON.stringify(job.data));
 
         done();
 
         await PROCESS_ACTION.PickCardDelayProcessAction(job.data);
 
     } catch (error: any) {
-        Logger('PickCardDelayProcess Error : ', error);
+        await Logger('PickCardDelayProcess Error : ', error);
     };
 };
 

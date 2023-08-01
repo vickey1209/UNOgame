@@ -5,7 +5,7 @@ const CancelRound = async (tableId: string) => {
 
     try {
 
-        Logger("CancelRound", JSON.stringify({ tableId }));
+        await Logger("CancelRound", JSON.stringify({ tableId }));
 
         const jobId = `${tableId}`;
 
@@ -16,7 +16,7 @@ const CancelRound = async (tableId: string) => {
         return;
 
     } catch (error: any) {
-        Logger('CancelRound Error', error);
+        await Logger('CancelRound Error', error);
     };
 };
 

@@ -6,7 +6,7 @@ const RoundScoreDelay = async (tableId: string, delayNumber: number) => {
 
     try {
 
-        Logger("RoundScoreDelay", JSON.stringify({ tableId }));
+        await Logger("RoundScoreDelay", JSON.stringify({ tableId }));
 
         const jobId = `${tableId}`;
 
@@ -19,7 +19,7 @@ const RoundScoreDelay = async (tableId: string, delayNumber: number) => {
         await RoundScoreDelayQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        Logger('RoundScoreDelay Error : ', error);
+        await Logger('RoundScoreDelay Error : ', error);
     };
 };
 

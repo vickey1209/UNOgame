@@ -7,14 +7,14 @@ const BotCardThrowProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger('BotCardThrowProcess', JSON.stringify(job.data));
+        await Logger('BotCardThrowProcess', JSON.stringify(job.data));
 
         done();
 
         await ThrowCard(job.data.eventName,job.data.socket,job.data.Fake_Data);
 
     } catch (error: any) {
-        Logger('BotCardThrowProcess Error : ', error);
+        await Logger('BotCardThrowProcess Error : ', error);
     };
 };
 

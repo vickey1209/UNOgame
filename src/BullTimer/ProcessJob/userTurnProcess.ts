@@ -6,14 +6,14 @@ const UserTurnProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger('UserTurnProcess', JSON.stringify(job.data));
+        await Logger('UserTurnProcess', JSON.stringify(job.data));
 
         done();
 
         await PROCESS_ACTION.UserTurnProcessAction(job.data);
 
     } catch (error: any) {
-        Logger('UserTurnProcess Error : ', error);
+        await Logger('UserTurnProcess Error : ', error);
     };
 };
 

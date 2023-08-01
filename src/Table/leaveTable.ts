@@ -33,13 +33,13 @@ const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface)
 
     try {
 
-        Logger("LeaveTable", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
+        await Logger("LeaveTable", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
         await RemoveUserFromTable(userId, tableId, true);
 
     } catch (error: any) {
 
-        Logger('LeaveTable Error : ', error);
+        await Logger('LeaveTable Error : ', error);
 
     } finally {
 
@@ -53,7 +53,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, selfLeave: b
 
     try {
 
-        Logger("RemoveUserFromTable", JSON.stringify({ userId, tableId }));
+        await Logger("RemoveUserFromTable", JSON.stringify({ userId, tableId }));
 
         const { LEAVE_TABLE, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
 
@@ -149,7 +149,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, selfLeave: b
         };
 
     } catch (error: any) {
-        Logger('RemoveUserFromTable Error : ', error);
+        await Logger('RemoveUserFromTable Error : ', error);
     };
 };
 

@@ -10,7 +10,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
     try {
 
-        Logger("ChangeUserTurn", JSON.stringify({ tableId }));
+        await Logger("ChangeUserTurn", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -199,7 +199,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
         };
 
     } catch (error: any) {
-        Logger('ChangeUserTurn Error : ', error);
+        await Logger('ChangeUserTurn Error : ', error);
     };
 };
 

@@ -24,7 +24,7 @@ const RoundHistory = async (en: string, socket: Socket, Data: RoundHistoryInterf
 
     try {
 
-        Logger("RoundHistory", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
+        await Logger("RoundHistory", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -50,7 +50,7 @@ const RoundHistory = async (en: string, socket: Socket, Data: RoundHistoryInterf
 
     } catch (error: any) {
 
-        Logger('RoundHistory Error : ', error);
+        await Logger('RoundHistory Error : ', error);
 
     } finally {
 

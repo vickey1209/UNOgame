@@ -13,7 +13,7 @@ const DistributeCards = async (tableId: string) => {
 
     try {
 
-        Logger("DistributeCards", JSON.stringify({ tableId }));
+        await Logger("DistributeCards", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -109,7 +109,7 @@ const DistributeCards = async (tableId: string) => {
         await RandomPlayerTurn(TableDetails.tableId);
 
     } catch (error: any) {
-        Logger('DistributeCards Error : ', error);
+        await Logger('DistributeCards Error : ', error);
     };
 };
 

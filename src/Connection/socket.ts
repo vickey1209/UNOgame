@@ -31,7 +31,7 @@ const SocketConnection = async () => {
             NumberOfSocketsOnServer = io.of("/").sockets.size;
             NumberOfSocketsOnRoom = io.sockets.adapter.rooms.get('TABLE')?.size ? io.sockets.adapter.rooms.get('TABLE')?.size : 0;
 
-            Logger("SocketConnection", JSON.stringify(socket.id));
+            await Logger("SocketConnection", JSON.stringify(socket.id));
 
             await EventCases(socket);
 
@@ -41,9 +41,9 @@ const SocketConnection = async () => {
 
                 await socket.disconnect();
 
-                Logger("Disconnect", JSON.stringify(socket.id));
+                await Logger("Disconnect", JSON.stringify(socket.id));
 
-                Logger("Disconnect Reason.", JSON.stringify(reason));
+                await Logger("Disconnect Reason.", JSON.stringify(reason));
 
                 await DisconnectHandler(socket);
 

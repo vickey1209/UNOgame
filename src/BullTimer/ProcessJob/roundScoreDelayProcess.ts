@@ -6,14 +6,14 @@ const RoundScoreDelayProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger('RoundScoreDelayProcess', JSON.stringify(job.data));
+        await Logger('RoundScoreDelayProcess', JSON.stringify(job.data));
 
         done();
 
         await PROCESS_ACTION.RoundScoreDelayProcessAction(job.data);
 
     } catch (error: any) {
-        Logger('RoundScoreDelayProcess Error : ', error);
+        await Logger('RoundScoreDelayProcess Error : ', error);
     };
 };
 

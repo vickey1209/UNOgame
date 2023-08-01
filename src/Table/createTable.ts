@@ -18,7 +18,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
     try {
 
-        Logger('CreateTable', JSON.stringify({ Data }));
+        await Logger('CreateTable', JSON.stringify({ Data }));
 
         const { JOIN_TABLE, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
 
@@ -54,7 +54,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
         await CardScoring(socket);
 
     } catch (error: any) {
-        Logger('CreateTable Error : ', error);
+        await Logger('CreateTable Error : ', error);
     };
 };
 
@@ -62,7 +62,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
     try {
 
-        Logger('CreateNewTable', JSON.stringify({ UserDetails }));
+        await Logger('CreateNewTable', JSON.stringify({ UserDetails }));
 
         const CONFIG = Config();
 
@@ -145,7 +145,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
         return Table;
 
     } catch (error: any) {
-        Logger('CreateNewTable Error : ', error);
+        await Logger('CreateNewTable Error : ', error);
     };
 };
 

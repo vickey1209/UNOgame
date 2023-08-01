@@ -5,7 +5,7 @@ const CheckCollectBootValue = async (tableId: string) => {
 
     try {
 
-        Logger("CheckCollectBootValue", JSON.stringify({ tableId }));
+        await Logger("CheckCollectBootValue", JSON.stringify({ tableId }));
 
         const jobId = `${tableId}`;
 
@@ -16,7 +16,7 @@ const CheckCollectBootValue = async (tableId: string) => {
         return;
 
     } catch (error: any) {
-        Logger('CheckCollectBootValue Error : ', error);
+        await Logger('CheckCollectBootValue Error : ', error);
     };
 };
 

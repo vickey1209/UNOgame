@@ -7,7 +7,7 @@ const GameEnd = async (tableId: string) => {
 
     try {
 
-        Logger("GameEnd", JSON.stringify({ tableId }));
+        await Logger("GameEnd", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -22,7 +22,7 @@ const GameEnd = async (tableId: string) => {
         await GameEndQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        Logger('GameEnd Error : ', error);
+        await Logger('GameEnd Error : ', error);
     };
 };
 

@@ -13,7 +13,7 @@ const PlusFour = async (tableId: string) => {
 
     try {
 
-        Logger("PlusFour", JSON.stringify({ tableId }));
+        await Logger("PlusFour", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -119,7 +119,7 @@ const PlusFour = async (tableId: string) => {
         };
 
     } catch (error: any) {
-        Logger('PlusFour Error : ', error);
+        await Logger('PlusFour Error : ', error);
     };
 };
 

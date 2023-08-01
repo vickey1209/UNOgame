@@ -32,7 +32,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
     try {
 
-        Logger("PickCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
+        await Logger("PickCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -153,7 +153,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
     } catch (error: any) {
 
-        Logger('PickCard Error : ', error);
+        await Logger('PickCard Error : ', error);
 
     } finally {
 

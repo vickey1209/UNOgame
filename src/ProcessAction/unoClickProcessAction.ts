@@ -23,7 +23,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("UnoClickProcessAction", JSON.stringify(Data));
+        await Logger("UnoClickProcessAction", JSON.stringify(Data));
 
         const CONFIG = Config();
 
@@ -127,7 +127,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('UnoClickProcessAction Error : ', error);
+        await Logger('UnoClickProcessAction Error : ', error);
 
     } finally {
 

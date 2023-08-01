@@ -15,7 +15,7 @@ const RoundProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("RoundProcessAction", JSON.stringify(Data));
+        await Logger("RoundProcessAction", JSON.stringify(Data));
 
         const tableId = Data?.tableId;
 
@@ -25,7 +25,7 @@ const RoundProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('RoundProcessAction Error : ', error);
+        await Logger('RoundProcessAction Error : ', error);
 
     } finally {
 

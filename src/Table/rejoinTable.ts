@@ -28,7 +28,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
     try {
 
-        Logger('RejoinTable', JSON.stringify({ Data }));
+        await Logger('RejoinTable', JSON.stringify({ Data }));
 
         const CONFIG = Config();
 
@@ -168,7 +168,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
     } catch (error: any) {
 
-        Logger('RejoinTable Error : ', error);
+        await Logger('RejoinTable Error : ', error);
 
     } finally {
 

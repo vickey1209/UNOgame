@@ -5,7 +5,7 @@ const CheckRound = async (tableId: string) => {
 
     try {
 
-        Logger("CheckRound", JSON.stringify({ tableId }));
+        await Logger("CheckRound", JSON.stringify({ tableId }));
 
         const jobId = `${tableId}`;
 
@@ -16,7 +16,7 @@ const CheckRound = async (tableId: string) => {
         return;
 
     } catch (error: any) {
-        Logger('CheckRound Error', error);
+        await Logger('CheckRound Error', error);
     };
 };
 

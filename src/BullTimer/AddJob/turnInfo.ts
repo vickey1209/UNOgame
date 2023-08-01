@@ -6,7 +6,7 @@ const TurnInfo = async (tableId: string, isSkip: boolean, skipSeatIndex: number,
 
     try {
 
-        Logger("TurnInfo", JSON.stringify({ tableId, isSkip, skipSeatIndex, isRevers }));
+        await Logger("TurnInfo", JSON.stringify({ tableId, isSkip, skipSeatIndex, isRevers }));
 
         const jobId = `${tableId}`;
 
@@ -19,7 +19,7 @@ const TurnInfo = async (tableId: string, isSkip: boolean, skipSeatIndex: number,
         await TurnInfoQueue.add({ tableId, isSkip, skipSeatIndex, isRevers }, options);
 
     } catch (error: any) {
-        Logger('TurnInfo Error : ', error);
+        await Logger('TurnInfo Error : ', error);
     };
 };
 

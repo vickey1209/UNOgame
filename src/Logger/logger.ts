@@ -1,6 +1,6 @@
 import { Config } from "../Config";
 
-const Logger = (Path: string, Data: string) => {
+const Logger = async (Path: string, Data: string) => {
 
     const CONFIG = Config();
 

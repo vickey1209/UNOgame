@@ -18,7 +18,7 @@ const NextRoundProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("NextRoundProcessAction", JSON.stringify(Data));
+        await Logger("NextRoundProcessAction", JSON.stringify(Data));
 
         const tableId = Data?.tableId;
 
@@ -66,7 +66,7 @@ const NextRoundProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('NextRoundProcessAction Error : ', error);
+        await Logger('NextRoundProcessAction Error : ', error);
 
     } finally {
 

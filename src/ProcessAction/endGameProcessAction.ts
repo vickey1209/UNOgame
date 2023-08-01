@@ -17,7 +17,7 @@ const GameEndProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("GameEndProcessAction", JSON.stringify(Data));
+        await Logger("GameEndProcessAction", JSON.stringify(Data));
 
         const TableDetails: TableInterface = await GetTable(tableId);
 
@@ -29,7 +29,7 @@ const GameEndProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('GameEndProcessAction Error : ', error);
+        await Logger('GameEndProcessAction Error : ', error);
 
     } finally {
 

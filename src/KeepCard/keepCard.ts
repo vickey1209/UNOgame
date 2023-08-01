@@ -27,7 +27,7 @@ const KeepCard = async (en: string, socket: Socket, Data: KeepCardInterface) => 
 
     try {
 
-        Logger("KeepCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
+        await Logger("KeepCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -66,7 +66,7 @@ const KeepCard = async (en: string, socket: Socket, Data: KeepCardInterface) => 
 
     } catch (error: any) {
 
-        Logger('KeepCard Error : ', error);
+        await Logger('KeepCard Error : ', error);
 
     } finally {
 

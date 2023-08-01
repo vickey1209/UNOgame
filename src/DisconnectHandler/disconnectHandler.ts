@@ -28,7 +28,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
     try {
 
-        Logger("DisconnectHandler", JSON.stringify({ SocketData: socket.handshake.auth }));
+        await Logger("DisconnectHandler", JSON.stringify({ SocketData: socket.handshake.auth }));
 
         let UserDetails: SignUpInterface = await GetUser(userId);
 
@@ -39,6 +39,8 @@ const DisconnectHandler = async (socket: Socket) => {
         if (IsUserOnline) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IS_ONLINE); };
 
         await BullTimer.CancelJob.CancelDisconnectUser(UserDetails.userId);
+
+        if (UserDetails.tableId === CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IS_ALREADY_DISCONNECTED_OR_TURN_MISSED); };
 
         if (UserDetails.tableId !== '') {
 
@@ -79,7 +81,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
     } catch (error: any) {
 
-        Logger('DisconnectHandler Error : ', error);
+        await Logger('DisconnectHandler Error : ', error);
 
     } finally {
 

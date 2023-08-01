@@ -10,7 +10,7 @@ const RandomPlayerTurn = async (tableId: string) => {
 
     try {
 
-        Logger('RandomPlayerTurn', JSON.stringify({ tableId }));
+        await Logger('RandomPlayerTurn', JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -42,7 +42,7 @@ const RandomPlayerTurn = async (tableId: string) => {
         await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, CONFIG.GamePlay.DELAY_FOR_CARD_DISTRIBUTION);
 
     } catch (error: any) {
-        Logger('RandomPlayerTurn Error : ', error);
+        await Logger('RandomPlayerTurn Error : ', error);
     };
 };
 

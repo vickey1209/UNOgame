@@ -5,7 +5,7 @@ const CancelDisconnectUser = async (userId: string) => {
 
     try {
 
-        Logger("CancelDisconnectUser", JSON.stringify({ userId }));
+        await Logger("CancelDisconnectUser", JSON.stringify({ userId }));
 
         const jobId = `${userId}`;
 
@@ -16,7 +16,7 @@ const CancelDisconnectUser = async (userId: string) => {
         return;
 
     } catch (error: any) {
-        Logger('CancelDisconnectUser Error : ', error);
+        await Logger('CancelDisconnectUser Error : ', error);
     };
 };
 

@@ -7,7 +7,7 @@ const TimesUp = async (tableId: string) => {
 
     try {
 
-        Logger("TimesUp", JSON.stringify({ tableId }));
+        await Logger("TimesUp", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -22,7 +22,7 @@ const TimesUp = async (tableId: string) => {
         await TimesUpQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        Logger('TimesUp Error : ', error);
+        await Logger('TimesUp Error : ', error);
     };
 };
 

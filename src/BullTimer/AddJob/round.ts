@@ -7,7 +7,7 @@ const Round = async (tableId: string) => {
 
     try {
 
-        Logger("Round", JSON.stringify({ tableId }));
+        await Logger("Round", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -22,7 +22,7 @@ const Round = async (tableId: string) => {
         await RoundQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        Logger('Round Error : ', error);
+        await Logger('Round Error : ', error);
     };
 };
 

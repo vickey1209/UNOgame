@@ -4,7 +4,7 @@ const RemainTimeCalculation = async (Job: any) => {
 
     try {
 
-        Logger("RemainTimeCalculation", JSON.stringify(Job.data));
+        await Logger("RemainTimeCalculation", JSON.stringify(Job.data));
 
         if (!Job) { return 0; };
 
@@ -27,7 +27,7 @@ const RemainTimeCalculation = async (Job: any) => {
         return FixedFinalRemainingTime;
 
     } catch (error: any) {
-        Logger('RemainTimeCalculation Error : ', error);
+        await Logger('RemainTimeCalculation Error : ', error);
     };
 };
 

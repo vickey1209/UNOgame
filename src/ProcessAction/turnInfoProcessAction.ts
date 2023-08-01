@@ -25,7 +25,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("TurnInfoProcessAction", JSON.stringify(Data));
+        await Logger("TurnInfoProcessAction", JSON.stringify(Data));
 
         const CONFIG = Config();
 
@@ -152,7 +152,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('TurnInfoProcessAction Error : ', error);
+        await Logger('TurnInfoProcessAction Error : ', error);
 
     } finally {
 

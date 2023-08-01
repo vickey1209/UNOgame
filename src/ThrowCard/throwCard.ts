@@ -28,7 +28,7 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
     try {
 
-        Logger("ThrowCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
+        await Logger("ThrowCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -110,7 +110,7 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
     } catch (error: any) {
 
-        Logger('ThrowCard Error : ', error);
+        await Logger('ThrowCard Error : ', error);
 
     } finally {
 

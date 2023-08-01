@@ -37,5 +37,6 @@ export = Object.freeze({
     INVALID_CARD_COLOR: "Invalid Card Color !!!",
     TURN_SKIP_LIMIT_REACHED: "Your Turn Skip Limit Reach !!!",
     SOCKET_ROOM_ERROR: "Socket Room Error !!!",
+    USER_IS_ALREADY_DISCONNECTED_OR_TURN_MISSED: "User Is Miss Turn Or Disconnected Before !!!"
 
 });

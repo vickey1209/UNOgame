@@ -25,7 +25,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("UserTurnProcessAction", JSON.stringify(Data));
+        await Logger("UserTurnProcessAction", JSON.stringify(Data));
 
         const CONFIG = Config();
 
@@ -137,7 +137,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('UserTurnProcessAction Error : ', error);
+        await Logger('UserTurnProcessAction Error : ', error);
 
     } finally {
 

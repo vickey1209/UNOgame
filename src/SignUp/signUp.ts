@@ -23,7 +23,7 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
 
     try {
 
-        Logger('SignUp', JSON.stringify({ Data }));
+        await Logger('SignUp', JSON.stringify({ Data }));
 
         if (!Data?.bootValue || !Data?.playerCount || !Data?.userId) {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: "Provide Valid Data !" } });
@@ -73,7 +73,7 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
 
     } catch (error: any) {
 
-        Logger('SignUp Error : ', error);
+        await Logger('SignUp Error : ', error);
 
     } finally {
 
@@ -86,7 +86,7 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
 
     try {
 
-        Logger("NewUser", JSON.stringify({ Data }));
+        await Logger("NewUser", JSON.stringify({ Data }));
 
         const {
 
@@ -119,7 +119,7 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
         if (User === 'OK') return NewUserData;
 
     } catch (error: any) {
-        Logger('NewUser Error : ', error);
+        await Logger('NewUser Error : ', error);
     };
 };
 
@@ -128,7 +128,7 @@ const UpdateUser = async (socket: Socket, Data: SignUpInterface, AvailableUser: 
 
     try {
 
-        Logger("UpdateUser", JSON.stringify({ AvailableUser, Data }));
+        await Logger("UpdateUser", JSON.stringify({ AvailableUser, Data }));
 
         const {
 
@@ -161,7 +161,7 @@ const UpdateUser = async (socket: Socket, Data: SignUpInterface, AvailableUser: 
         if (User === 'OK') return UpdateUserData;
 
     } catch (error: any) {
-        Logger('UpdateUser Error : ', error);
+        await Logger('UpdateUser Error : ', error);
     };
 };
 

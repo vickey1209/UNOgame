@@ -6,14 +6,14 @@ const BotTurnProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger('BotTurnProcess', JSON.stringify(job.data));
+        await Logger('BotTurnProcess', JSON.stringify(job.data));
 
         done();
 
         await BOT_ACTION.TakeTurn(job.data.tableId)
 
     } catch (error: any) {
-        Logger('BotTurnProcess Error : ', error);
+        await Logger('BotTurnProcess Error : ', error);
     };
 };
 

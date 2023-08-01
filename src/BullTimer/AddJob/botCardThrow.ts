@@ -6,10 +6,10 @@ const BotCardThrow = async (data:any) => {
 
     try {
 
-        Logger("BotCardThrow", JSON.stringify(data));
+        await Logger("BotCardThrow", JSON.stringify(data));
 
         const jobId = `${data.Fake_Data.tableId}:BotThrow`;
-        Logger("BotCardThrow jobId : ", jobId);
+        await Logger("BotCardThrow jobId : ", jobId);
         const options = {
             delay: data.delayNumber * 1000,
             jobId,
@@ -19,7 +19,7 @@ const BotCardThrow = async (data:any) => {
         await BotCardThrowQueue.add(data, options);
 
     } catch (error: any) {
-        Logger('BotCardThrow Error : ', error);
+        await Logger('BotCardThrow Error : ', error);
     };
 };
 

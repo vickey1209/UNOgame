@@ -7,7 +7,7 @@ const WinConfirmation = async (en: string, socket: Socket, Data: any) => {
 
     try {
 
-        Logger("WinConfirmation", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
+        await Logger("WinConfirmation", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
         const userId = socket.handshake.auth?.userId;
 
@@ -22,7 +22,7 @@ const WinConfirmation = async (en: string, socket: Socket, Data: any) => {
         };
 
     } catch (error: any) {
-        Logger('WinConfirmation Error : ', error);
+        await Logger('WinConfirmation Error : ', error);
     };
 };
 

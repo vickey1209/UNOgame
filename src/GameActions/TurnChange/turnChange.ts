@@ -5,7 +5,7 @@ const ClockWiseTurnChange = async (TableDetails: TableInterface) => {
 
     try {
 
-        Logger("ClockWiseTurnChange", JSON.stringify({ TableDetails }));
+        await Logger("ClockWiseTurnChange", JSON.stringify({ TableDetails }));
 
         let NextTurn = TableDetails.currentTurn + 1;
 
@@ -23,7 +23,7 @@ const ClockWiseTurnChange = async (TableDetails: TableInterface) => {
         return NextTurn;
 
     } catch (error: any) {
-        Logger('ClockWiseTurnChange Error : ', error);
+        await Logger('ClockWiseTurnChange Error : ', error);
     };
 };
 
@@ -31,7 +31,7 @@ const AntiClockWiseTurnChange = async (TableDetails: TableInterface) => {
 
     try {
 
-        Logger("AntiClockWiseTurnChange", JSON.stringify({ TableDetails }));
+        await Logger("AntiClockWiseTurnChange", JSON.stringify({ TableDetails }));
 
         let NextTurn = TableDetails.currentTurn - 1;
 
@@ -51,7 +51,7 @@ const AntiClockWiseTurnChange = async (TableDetails: TableInterface) => {
         return NextTurn;
 
     } catch (error: any) {
-        Logger('AntiClockWiseTurnChange Error : ', error);
+        await Logger('AntiClockWiseTurnChange Error : ', error);
     };
 };
 

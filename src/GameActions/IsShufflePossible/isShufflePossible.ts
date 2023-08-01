@@ -8,7 +8,7 @@ const IsShufflePossible = async (tableId: string) => {
 
     try {
 
-        Logger("IsShufflePossible", JSON.stringify({ tableId }));
+        await Logger("IsShufflePossible", JSON.stringify({ tableId }));
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -24,7 +24,7 @@ const IsShufflePossible = async (tableId: string) => {
         return { isShuffle, cardsForCloseDeckArray, cardsForOpenDeckArray: TableDetails.openCardDeck };
 
     } catch (error: any) {
-        Logger('IsShufflePossible Error : ', error);
+        await Logger('IsShufflePossible Error : ', error);
     };
 };
 

@@ -7,7 +7,7 @@ const PickCardDelay = async (tableId: string, delayNumber: number, PickCardResDa
 
     try {
 
-        Logger("PickCardDelay", JSON.stringify({ tableId, delayNumber, PickCardResData }));
+        await Logger("PickCardDelay", JSON.stringify({ tableId, delayNumber, PickCardResData }));
 
         const jobId = `${tableId}`;
 
@@ -20,7 +20,7 @@ const PickCardDelay = async (tableId: string, delayNumber: number, PickCardResDa
         await PickCardDelayQueue.add({ tableId, PickCardResData }, options);
 
     } catch (error: any) {
-        Logger('PickCardDelay Error : ', error);
+        await Logger('PickCardDelay Error : ', error);
     };
 };
 
