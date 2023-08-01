@@ -153,7 +153,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 await JoinRoom(socket, TableDetails.tableId);
 
-                EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: UserDetails.socketId, Data: TableDetails });
+                // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: UserDetails.socketId, Data: TableDetails });
 
                 await CardScoring(socket);
 

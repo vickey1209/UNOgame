@@ -20,7 +20,8 @@ const Skip = async (tableId: string) => {
 
             let NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
 
-            if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+            if (NextTurn === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+            // if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
             TableDetails.currentTurn = NextTurn;
 
@@ -28,7 +29,8 @@ const Skip = async (tableId: string) => {
 
             NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
 
-            if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+            if (NextTurn === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+            // if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
             TableDetails.currentTurn = NextTurn;
 
@@ -39,7 +41,8 @@ const Skip = async (tableId: string) => {
 
             let NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
 
-            if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+            if (NextTurn === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+            // if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
             TableDetails.currentTurn = NextTurn;
 
@@ -47,7 +50,8 @@ const Skip = async (tableId: string) => {
 
             NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
 
-            if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+            if (NextTurn === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
+            // if (!NextTurn && NextTurn !== 0) { throw new Error(CONSTANTS.ERROR_MESSAGES.TURN_CHANGE_ERROR) };
 
             TableDetails.currentTurn = NextTurn;
 
