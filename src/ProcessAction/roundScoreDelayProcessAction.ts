@@ -20,7 +20,7 @@ const RoundScoreDelayProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("RoundScoreDelayProcessAction", JSON.stringify(Data));
+        await Logger("RoundScoreDelayProcessAction", JSON.stringify(Data));
 
         const CONFIG = Config();
 
@@ -40,7 +40,7 @@ const RoundScoreDelayProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('RoundScoreDelayProcessAction Error : ', error);
+        await Logger('RoundScoreDelayProcessAction Error : ', error);
 
     } finally {
 

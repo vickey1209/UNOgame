@@ -7,7 +7,7 @@ const NextRound = async (tableId: string) => {
 
     try {
 
-        Logger("NextRound", JSON.stringify({ tableId }));
+        await Logger("NextRound", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -22,7 +22,7 @@ const NextRound = async (tableId: string) => {
         await NextRoundQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        Logger('NextRound Error : ', error);
+        await Logger('NextRound Error : ', error);
     };
 };
 

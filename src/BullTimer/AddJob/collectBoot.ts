@@ -7,7 +7,7 @@ const CollectBootValue = async (tableId: string) => {
 
     try {
 
-        Logger("CollectBootValue", JSON.stringify({ tableId }));
+        await Logger("CollectBootValue", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -22,7 +22,7 @@ const CollectBootValue = async (tableId: string) => {
         await CollectBootQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        Logger('CollectBootValue Error : ', error);
+        await Logger('CollectBootValue Error : ', error);
     };
 };
 

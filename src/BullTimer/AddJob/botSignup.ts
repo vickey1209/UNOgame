@@ -6,10 +6,10 @@ const BotSignup = async (data:any) => {
 
     try {
 
-        Logger("BotSignup", JSON.stringify(data));
+        await Logger("BotSignup", JSON.stringify(data));
 
         const jobId = `${data.tableId}:BotSignup`;
-        Logger("BotSignup jobId : ", jobId);
+        await Logger("BotSignup jobId : ", jobId);
         const options = {
             delay: data.delayNumber * 1000,
             jobId,
@@ -19,7 +19,7 @@ const BotSignup = async (data:any) => {
         await BotSignupQueue.add(data, options);
 
     } catch (error: any) {
-        Logger('BotSignup Error : ', error);
+        await Logger('BotSignup Error : ', error);
     };
 };
 

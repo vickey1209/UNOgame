@@ -16,7 +16,7 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
     try {
 
-        Logger('JoinTable', JSON.stringify({ Data }));
+        await Logger('JoinTable', JSON.stringify({ Data }));
 
         const CONFIG = Config();
 
@@ -83,7 +83,7 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
         };
 
     } catch (error: any) {
-        Logger('JoinTable Error : ', error);
+        await Logger('JoinTable Error : ', error);
     };
 };
 
@@ -91,7 +91,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
 
     try {
 
-        Logger('SeatPlayerOnTable', JSON.stringify({ TableDetails, UserDetails }));
+        await Logger('SeatPlayerOnTable', JSON.stringify({ TableDetails, UserDetails }));
 
         const { NEW_USER } = CONSTANTS.EVENTS_NAME;
 
@@ -158,7 +158,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
         return TableDetails;
 
     } catch (error: any) {
-        Logger('SeatPlayerOnTable Error : ', error);
+        await Logger('SeatPlayerOnTable Error : ', error);
     };
 };
 

@@ -7,7 +7,7 @@ const UserTurn = async (tableId: string, currentTurn: number) => {
 
     try {
 
-        Logger("UserTurn", JSON.stringify({ tableId }));
+        await Logger("UserTurn", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -22,7 +22,7 @@ const UserTurn = async (tableId: string, currentTurn: number) => {
         await UserTurnQueue.add({ tableId, currentTurn }, options);
 
     } catch (error: any) {
-        Logger('UserTurn Error : ', error);
+        await Logger('UserTurn Error : ', error);
     };
 };
 

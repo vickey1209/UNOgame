@@ -13,7 +13,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
     try {
 
-        Logger("EndRound", JSON.stringify({ tableId }));
+        await Logger("EndRound", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
 
@@ -90,7 +90,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
         };
 
     } catch (error: any) {
-        Logger('EndRound Error : ', error);
+        await Logger('EndRound Error : ', error);
     };
 };
 

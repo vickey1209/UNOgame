@@ -6,14 +6,14 @@ const NextRoundProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger('NextRoundProcess', JSON.stringify(job.data));
+        await Logger('NextRoundProcess', JSON.stringify(job.data));
 
         done();
 
         await PROCESS_ACTION.NextRoundProcessAction(job.data);
 
     } catch (error: any) {
-        Logger('NextRoundProcess Error : ', error);
+        await Logger('NextRoundProcess Error : ', error);
     };
 };
 

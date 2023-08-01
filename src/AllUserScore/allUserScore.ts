@@ -10,7 +10,7 @@ const AllUserScore = async (tableId: string) => {
 
     try {
 
-        Logger("AllUserScore", JSON.stringify({ tableId }));
+        await Logger("AllUserScore", JSON.stringify({ tableId }));
 
         const { USERS_SCORE } = CONSTANTS.EVENTS_NAME;
 
@@ -37,7 +37,7 @@ const AllUserScore = async (tableId: string) => {
         EventEmitter.emit(USERS_SCORE, { en: USERS_SCORE, RoomId: TableDetails.tableId, Data: ScoreResData });
 
     } catch (error: any) {
-        Logger('AllUserScore Error : ', error);
+        await Logger('AllUserScore Error : ', error);
     };
 };
 
@@ -45,7 +45,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
     try {
 
-        Logger("CheckUserScore", JSON.stringify({ UserInTableDetails }));
+        await Logger("CheckUserScore", JSON.stringify({ UserInTableDetails }));
 
         const CONFIG = Config();
 
@@ -124,13 +124,13 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
         return { totalScore, currentRoundScore, simple, special, zero, wildColorChange, wildPlusFour };
 
     } catch (error: any) {
-        Logger('CheckUserScore Error : ', error);
+        await Logger('CheckUserScore Error : ', error);
     };
 };
 
 const getUserScore = async (cardArray: any) => {
     try {
-        Logger("getUserScore", JSON.stringify({ cardArray }));
+        await Logger("getUserScore", JSON.stringify({ cardArray }));
         const CONFIG = Config();
         let  currentRoundScore: any = 0;
         if(!cardArray ||cardArray.length === 0 )
@@ -156,7 +156,7 @@ const getUserScore = async (cardArray: any) => {
         // currentRoundScore = (-Math.abs(currentRoundScore));
         return { currentRoundScore };
     } catch (error: any) {
-        Logger('getUserScore Error : ', error);
+        await Logger('getUserScore Error : ', error);
     };
 };
 

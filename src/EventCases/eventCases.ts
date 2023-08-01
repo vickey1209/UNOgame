@@ -41,57 +41,57 @@ const EventCases = async (socket: Socket) => {
             switch (EventName) {
 
                 case TEST:
-                    Logger('EventCases TEST', JSON.stringify({ Data }));
+                    await Logger('EventCases TEST', JSON.stringify({ Data }));
                     EventEmitter.emit(TEST, { en: EventName, SocketId: socket.id, Data });
                     break;
 
                 case HEART_BEAT:
-                    // Logger('EventCases HEART_BEAT', JSON.stringify({ Data }));
+                    // await Logger('EventCases HEART_BEAT', JSON.stringify({ Data }));
                     EventEmitter.emit(HEART_BEAT, { en: EventName, SocketId: socket.id, Data });
                     break;
 
                 case SIGNUP:
-                    Logger('EventCases SIGNUP', JSON.stringify({ Data }));
+                    await Logger('EventCases SIGNUP', JSON.stringify({ Data }));
                     await SignUp(EventName, socket, Data);
                     break;
 
                 case THROW_CARD:
-                    Logger('EventCases THROW_CARD', JSON.stringify({ Data }));
+                    await Logger('EventCases THROW_CARD', JSON.stringify({ Data }));
                     await ThrowCard(EventName, socket, Data);
                     break;
 
                 case PICK_CARD:
-                    Logger('EventCases PICK_CARD', JSON.stringify({ Data }));
+                    await Logger('EventCases PICK_CARD', JSON.stringify({ Data }));
                     await PickCard(EventName, socket, Data);
                     break;
 
                 case KEEP_CARD:
-                    Logger('EventCases KEEP_CARD', JSON.stringify({ Data }));
+                    await Logger('EventCases KEEP_CARD', JSON.stringify({ Data }));
                     await KeepCard(EventName, socket, Data);
                     break;
 
                 case LEAVE_TABLE:
-                    Logger('EventCases LEAVE_TABLE', JSON.stringify({ Data }));
+                    await Logger('EventCases LEAVE_TABLE', JSON.stringify({ Data }));
                     await LeaveTable(EventName, socket, Data);
                     break;
 
                 case UNO:
-                    Logger('EventCases UNO', JSON.stringify({ Data }));
+                    await Logger('EventCases UNO', JSON.stringify({ Data }));
                     await Uno(EventName, socket, Data);
                     break;
 
                 case ROUND_HISTORY:
-                    Logger('EventCases ROUND_HISTORY', JSON.stringify({ Data }));
+                    await Logger('EventCases ROUND_HISTORY', JSON.stringify({ Data }));
                     await RoundHistory(EventName, socket, Data);
                     break;
 
                 case WIN_CONFIRMATION:
-                    Logger('EventCases WIN_CONFIRMATION', JSON.stringify({ Data }));
+                    await Logger('EventCases WIN_CONFIRMATION', JSON.stringify({ Data }));
                     await WinConfirmation(EventName, socket, Data);
                     break;
 
                 default:
-                    Logger("EventCases Default", JSON.stringify({ Data }));
+                    await Logger("EventCases Default", JSON.stringify({ Data }));
                     EventEmitter.emit(DEFAULT, { en: EventName, SocketId: socket.id, Data: { "Message": "Unknown Event" } });
                     break;
 

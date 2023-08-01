@@ -7,7 +7,7 @@ const UnoClick = async (tableId: string, isSkip: boolean, skipSeatIndex: number,
 
     try {
 
-        Logger("UnoClick", JSON.stringify({ tableId, isSkip, skipSeatIndex, isRevers, delayNumber, unoSeatIndex }));
+        await Logger("UnoClick", JSON.stringify({ tableId, isSkip, skipSeatIndex, isRevers, delayNumber, unoSeatIndex }));
 
         const CONFIG = Config();
 
@@ -22,7 +22,7 @@ const UnoClick = async (tableId: string, isSkip: boolean, skipSeatIndex: number,
         await UnoClickQueue.add({ tableId, isSkip, skipSeatIndex, isRevers, delayNumber, unoSeatIndex }, options);
 
     } catch (error: any) {
-        Logger('UnoClick Error : ', error);
+        await Logger('UnoClick Error : ', error);
     };
 };
 

@@ -24,7 +24,7 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
 
     try {
 
-        Logger("Uno", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
+        await Logger("Uno", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -56,7 +56,7 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
 
     } catch (error: any) {
 
-        Logger('Uno Error : ', error);
+        await Logger('Uno Error : ', error);
 
     } finally {
 

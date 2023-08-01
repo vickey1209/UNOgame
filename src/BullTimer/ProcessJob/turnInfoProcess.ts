@@ -6,14 +6,14 @@ const TurnInfoProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger('TurnInfoProcess', JSON.stringify(job.data));
+        await Logger('TurnInfoProcess', JSON.stringify(job.data));
 
         done();
 
         await PROCESS_ACTION.TurnInfoProcessAction(job.data);
 
     } catch (error: any) {
-        Logger('TurnInfoProcess Error : ', error);
+        await Logger('TurnInfoProcess Error : ', error);
     };
 };
 

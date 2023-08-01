@@ -6,14 +6,14 @@ const TimesUpProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger('TimesUpProcess', JSON.stringify(job.data));
+        await Logger('TimesUpProcess', JSON.stringify(job.data));
 
         done();
 
         await PROCESS_ACTION.TimesUpProcessAction(job.data);
 
     } catch (error: any) {
-        Logger('TimesUpProcess Error : ', error);
+        await Logger('TimesUpProcess Error : ', error);
     };
 };
 

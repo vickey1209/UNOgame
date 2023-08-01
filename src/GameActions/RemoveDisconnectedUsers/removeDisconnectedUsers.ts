@@ -8,7 +8,7 @@ const RemoveDisconnectedUsers = async (tableId: string) => {
 
     try {
 
-        Logger("RemoveDisconnectedUsers", JSON.stringify({ tableId }));
+        await Logger("RemoveDisconnectedUsers", JSON.stringify({ tableId }));
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -25,7 +25,7 @@ const RemoveDisconnectedUsers = async (tableId: string) => {
         await SetTable(TableDetails.tableId, TableDetails);
 
     } catch (error: any) {
-        Logger('RemoveDisconnectedUsers Error : ', error);
+        await Logger('RemoveDisconnectedUsers Error : ', error);
     };
 };
 

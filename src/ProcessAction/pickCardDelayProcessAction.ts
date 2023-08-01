@@ -18,7 +18,7 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("PickCardDelayProcessAction", JSON.stringify(Data));
+        await Logger("PickCardDelayProcessAction", JSON.stringify(Data));
 
         let TableDetails: TableInterface = await GetTable(Data?.tableId);
 
@@ -32,7 +32,7 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('PickCardDelayProcessAction Error : ', error);
+        await Logger('PickCardDelayProcessAction Error : ', error);
 
     } finally {
 

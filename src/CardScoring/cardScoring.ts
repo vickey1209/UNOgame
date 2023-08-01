@@ -8,7 +8,7 @@ const CardScoring = async (socket: Socket) => {
 
     try {
 
-        Logger("CardScoring", JSON.stringify({ SocketData: socket.handshake.auth }));
+        await Logger("CardScoring", JSON.stringify({ SocketData: socket.handshake.auth }));
 
         const CONFIG = Config();
 
@@ -26,7 +26,7 @@ const CardScoring = async (socket: Socket) => {
         EventEmitter.emit(CARD_SCORING, { en: CARD_SCORING, SocketId: socket.id, Data: ResData });
 
     } catch (error: any) {
-        Logger('CardScoring Error : ', error);
+        await Logger('CardScoring Error : ', error);
     };
 };
 

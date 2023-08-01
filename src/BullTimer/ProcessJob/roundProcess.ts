@@ -6,14 +6,14 @@ const RoundProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger('RoundProcess', JSON.stringify(job.data));
+        await Logger('RoundProcess', JSON.stringify(job.data));
 
         done();
 
         await PROCESS_ACTION.RoundProcessAction(job.data);
 
     } catch (error: any) {
-        Logger('RoundProcess Error : ', error);
+        await Logger('RoundProcess Error : ', error);
     };
 };
 

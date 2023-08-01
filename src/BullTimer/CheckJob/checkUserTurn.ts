@@ -5,7 +5,7 @@ const CheckUserTurn = async (tableId: string, currentTurn: number) => {
 
     try {
 
-        Logger("CheckUserTurn", JSON.stringify({ tableId, currentTurn }));
+        await Logger("CheckUserTurn", JSON.stringify({ tableId, currentTurn }));
 
         const jobId = `${tableId}:${currentTurn}`;
 
@@ -16,7 +16,7 @@ const CheckUserTurn = async (tableId: string, currentTurn: number) => {
         return;
 
     } catch (error: any) {
-        Logger('CheckUserTurn Error', error);
+        await Logger('CheckUserTurn Error', error);
     };
 };
 

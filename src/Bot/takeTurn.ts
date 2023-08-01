@@ -15,7 +15,7 @@ const TakeTurn = async (tableId: string) => {
 
     try {
  
-        Logger("TakeTurn", JSON.stringify({ tableId }));
+        await Logger("TakeTurn", JSON.stringify({ tableId }));
 
         let TableDetails: TableInterface = await GetTable(tableId);
 
@@ -112,7 +112,7 @@ const TakeTurn = async (tableId: string) => {
         };
 
     } catch (error: any) {
-        Logger('TakeTurn Error : ', error);
+        await Logger('TakeTurn Error : ', error);
     };
 };
 

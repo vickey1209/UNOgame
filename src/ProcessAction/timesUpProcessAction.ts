@@ -20,7 +20,7 @@ const TimesUpProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("TimesUpProcessAction", JSON.stringify(Data));
+        await Logger("TimesUpProcessAction", JSON.stringify(Data));
 
         const CONFIG = Config();
 
@@ -41,7 +41,7 @@ const TimesUpProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('TimesUpProcessAction Error : ', error);
+        await Logger('TimesUpProcessAction Error : ', error);
 
     } finally {
 

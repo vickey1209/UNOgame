@@ -28,7 +28,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
     try {
 
-        Logger("DisconnectHandler", JSON.stringify({ SocketData: socket.handshake.auth }));
+        await Logger("DisconnectHandler", JSON.stringify({ SocketData: socket.handshake.auth }));
 
         let UserDetails: SignUpInterface = await GetUser(userId);
 
@@ -79,7 +79,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
     } catch (error: any) {
 
-        Logger('DisconnectHandler Error : ', error);
+        await Logger('DisconnectHandler Error : ', error);
 
     } finally {
 

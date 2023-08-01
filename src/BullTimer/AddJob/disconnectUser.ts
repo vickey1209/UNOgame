@@ -7,7 +7,7 @@ const DisconnectUser = async (userId: string, tableId: string, bootValue: number
 
     try {
 
-        Logger("DisconnectUser", JSON.stringify({ userId, tableId, bootValue, playerCount }));
+        await Logger("DisconnectUser", JSON.stringify({ userId, tableId, bootValue, playerCount }));
 
         const CONFIG = Config();
 
@@ -22,7 +22,7 @@ const DisconnectUser = async (userId: string, tableId: string, bootValue: number
         await DisconnectUserQueue.add({ userId, tableId, bootValue, playerCount }, options);
 
     } catch (error: any) {
-        Logger('DisconnectUser Error : ', error);
+        await Logger('DisconnectUser Error : ', error);
     };
 };
 

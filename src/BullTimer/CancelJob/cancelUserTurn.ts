@@ -5,7 +5,7 @@ const CancelUserTurn = async (tableId: string, currentTurn: number) => {
 
     try {
 
-        Logger("CancelUserTurn", JSON.stringify({ tableId, currentTurn }));
+        await Logger("CancelUserTurn", JSON.stringify({ tableId, currentTurn }));
 
         const jobId = `${tableId}:${currentTurn}`;
 
@@ -16,7 +16,7 @@ const CancelUserTurn = async (tableId: string, currentTurn: number) => {
         return;
 
     } catch (error: any) {
-        Logger('CancelUserTurn Error', error);
+        await Logger('CancelUserTurn Error', error);
     };
 };
 

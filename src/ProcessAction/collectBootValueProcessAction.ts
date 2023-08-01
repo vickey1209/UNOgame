@@ -20,7 +20,7 @@ const CollectBootValueProcessAction = async (Data: any) => {
 
     try {
 
-        Logger("CollectBootValueProcessAction", JSON.stringify(Data));
+        await Logger("CollectBootValueProcessAction", JSON.stringify(Data));
 
         const tableId = Data?.tableId;
 
@@ -45,7 +45,7 @@ const CollectBootValueProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        Logger('CollectBootValueProcessAction Error : ', error);
+        await Logger('CollectBootValueProcessAction Error : ', error);
 
     } finally {
 
@@ -58,7 +58,7 @@ const CutBootValueFromUser = async (TableDetails: TableInterface) => {
 
     try {
 
-        Logger("CutBootValueFromUser", JSON.stringify({ TableDetails }));
+        await Logger("CutBootValueFromUser", JSON.stringify({ TableDetails }));
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
@@ -71,7 +71,7 @@ const CutBootValueFromUser = async (TableDetails: TableInterface) => {
         };
 
     } catch (error: any) {
-        Logger('CutBootValueFromUser Error', error);
+        await Logger('CutBootValueFromUser Error', error);
     };
 };
 

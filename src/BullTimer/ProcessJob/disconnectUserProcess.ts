@@ -6,14 +6,14 @@ const DisconnectUserProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger("DisconnectUserProcess", JSON.stringify(job.data));
+        await Logger("DisconnectUserProcess", JSON.stringify(job.data));
 
         done();
 
         await PROCESS_ACTION.DisconnectUserProcessAction(job.data);
 
     } catch (error: any) {
-        Logger('DisconnectUserProcess Error : ', error);
+        await Logger('DisconnectUserProcess Error : ', error);
     };
 };
 

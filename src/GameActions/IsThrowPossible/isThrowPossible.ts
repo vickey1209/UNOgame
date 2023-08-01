@@ -7,7 +7,7 @@ const IsThrowPossible = async (UserInTableDetails: UserInTableInterface, TableDe
 
     try {
 
-        Logger("IsThrowPossible", JSON.stringify({ UserInTableDetails }));
+        await Logger("IsThrowPossible", JSON.stringify({ UserInTableDetails }));
 
         let isThrowPossible = false;
 
@@ -38,7 +38,7 @@ const IsThrowPossible = async (UserInTableDetails: UserInTableInterface, TableDe
         return isThrowPossible;
 
     } catch (error: any) {
-        Logger('IsThrowPossible Error : ', error);
+        await Logger('IsThrowPossible Error : ', error);
     };
 };
 

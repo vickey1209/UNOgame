@@ -6,13 +6,13 @@ const LeaveRoom = async (socket: Socket, RooId: string) => { // * Leave Socket R
 
     try {
 
-        Logger("LeaveRoom", RooId);
+        await Logger("LeaveRoom", RooId);
 
         if (socket && socket?.leave) { await socket.leave(RooId); }
         else { throw new Error(CONSTANTS.ERROR_MESSAGES.SOCKET_ROOM_ERROR) };
 
     } catch (error: any) {
-        Logger('LeaveRoom Error : ', error);
+        await Logger('LeaveRoom Error : ', error);
     };
 };
 

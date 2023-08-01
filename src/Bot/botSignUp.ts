@@ -5,7 +5,7 @@ const BotSignUp = async (data:any) => {
 
     try {
 
-        Logger('BotSignUp', JSON.stringify({}));
+        await Logger('BotSignUp', JSON.stringify({}));
 
         const SignUpData = {
 
@@ -42,7 +42,7 @@ const BotSignUp = async (data:any) => {
         await SignUp('SIGNUP', Fake_Socket, SignUpData);
 
     } catch (error: any) {
-        Logger('BotSignUp Error : ', error);
+        await Logger('BotSignUp Error : ', error);
     };
 };
 

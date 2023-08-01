@@ -6,14 +6,14 @@ const GameEndProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        Logger("GameEndProcess", JSON.stringify(job.data));
+        await Logger("GameEndProcess", JSON.stringify(job.data));
 
         done();
 
         await PROCESS_ACTION.GameEndProcessAction(job.data);
 
     } catch (error: any) {
-        Logger('GameEndProcess Error : ', error);
+        await Logger('GameEndProcess Error : ', error);
     };
 };
 

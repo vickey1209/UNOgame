@@ -6,13 +6,13 @@ const JoinRoom = async (socket: Socket, RooId: string) => { // * Join Socket Roo
 
     try {
 
-        Logger("JoinRoom", RooId);
+        await Logger("JoinRoom", RooId);
 
         if (socket && socket?.join) { await socket.join(RooId); }
         else { throw new Error(CONSTANTS.ERROR_MESSAGES.SOCKET_ROOM_ERROR) };
 
     } catch (error: any) {
-        Logger('JoinRoom Error : ', error);
+        await Logger('JoinRoom Error : ', error);
     };
 };
 

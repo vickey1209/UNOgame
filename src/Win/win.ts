@@ -12,7 +12,7 @@ const Win = async (tableId: string) => {
 
     try {
 
-        Logger("Win", JSON.stringify({ tableId }));
+        await Logger("Win", JSON.stringify({ tableId }));
 
         const { WINNER_DECLARE } = CONSTANTS.EVENTS_NAME;
 
@@ -126,7 +126,7 @@ const Win = async (tableId: string) => {
         EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: TableDetails.tableId, Data: { winningArray: FinalArray } });
 
     } catch (error: any) {
-        Logger('Win Error : ', error);
+        await Logger('Win Error : ', error);
     };
 };
 

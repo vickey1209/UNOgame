@@ -9,12 +9,12 @@ const SendToSocket = async (EVENT: string, data: any) => {
 
         const { en, SocketId, Data } = data;
 
-        Logger("SendToSocket", JSON.stringify({ EVENT, Data }));
+        await Logger("SendToSocket", JSON.stringify({ EVENT, Data }));
 
         io.to(SocketId).emit(EVENT, JSON.stringify({ en, Data }));
 
     } catch (error: any) {
-        Logger('SendToSocket Error : ', error);
+        await Logger('SendToSocket Error : ', error);
     };
 };
 
@@ -24,16 +24,16 @@ const SendToRoom = async (EVENT: string, data: any) => {
 
         const { en, RoomId, Data } = data;
 
-        Logger("SendToRoom", JSON.stringify({ EVENT, Data }));
+        await Logger("SendToRoom", JSON.stringify({ EVENT, Data }));
 
         io.to(RoomId).emit(EVENT, JSON.stringify({ en, Data }));
 
     } catch (error: any) {
-        Logger('SendToRoom Error : ', error);
+        await Logger('SendToRoom Error : ', error);
     };
 };
 
-const EmitterON = () => {
+const EmitterON = async () => {
 
     try {
 
@@ -137,7 +137,7 @@ const EmitterON = () => {
         // * SendToRoom ....
 
     } catch (error: any) {
-        Logger('EmitterON Error', error);
+        await Logger('EmitterON Error', error);
     };
 };
 
