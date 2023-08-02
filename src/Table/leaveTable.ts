@@ -35,7 +35,7 @@ const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface)
 
         await Logger("LeaveTable", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
-        await RemoveUserFromTable(userId, tableId, true);
+        await RemoveUserFromTable(userId, tableId, Data.isPlayerChooseToLeave);
 
     } catch (error: any) {
 
@@ -49,7 +49,7 @@ const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface)
     };
 };
 
-const RemoveUserFromTable = async (userId: string, tableId: string, selfLeave: boolean) => {
+const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChooseToLeave: boolean) => {
 
     try {
 
@@ -83,7 +83,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, selfLeave: b
 
             TableDetails.playersArray.splice(PlayerIndexInArray, 1);
 
-            UserDetails.tableId = selfLeave ? '' : CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
+            UserDetails.tableId = isPlayerChooseToLeave ? '' : CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
             await SetUser(UserDetails.userId, UserDetails);
 
             await SetTable(TableDetails.tableId, TableDetails);
@@ -98,7 +98,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, selfLeave: b
 
             };
 
-            const LeaveTableResData = { userId, tableId, seatIndex: UserInTableDetails.seatIndex };
+            const LeaveTableResData = { userId, tableId, seatIndex: UserInTableDetails.seatIndex, isPlayerChooseToLeave };
 
             EventEmitter.emit(LEAVE_TABLE, { en: LEAVE_TABLE, RoomId: TableDetails.tableId, Data: LeaveTableResData });
 
@@ -117,12 +117,12 @@ const RemoveUserFromTable = async (userId: string, tableId: string, selfLeave: b
                 ]
             };
 
-            UserDetails.tableId = selfLeave ? '' : CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
+            UserDetails.tableId = isPlayerChooseToLeave ? '' : CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
             await SetUser(UserDetails.userId, UserDetails);
 
             await SetTable(TableDetails.tableId, TableDetails);
 
-            const LeaveTableResData = { userId, tableId, seatIndex: UserInTableDetails.seatIndex };
+            const LeaveTableResData = { userId, tableId, seatIndex: UserInTableDetails.seatIndex, isPlayerChooseToLeave };
 
             EventEmitter.emit(LEAVE_TABLE, { en: LEAVE_TABLE, RoomId: TableDetails.tableId, Data: LeaveTableResData });
 

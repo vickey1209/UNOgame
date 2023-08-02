@@ -2,6 +2,7 @@ export interface LeaveTableInterface {
 
     userId: string,
     tableId: string,
-    seatIndex: number
+    seatIndex: number,
+    isPlayerChooseToLeave: boolean
 
 }
