@@ -142,7 +142,8 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 await JoinRoom(socket, TableDetails.tableId);
 
-                await AllUserScore(TableDetails.tableId);
+                if (!TableDetails.isLeaveLock) { await AllUserScore(TableDetails.tableId); };
+                // await AllUserScore(TableDetails.tableId);
 
             } else {
 
