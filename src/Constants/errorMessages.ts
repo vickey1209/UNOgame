@@ -31,12 +31,11 @@ export = Object.freeze({
     ALREADY_CLICKED_UNO: "You Already Clicked UNO !!!",
     UNO_NOT_POSSIBLE: "UNO Not Possible !!!",
     IS_POSSIBLE_THROW_ERROR: "Possible Throw Card Return Error !!!",
-    LAST_GAME_FINISHED: "The Last Game Doesn't Exist Anymore !!!",
-    // LAST_GAME_FINISHED: "The Last Game That You Played Doesn't Exist Anymore !!!",
+    LAST_GAME_FINISHED: "The Last Game That You Played Doesn't Exist Anymore !!!",
     ROUND_HISTORY_ERROR: "Score Board Is Not Generated !!!",
     INVALID_CARD_COLOR: "Invalid Card Color !!!",
     TURN_SKIP_LIMIT_REACHED: "Your Turn Skip Limit Reach !!!",
     SOCKET_ROOM_ERROR: "Socket Room Error !!!",
-    USER_IS_ALREADY_DISCONNECTED_OR_TURN_MISSED: "User Is Miss Turn Or Disconnected Before !!!"
+    USER_IS_ALREADY_DISCONNECTED_OR_TURN_MISSED: "User Is Miss Turn Or Disconnected Before !!!",
 
 });
