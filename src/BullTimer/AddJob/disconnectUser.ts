@@ -1,5 +1,5 @@
 import { Config } from "../../Config";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { DisconnectUserQueue } from "../AllQueues/allQueues";
 import { DisconnectUserProcess } from "../ProcessJob/disconnectUserProcess";
 
@@ -22,7 +22,7 @@ const DisconnectUser = async (userId: string, tableId: string, bootValue: number
         await DisconnectUserQueue.add({ userId, tableId, bootValue, playerCount }, options);
 
     } catch (error: any) {
-        await Logger('DisconnectUser Error : ', error);
+        await ErrorLogger('DisconnectUser Error : ', error);
     };
 };
 

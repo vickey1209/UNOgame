@@ -1,5 +1,5 @@
 import { Config } from "../../Config";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { UserTurnQueue } from "../AllQueues/allQueues";
 import { UserTurnProcess } from "../ProcessJob/userTurnProcess";
 
@@ -22,7 +22,7 @@ const UserTurn = async (tableId: string, currentTurn: number) => {
         await UserTurnQueue.add({ tableId, currentTurn }, options);
 
     } catch (error: any) {
-        await Logger('UserTurn Error : ', error);
+        await ErrorLogger('UserTurn Error : ', error);
     };
 };
 

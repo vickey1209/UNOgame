@@ -6,7 +6,7 @@ import { GetTable, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../
 import { MyCardsResInterface } from "../../Interface/MyCardsRes/MyCardsResInterface";
 import { SignUpInterface } from "../../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../../Interface/Table/TableInterface";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { RandomPlayerTurn } from "../../RandomPlayerTurn/randomPlayer";
 
 const DistributeCards = async (tableId: string) => {
@@ -109,7 +109,7 @@ const DistributeCards = async (tableId: string) => {
         await RandomPlayerTurn(TableDetails.tableId);
 
     } catch (error: any) {
-        await Logger('DistributeCards Error : ', error);
+        await ErrorLogger('DistributeCards Error : ', error);
     };
 };
 

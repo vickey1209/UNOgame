@@ -2,7 +2,7 @@ import { CONSTANTS } from "../Constants";
 import { GetTable, GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { PickCard } from "../PickCard/pickCard";
 import { ThrowCard } from "../ThrowCard/throwCard";
 import { GAME_ACTIONS } from "../GameActions";
@@ -112,7 +112,7 @@ const TakeTurn = async (tableId: string) => {
         };
 
     } catch (error: any) {
-        await Logger('TakeTurn Error : ', error);
+        await ErrorLogger('TakeTurn Error : ', error);
     };
 };
 

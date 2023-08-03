@@ -1,7 +1,7 @@
 import cryptoRandomString from "crypto-random-string";
 import { Socket } from "socket.io";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { GetEmptyTable, GetUser, SetEmptyTable, SetTable, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { CONSTANTS } from "../Constants";
 import { JoinRoom } from "../SocketRooms/joinRoom";
@@ -20,15 +20,11 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
         await Logger('CreateTable', JSON.stringify({ Data }));
 
-        const { JOIN_TABLE, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
+        const { JOIN_TABLE } = CONSTANTS.EVENTS_NAME;
 
         const UserDetails: SignUpInterface = await GetUser(Data.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
-
-        if (UserDetails.chips < Data.bootValue) {
-            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.ENOUGH_CHIPS } });
-        };
 
         const EmptyTableList = await GetEmptyTable(Data?.bootValue, Data?.playerCount);
 
@@ -54,7 +50,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
         await CardScoring(socket);
 
     } catch (error: any) {
-        await Logger('CreateTable Error : ', error);
+        await ErrorLogger('CreateTable Error : ', error);
     };
 };
 
@@ -145,7 +141,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
         return Table;
 
     } catch (error: any) {
-        await Logger('CreateNewTable Error : ', error);
+        await ErrorLogger('CreateNewTable Error : ', error);
     };
 };
 

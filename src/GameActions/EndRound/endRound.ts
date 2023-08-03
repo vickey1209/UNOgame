@@ -6,14 +6,14 @@ import { CONSTANTS } from "../../Constants";
 import { GetRoundHistory, GetTable, GetUserInTable, SetRoundHistory, SetTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { Win } from "../../Win/win";
 
 const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: number) => {
 
     try {
 
-        await Logger("EndRound", JSON.stringify({ tableId }));
+        await Logger("EndRound", JSON.stringify({ tableId, isRoundTimeEnd, delayNumber }));
 
         const CONFIG = Config();
 
@@ -90,7 +90,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
         };
 
     } catch (error: any) {
-        await Logger('EndRound Error : ', error);
+        await ErrorLogger('EndRound Error : ', error);
     };
 };
 

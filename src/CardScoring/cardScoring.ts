@@ -1,4 +1,4 @@
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
 import { Config } from "../Config";
@@ -26,7 +26,7 @@ const CardScoring = async (socket: Socket) => {
         EventEmitter.emit(CARD_SCORING, { en: CARD_SCORING, SocketId: socket.id, Data: ResData });
 
     } catch (error: any) {
-        await Logger('CardScoring Error : ', error);
+        await ErrorLogger('CardScoring Error : ', error);
     };
 };
 

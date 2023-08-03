@@ -6,7 +6,7 @@ import { DeleteRoundHistory, DeleteTable, DeleteUserInTable, GetRoundHistory, Ge
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const Win = async (tableId: string) => {
 
@@ -126,7 +126,7 @@ const Win = async (tableId: string) => {
         EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: TableDetails.tableId, Data: { winningArray: FinalArray } });
 
     } catch (error: any) {
-        await Logger('Win Error : ', error);
+        await ErrorLogger('Win Error : ', error);
     };
 };
 

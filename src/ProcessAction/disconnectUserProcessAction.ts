@@ -4,7 +4,7 @@ import { CONSTANTS } from "../Constants";
 import { GetTable, GetUser, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { RemoveUserFromTable } from "../Table/leaveTable";
 
 const DisconnectUserProcessAction = async (Data: any) => {
@@ -58,7 +58,7 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('DisconnectUserProcessAction Error : ', error);
+        await ErrorLogger('DisconnectUserProcessAction Error : ', error);
 
     } finally {
 

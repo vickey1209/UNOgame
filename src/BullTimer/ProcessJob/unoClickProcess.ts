@@ -1,5 +1,5 @@
 import { DoneCallback, Job } from "bull";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { PROCESS_ACTION } from "../../ProcessAction";
 
 const UnoClickProcess = async (job: Job, done: DoneCallback) => {
@@ -13,7 +13,7 @@ const UnoClickProcess = async (job: Job, done: DoneCallback) => {
         await PROCESS_ACTION.UnoClickProcessAction(job.data);
 
     } catch (error: any) {
-        await Logger('UnoClickProcess Error : ', error);
+        await ErrorLogger('UnoClickProcess Error : ', error);
     };
 };
 

@@ -1,5 +1,5 @@
 import { Config } from "../../Config";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { NextRoundQueue } from "../AllQueues/allQueues";
 import { NextRoundProcess } from "../ProcessJob/nextRoundProcess";
 
@@ -22,7 +22,7 @@ const NextRound = async (tableId: string) => {
         await NextRoundQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        await Logger('NextRound Error : ', error);
+        await ErrorLogger('NextRound Error : ', error);
     };
 };
 

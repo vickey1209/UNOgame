@@ -1,5 +1,5 @@
 import { DoneCallback, Job } from 'bull';
-import { Logger } from '../../Logger/logger';
+import { ErrorLogger, Logger } from '../../Logger/logger';
 import { PROCESS_ACTION } from '../../ProcessAction';
 
 const NextRoundProcess = async (job: Job, done: DoneCallback) => {
@@ -13,7 +13,7 @@ const NextRoundProcess = async (job: Job, done: DoneCallback) => {
         await PROCESS_ACTION.NextRoundProcessAction(job.data);
 
     } catch (error: any) {
-        await Logger('NextRoundProcess Error : ', error);
+        await ErrorLogger('NextRoundProcess Error : ', error);
     };
 };
 

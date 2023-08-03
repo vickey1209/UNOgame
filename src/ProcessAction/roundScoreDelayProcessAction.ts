@@ -5,7 +5,7 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GetRoundHistory, GetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const RoundScoreDelayProcessAction = async (Data: any) => {
 
@@ -40,7 +40,7 @@ const RoundScoreDelayProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('RoundScoreDelayProcessAction Error : ', error);
+        await ErrorLogger('RoundScoreDelayProcessAction Error : ', error);
 
     } finally {
 

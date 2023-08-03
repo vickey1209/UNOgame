@@ -10,7 +10,7 @@ import { GetRoundHistory, GetTable, GetUser, GetUserInTable, SetUser } from "../
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { JoinRoom } from "../SocketRooms/joinRoom";
 import { CreateTable } from "./createTable";
 
@@ -77,7 +77,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
             if (TableDetails.isGameStart) {
 
-                const { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray }: any = UserInTableDetails;
+                const { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray, lastPickCard }: any = UserInTableDetails;
 
                 let { tableId, bootValue, currentTurn, currentRound, totalRounds, maxPlayers, playersArray, activeCard, activeCardType, activeCardColor, isClockwise, isGameStart, isRoundStart, isScoreScreen, isWinning }: any = TableDetails;
 
@@ -130,7 +130,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                     },
 
-                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, isThrowPossible, cardArray },
+                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, isThrowPossible, cardArray, lastPickCard },
 
                     allRoundScore: RoundHistoryDetails.length ? RoundHistoryDetails : [],
 
@@ -169,7 +169,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
     } catch (error: any) {
 
-        await Logger('RejoinTable Error : ', error);
+        await ErrorLogger('RejoinTable Error : ', error);
 
     } finally {
 

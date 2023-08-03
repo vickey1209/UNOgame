@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { DisconnectUserQueue } from "../AllQueues/allQueues";
 
 const CancelDisconnectUser = async (userId: string) => {
@@ -16,7 +16,7 @@ const CancelDisconnectUser = async (userId: string) => {
         return;
 
     } catch (error: any) {
-        await Logger('CancelDisconnectUser Error : ', error);
+        await ErrorLogger('CancelDisconnectUser Error : ', error);
     };
 };
 

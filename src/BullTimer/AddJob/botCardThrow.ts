@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { BotCardThrowQueue } from "../AllQueues/allQueues";
 import { BotCardThrowProcess } from "../ProcessJob/botCardThrowProcess";
 
@@ -19,7 +19,7 @@ const BotCardThrow = async (data:any) => {
         await BotCardThrowQueue.add(data, options);
 
     } catch (error: any) {
-        await Logger('BotCardThrow Error : ', error);
+        await ErrorLogger('BotCardThrow Error : ', error);
     };
 };
 

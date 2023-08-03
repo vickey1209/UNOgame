@@ -1,5 +1,5 @@
 import { DoneCallback, Job } from 'bull';
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { PROCESS_ACTION } from '../../ProcessAction';
 
 const TimesUpProcess = async (job: Job, done: DoneCallback) => {
@@ -13,7 +13,7 @@ const TimesUpProcess = async (job: Job, done: DoneCallback) => {
         await PROCESS_ACTION.TimesUpProcessAction(job.data);
 
     } catch (error: any) {
-        await Logger('TimesUpProcess Error : ', error);
+        await ErrorLogger('TimesUpProcess Error : ', error);
     };
 };
 

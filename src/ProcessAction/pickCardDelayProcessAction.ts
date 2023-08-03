@@ -3,7 +3,7 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const PickCardDelayProcessAction = async (Data: any) => {
 
@@ -32,7 +32,7 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('PickCardDelayProcessAction Error : ', error);
+        await ErrorLogger('PickCardDelayProcessAction Error : ', error);
 
     } finally {
 

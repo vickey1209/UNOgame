@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { DeleteEmptyTable, DeleteTable, DeleteUserInTable, GetTable, GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { CONSTANTS } from "../Constants";
@@ -81,7 +81,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
     } catch (error: any) {
 
-        await Logger('DisconnectHandler Error : ', error);
+        await ErrorLogger('DisconnectHandler Error : ', error);
 
     } finally {
 

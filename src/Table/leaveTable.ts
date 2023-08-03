@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { CONSTANTS } from "../Constants";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { DeleteEmptyTable, DeleteTable, DeleteUserInTable, GetTable, GetUser, GetUserInTable, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
@@ -39,7 +39,7 @@ const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface)
 
     } catch (error: any) {
 
-        await Logger('LeaveTable Error : ', error);
+        await ErrorLogger('LeaveTable Error : ', error);
 
     } finally {
 
@@ -149,7 +149,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
         };
 
     } catch (error: any) {
-        await Logger('RemoveUserFromTable Error : ', error);
+        await ErrorLogger('RemoveUserFromTable Error : ', error);
     };
 };
 

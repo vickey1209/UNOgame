@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { BotTurnQueue  } from "../AllQueues/allQueues";
 import { BotTurnProcess } from "../ProcessJob/botTurnProcess";
 
@@ -19,7 +19,7 @@ const BotTurn = async (data:any) => {
         await BotTurnQueue.add(data, options);
 
     } catch (error: any) {
-        await Logger('BotTurn Error : ', error);
+        await ErrorLogger('BotTurn Error : ', error);
     };
 };
 

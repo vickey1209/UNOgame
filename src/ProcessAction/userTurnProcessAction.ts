@@ -9,7 +9,7 @@ import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterf
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { RemoveUserFromTable } from "../Table/leaveTable";
 
 const UserTurnProcessAction = async (Data: any) => {
@@ -137,7 +137,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('UserTurnProcessAction Error : ', error);
+        await ErrorLogger('UserTurnProcessAction Error : ', error);
 
     } finally {
 

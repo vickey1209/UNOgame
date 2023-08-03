@@ -4,7 +4,7 @@ import { CONSTANTS } from "../Constants";
 import { GetTable, GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const AllUserScore = async (tableId: string) => {
 
@@ -37,7 +37,7 @@ const AllUserScore = async (tableId: string) => {
         EventEmitter.emit(USERS_SCORE, { en: USERS_SCORE, RoomId: TableDetails.tableId, Data: ScoreResData });
 
     } catch (error: any) {
-        await Logger('AllUserScore Error : ', error);
+        await ErrorLogger('AllUserScore Error : ', error);
     };
 };
 
@@ -124,7 +124,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
         return { totalScore, currentRoundScore, simple, special, zero, wildColorChange, wildPlusFour };
 
     } catch (error: any) {
-        await Logger('CheckUserScore Error : ', error);
+        await ErrorLogger('CheckUserScore Error : ', error);
     };
 };
 
@@ -156,7 +156,7 @@ const getUserScore = async (cardArray: any) => {
         // currentRoundScore = (-Math.abs(currentRoundScore));
         return { currentRoundScore };
     } catch (error: any) {
-        await Logger('getUserScore Error : ', error);
+        await ErrorLogger('getUserScore Error : ', error);
     };
 };
 

@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { CONSTANTS } from "../Constants";
 import { PickCardInterface } from "../Interface/PickCard/PickCardInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { GetTable, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
@@ -153,7 +153,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
     } catch (error: any) {
 
-        await Logger('PickCard Error : ', error);
+        await ErrorLogger('PickCard Error : ', error);
 
     } finally {
 

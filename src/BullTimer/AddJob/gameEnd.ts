@@ -1,5 +1,5 @@
 import { Config } from "../../Config";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { GameEndQueue } from "../AllQueues/allQueues";
 import { GameEndProcess } from "../ProcessJob/gameEndProcess";
 
@@ -22,7 +22,7 @@ const GameEnd = async (tableId: string) => {
         await GameEndQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        await Logger('GameEnd Error : ', error);
+        await ErrorLogger('GameEnd Error : ', error);
     };
 };
 

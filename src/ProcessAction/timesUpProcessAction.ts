@@ -5,7 +5,7 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GetRoundHistory, GetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const TimesUpProcessAction = async (Data: any) => {
 
@@ -41,7 +41,7 @@ const TimesUpProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('TimesUpProcessAction Error : ', error);
+        await ErrorLogger('TimesUpProcessAction Error : ', error);
 
     } finally {
 

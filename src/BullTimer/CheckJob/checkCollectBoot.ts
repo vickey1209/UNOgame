@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { CollectBootQueue } from "../AllQueues/allQueues";
 
 const CheckCollectBootValue = async (tableId: string) => {
@@ -16,7 +16,7 @@ const CheckCollectBootValue = async (tableId: string) => {
         return;
 
     } catch (error: any) {
-        await Logger('CheckCollectBootValue Error : ', error);
+        await ErrorLogger('CheckCollectBootValue Error : ', error);
     };
 };
 

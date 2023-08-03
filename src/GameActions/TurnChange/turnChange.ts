@@ -1,5 +1,5 @@
 import { TableInterface } from "../../Interface/Table/TableInterface"
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 
 const ClockWiseTurnChange = async (TableDetails: TableInterface) => {
 
@@ -23,7 +23,7 @@ const ClockWiseTurnChange = async (TableDetails: TableInterface) => {
         return NextTurn;
 
     } catch (error: any) {
-        await Logger('ClockWiseTurnChange Error : ', error);
+        await ErrorLogger('ClockWiseTurnChange Error : ', error);
     };
 };
 
@@ -51,7 +51,7 @@ const AntiClockWiseTurnChange = async (TableDetails: TableInterface) => {
         return NextTurn;
 
     } catch (error: any) {
-        await Logger('AntiClockWiseTurnChange Error : ', error);
+        await ErrorLogger('AntiClockWiseTurnChange Error : ', error);
     };
 };
 

@@ -2,7 +2,7 @@ import { GAME_ACTIONS } from "..";
 import { CONSTANTS } from "../../Constants";
 import { GetTable } from "../../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../../Interface/Table/TableInterface";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 
 const Skip = async (tableId: string) => {
 
@@ -63,7 +63,7 @@ const Skip = async (tableId: string) => {
         return { isSkip, skipSeatIndex, nextTurnSeatIndex };
 
     } catch (error: any) {
-        await Logger('Skip Error : ', error);
+        await ErrorLogger('Skip Error : ', error);
     };
 };
 

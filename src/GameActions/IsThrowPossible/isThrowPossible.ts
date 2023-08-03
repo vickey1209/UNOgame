@@ -1,7 +1,7 @@
 import { CONSTANTS } from "../../Constants";
 import { TableInterface } from "../../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 
 const IsThrowPossible = async (UserInTableDetails: UserInTableInterface, TableDetails: TableInterface) => {
 
@@ -38,7 +38,7 @@ const IsThrowPossible = async (UserInTableDetails: UserInTableInterface, TableDe
         return isThrowPossible;
 
     } catch (error: any) {
-        await Logger('IsThrowPossible Error : ', error);
+        await ErrorLogger('IsThrowPossible Error : ', error);
     };
 };
 
