@@ -1,7 +1,7 @@
 import cryptoRandomString from "crypto-random-string";
 import { Socket } from "socket.io";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { GetEmptyTable, GetUser, SetEmptyTable, SetTable, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { CONSTANTS } from "../Constants";
 import { JoinRoom } from "../SocketRooms/joinRoom";
@@ -50,7 +50,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
         await CardScoring(socket);
 
     } catch (error: any) {
-        await Logger('CreateTable Error : ', error);
+        await ErrorLogger('CreateTable Error : ', error);
     };
 };
 
@@ -141,7 +141,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
         return Table;
 
     } catch (error: any) {
-        await Logger('CreateNewTable Error : ', error);
+        await ErrorLogger('CreateNewTable Error : ', error);
     };
 };
 

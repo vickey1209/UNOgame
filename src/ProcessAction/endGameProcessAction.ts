@@ -2,7 +2,7 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { DeleteRoundHistory, DeleteTable, DeleteUserInTable, GetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const GameEndProcessAction = async (Data: any) => {
 
@@ -29,7 +29,7 @@ const GameEndProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('GameEndProcessAction Error : ', error);
+        await ErrorLogger('GameEndProcessAction Error : ', error);
 
     } finally {
 

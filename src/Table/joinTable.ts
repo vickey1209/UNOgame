@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { GetEmptyTable, GetTable, GetUser, DeleteEmptyTable, SetTable, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { CreateTable } from "./createTable";
 import { EventEmitter } from "../Connection/emitter";
@@ -83,7 +83,7 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
         };
 
     } catch (error: any) {
-        await Logger('JoinTable Error : ', error);
+        await ErrorLogger('JoinTable Error : ', error);
     };
 };
 
@@ -158,7 +158,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
         return TableDetails;
 
     } catch (error: any) {
-        await Logger('SeatPlayerOnTable Error : ', error);
+        await ErrorLogger('SeatPlayerOnTable Error : ', error);
     };
 };
 

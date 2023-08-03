@@ -1,6 +1,6 @@
 import { io } from './socket';
 import { CONSTANTS } from '../Constants';
-import { Logger } from '../Logger/logger';
+import { ErrorLogger, Logger } from '../Logger/logger';
 import { EventEmitter } from './emitter';
 
 const SendToSocket = async (EVENT: string, data: any) => {
@@ -14,7 +14,7 @@ const SendToSocket = async (EVENT: string, data: any) => {
         io.to(SocketId).emit(EVENT, JSON.stringify({ en, Data }));
 
     } catch (error: any) {
-        await Logger('SendToSocket Error : ', error);
+        await ErrorLogger('SendToSocket Error : ', error);
     };
 };
 
@@ -29,7 +29,7 @@ const SendToRoom = async (EVENT: string, data: any) => {
         io.to(RoomId).emit(EVENT, JSON.stringify({ en, Data }));
 
     } catch (error: any) {
-        await Logger('SendToRoom Error : ', error);
+        await ErrorLogger('SendToRoom Error : ', error);
     };
 };
 

@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { CONSTANTS } from "../Constants";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { TableInterface } from "../Interface/Table/TableInterface";
@@ -66,7 +66,7 @@ const KeepCard = async (en: string, socket: Socket, Data: KeepCardInterface) => 
 
     } catch (error: any) {
 
-        await Logger('KeepCard Error : ', error);
+        await ErrorLogger('KeepCard Error : ', error);
 
     } finally {
 

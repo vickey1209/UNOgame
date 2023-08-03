@@ -1,5 +1,5 @@
 import { Config } from "../../Config";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { TimesUpQueue } from "../AllQueues/allQueues";
 import { TimesUpProcess } from "../ProcessJob/timesUpProcess";
 
@@ -22,7 +22,7 @@ const TimesUp = async (tableId: string) => {
         await TimesUpQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        await Logger('TimesUp Error : ', error);
+        await ErrorLogger('TimesUp Error : ', error);
     };
 };
 

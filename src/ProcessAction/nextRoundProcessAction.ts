@@ -4,7 +4,7 @@ import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const NextRoundProcessAction = async (Data: any) => {
 
@@ -66,7 +66,7 @@ const NextRoundProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('NextRoundProcessAction Error : ', error);
+        await ErrorLogger('NextRoundProcessAction Error : ', error);
 
     } finally {
 

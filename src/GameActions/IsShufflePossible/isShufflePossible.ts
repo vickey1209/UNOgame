@@ -2,7 +2,7 @@ import { GAME_ACTIONS } from "..";
 import { CONSTANTS } from "../../Constants";
 import { GetTable } from "../../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../../Interface/Table/TableInterface";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 
 const IsShufflePossible = async (tableId: string) => {
 
@@ -24,7 +24,7 @@ const IsShufflePossible = async (tableId: string) => {
         return { isShuffle, cardsForCloseDeckArray, cardsForOpenDeckArray: TableDetails.openCardDeck };
 
     } catch (error: any) {
-        await Logger('IsShufflePossible Error : ', error);
+        await ErrorLogger('IsShufflePossible Error : ', error);
     };
 };
 

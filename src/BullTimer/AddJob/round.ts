@@ -1,5 +1,5 @@
 import { Config } from "../../Config";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { RoundQueue } from "../AllQueues/allQueues";
 import { RoundProcess } from "../ProcessJob/roundProcess";
 
@@ -22,7 +22,7 @@ const Round = async (tableId: string) => {
         await RoundQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        await Logger('Round Error : ', error);
+        await ErrorLogger('Round Error : ', error);
     };
 };
 

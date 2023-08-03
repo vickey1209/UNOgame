@@ -4,7 +4,7 @@ import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../Interface/Table/TableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean, remainingCardsNumber: number) => {
 
@@ -199,7 +199,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
         };
 
     } catch (error: any) {
-        await Logger('ChangeUserTurn Error : ', error);
+        await ErrorLogger('ChangeUserTurn Error : ', error);
     };
 };
 

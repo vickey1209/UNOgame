@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { PickCardDelayQueue } from "../AllQueues/allQueues";
 import { PickCardResInterface } from "../../Interface/PickCardRes/PickCardResInterface";
 import { PickCardDelayProcess } from "../ProcessJob/pickCardDelayProcess";
@@ -20,7 +20,7 @@ const PickCardDelay = async (tableId: string, delayNumber: number, PickCardResDa
         await PickCardDelayQueue.add({ tableId, PickCardResData }, options);
 
     } catch (error: any) {
-        await Logger('PickCardDelay Error : ', error);
+        await ErrorLogger('PickCardDelay Error : ', error);
     };
 };
 

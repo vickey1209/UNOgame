@@ -1,7 +1,7 @@
 import { CONSTANTS } from "../../Constants";
 import { GetTable, SetTable } from "../../GameRedisOperations/gameRedisOperations";
 import { TableInterface } from "../../Interface/Table/TableInterface";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { RemoveUserFromTable } from "../../Table/leaveTable";
 
 const RemoveDisconnectedUsers = async (tableId: string) => {
@@ -25,7 +25,7 @@ const RemoveDisconnectedUsers = async (tableId: string) => {
         await SetTable(TableDetails.tableId, TableDetails);
 
     } catch (error: any) {
-        await Logger('RemoveDisconnectedUsers Error : ', error);
+        await ErrorLogger('RemoveDisconnectedUsers Error : ', error);
     };
 };
 

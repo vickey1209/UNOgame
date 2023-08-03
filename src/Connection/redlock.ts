@@ -1,7 +1,7 @@
 import Redlock from "redlock";
 import Redis from 'ioredis';
 import { Config } from "../Config";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 let redLock: any;
 
@@ -54,7 +54,7 @@ const ApplyLock = async (Path: string, LockId: string) => {
         return Lock;
 
     } catch (error: any) {
-        await Logger('ApplyLock Error : ', error);
+        await ErrorLogger('ApplyLock Error : ', error);
     };
 };
 
@@ -67,7 +67,7 @@ const RemoveLock = async (Path: string, Lock: any) => {
         await Lock.release();
 
     } catch (error: any) {
-        await Logger('RemoveLock Error : ', error);
+        await ErrorLogger('RemoveLock Error : ', error);
     };
 };
 

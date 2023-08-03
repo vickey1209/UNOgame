@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { BotSignupQueue  } from "../AllQueues/allQueues";
 import { BotSignupProcess } from "../ProcessJob/botSignupProcess";
 
@@ -19,7 +19,7 @@ const BotSignup = async (data:any) => {
         await BotSignupQueue.add(data, options);
 
     } catch (error: any) {
-        await Logger('BotSignup Error : ', error);
+        await ErrorLogger('BotSignup Error : ', error);
     };
 };
 

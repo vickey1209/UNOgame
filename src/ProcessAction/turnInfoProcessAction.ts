@@ -9,7 +9,7 @@ import { GetTable, GetUserInTable, SetTable } from "../GameRedisOperations/gameR
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { BOT_ACTION } from "../Bot";
 
 const TurnInfoProcessAction = async (Data: any) => {
@@ -152,7 +152,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('TurnInfoProcessAction Error : ', error);
+        await ErrorLogger('TurnInfoProcessAction Error : ', error);
 
     } finally {
 

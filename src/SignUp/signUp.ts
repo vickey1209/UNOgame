@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
@@ -75,7 +75,7 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
 
     } catch (error: any) {
 
-        await Logger('SignUp Error : ', error);
+        await ErrorLogger('SignUp Error : ', error);
 
     } finally {
 
@@ -121,7 +121,7 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
         if (User === 'OK') return NewUserData;
 
     } catch (error: any) {
-        await Logger('NewUser Error : ', error);
+        await ErrorLogger('NewUser Error : ', error);
     };
 };
 
@@ -163,7 +163,7 @@ const UpdateUser = async (socket: Socket, Data: SignUpInterface, AvailableUser: 
         if (User === 'OK') return UpdateUserData;
 
     } catch (error: any) {
-        await Logger('UpdateUser Error : ', error);
+        await ErrorLogger('UpdateUser Error : ', error);
     };
 };
 

@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { TurnInfoQueue } from "../AllQueues/allQueues";
 
 const CancelTurnInfo = async (tableId: string) => {
@@ -16,7 +16,7 @@ const CancelTurnInfo = async (tableId: string) => {
         return;
 
     } catch (error: any) {
-        await Logger('CancelTurnInfo Error : ', error);
+        await ErrorLogger('CancelTurnInfo Error : ', error);
     };
 };
 

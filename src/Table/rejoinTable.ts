@@ -10,7 +10,7 @@ import { GetRoundHistory, GetTable, GetUser, GetUserInTable, SetUser } from "../
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { JoinRoom } from "../SocketRooms/joinRoom";
 import { CreateTable } from "./createTable";
 
@@ -169,7 +169,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
     } catch (error: any) {
 
-        await Logger('RejoinTable Error : ', error);
+        await ErrorLogger('RejoinTable Error : ', error);
 
     } finally {
 

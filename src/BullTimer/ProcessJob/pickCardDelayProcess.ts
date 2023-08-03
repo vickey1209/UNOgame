@@ -1,5 +1,5 @@
 import { DoneCallback, Job } from 'bull';
-import { Logger } from '../../Logger/logger';
+import { ErrorLogger, Logger } from '../../Logger/logger';
 import { PROCESS_ACTION } from '../../ProcessAction';
 
 const PickCardDelayProcess = async (job: Job, done: DoneCallback) => {
@@ -13,7 +13,7 @@ const PickCardDelayProcess = async (job: Job, done: DoneCallback) => {
         await PROCESS_ACTION.PickCardDelayProcessAction(job.data);
 
     } catch (error: any) {
-        await Logger('PickCardDelayProcess Error : ', error);
+        await ErrorLogger('PickCardDelayProcess Error : ', error);
     };
 };
 

@@ -1,5 +1,5 @@
 import { Config } from "../../Config";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { UnoClickQueue } from "../AllQueues/allQueues";
 import { UnoClickProcess } from "../ProcessJob/unoClickProcess";
 
@@ -22,7 +22,7 @@ const UnoClick = async (tableId: string, isSkip: boolean, skipSeatIndex: number,
         await UnoClickQueue.add({ tableId, isSkip, skipSeatIndex, isRevers, delayNumber, unoSeatIndex }, options);
 
     } catch (error: any) {
-        await Logger('UnoClick Error : ', error);
+        await ErrorLogger('UnoClick Error : ', error);
     };
 };
 

@@ -8,7 +8,7 @@ import { GetTable, GetUserInTable, SetTable, SetUserInTable } from "../GameRedis
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const UnoClickProcessAction = async (Data: any) => {
 
@@ -127,7 +127,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('UnoClickProcessAction Error : ', error);
+        await ErrorLogger('UnoClickProcessAction Error : ', error);
 
     } finally {
 

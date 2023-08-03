@@ -5,7 +5,7 @@ import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const CollectBootValueProcessAction = async (Data: any) => {
 
@@ -45,7 +45,7 @@ const CollectBootValueProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('CollectBootValueProcessAction Error : ', error);
+        await ErrorLogger('CollectBootValueProcessAction Error : ', error);
 
     } finally {
 
@@ -71,7 +71,7 @@ const CutBootValueFromUser = async (TableDetails: TableInterface) => {
         };
 
     } catch (error: any) {
-        await Logger('CutBootValueFromUser Error', error);
+        await ErrorLogger('CutBootValueFromUser Error : ', error);
     };
 };
 

@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { TurnInfoQueue } from "../AllQueues/allQueues";
 import { TurnInfoProcess } from "../ProcessJob/turnInfoProcess";
 
@@ -6,7 +6,7 @@ const TurnInfo = async (tableId: string, isSkip: boolean, skipSeatIndex: number,
 
     try {
 
-        await Logger("TurnInfo", JSON.stringify({ tableId, isSkip, skipSeatIndex, isRevers }));
+        await Logger("TurnInfo", JSON.stringify({ tableId, isSkip, skipSeatIndex, isRevers, delayNumber }));
 
         const jobId = `${tableId}`;
 
@@ -19,7 +19,7 @@ const TurnInfo = async (tableId: string, isSkip: boolean, skipSeatIndex: number,
         await TurnInfoQueue.add({ tableId, isSkip, skipSeatIndex, isRevers }, options);
 
     } catch (error: any) {
-        await Logger('TurnInfo Error : ', error);
+        await ErrorLogger('TurnInfo Error : ', error);
     };
 };
 

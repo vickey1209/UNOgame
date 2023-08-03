@@ -1,4 +1,4 @@
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { CONSTANTS } from "../Constants";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { ThrowCardInterface } from "../Interface/ThrowCard/ThrowCardInterface";
@@ -110,7 +110,7 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
     } catch (error: any) {
 
-        await Logger('ThrowCard Error : ', error);
+        await ErrorLogger('ThrowCard Error : ', error);
 
     } finally {
 

@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 
 const RemainTimeCalculation = async (Job: any) => {
 
@@ -27,7 +27,7 @@ const RemainTimeCalculation = async (Job: any) => {
         return FixedFinalRemainingTime;
 
     } catch (error: any) {
-        await Logger('RemainTimeCalculation Error : ', error);
+        await ErrorLogger('RemainTimeCalculation Error : ', error);
     };
 };
 

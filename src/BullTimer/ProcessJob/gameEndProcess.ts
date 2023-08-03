@@ -1,5 +1,5 @@
 import { DoneCallback, Job } from "bull";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { PROCESS_ACTION } from "../../ProcessAction";
 
 const GameEndProcess = async (job: Job, done: DoneCallback) => {
@@ -13,7 +13,7 @@ const GameEndProcess = async (job: Job, done: DoneCallback) => {
         await PROCESS_ACTION.GameEndProcessAction(job.data);
 
     } catch (error: any) {
-        await Logger('GameEndProcess Error : ', error);
+        await ErrorLogger('GameEndProcess Error : ', error);
     };
 };
 

@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 
@@ -22,7 +22,7 @@ const WinConfirmation = async (en: string, socket: Socket, Data: any) => {
         };
 
     } catch (error: any) {
-        await Logger('WinConfirmation Error : ', error);
+        await ErrorLogger('WinConfirmation Error : ', error);
     };
 };
 

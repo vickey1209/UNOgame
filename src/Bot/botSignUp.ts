@@ -1,4 +1,4 @@
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { SignUp } from "../SignUp/signUp";
 
 const BotSignUp = async (data:any) => {
@@ -42,7 +42,7 @@ const BotSignUp = async (data:any) => {
         await SignUp('SIGNUP', Fake_Socket, SignUpData);
 
     } catch (error: any) {
-        await Logger('BotSignUp Error : ', error);
+        await ErrorLogger('BotSignUp Error : ', error);
     };
 };
 

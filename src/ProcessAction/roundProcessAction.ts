@@ -1,7 +1,7 @@
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 
 const RoundProcessAction = async (Data: any) => {
 
@@ -25,7 +25,7 @@ const RoundProcessAction = async (Data: any) => {
 
     } catch (error: any) {
 
-        await Logger('RoundProcessAction Error : ', error);
+        await ErrorLogger('RoundProcessAction Error : ', error);
 
     } finally {
 

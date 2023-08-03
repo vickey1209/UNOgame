@@ -7,7 +7,7 @@ import { GetTable, GetUserInTable, SetUserInTable } from "../../GameRedisOperati
 import { PickCardResInterface } from "../../Interface/PickCardRes/PickCardResInterface";
 import { TableInterface } from "../../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../../Interface/UserInTable/UserInTableInterface";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 
 const PlusTwo = async (tableId: string) => {
 
@@ -119,7 +119,7 @@ const PlusTwo = async (tableId: string) => {
         };
 
     } catch (error: any) {
-        await Logger('PlusTwo Error : ', error);
+        await ErrorLogger('PlusTwo Error : ', error);
     };
 };
 

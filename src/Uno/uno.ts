@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { Logger } from "../Logger/logger";
+import { ErrorLogger, Logger } from "../Logger/logger";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { TableInterface } from "../Interface/Table/TableInterface";
@@ -56,7 +56,7 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
 
     } catch (error: any) {
 
-        await Logger('Uno Error : ', error);
+        await ErrorLogger('Uno Error : ', error);
 
     } finally {
 

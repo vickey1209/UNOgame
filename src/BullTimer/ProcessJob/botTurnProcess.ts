@@ -1,5 +1,5 @@
 import { DoneCallback, Job } from 'bull';
-import { Logger } from '../../Logger/logger';
+import { ErrorLogger, Logger } from '../../Logger/logger';
 import { BOT_ACTION } from "../../Bot";
 
 const BotTurnProcess = async (job: Job, done: DoneCallback) => {
@@ -13,7 +13,7 @@ const BotTurnProcess = async (job: Job, done: DoneCallback) => {
         await BOT_ACTION.TakeTurn(job.data.tableId)
 
     } catch (error: any) {
-        await Logger('BotTurnProcess Error : ', error);
+        await ErrorLogger('BotTurnProcess Error : ', error);
     };
 };
 

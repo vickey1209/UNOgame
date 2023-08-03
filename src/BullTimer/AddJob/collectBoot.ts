@@ -1,5 +1,5 @@
 import { Config } from "../../Config";
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { CollectBootQueue } from "../AllQueues/allQueues";
 import { CollectBootValueProcess } from "../ProcessJob/collectBootValueProcess";
 
@@ -22,7 +22,7 @@ const CollectBootValue = async (tableId: string) => {
         await CollectBootQueue.add({ tableId }, options);
 
     } catch (error: any) {
-        await Logger('CollectBootValue Error : ', error);
+        await ErrorLogger('CollectBootValue Error : ', error);
     };
 };
 
