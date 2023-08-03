@@ -9,7 +9,7 @@ const logger = winston.createLogger({
         winston.format.simple(),
         // winston.format.colorize({ all: true }),
         winston.format.timestamp({ format: 'DD-MM-YYYY HH:mm:ss.SSS' }),
-        winston.format.printf(info => `${info.timestamp} : ${info.level} >> ${info.message}`)
+        winston.format.printf(info => `${info.timestamp} : ${info.level} >> ${info.message}\n.`),
 
     ),
     transports: [new winston.transports.Console()]
@@ -31,30 +31,10 @@ const Logger = async (Path: string, Data: string) => {
             // console.log(new Date());
             // console.log('.');
 
-            // console.log(typeof Data === "string");
-
-            // if (typeof Data === "string") { Data = JSON.parse(Data) }
-
-            // if (typeof Path !== "string") { console.log('Path'); }
-
-            // if (typeof Data !== "string") { console.log('Data'); }
-
-            // const ErrorRezex = /Error/g;
-
-            // if (Path.match(ErrorRezex)) {
-
-            //     logger.error(`${Path}${Data}`);
-            //     // logger.error(JSON.stringify({ Path, Data }));
-
-            // } else {
-
-            //     logger.info(JSON.stringify({ Path, Data }));
-
-            // };
+            // logger.info(JSON.stringify({ Path, Data }));
 
             logger.info(`Path : ${Path} >> Data : ${Data}`);
-            logger.info('.');
-            // logger.info(JSON.stringify({ Path, Data }));
+            // logger.info('');
 
         };
 
@@ -68,6 +48,7 @@ const ErrorLogger = async (Path: string, Data: string) => {
     try {
 
         logger.error({ Path, Data });
+
         // logger.error(`${Path}${Data}`);
 
     } catch (error) {
