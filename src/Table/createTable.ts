@@ -20,15 +20,11 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
         await Logger('CreateTable', JSON.stringify({ Data }));
 
-        const { JOIN_TABLE, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
+        const { JOIN_TABLE } = CONSTANTS.EVENTS_NAME;
 
         const UserDetails: SignUpInterface = await GetUser(Data.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
-
-        if (UserDetails.chips < Data.bootValue) {
-            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.ENOUGH_CHIPS } });
-        };
 
         const EmptyTableList = await GetEmptyTable(Data?.bootValue, Data?.playerCount);
 

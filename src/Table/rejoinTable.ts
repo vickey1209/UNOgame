@@ -77,7 +77,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
             if (TableDetails.isGameStart) {
 
-                const { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray }: any = UserInTableDetails;
+                const { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray, lastPickCard }: any = UserInTableDetails;
 
                 let { tableId, bootValue, currentTurn, currentRound, totalRounds, maxPlayers, playersArray, activeCard, activeCardType, activeCardColor, isClockwise, isGameStart, isRoundStart, isScoreScreen, isWinning }: any = TableDetails;
 
@@ -130,7 +130,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                     },
 
-                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, isThrowPossible, cardArray },
+                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, isThrowPossible, cardArray, lastPickCard },
 
                     allRoundScore: RoundHistoryDetails.length ? RoundHistoryDetails : [],
 

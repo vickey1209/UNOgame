@@ -24,12 +24,12 @@ const SocketConnection = async () => {
 
         console.log(`Socket IO Done !`);
 
-        let NumberOfSocketsOnServer = 0, NumberOfSocketsOnRoom = 0;
+        // let NumberOfSocketsOnServer = 0, NumberOfSocketsOnRoom = 0;
 
         io.on('connection', async (socket: any) => {
 
-            NumberOfSocketsOnServer = io.of("/").sockets.size;
-            NumberOfSocketsOnRoom = io.sockets.adapter.rooms.get('TABLE')?.size ? io.sockets.adapter.rooms.get('TABLE')?.size : 0;
+            // NumberOfSocketsOnServer = io.of("/").sockets.size;
+            // NumberOfSocketsOnRoom = io.sockets.adapter.rooms.get('TABLE')?.size ? io.sockets.adapter.rooms.get('TABLE')?.size : 0;
 
             await Logger("SocketConnection", JSON.stringify(socket.id));
 
@@ -37,7 +37,9 @@ const SocketConnection = async () => {
 
             socket.on('disconnect', async (reason: any) => {
 
-                NumberOfSocketsOnServer = io.of("/").sockets.size;
+                // NumberOfSocketsOnServer = io.of("/").sockets.size;
+
+                socket.handshake.auth = {};
 
                 await socket.disconnect();
 

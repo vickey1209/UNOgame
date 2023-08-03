@@ -67,7 +67,9 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
 
             if (!UserData) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
-            await RejoinTable(socket, UserData);
+            await CreateTable(socket, UserData);
+
+            // await RejoinTable(socket, UserData);
 
         };
 
