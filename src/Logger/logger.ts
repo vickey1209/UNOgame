@@ -47,9 +47,9 @@ const ErrorLogger = async (Path: string, Data: string) => {
 
     try {
 
-        logger.error({ Path, Data });
+        // logger.error({ Path, Data });
 
-        // logger.error(`${Path}${Data}`);
+        logger.error(`Path : ${Path}${Data}`);
 
     } catch (error) {
         console.log('ErrorLogger Error : ', error);
