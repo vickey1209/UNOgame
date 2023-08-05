@@ -28,11 +28,13 @@ const RedLockConnction = async () => {
             // automaticExtensionThreshold: 500
         });
 
-        redLock.on('error', (error: any) => {
+        redLock.on('error', async (error: any) => {
 
-            console.log(`RedLock > `, error);
-            console.log(new Date());
-            console.log('.');
+            // console.log(`RedLock > `, error);
+            // console.log(new Date());
+            // console.log('.');
+
+            await ErrorLogger('RedLock Error : ', error);
 
         });
 
