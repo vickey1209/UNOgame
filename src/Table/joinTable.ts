@@ -105,7 +105,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
 
             if (isSeatAvailable !== -1) { NumberOfSeatAvailable.splice(isSeatAvailable, 1); };
 
-        }
+        };
 
         const PlayerForPlayerArray: PlayersArrayInterface = {
 

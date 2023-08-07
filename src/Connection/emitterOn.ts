@@ -64,6 +64,7 @@ const EmitterON = async () => {
             ERROR_POPUP,
             COLLECT_BOOT,
             CARD_SCORING,
+            UNO_HIGHLIGHT,
             ROUND_HISTORY,
             WINNER_DECLARE,
 
@@ -109,35 +110,37 @@ const EmitterON = async () => {
         EventEmitter.on(UNO, async (data) => { await SendToRoom(UNO, data); });
 
         EventEmitter.on(TIMES_UP, async (data) => { await SendToRoom(TIMES_UP, data); });
-
+        
         EventEmitter.on(NEW_USER, async (data) => { await SendToRoom(NEW_USER, data); });
-
+        
         EventEmitter.on(PICK_CARD, async (data) => { await SendToRoom(PICK_CARD, data); });
-
+        
         EventEmitter.on(TURN_INFO, async (data) => { await SendToRoom(TURN_INFO, data); });
-
+        
         EventEmitter.on(THROW_CARD, async (data) => { await SendToRoom(THROW_CARD, data); });
-
+        
         EventEmitter.on(GAME_START, async (data) => { await SendToRoom(GAME_START, data); });
-
+        
         EventEmitter.on(USERS_SCORE, async (data) => { await SendToRoom(USERS_SCORE, data); });
-
+        
         EventEmitter.on(ROUND_START, async (data) => { await SendToRoom(ROUND_START, data); });
-
+        
         EventEmitter.on(ROUND_SCORE, async (data) => { await SendToRoom(ROUND_SCORE, data); });
-
+        
         EventEmitter.on(LEAVE_TABLE, async (data) => { await SendToRoom(LEAVE_TABLE, data); });
-
+        
         EventEmitter.on(TURN_MISSED, async (data) => { await SendToRoom(TURN_MISSED, data); });
-
+        
         EventEmitter.on(COLLECT_BOOT, async (data) => { await SendToRoom(COLLECT_BOOT, data); });
+
+        EventEmitter.on(UNO_HIGHLIGHT, async (data) => { await SendToRoom(UNO_HIGHLIGHT, data); });
 
         EventEmitter.on(WINNER_DECLARE, async (data) => { await SendToRoom(WINNER_DECLARE, data); });
 
         // * SendToRoom ....
 
     } catch (error: any) {
-        await Logger('EmitterON Error', error);
+        await ErrorLogger('EmitterON Error', error);
     };
 };
 
