@@ -87,6 +87,8 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 if (isThrowPossible === undefined || UserInTableDetails.seatIndex !== TableDetails.currentTurn) { isThrowPossible = false };
 
+                const isUno = (isThrowPossible && cardArray.length === 2 && UserInTableDetails.seatIndex === TableDetails.currentTurn) ? true : false;
+
                 const RoundJob = await BullTimer.CheckJob.CheckRound(TableDetails.tableId);
                 const UserTurnJob = await BullTimer.CheckJob.CheckUserTurn(tableId, currentTurn);
                 const GameStartJob = await BullTimer.CheckJob.CheckCollectBootValue(TableDetails.tableId);
@@ -130,7 +132,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                     },
 
-                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, isThrowPossible, cardArray, lastPickCard },
+                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, isThrowPossible, cardArray, lastPickCard, isUno },
 
                     allRoundScore: RoundHistoryDetails.length ? RoundHistoryDetails : [],
 

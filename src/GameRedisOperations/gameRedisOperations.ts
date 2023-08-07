@@ -1,5 +1,7 @@
 import { CONSTANTS } from "../Constants";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
+import { TableInterface } from "../Interface/Table/TableInterface";
+import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
 import { AllKeys, DeleteData, GetData, SetData } from "../RedisOperations/redisOperations";
 
@@ -9,7 +11,7 @@ const { USERS, EMPTY_TABLE, TABLES, USER_IN_TABLE, ROUND_HISTORY } = CONSTANTS.R
 
 const UserKeySet = async (UserKey: string) => {
 
-    await Logger('UserKeySet', JSON.stringify({}));
+    await Logger('UserKeySet', JSON.stringify({ UserKey }));
 
     const key = `${USERS}:${UserKey}`;
 
@@ -19,7 +21,7 @@ const UserKeySet = async (UserKey: string) => {
 
 const SetUser = async (UserKey: string, UserData: SignUpInterface) => {
 
-    await Logger('SetUser', JSON.stringify({ UserData }));
+    await Logger('SetUser', JSON.stringify({ UserKey, UserData }));
 
     const key = await UserKeySet(UserKey);
 
@@ -31,7 +33,7 @@ const SetUser = async (UserKey: string, UserData: SignUpInterface) => {
 
 const GetUser = async (UserKey: string) => {
 
-    await Logger('GetUser', JSON.stringify({}));
+    await Logger('GetUser', JSON.stringify({ UserKey }));
 
     const key = await UserKeySet(UserKey);
 
@@ -50,7 +52,7 @@ const GetUser = async (UserKey: string) => {
 
 const GetEmptyTable = async (BootValue: number, PlayerCount: number) => {
 
-    await Logger('GetEmptyTable', JSON.stringify({}));
+    await Logger('GetEmptyTable', JSON.stringify({ BootValue, PlayerCount }));
 
     const key = `${EMPTY_TABLE}:${BootValue}:${PlayerCount}:*`;
 
@@ -64,7 +66,7 @@ const GetEmptyTable = async (BootValue: number, PlayerCount: number) => {
 
 const SetEmptyTable = async (BootValue: number, PlayerCount: number, TableId: string) => {
 
-    await Logger('SetEmptyTable', JSON.stringify({}));
+    await Logger('SetEmptyTable', JSON.stringify({ BootValue, PlayerCount, TableId }));
 
     const key = `${EMPTY_TABLE}:${BootValue}:${PlayerCount}:${TableId}`;
 
@@ -76,7 +78,7 @@ const SetEmptyTable = async (BootValue: number, PlayerCount: number, TableId: st
 
 const DeleteEmptyTable = async (BootValue: number, PlayerCount: number, TableId: string) => {
 
-    await Logger('SetEmptyTable', JSON.stringify({}));
+    await Logger('DeleteEmptyTable', JSON.stringify({ BootValue, PlayerCount, TableId }));
 
     const key = `${EMPTY_TABLE}:${BootValue}:${PlayerCount}:${TableId}`;
 
@@ -91,7 +93,7 @@ const DeleteEmptyTable = async (BootValue: number, PlayerCount: number, TableId:
 
 const TableKeySet = async (TableId: string) => {
 
-    await Logger('TableKeySet', JSON.stringify({}));
+    await Logger('TableKeySet', JSON.stringify({ TableId }));
 
     const key = `${TABLES}:${TableId}`;
 
@@ -99,9 +101,9 @@ const TableKeySet = async (TableId: string) => {
 
 };
 
-const SetTable = async (TableId: string, TableData: any) => {
+const SetTable = async (TableId: string, TableData: TableInterface) => {
 
-    await Logger('SetTable', JSON.stringify({ TableData }));
+    await Logger('SetTable', JSON.stringify({ TableId, TableData }));
 
     const key = await TableKeySet(TableId);
 
@@ -113,7 +115,7 @@ const SetTable = async (TableId: string, TableData: any) => {
 
 const GetTable = async (TableId: string) => {
 
-    await Logger('GetTable', JSON.stringify({}));
+    await Logger('GetTable', JSON.stringify({ TableId }));
 
     const key = await TableKeySet(TableId);
 
@@ -127,7 +129,7 @@ const GetTable = async (TableId: string) => {
 
 const DeleteTable = async (TableId: string) => {
 
-    await Logger('DeleteTable', JSON.stringify({}));
+    await Logger('DeleteTable', JSON.stringify({ TableId }));
 
     const key = await TableKeySet(TableId);
 
@@ -150,9 +152,9 @@ const UserInTableKeySet = async (UserInTableId: string) => {
 
 };
 
-const SetUserInTable = async (UserInTableId: string, UserInTableData: any) => {
+const SetUserInTable = async (UserInTableId: string, UserInTableData: UserInTableInterface) => {
 
-    await Logger('SetUserInTable', JSON.stringify({ UserInTableData }));
+    await Logger('SetUserInTable', JSON.stringify({ UserInTableId, UserInTableData }));
 
     const key = await UserInTableKeySet(UserInTableId);
 
@@ -164,7 +166,7 @@ const SetUserInTable = async (UserInTableId: string, UserInTableData: any) => {
 
 const GetUserInTable = async (UserInTableId: string) => {
 
-    await Logger('GetUserInTable', JSON.stringify({}));
+    await Logger('GetUserInTable', JSON.stringify({ UserInTableId }));
 
     const key = await UserInTableKeySet(UserInTableId);
 
@@ -178,7 +180,7 @@ const GetUserInTable = async (UserInTableId: string) => {
 
 const DeleteUserInTable = async (UserInTableId: string) => {
 
-    await Logger('DeleteUserInTable', JSON.stringify({}));
+    await Logger('DeleteUserInTable', JSON.stringify({ UserInTableId }));
 
     const key = await UserInTableKeySet(UserInTableId);
 
@@ -193,7 +195,7 @@ const DeleteUserInTable = async (UserInTableId: string) => {
 
 const RoundHistoryKeySet = async (RoundId: string) => {
 
-    await Logger('RoundHistory', JSON.stringify({ RoundId }));
+    await Logger('RoundHistoryKeySet', JSON.stringify({ RoundId }));
 
     const key = `${ROUND_HISTORY}:${RoundId}`;
 
@@ -203,7 +205,7 @@ const RoundHistoryKeySet = async (RoundId: string) => {
 
 const SetRoundHistory = async (RoundId: string, RoundHistoryData: any) => {
 
-    await Logger('SetRoundHistory', JSON.stringify({ RoundHistoryData }));
+    await Logger('SetRoundHistory', JSON.stringify({ RoundId, RoundHistoryData }));
 
     const key = await RoundHistoryKeySet(RoundId);
 
@@ -215,7 +217,7 @@ const SetRoundHistory = async (RoundId: string, RoundHistoryData: any) => {
 
 const GetRoundHistory = async (RoundId: string) => {
 
-    await Logger('GetRoundHistory', JSON.stringify({}));
+    await Logger('GetRoundHistory', JSON.stringify({ RoundId }));
 
     const key = await RoundHistoryKeySet(RoundId);
 
@@ -229,7 +231,7 @@ const GetRoundHistory = async (RoundId: string) => {
 
 const DeleteRoundHistory = async (RoundId: string) => {
 
-    await Logger('DeleteRoundHistory', JSON.stringify({}));
+    await Logger('DeleteRoundHistory', JSON.stringify({ RoundId }));
 
     const key = await RoundHistoryKeySet(RoundId);
 

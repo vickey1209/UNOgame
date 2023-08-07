@@ -2,7 +2,7 @@ import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
-import { GetTable, GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetUser, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
@@ -30,7 +30,11 @@ const CollectBootValueProcessAction = async (Data: any) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
+        TableDetails.playersArray = TableDetails.playersArray.sort((a, b) => { return a.seatIndex - b.seatIndex });
+
         await CutBootValueFromUser(TableDetails);
+
+        await SetTable(tableId, TableDetails);
 
         // const ResData = {
 
