@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { NextRoundQueue } from "../AllQueues/allQueues";
 
 const CheckNextRound = async (tableId: string) => {
@@ -16,7 +16,7 @@ const CheckNextRound = async (tableId: string) => {
         return;
 
     } catch (error: any) {
-        await Logger('CheckNextRound Error', error);
+        await ErrorLogger('CheckNextRound Error : ', error);
     };
 };
 

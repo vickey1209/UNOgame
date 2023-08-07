@@ -1,4 +1,4 @@
-import { Logger } from '../Logger/logger';
+import { ErrorLogger, Logger } from '../Logger/logger';
 import { redisClient } from './../Connection/redis';
 
 const SetData = async (key: string, data: object) => {
@@ -11,7 +11,7 @@ const SetData = async (key: string, data: object) => {
         return Data;
 
     } catch (error: any) {
-        await Logger('SetData Error', error);
+        await ErrorLogger('SetData Error : ', error);
     };
 };
 
@@ -27,7 +27,7 @@ const GetData = async (key: string) => {
         return '';
 
     } catch (error: any) {
-        await Logger('GetData Error', error);
+        await ErrorLogger('GetData Error: ', error);
     };
 };
 
@@ -39,7 +39,7 @@ const DeleteData = async (key: string) => {
         await redisClient.del(key);
 
     } catch (error: any) {
-        await Logger('DeleteData Error', error);
+        await ErrorLogger('DeleteData Error : ', error);
     };
 };
 
@@ -51,7 +51,7 @@ const RPush = async (key: string, data: any) => {
         await redisClient.rPush(key, JSON.stringify(data));
 
     } catch (error: any) {
-        await Logger('RPush Error', error);
+        await ErrorLogger('RPush Error : ', error);
     };
 };
 
@@ -63,7 +63,7 @@ const LRange = async (key: string, start: number, end: number) => {
         return await redisClient.lRange(key, start, end);
 
     } catch (error: any) {
-        await Logger('LRange Error', error);
+        await ErrorLogger('LRange Error : ', error);
     };
 };
 
@@ -79,7 +79,7 @@ const AllKeys = async (key: string) => {
         return Data;
 
     } catch (error: any) {
-        await Logger('AllKeys Error', error);
+        await ErrorLogger('AllKeys Error : ', error);
     };
 };
 

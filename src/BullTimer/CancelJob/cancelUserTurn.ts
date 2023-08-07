@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { ErrorLogger, Logger } from "../../Logger/logger";
 import { UserTurnQueue } from "../AllQueues/allQueues";
 
 const CancelUserTurn = async (tableId: string, currentTurn: number) => {
@@ -16,7 +16,7 @@ const CancelUserTurn = async (tableId: string, currentTurn: number) => {
         return;
 
     } catch (error: any) {
-        await Logger('CancelUserTurn Error', error);
+        await ErrorLogger('CancelUserTurn Error : ', error);
     };
 };
 

@@ -1,4 +1,4 @@
-import { Logger } from "../../Logger/logger";
+import { Logger, ErrorLogger } from "../../Logger/logger";
 import { RoundQueue } from "../AllQueues/allQueues";
 
 const CancelRound = async (tableId: string) => {
@@ -12,11 +12,11 @@ const CancelRound = async (tableId: string) => {
         const Job = await RoundQueue.getJob(jobId);
 
         if (Job) { Job.remove(); };
-        
+
         return;
 
     } catch (error: any) {
-        await Logger('CancelRound Error', error);
+        await ErrorLogger('CancelRound Error : ', error);
     };
 };
 

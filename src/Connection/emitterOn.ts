@@ -140,7 +140,7 @@ const EmitterON = async () => {
         // * SendToRoom ....
 
     } catch (error: any) {
-        await ErrorLogger('EmitterON Error', error);
+        await ErrorLogger('EmitterON Error : ', error);
     };
 };
 
