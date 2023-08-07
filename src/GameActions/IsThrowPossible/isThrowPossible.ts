@@ -35,9 +35,9 @@ const IsThrowPossible = async (UserInTableDetails: UserInTableInterface, TableDe
 
         };
 
-        // return { isThrowPossible, throwPossibleCards };
+        return { isThrowPossible, throwPossibleCards };
 
-        return isThrowPossible;
+        // return isThrowPossible;
 
     } catch (error: any) {
         await ErrorLogger('IsThrowPossible Error : ', error);

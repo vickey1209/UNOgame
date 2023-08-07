@@ -176,9 +176,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         TableDetails.isTurnLock = true;
 
-        await SetTable(TableDetails.tableId, TableDetails);
+        // await SetTable(TableDetails.tableId, TableDetails);
 
         if (isGameEnd) { // ^ End Game Immediately
+
+            await SetTable(TableDetails.tableId, TableDetails);
 
             await GAME_ACTIONS.EndRound(tableId, false, turnInfoDelay);
 
@@ -188,9 +190,17 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
                 // turnInfoDelay += CONFIG.GamePlay.DELAU_FOR_UNO;
 
-                await BullTimer.AddJob.UnoClick(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, turnInfoDelay, unoSeatIndex);
+                const nextTurn = TableDetails.currentTurn;
+
+                TableDetails.currentTurn = unoSeatIndex;
+
+                await SetTable(TableDetails.tableId, TableDetails);
+
+                await BullTimer.AddJob.UnoClick(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, turnInfoDelay, unoSeatIndex, nextTurn);
 
             } else { // ^ Turn Bull
+
+                await SetTable(TableDetails.tableId, TableDetails);
 
                 await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, turnInfoDelay);
 

@@ -83,11 +83,23 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 const totalUserTurnTimer = CONFIG.GamePlay.USER_TURN_TIMER;
 
-                let isThrowPossible = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
+                let isThrowPossible: boolean = false, throwPossibleCards: Array<string> = [], isUno: boolean = false;
 
-                if (isThrowPossible === undefined || UserInTableDetails.seatIndex !== TableDetails.currentTurn) { isThrowPossible = false };
+                let isThrowPossibleData = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
 
-                const isUno = (isThrowPossible && cardArray.length === 2 && UserInTableDetails.seatIndex === TableDetails.currentTurn) ? true : false;
+                // if (isThrowPossibleData === undefined || UserInTableDetails.seatIndex !== TableDetails.currentTurn) { isThrowPossible = false }
+
+                if (isThrowPossibleData && isThrowPossibleData?.isThrowPossible && UserInTableDetails.seatIndex === TableDetails.currentTurn) {
+                    isThrowPossible = isThrowPossibleData.isThrowPossible, throwPossibleCards = isThrowPossibleData.throwPossibleCards
+                };
+
+                if ((cardArray.length === 1) || (cardArray.length === 2 && isThrowPossibleData?.isThrowPossible)) { isUno = true; };
+
+                // let isThrowPossible = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
+
+                // if (isThrowPossible === undefined || UserInTableDetails.seatIndex !== TableDetails.currentTurn) { isThrowPossible = false };
+
+                // const isUno = (isThrowPossible && cardArray.length === 2 && UserInTableDetails.seatIndex === TableDetails.currentTurn) ? true : false;
 
                 const RoundJob = await BullTimer.CheckJob.CheckRound(TableDetails.tableId);
                 const UserTurnJob = await BullTimer.CheckJob.CheckUserTurn(tableId, currentTurn);
@@ -132,7 +144,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                     },
 
-                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, isThrowPossible, cardArray, lastPickCard, isUno },
+                    user: { userId, seatIndex, turnMissCount, isBot, isUnoClick, isThrowPossible, cardArray, lastPickCard, isUno, throwPossibleCards },
 
                     allRoundScore: RoundHistoryDetails.length ? RoundHistoryDetails : [],
 

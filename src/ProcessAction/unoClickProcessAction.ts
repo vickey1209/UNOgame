@@ -51,9 +51,15 @@ const UnoClickProcessAction = async (Data: any) => {
 
         if (UserInTableDetails.isUnoClick) {
 
+            TableDetails.currentTurn = Data?.nextTurn;
+
+            await SetTable(TableDetails.tableId, TableDetails);
+
             await BullTimer.AddJob.TurnInfo(TableDetails.tableId, Data?.isSkip, Data?.skipSeatIndex, Data?.isRevers, Data?.delayNumber);
 
         } else {
+
+            TableDetails.currentTurn = Data?.nextTurn;
 
             if (TableDetails.closeCardDeck.length > CONFIG.GamePlay.UNO_PENALTY_NUMBER) {
 

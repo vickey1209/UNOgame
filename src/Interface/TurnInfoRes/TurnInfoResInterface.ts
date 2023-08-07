@@ -12,6 +12,7 @@ export interface TurnInfoResInterface {
     isClockwise: boolean,
 
     isThrowPossible: boolean,
+    throwPossibleCards: Array<string>,
 
     totalTime: number,
     remainingTime: number,

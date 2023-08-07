@@ -47,23 +47,24 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-        const isThrowPossible = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
+        const isThrowPossibleData = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
 
-        if (isThrowPossible === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.IS_POSSIBLE_THROW_ERROR); };
+        if (isThrowPossibleData === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.IS_POSSIBLE_THROW_ERROR); };
 
         // if (!isThrowPossible && UserInTableDetails.cardArray.length > 2) {
         //     return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.UNO_NOT_POSSIBLE } });
         // };
 
-        const UnoClickJob = await BullTimer.CheckJob.CheckUnoClick(TableDetails.tableId, TableDetails.currentTurn);
+        // const UnoClickJob = await BullTimer.CheckJob.CheckUnoClick(TableDetails.tableId, TableDetails.currentTurn);
 
-        if (!UnoClickJob && TableDetails.currentTurn !== seatIndex) {
+        if (TableDetails.currentTurn !== seatIndex) {
+            // if (!UnoClickJob && TableDetails.currentTurn !== seatIndex) {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
         };
 
         if (
 
-            ((UserInTableDetails.cardArray.length > 2) || (!isThrowPossible && UserInTableDetails.cardArray.length === 2)) &&
+            ((UserInTableDetails.cardArray.length > 2) || (!isThrowPossibleData?.isThrowPossible && UserInTableDetails.cardArray.length === 2)) &&
             (UserInTableDetails.cardArray.length !== 1)
 
         ) {

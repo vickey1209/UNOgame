@@ -1,4 +1,3 @@
-
 import { Socket } from "socket.io";
 import { Logger } from "../Logger/logger";
 import { EventEmitter } from "../Connection/emitter";
