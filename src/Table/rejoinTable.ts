@@ -93,7 +93,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
                     isThrowPossible = isThrowPossibleData.isThrowPossible, throwPossibleCards = isThrowPossibleData.throwPossibleCards
                 };
 
-                if ((cardArray.length === 1) || (cardArray.length === 2 && isThrowPossibleData?.isThrowPossible)) { isUno = true; };
+                if (((cardArray.length === 1) || (cardArray.length === 2 && isThrowPossibleData?.isThrowPossible)) && TableDetails.currentTurn === UserInTableDetails.seatIndex) { isUno = true; };
 
                 // let isThrowPossible = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
 

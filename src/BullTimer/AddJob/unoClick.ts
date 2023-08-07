@@ -11,7 +11,7 @@ const UnoClick = async (tableId: string, isSkip: boolean, skipSeatIndex: number,
 
         const CONFIG = Config();
 
-        const jobId = `${tableId}:${unoSeatIndex}`;
+        const jobId = `${tableId}`;
 
         const options = {
             delay: (delayNumber + CONFIG.GamePlay.DELAY_FOR_UNO) * 1000,
