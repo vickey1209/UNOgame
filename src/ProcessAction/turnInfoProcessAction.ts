@@ -54,9 +54,9 @@ const TurnInfoProcessAction = async (Data: any) => {
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-        const isThrowPossible = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
+        const isThrowPossibleData = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
 
-        if (isThrowPossible === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.IS_POSSIBLE_THROW_ERROR); };
+        if (isThrowPossibleData === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.IS_POSSIBLE_THROW_ERROR); };
 
         await SetTable(TableDetails.tableId, TableDetails);
 
@@ -73,7 +73,8 @@ const TurnInfoProcessAction = async (Data: any) => {
             isRevers: Data?.isRevers,
             isClockwise: TableDetails.isClockwise,
 
-            isThrowPossible,
+            isThrowPossible: isThrowPossibleData.isThrowPossible,
+            throwPossibleCards: isThrowPossibleData.throwPossibleCards,
 
             totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
             remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
@@ -86,7 +87,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
         EventEmitter.emit(TURN_INFO, { en: TURN_INFO, RoomId: TableDetails.tableId, Data: TurnInfoResData });
 
-        if (isThrowPossible && UserInTableDetails.cardArray.length === 2) {
+        if (isThrowPossibleData.isThrowPossible && UserInTableDetails.cardArray.length === 2) {
 
             const UnoHighlightResData = {
 
