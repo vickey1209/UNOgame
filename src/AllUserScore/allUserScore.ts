@@ -47,6 +47,8 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
         await Logger("CheckUserScore", JSON.stringify({ UserInTableDetails }));
 
+        console.log(UserInTableDetails);
+
         const CONFIG = Config();
 
         let totalScore: any = 0, currentRoundScore: any = 0,
@@ -132,8 +134,8 @@ const getUserScore = async (cardArray: any) => {
     try {
         await Logger("getUserScore", JSON.stringify({ cardArray }));
         const CONFIG = Config();
-        let  currentRoundScore: any = 0;
-        if(!cardArray ||cardArray.length === 0 )
+        let currentRoundScore: any = 0;
+        if (!cardArray || cardArray.length === 0)
             return null;
 
         for (let i = 0; i < cardArray.length; i++) {

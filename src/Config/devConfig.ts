@@ -31,25 +31,25 @@ const DevConfig = (): ConfigInterface => {
 
     const GamePlay = {
 
-        LOG: true,
+        LOG: false,
 
         PLUS_ON_PLUS: true,
 
-        GAME_START_TIMER: 4,
+        GAME_START_TIMER: 1,
         USER_TURN_TIMER: 50,
-        ROUND_TIMER: 800,
-        NEXT_ROUND_TIMER: 10,
+        ROUND_TIMER: 2,
+        NEXT_ROUND_TIMER: 1,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
         TIMES_UP_DELAY_TIMER: 2,
-        GAME_END_TIMER: 30,
+        CLEAR_TABLE_DATA_TIMER: 30,
 
         DISTRIBUTE_CARDS_LIMIT: 2,
         MIN_SPECIAL_CARD: 1,
         MAX_SPECIAL_CARD: 3,
         TURN_TIMEOUT_COUNT: 2,
 
-        TOTAL_ROUND_NUMBER: 2,
+        TOTAL_ROUND_NUMBER: 3,
         UNO_PENALTY_NUMBER: 2,
         PLUS_TWO_PENALTY_NUMBER: 2,
         PLUS_FOUR_PENALTY_NUMBER: 4,
@@ -67,7 +67,7 @@ const DevConfig = (): ConfigInterface => {
         DELAY_FOR_COLOR_CHANGE: 2,
         DELAY_FOR_REVERS: 1,
         DELAY_FOR_UNO: 20,
-        DELAY_FOR_CARD_DISTRIBUTION: 5,
+        DELAY_FOR_CARD_DISTRIBUTION: 1,
         DELAY_FOR_TIMES_UP: 2,
 
     };
