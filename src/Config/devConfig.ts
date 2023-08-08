@@ -44,7 +44,7 @@ const DevConfig = (): ConfigInterface => {
         TIMES_UP_DELAY_TIMER: 2,
         CLEAR_TABLE_DATA_TIMER: 30,
 
-        DISTRIBUTE_CARDS_LIMIT: 2,
+        DISTRIBUTE_CARDS_LIMIT: 3,
         MIN_SPECIAL_CARD: 1,
         MAX_SPECIAL_CARD: 3,
         TURN_TIMEOUT_COUNT: 2,

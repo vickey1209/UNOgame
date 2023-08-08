@@ -82,9 +82,9 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
         // };
 
         // * Working ...
-        // if (UserInTableDetails.isUnoClick) {
-        //     return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.ALREADY_CLICKED_UNO } });
-        // };
+        if (UserInTableDetails.isUnoClick) {
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.ALREADY_CLICKED_UNO } });
+        };
         // * Working ...
 
         UserInTableDetails.isUnoClick = true;
