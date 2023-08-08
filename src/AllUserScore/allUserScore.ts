@@ -47,8 +47,6 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
         await Logger("CheckUserScore", JSON.stringify({ UserInTableDetails }));
 
-        console.log(UserInTableDetails);
-
         const CONFIG = Config();
 
         let totalScore: any = 0, currentRoundScore: any = 0,

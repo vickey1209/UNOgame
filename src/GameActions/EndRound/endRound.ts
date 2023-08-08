@@ -69,7 +69,10 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {
+        const PlayersAvailableInTable = TableDetails.playersArray.filter(player => { return player.isLeave === false });
+
+        if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER || PlayersAvailableInTable.length < 2) {
+            // if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {
 
             if (isRoundTimeEnd) {
 
@@ -88,7 +91,6 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
             EventEmitter.emit(TIMES_UP, { en: TIMES_UP, RoomId: TableDetails.tableId, Data: {} });
 
             await BullTimer.AddJob.RoundScoreDelay(TableDetails.tableId, (CONFIG.GamePlay.DELAY_FOR_TIMES_UP + delayNumber));
-
 
         } else {
 
