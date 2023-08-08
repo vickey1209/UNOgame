@@ -134,7 +134,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
             if (PlayersAvailableInTable.length < 2) {
 
-                await Win(TableDetails.tableId);
+                await Win(TableDetails.tableId, 0.1);
 
             } else {
 
