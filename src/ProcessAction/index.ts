@@ -9,6 +9,7 @@ import { TimesUpProcessAction } from "./timesUpProcessAction";
 import { TurnInfoProcessAction } from "./turnInfoProcessAction";
 import { UnoClickProcessAction } from "./unoClickProcessAction";
 import { UserTurnProcessAction } from "./userTurnProcessAction";
+import { WinningDelayProcessAction } from "./winningDelayProcessAction";
 
 const PROCESS_ACTION = {
 
@@ -19,6 +20,7 @@ const PROCESS_ACTION = {
     TurnInfoProcessAction,
     UnoClickProcessAction,
     NextRoundProcessAction,
+    WinningDelayProcessAction,
     PickCardDelayProcessAction,
     DisconnectUserProcessAction,
     RoundScoreDelayProcessAction,

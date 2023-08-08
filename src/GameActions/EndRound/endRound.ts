@@ -71,7 +71,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
         if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {
 
-            await Win(TableDetails.tableId);
+            await Win(TableDetails.tableId, delayNumber);
 
         } else if (isRoundTimeEnd) {
 

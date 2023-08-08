@@ -21,7 +21,7 @@ const RoundProcessAction = async (Data: any) => {
 
         if (!tableId) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
 
-        await GAME_ACTIONS.EndRound(tableId, true, 0);
+        await GAME_ACTIONS.EndRound(tableId, true, 0.1);
 
     } catch (error: any) {
 

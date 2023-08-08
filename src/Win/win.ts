@@ -8,7 +8,7 @@ import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
-const Win = async (tableId: string) => {
+const Win = async (tableId: string, delayNumber: number) => {
 
     try {
 
@@ -121,9 +121,11 @@ const Win = async (tableId: string) => {
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) { await DeleteUserInTable(TableDetails.playersArray[i].userId) };
 
-        await BullTimer.AddJob.GameEnd(TableDetails.tableId);
+        await BullTimer.AddJob.WinningDelay(TableDetails.tableId, delayNumber);
 
-        EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: TableDetails.tableId, Data: { winningArray: FinalArray } });
+        // await BullTimer.AddJob.GameEnd(TableDetails.tableId);
+
+        // EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: TableDetails.tableId, Data: { winningArray: FinalArray } });
 
     } catch (error: any) {
         await ErrorLogger('Win Error : ', error);

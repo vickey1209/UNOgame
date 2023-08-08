@@ -29,7 +29,11 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
             if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_TWO; }
             else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR; }
             else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE; }
-            else { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK; };
+            else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_REVERS; }
+            else { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_REVERS; };
+            // else { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK; };
+
+            await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 0.1);
 
             await GAME_ACTIONS.EndRound(tableId, false, turnInfoDelay);
 

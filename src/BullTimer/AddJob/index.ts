@@ -12,23 +12,25 @@ import { RoundScoreDelay } from "./roundScoreDelay";
 import { BotSignup } from "./botSignup";
 import { BotTurn } from "./botTurn";
 import { GameEnd } from "./gameEnd";
+import { WinningDelay } from "./winningDelay";
 
 const AddJob = {
 
-    CollectBootValue,
-    UserTurn,
     Round,
-    NextRound,
-    TurnInfo,
-    DisconnectUser,
-    UnoClick,
     TimesUp,
-    BotCardThrow,
-    PickCardDelay,
-    RoundScoreDelay,
-    BotSignup,
     BotTurn,
     GameEnd,
+    UnoClick,
+    TurnInfo,
+    UserTurn,
+    NextRound,
+    BotSignup,
+    WinningDelay,
+    BotCardThrow,
+    PickCardDelay,
+    DisconnectUser,
+    RoundScoreDelay,
+    CollectBootValue,
 
 };
 
