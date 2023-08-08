@@ -14,7 +14,7 @@ const GameEnd = async (tableId: string) => {
         const jobId = `${tableId}`;
 
         const options = {
-            delay: CONFIG.GamePlay.GAME_END_TIMER * 1000,
+            delay: CONFIG.GamePlay.CLEAR_TABLE_DATA_TIMER * 1000,
             jobId,
             removeOnComplete: true
         };
