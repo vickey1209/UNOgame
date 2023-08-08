@@ -21,7 +21,6 @@ const NextRoundQueue = new Bull('NextRound', BullRedisOptions);
 const TurnInfoQueue = new Bull('TurnInfo', BullRedisOptions);
 const DisconnectUserQueue = new Bull('DisconnectUser', BullRedisOptions);
 const UnoClickQueue = new Bull('UnoClick', BullRedisOptions);
-const TimesUpQueue = new Bull('TimesUp', BullRedisOptions);
 const BotCardThrowQueue = new Bull('BotCardThrow', BullRedisOptions);
 const PickCardDelayQueue = new Bull('PickCardDelay', BullRedisOptions);
 const RoundScoreDelayQueue = new Bull('RoundScoreDelay', BullRedisOptions);
@@ -39,7 +38,6 @@ export {
     TurnInfoQueue,
     DisconnectUserQueue,
     UnoClickQueue,
-    TimesUpQueue,
     BotCardThrowQueue,
     PickCardDelayQueue,
     RoundScoreDelayQueue,

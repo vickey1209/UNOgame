@@ -1,5 +1,4 @@
 import { Round } from "./round";
-import { TimesUp } from "./timesUp";
 import { TurnInfo } from "./turnInfo";
 import { UnoClick } from "./unoClick";
 import { UserTurn } from "./userTurn";
@@ -17,7 +16,6 @@ import { WinningDelay } from "./winningDelay";
 const AddJob = {
 
     Round,
-    TimesUp,
     BotTurn,
     GameEnd,
     UnoClick,
