@@ -30,6 +30,10 @@ const RoundHistory = async (en: string, socket: Socket, Data: RoundHistoryInterf
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
+        if (TableDetails.isWinning) { throw new Error(CONSTANTS.ERROR_MESSAGES.WINNING_DONE) };
+
+        if (TableDetails.isScoreScreen) { throw new Error(CONSTANTS.ERROR_MESSAGES.ROUND_SCORE_DONE) };
+
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === userId });
 
         if (!UserAvailableInTable) {

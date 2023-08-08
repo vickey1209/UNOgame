@@ -13,6 +13,7 @@ import { BullTimer } from "../BullTimer";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { LeaveTableInterface } from "../Interface/LeaveTable/LeaveTableInterface";
 import { Win } from "../Win/win";
+import { EndRound } from "../GameActions/EndRound/endRound";
 
 const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface) => {
 
@@ -134,7 +135,8 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
             if (PlayersAvailableInTable.length < 2) {
 
-                await Win(TableDetails.tableId, 0.1);
+                await EndRound(TableDetails.tableId, false, 0.1);
+                // await Win(TableDetails.tableId, 0.1);
 
             } else {
 
