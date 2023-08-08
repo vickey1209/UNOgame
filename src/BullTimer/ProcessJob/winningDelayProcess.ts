@@ -6,14 +6,14 @@ const WinningDelayProcess = async (job: Job, done: DoneCallback) => {
 
     try {
 
-        await Logger('PickCardDelayProcess', JSON.stringify(job.data));
+        await Logger('WinningDelayProcess', JSON.stringify(job.data));
 
         done();
 
-        // await PROCESS_ACTION.PickCardDelayProcessAction(job.data);
+        await PROCESS_ACTION.WinningDelayProcessAction(job.data);
 
     } catch (error: any) {
-        await ErrorLogger('PickCardDelayProcess Error : ', error);
+        await ErrorLogger('WinningDelayProcess Error : ', error);
     };
 };
 
