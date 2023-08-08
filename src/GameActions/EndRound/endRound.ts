@@ -71,7 +71,17 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
         if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {
 
-            await Win(TableDetails.tableId, delayNumber);
+            if (isRoundTimeEnd) {
+
+                EventEmitter.emit(TIMES_UP, { en: TIMES_UP, RoomId: TableDetails.tableId, Data: {} });
+
+                await Win(TableDetails.tableId, (CONFIG.GamePlay.DELAY_FOR_TIMES_UP + delayNumber));
+
+            } else {
+
+                await Win(TableDetails.tableId, delayNumber);
+
+            };
 
         } else if (isRoundTimeEnd) {
 
