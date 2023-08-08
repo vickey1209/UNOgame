@@ -70,7 +70,7 @@ const LiveConfig = (): ConfigInterface => {
         MAX_SPECIAL_CARD: 3,
         TURN_TIMEOUT_COUNT: 3,
 
-        TOTAL_ROUND_NUMBER: 1,
+        TOTAL_ROUND_NUMBER: 2,
         UNO_PENALTY_NUMBER: 2,
         PLUS_TWO_PENALTY_NUMBER: 2,
         PLUS_FOUR_PENALTY_NUMBER: 4,
