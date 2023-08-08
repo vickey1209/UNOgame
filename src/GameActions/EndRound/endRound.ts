@@ -85,9 +85,12 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
         } else if (isRoundTimeEnd) {
 
-            await BullTimer.AddJob.TimesUp(TableDetails.tableId);
+            // await BullTimer.AddJob.TimesUp(TableDetails.tableId);
 
             EventEmitter.emit(TIMES_UP, { en: TIMES_UP, RoomId: TableDetails.tableId, Data: {} });
+
+            await BullTimer.AddJob.RoundScoreDelay(TableDetails.tableId, (CONFIG.GamePlay.DELAY_FOR_TIMES_UP + delayNumber));
+
 
         } else {
 
