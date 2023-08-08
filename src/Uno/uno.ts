@@ -57,7 +57,14 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
 
         // const UnoClickJob = await BullTimer.CheckJob.CheckUnoClick(TableDetails.tableId, TableDetails.currentTurn);
 
-        if (TableDetails.currentTurn !== seatIndex) {
+        const UserTurnJob = await BullTimer.CheckJob.CheckUserTurn(tableId, TableDetails.currentTurn);
+
+        if (
+
+            (TableDetails.currentTurn !== seatIndex) &&
+            ((UserInTableDetails.cardArray.length !== 1 && !TableDetails.isTurnLock) || (UserInTableDetails.cardArray.length !== 2 && !UserTurnJob))
+
+        ) {
             // if (!UnoClickJob && TableDetails.currentTurn !== seatIndex) {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
         };
