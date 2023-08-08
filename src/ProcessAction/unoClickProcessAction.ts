@@ -55,7 +55,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
             await SetTable(TableDetails.tableId, TableDetails);
 
-            await BullTimer.AddJob.TurnInfo(TableDetails.tableId, Data?.isSkip, Data?.skipSeatIndex, Data?.isRevers, Data?.delayNumber);
+            await BullTimer.AddJob.TurnInfo(TableDetails.tableId, Data?.isSkip, Data?.skipSeatIndex, Data?.isRevers, 0.1);
 
         } else {
 
