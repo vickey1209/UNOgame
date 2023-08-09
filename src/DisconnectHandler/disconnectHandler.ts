@@ -85,6 +85,8 @@ const DisconnectHandler = async (socket: Socket) => {
 
     } finally {
 
+        socket.handshake.auth = {};
+
         await RemoveLock(Path, Tablelock);
         await RemoveLock(Path, MatchMakingLock);
 
