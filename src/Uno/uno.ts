@@ -51,6 +51,19 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
 
         if (isThrowPossibleData === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.IS_POSSIBLE_THROW_ERROR); };
 
+        if (TableDetails.currentTurn !== seatIndex) {
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
+        };
+
+        if (
+
+            ((UserInTableDetails.cardArray.length > 2) || (!isThrowPossibleData?.isThrowPossible && UserInTableDetails.cardArray.length === 2)) &&
+            (UserInTableDetails.cardArray.length !== 1)
+
+        ) {
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.UNO_NOT_POSSIBLE } });
+        };
+
         const UserTurnJob = await BullTimer.CheckJob.CheckUserTurn(tableId, TableDetails.currentTurn);
 
         let isUnoAvailable = false;
@@ -66,20 +79,6 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
 
         if (!isUnoAvailable) {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WAIT_FOR_TURN_INFO } });
-        };
-
-        // if (TableDetails.currentTurn !== seatIndex) {
-        //     // if (!UnoClickJob && TableDetails.currentTurn !== seatIndex) {
-        //     return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.NOT_YOUR_TURN } });
-        // };
-
-        if (
-
-            ((UserInTableDetails.cardArray.length > 2) || (!isThrowPossibleData?.isThrowPossible && UserInTableDetails.cardArray.length === 2)) &&
-            (UserInTableDetails.cardArray.length !== 1)
-
-        ) {
-            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.UNO_NOT_POSSIBLE } });
         };
 
         if (UserInTableDetails.isUnoClick) {
