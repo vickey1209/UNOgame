@@ -39,8 +39,6 @@ const SocketConnection = async () => {
 
                 // NumberOfSocketsOnServer = io.of("/").sockets.size;
 
-                socket.handshake.auth = {};
-
                 await socket.disconnect();
 
                 await Logger("Disconnect", JSON.stringify(socket.id));

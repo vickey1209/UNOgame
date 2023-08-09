@@ -82,7 +82,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
             const PlayerIndexInArray = TableDetails.playersArray.findIndex((e) => { return e.userId === userId });
 
-            TableDetails.playersArray.splice(PlayerIndexInArray, 1);
+            if (PlayerIndexInArray !== -1) { TableDetails.playersArray.splice(PlayerIndexInArray, 1); };
 
             UserDetails.tableId = isPlayerChooseToLeave ? '' : CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
             await SetUser(UserDetails.userId, UserDetails);
