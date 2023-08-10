@@ -54,7 +54,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
     try {
 
-        await Logger("RemoveUserFromTable", JSON.stringify({ userId, tableId }));
+        await Logger("RemoveUserFromTable", JSON.stringify({ userId, tableId, isPlayerChooseToLeave }));
 
         const { LEAVE_TABLE, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
 

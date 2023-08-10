@@ -25,7 +25,7 @@ const WinningDelayProcessAction = async (Data: any) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        if (!TableDetails.isWinning) { throw new Error(CONSTANTS.ERROR_MESSAGES.WINNER_NOT_DECLARE) };
+        // if (!TableDetails.isWinning) { throw new Error(CONSTANTS.ERROR_MESSAGES.WINNER_NOT_DECLARE) };
 
         await BullTimer.AddJob.GameEnd(TableDetails.tableId);
 
