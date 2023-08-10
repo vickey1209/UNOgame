@@ -20,9 +20,9 @@ const RemoveDisconnectedUsers = async (tableId: string) => {
 
         };
 
-        TableDetails.disconnectedUsers = [];
+        // TableDetails.disconnectedUsers = [];
 
-        await SetTable(TableDetails.tableId, TableDetails);
+        // await SetTable(TableDetails.tableId, TableDetails);
 
     } catch (error: any) {
         await ErrorLogger('RemoveDisconnectedUsers Error : ', error);
