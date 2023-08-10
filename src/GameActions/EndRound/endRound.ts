@@ -49,6 +49,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
             if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
 
             UserInTableDetails.userScore = Score.totalScore;
+            UserInTableDetails.isUnoClick = false;
 
             RoundScoreArray.push({ userId, userName, userProfile, isLeave, seatIndex, userScore: Score.currentRoundScore, currentRound, ...Score });
 
