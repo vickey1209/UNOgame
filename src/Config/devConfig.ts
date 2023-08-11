@@ -69,6 +69,7 @@ const DevConfig = (): ConfigInterface => {
         DELAY_FOR_UNO: 20,
         DELAY_FOR_CARD_DISTRIBUTION: 1,
         DELAY_FOR_TIMES_UP: 2,
+        DELAY_FOR_SKIP: 0.5,
 
     };
 

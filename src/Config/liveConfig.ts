@@ -88,7 +88,8 @@ const LiveConfig = (): ConfigInterface => {
         DELAY_FOR_REVERS: 1,
         DELAY_FOR_UNO: 2,
         DELAY_FOR_CARD_DISTRIBUTION: 5,
-        DELAY_FOR_TIMES_UP: 2
+        DELAY_FOR_TIMES_UP: 2,
+        DELAY_FOR_SKIP: 0.5,
 
     };
 
