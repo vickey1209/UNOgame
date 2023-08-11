@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
-import { GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
+import { DeleteUser, GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 
 const WinConfirmation = async (en: string, socket: Socket, Data: any) => {
 
@@ -15,9 +15,11 @@ const WinConfirmation = async (en: string, socket: Socket, Data: any) => {
 
         if (UserDetails) {
 
-            UserDetails.tableId = '';
+            // UserDetails.tableId = '';
 
-            await SetUser(userId, UserDetails);
+            // await SetUser(userId, UserDetails);
+
+            await DeleteUser(UserDetails.userId);
 
         };
 
