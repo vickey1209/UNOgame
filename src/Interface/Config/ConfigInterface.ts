@@ -67,5 +67,6 @@ export interface GamePlayInterface {
     DELAY_FOR_UNO: number,
     DELAY_FOR_CARD_DISTRIBUTION: number,
     DELAY_FOR_TIMES_UP: number,
+    DELAY_FOR_SKIP: number,
 
 }

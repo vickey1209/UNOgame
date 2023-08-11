@@ -105,6 +105,8 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
             isSkip = SkipData.isSkip;
             skipSeatIndex = SkipData.skipSeatIndex;
 
+            turnInfoDelay += CONFIG.GamePlay.DELAY_FOR_SKIP;
+
         } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS && isThrow) { // ^ Revers Card !
 
             const PlayersAvailableInTable = TableDetails.playersArray.filter(player => { return player.isLeave === false });
