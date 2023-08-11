@@ -45,6 +45,16 @@ const GetUser = async (UserKey: string) => {
 
 };
 
+const DeleteUser = async (UserKey: string) => {
+
+    await Logger('DeleteUser', JSON.stringify({ UserKey }));
+
+    const key = await UserKeySet(UserKey);
+
+    await DeleteData(key);
+
+};
+
 // ^ User ...
 
 
@@ -246,6 +256,7 @@ export {
 
     SetUser,
     GetUser,
+    DeleteUser,
 
     GetEmptyTable,
     SetEmptyTable,
