@@ -22,15 +22,19 @@ const AllUserScore = async (tableId: string) => {
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
+            if (TableDetails.playersArray[i].isLeave === false) {
 
-            if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
+                let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
 
-            const Score = await CheckUserScore(UserInTableDetails);
+                if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-            if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
+                const Score = await CheckUserScore(UserInTableDetails);
 
-            ScoreResData.allUserScore.push({ userScore: Math.abs(Score.currentRoundScore), seatIndex: UserInTableDetails.seatIndex, cardsLength: UserInTableDetails.cardArray.length });
+                if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
+
+                ScoreResData.allUserScore.push({ userScore: Math.abs(Score.currentRoundScore), seatIndex: UserInTableDetails.seatIndex, cardsLength: UserInTableDetails.cardArray.length });
+
+            };
 
         };
 
