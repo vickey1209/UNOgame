@@ -65,7 +65,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
                 for (let i = 0; i < CONFIG.GamePlay.UNO_PENALTY_NUMBER; i++) {
 
-                    UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+                    // UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
                     pickCards.push(TableDetails.closeCardDeck[0]);
 
@@ -90,7 +90,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
                     for (let i = 0; i < CONFIG.GamePlay.UNO_PENALTY_NUMBER; i++) {
 
-                        UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+                        // UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
                         pickCards.push(TableDetails.closeCardDeck[0]);
 

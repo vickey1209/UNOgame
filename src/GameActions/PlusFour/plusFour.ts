@@ -86,7 +86,7 @@ const PlusFour = async (tableId: string) => {
 
                 if (TableDetails.closeCardDeck.length) {
 
-                    UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+                    // UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
                     pickCards.push(TableDetails.closeCardDeck[0]);
 

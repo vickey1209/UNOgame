@@ -93,7 +93,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
                 TableDetails.closeCardDeck.splice(0, 1);
 
-                UserInTableDetails.cardArray.push(pickCards[0]);
+                // UserInTableDetails.cardArray.push(pickCards[0]);
 
             };
 
@@ -103,7 +103,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
                 if (TableDetails.closeCardDeck.length) {
 
-                    UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+                    // UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
                     pickCards.push(TableDetails.closeCardDeck[0]);
 
