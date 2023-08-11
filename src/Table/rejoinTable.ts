@@ -79,7 +79,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 const { userId, seatIndex, turnMissCount, isBot, isUnoClick, cardArray, lastPickCard }: any = UserInTableDetails;
 
-                let { tableId, bootValue, currentTurn, currentRound, totalRounds, maxPlayers, playersArray, activeCard, activeCardType, activeCardColor, isClockwise, isGameStart, isRoundStart, isScoreScreen, isWinning }: any = TableDetails;
+                let { tableId, bootValue, currentTurn, currentRound, totalRounds, maxPlayers, playersArray, activeCard, activeCardType, activeCardColor, isClockwise, isGameStart, isRoundStart, isScoreScreen, isWinning, isTurnLock }: any = TableDetails;
 
                 const totalUserTurnTimer = CONFIG.GamePlay.USER_TURN_TIMER;
 
@@ -147,7 +147,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
                         tableId, bootValue, currentTurn,
                         currentRound, totalRounds, maxPlayers, playersArray,
                         activeCard, activeCardType, activeCardColor,
-                        isClockwise, isGameStart, isRoundStart, isWinning, isScoreScreen,
+                        isClockwise, isGameStart, isRoundStart, isWinning, isScoreScreen, isTurnLock,
                         RemainingRoundTimer, RemainingGameStartTimer, RemainingScoreScreenTimer, RemainingUserTurnTimer, totalUserTurnTimer,
 
                     },
