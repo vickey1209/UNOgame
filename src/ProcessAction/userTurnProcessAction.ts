@@ -70,7 +70,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
                 if (TableDetails.closeCardDeck.length) {
 
-                    UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+                    // UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
                     pickCards.push(TableDetails.closeCardDeck[0]);
 
@@ -84,7 +84,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
                     if (TableDetails.closeCardDeck.length) {
 
-                        UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+                        // UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
                         pickCards.push(TableDetails.closeCardDeck[0]);
 
