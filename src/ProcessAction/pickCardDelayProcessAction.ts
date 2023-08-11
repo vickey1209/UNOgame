@@ -29,7 +29,7 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
         if (TableDetails.isScoreScreen) { throw new Error(CONSTANTS.ERROR_MESSAGES.ROUND_SCORE_DONE) };
 
-        const PenaltyUser = TableDetails.playersArray.find(player => { player.seatIndex === Data?.PickCardResData?.seatIndex });
+        const PenaltyUser = TableDetails.playersArray.find(player => { return player.seatIndex === Data?.PickCardResData?.seatIndex });
 
         if (!PenaltyUser) { throw new Error(CONSTANTS.ERROR_MESSAGES.ARRAY_FIND_ERROR) };
 
