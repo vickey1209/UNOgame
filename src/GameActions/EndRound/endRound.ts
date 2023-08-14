@@ -50,6 +50,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
             UserInTableDetails.userScore = Score.totalScore;
             UserInTableDetails.isUnoClick = false;
+            UserInTableDetails.cardArray = [];
 
             RoundScoreArray.push({ userId, userName, userProfile, isLeave, seatIndex, userScore: Score.currentRoundScore, currentRound, ...Score });
 

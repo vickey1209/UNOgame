@@ -10,7 +10,7 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
     const Path = 'PickCardDelayProcessAction';
 
-    const { PICK_CARD } = CONSTANTS.EVENTS_NAME;
+    const { PICK_CARD, UNO_HIGHLIGHT } = CONSTANTS.EVENTS_NAME;
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
@@ -40,6 +40,19 @@ const PickCardDelayProcessAction = async (Data: any) => {
         Data?.PickCardResData?.pickCards.forEach((card: string) => { UserInTableDetails.cardArray.push(card); });
 
         await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
+
+        if (UserInTableDetails.cardArray.length === 2 && Data?.PickCardResData?.isPlayableCard) {
+
+            const UnoHighlightResData = {
+
+                userId: UserInTableDetails.userId,
+                tableId: UserInTableDetails.tableId,
+                seatIndex: UserInTableDetails.seatIndex,
+
+            };
+
+            EventEmitter.emit(UNO_HIGHLIGHT, { en: UNO_HIGHLIGHT, RoomId: TableDetails.tableId, Data: UnoHighlightResData });
+        };
 
         EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: Data?.PickCardResData });
 
