@@ -50,7 +50,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
             EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.LAST_GAME_FINISHED } });
 
             // UserDetails.tableId = '';
-            await SetUser(UserDetails.userId, UserDetails);
+            // await SetUser(UserDetails.userId, UserDetails);
 
             return;
 
@@ -61,7 +61,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
             EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: UserDetails.socketId, Data: { winningArray: TableDetails.winningArray } });
 
             // UserDetails.tableId = '';
-            await SetUser(UserDetails.userId, UserDetails);
+            // await SetUser(UserDetails.userId, UserDetails);
 
             return;
 
