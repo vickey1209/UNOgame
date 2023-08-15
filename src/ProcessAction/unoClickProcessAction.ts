@@ -6,8 +6,6 @@ import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
-import { TableInterface } from "../Interface/Table/TableInterface";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
 const UnoClickProcessAction = async (Data: any) => {
@@ -29,7 +27,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
         let pickCards: Array<string> = [], isGameEnd = false, isPlayableCard = false, delayNumber = 0;
 
-        let TableDetails: TableInterface = await GetTable(Data?.tableId);
+        let TableDetails = await GetTable(Data?.tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -43,7 +41,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
         if (!UserAvailableInTable) { throw new Error(CONSTANTS.ERROR_MESSAGES.WRONG_TABLE) };
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
+        let UserInTableDetails = await GetUserInTable(UserAvailableInTable?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

@@ -6,9 +6,6 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GetTable, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
-import { TableInterface } from "../Interface/Table/TableInterface";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { RemoveUserFromTable } from "../Table/leaveTable";
 
@@ -36,7 +33,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         if (!tableId || currentTurn === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -50,11 +47,11 @@ const UserTurnProcessAction = async (Data: any) => {
 
         if (!CurrentTurnUser) { throw new Error(CONSTANTS.ERROR_MESSAGES.ARRAY_FIND_ERROR) };
 
-        const UserDetails: SignUpInterface = await GetUser(CurrentTurnUser?.userId);
+        const UserDetails = await GetUser(CurrentTurnUser?.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(CurrentTurnUser?.userId);
+        let UserInTableDetails = await GetUserInTable(CurrentTurnUser?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

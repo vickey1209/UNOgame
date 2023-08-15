@@ -50,7 +50,13 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
 
                 if (TableDetails.playersArray.length < TableDetails.maxPlayers) { // * Add Player Data In Table
 
-                    TableDetails = await SeatPlayerOnTable(socket, TableDetails, UserDetails);
+                    // TableDetails = await SeatPlayerOnTable(socket, TableDetails, UserDetails);
+
+                    const NewPlayerJoinedTableDetails = await SeatPlayerOnTable(socket, TableDetails, UserDetails);
+
+                    if (!NewPlayerJoinedTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.SEAT_PLAYER_ON_TABLE_ERROR) };
+
+                    TableDetails = NewPlayerJoinedTableDetails;
 
                 };
 
@@ -87,7 +93,7 @@ const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
     };
 };
 
-const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, UserDetails: SignUpInterface) => {
+const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, UserDetails: SignUpInterface): Promise<TableInterface | undefined> => {
 
     try {
 

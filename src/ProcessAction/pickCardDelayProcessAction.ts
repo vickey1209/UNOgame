@@ -2,8 +2,6 @@ import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GetTable, GetUserInTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../Interface/Table/TableInterface";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
 const PickCardDelayProcessAction = async (Data: any) => {
@@ -21,7 +19,7 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
         await Logger("PickCardDelayProcessAction", JSON.stringify(Data));
 
-        let TableDetails: TableInterface = await GetTable(Data?.tableId);
+        let TableDetails = await GetTable(Data?.tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -33,7 +31,9 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
         if (!PenaltyUser) { throw new Error(CONSTANTS.ERROR_MESSAGES.ARRAY_FIND_ERROR) };
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(PenaltyUser?.userId);
+        let UserInTableDetails = await GetUserInTable(PenaltyUser?.userId);
+
+        if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
         // UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 

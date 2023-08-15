@@ -6,9 +6,7 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../Interface/Table/TableInterface";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { BOT_ACTION } from "../Bot";
 
@@ -29,7 +27,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
         const CONFIG = Config();
 
-        let TableDetails: TableInterface = await GetTable(Data?.tableId);
+        let TableDetails = await GetTable(Data?.tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -50,7 +48,7 @@ const TurnInfoProcessAction = async (Data: any) => {
         TableDetails.isTurnLock = false;
         TableDetails.isLeaveLock = false;
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[TableDetails.currentTurn]?.userId);
+        let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[TableDetails.currentTurn]?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -127,7 +125,7 @@ const TurnInfoProcessAction = async (Data: any) => {
             };
             const UserAvailableInTable: any = TableDetails.playersArray.find((e: any) => { return e.seatIndex === nextTurn });
 
-            let nextPlayerUserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable.userId);
+            let nextPlayerUserInTableDetails = await GetUserInTable(UserAvailableInTable.userId);
 
             if (UserInTableDetails.cardArray.length < nextPlayerUserInTableDetails.cardArray.length && RemainingRoundTimer < CONFIG.GamePlay.USER_TURN_TIMER && TableDetails.botPriority === CONSTANTS.BOT_PRIORITY.HARD) {
 

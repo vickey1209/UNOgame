@@ -1,6 +1,5 @@
 import { Socket } from "socket.io";
 import { ErrorLogger, Logger } from "../Logger/logger";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { DeleteUser, GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 
 const WinConfirmation = async (en: string, socket: Socket, Data: any) => {
@@ -11,7 +10,7 @@ const WinConfirmation = async (en: string, socket: Socket, Data: any) => {
 
         const userId = socket.handshake.auth?.userId;
 
-        let UserDetails: SignUpInterface = await GetUser(userId);
+        let UserDetails = await GetUser(userId);
 
         if (UserDetails) {
 

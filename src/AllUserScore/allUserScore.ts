@@ -2,7 +2,6 @@ import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
 import { GetTable, GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
@@ -16,7 +15,7 @@ const AllUserScore = async (tableId: string) => {
 
         let ScoreResData: any = { allUserScore: [] };
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -24,7 +23,7 @@ const AllUserScore = async (tableId: string) => {
 
             if (TableDetails.playersArray[i].isLeave === false) {
 
-                let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
+                let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
 
                 if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

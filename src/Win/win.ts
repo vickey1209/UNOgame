@@ -3,9 +3,6 @@ import { BullTimer } from "../BullTimer";
 import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
 import { DeleteRoundHistory, DeleteTable, DeleteUserInTable, GetRoundHistory, GetTable, GetUser, GetUserInTable, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
-import { TableInterface } from "../Interface/Table/TableInterface";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
 const Win = async (tableId: string, delayNumber: number) => {
@@ -16,7 +13,7 @@ const Win = async (tableId: string, delayNumber: number) => {
 
         const { WINNER_DECLARE } = CONSTANTS.EVENTS_NAME;
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -32,7 +29,7 @@ const Win = async (tableId: string, delayNumber: number) => {
 
             const { userId, userName, userProfile, isLeave } = TableDetails.playersArray[i];
 
-            let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
+            let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
 
             if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

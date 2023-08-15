@@ -3,7 +3,6 @@ import { io } from "../Connection/socket";
 import { CONSTANTS } from "../Constants";
 import { GetTable, GetUser, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
-import { TableInterface } from "../Interface/Table/TableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { RemoveUserFromTable } from "../Table/leaveTable";
 
@@ -38,7 +37,7 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
         if (IsUserOnline) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IS_ONLINE); };
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 

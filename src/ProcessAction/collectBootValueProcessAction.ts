@@ -3,7 +3,6 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, GetUser, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
@@ -26,7 +25,7 @@ const CollectBootValueProcessAction = async (Data: any) => {
 
         if (!tableId) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -66,7 +65,7 @@ const CutBootValueFromUser = async (TableDetails: TableInterface) => {
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            let UserDetails: SignUpInterface = await GetUser(TableDetails.playersArray[i].userId);
+            let UserDetails = await GetUser(TableDetails.playersArray[i].userId);
 
             UserDetails.chips -= TableDetails.bootValue;
 

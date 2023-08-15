@@ -22,7 +22,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
 
         const { JOIN_TABLE } = CONSTANTS.EVENTS_NAME;
 
-        const UserDetails: SignUpInterface = await GetUser(Data.userId);
+        const UserDetails = await GetUser(Data.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
 

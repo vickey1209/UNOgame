@@ -8,8 +8,6 @@ import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetRoundHistory, GetTable, GetUser, GetUserInTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
-import { TableInterface } from "../Interface/Table/TableInterface";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { JoinRoom } from "../SocketRooms/joinRoom";
 import { CreateTable } from "./createTable";
@@ -43,7 +41,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
         };
 
-        let TableDetails: TableInterface = await GetTable(UserDetails.tableId);
+        let TableDetails = await GetTable(UserDetails.tableId);
 
         if (!TableDetails) {
 
@@ -69,7 +67,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === UserDetails.userId });
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(UserDetails.userId);
+        let UserInTableDetails = await GetUserInTable(UserDetails.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -132,7 +130,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-                    const SingleUserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
+                    const SingleUserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
 
                     const { turnMissCount, isUnoClick } = SingleUserInTableDetails;
 

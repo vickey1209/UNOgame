@@ -38,5 +38,6 @@ export = Object.freeze({
     SOCKET_ROOM_ERROR: "Socket Room Error !!!",
     USER_IS_ALREADY_DISCONNECTED_OR_TURN_MISSED: "User Is Miss Turn Or Disconnected Before !!!",
     WINNER_NOT_DECLARE: "Winner Not Declare !!!",
+    SEAT_PLAYER_ON_TABLE_ERROR: "Seat Player On Table Return Error !!!"
 
 });

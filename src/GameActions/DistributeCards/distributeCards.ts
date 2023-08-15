@@ -4,8 +4,6 @@ import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
 import { GetTable, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
 import { MyCardsResInterface } from "../../Interface/MyCardsRes/MyCardsResInterface";
-import { SignUpInterface } from "../../Interface/SignUp/SignUpInterface";
-import { TableInterface } from "../../Interface/Table/TableInterface";
 import { ErrorLogger, Logger } from "../../Logger/logger";
 import { RandomPlayerTurn } from "../../RandomPlayerTurn/randomPlayer";
 
@@ -19,7 +17,7 @@ const DistributeCards = async (tableId: string) => {
 
         const { MY_CARDS } = CONSTANTS.EVENTS_NAME;
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -50,7 +48,7 @@ const DistributeCards = async (tableId: string) => {
 
             let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
 
-            const UserDetails: SignUpInterface = await GetUser(TableDetails.playersArray[i].userId);
+            const UserDetails = await GetUser(TableDetails.playersArray[i].userId);
 
             // if (i == 0) {
 

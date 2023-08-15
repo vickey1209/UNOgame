@@ -3,10 +3,8 @@ import { ErrorLogger, Logger } from "../Logger/logger";
 import { CONSTANTS } from "../Constants";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { RoundHistoryInterface } from "../Interface/RoundHistory/RoundHistoryInterface";
-import { TableInterface } from "../Interface/Table/TableInterface";
 import { GetRoundHistory, GetTable, GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { EventEmitter } from "../Connection/emitter";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 
 const RoundHistory = async (en: string, socket: Socket, Data: RoundHistoryInterface) => {
 
@@ -26,7 +24,7 @@ const RoundHistory = async (en: string, socket: Socket, Data: RoundHistoryInterf
 
         await Logger("RoundHistory", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -40,7 +38,7 @@ const RoundHistory = async (en: string, socket: Socket, Data: RoundHistoryInterf
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_TABLE } });
         };
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(userId);
+        let UserInTableDetails = await GetUserInTable(userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
