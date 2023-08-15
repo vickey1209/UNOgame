@@ -4,10 +4,8 @@ import { PickCardInterface } from "../Interface/PickCard/PickCardInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { GetTable, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../Interface/Table/TableInterface";
 import { EventEmitter } from "../Connection/emitter";
 import { BullTimer } from "../BullTimer";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
 import { GAME_ACTIONS } from "../GameActions";
@@ -34,7 +32,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
         await Logger("PickCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         let pickCards: Array<string> = [], isPlayableCard = false;
 
@@ -58,7 +56,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_TABLE } });
         };
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(userId);
+        let UserInTableDetails = await GetUserInTable(userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

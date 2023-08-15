@@ -31,7 +31,7 @@ const SetUser = async (UserKey: string, UserData: SignUpInterface) => {
 
 };
 
-const GetUser = async (UserKey: string) => {
+const GetUser = async (UserKey: string): Promise<SignUpInterface> => {
 
     await Logger('GetUser', JSON.stringify({ UserKey }));
 
@@ -123,7 +123,7 @@ const SetTable = async (TableId: string, TableData: TableInterface) => {
 
 };
 
-const GetTable = async (TableId: string) => {
+const GetTable = async (TableId: string): Promise<TableInterface> => {
 
     await Logger('GetTable', JSON.stringify({ TableId }));
 
@@ -174,7 +174,7 @@ const SetUserInTable = async (UserInTableId: string, UserInTableData: UserInTabl
 
 };
 
-const GetUserInTable = async (UserInTableId: string) => {
+const GetUserInTable = async (UserInTableId: string): Promise<UserInTableInterface> => {
 
     await Logger('GetUserInTable', JSON.stringify({ UserInTableId }));
 

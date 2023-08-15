@@ -3,9 +3,6 @@ import { ErrorLogger, Logger } from "../Logger/logger";
 import { CONSTANTS } from "../Constants";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { DeleteEmptyTable, DeleteTable, DeleteUserInTable, GetTable, GetUser, GetUserInTable, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
-import { TableInterface } from "../Interface/Table/TableInterface";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { EventEmitter } from "../Connection/emitter";
 import { io } from "../Connection/socket";
 import { LeaveRoom } from "../SocketRooms/leaveRoom";
@@ -58,11 +55,11 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
         const { LEAVE_TABLE, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
 
-        let UserDetails: SignUpInterface = await GetUser(userId);
+        let UserDetails = await GetUser(userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -70,7 +67,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
         if (!UserAvailableInTable) { throw new Error(CONSTANTS.ERROR_MESSAGES.WRONG_TABLE) };
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(userId);
+        let UserInTableDetails = await GetUserInTable(userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

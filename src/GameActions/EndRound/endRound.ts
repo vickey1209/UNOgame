@@ -4,8 +4,6 @@ import { Config } from "../../Config";
 import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
 import { GetRoundHistory, GetTable, GetUserInTable, SetRoundHistory, SetTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../../Interface/Table/TableInterface";
-import { UserInTableInterface } from "../../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../../Logger/logger";
 import { Win } from "../../Win/win";
 
@@ -19,7 +17,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
         const { ROUND_SCORE, TIMES_UP } = CONSTANTS.EVENTS_NAME;
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -40,7 +38,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
             const { currentRound } = TableDetails;
             const { userId, userName, userProfile, isLeave, seatIndex } = TableDetails.playersArray[i];
 
-            let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
+            let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
 
             if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

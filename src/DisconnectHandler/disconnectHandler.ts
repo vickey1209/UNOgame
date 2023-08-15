@@ -1,11 +1,9 @@
 import { Socket } from "socket.io";
 import { ErrorLogger, Logger } from "../Logger/logger";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { DeleteEmptyTable, DeleteTable, DeleteUserInTable, GetTable, GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { CONSTANTS } from "../Constants";
 import { io } from "../Connection/socket";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
-import { TableInterface } from "../Interface/Table/TableInterface";
 import { RemoveUserFromTable } from "../Table/leaveTable";
 import { BullTimer } from "../BullTimer";
 
@@ -30,7 +28,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
         await Logger("DisconnectHandler", JSON.stringify({ SocketData: socket.handshake.auth }));
 
-        let UserDetails: SignUpInterface = await GetUser(userId);
+        let UserDetails = await GetUser(userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
@@ -44,7 +42,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
         if (UserDetails.tableId !== '') {
 
-            let TableDetails: TableInterface = await GetTable(UserDetails?.tableId);
+            let TableDetails = await GetTable(UserDetails?.tableId);
 
             if (!TableDetails) {
 

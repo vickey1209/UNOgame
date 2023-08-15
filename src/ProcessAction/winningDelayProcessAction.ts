@@ -3,7 +3,6 @@ import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GetTable } from "../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../Interface/Table/TableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
 const WinningDelayProcessAction = async (Data: any) => {
@@ -21,7 +20,7 @@ const WinningDelayProcessAction = async (Data: any) => {
 
         await Logger("WinningDelayProcessAction", JSON.stringify(Data));
 
-        let TableDetails: TableInterface = await GetTable(Data?.tableId);
+        let TableDetails = await GetTable(Data?.tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 

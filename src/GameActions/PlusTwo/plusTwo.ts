@@ -5,8 +5,6 @@ import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
 import { GetTable, GetUserInTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
 import { PickCardResInterface } from "../../Interface/PickCardRes/PickCardResInterface";
-import { TableInterface } from "../../Interface/Table/TableInterface";
-import { UserInTableInterface } from "../../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../../Logger/logger";
 
 const PlusTwo = async (tableId: string) => {
@@ -21,7 +19,7 @@ const PlusTwo = async (tableId: string) => {
 
         let isPenaltyFreeCard = false, penaltyNumber = 0;
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -51,7 +49,7 @@ const PlusTwo = async (tableId: string) => {
 
         if (!PenaltyUser) { throw new Error(CONSTANTS.ERROR_MESSAGES.ARRAY_FIND_ERROR) };
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(PenaltyUser?.userId);
+        let UserInTableDetails = await GetUserInTable(PenaltyUser?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

@@ -3,7 +3,6 @@ import { Config } from "../Config";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../Interface/Table/TableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
 const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean, remainingCardsNumber: number) => {
@@ -14,7 +13,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         const CONFIG = Config();
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 

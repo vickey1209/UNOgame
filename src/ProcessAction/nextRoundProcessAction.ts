@@ -2,8 +2,6 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetTable, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../Interface/Table/TableInterface";
-import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
 const NextRoundProcessAction = async (Data: any) => {
@@ -24,7 +22,7 @@ const NextRoundProcessAction = async (Data: any) => {
 
         if (!tableId) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
@@ -32,7 +30,7 @@ const NextRoundProcessAction = async (Data: any) => {
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.playersArray[i].userId);
+            let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
 
             if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

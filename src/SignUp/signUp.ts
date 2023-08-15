@@ -35,7 +35,8 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
         socket.handshake.auth.playerCount = Data?.playerCount;
         socket.handshake.auth.bootValue = Data?.bootValue;
 
-        const UserDetails: SignUpInterface = await GetUser(Data.userId);
+        const UserDetails = await GetUser(Data.userId);
+        // const UserDetails: SignUpInterface = await GetUser(Data.userId);
 
         await BullTimer.CancelJob.CancelDisconnectUser(Data.userId);
 

@@ -1,7 +1,6 @@
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { DeleteRoundHistory, DeleteTable, DeleteUserInTable, GetTable } from "../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../Interface/Table/TableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
 const GameEndProcessAction = async (Data: any) => {
@@ -19,7 +18,7 @@ const GameEndProcessAction = async (Data: any) => {
 
         await Logger("GameEndProcessAction", JSON.stringify(Data));
 
-        const TableDetails: TableInterface = await GetTable(tableId);
+        const TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
