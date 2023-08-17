@@ -15,15 +15,14 @@ const PlusFour = async (tableId: string) => {
 
         const CONFIG = Config();
 
-        const { PICK_CARD } = CONSTANTS.EVENTS_NAME;
-
         let isPenaltyFreeCard = false, penaltyNumber = 0;
 
         let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
-        let pickCards: Array<string> = [], penaltySeatIndex = -1, forLimit = (TableDetails.numberOfCardToPick + CONFIG.GamePlay.PLUS_FOUR_PENALTY_NUMBER);
+        let pickCards: Array<string> = [], penaltySeatIndex = -1;
+        // let pickCards: Array<string> = [], penaltySeatIndex = -1, forLimit = (TableDetails.numberOfCardToPick + CONFIG.GamePlay.PLUS_FOUR_PENALTY_NUMBER);
 
         if (TableDetails.isClockwise) {
 
@@ -78,9 +77,10 @@ const PlusFour = async (tableId: string) => {
 
             isPenaltyFreeCard = false;
 
-            if (forLimit === 0) { forLimit = CONFIG.GamePlay.PLUS_FOUR_PENALTY_NUMBER };
+            // if (forLimit === 0) { forLimit = CONFIG.GamePlay.PLUS_FOUR_PENALTY_NUMBER };
 
-            for (let i = 0; i < forLimit; i++) {
+            for (let i = 0; i < CONFIG.GamePlay.PLUS_FOUR_PENALTY_NUMBER; i++) {
+                // for (let i = 0; i < forLimit; i++) {
 
                 if (TableDetails.closeCardDeck.length) {
 

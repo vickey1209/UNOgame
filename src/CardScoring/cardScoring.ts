@@ -14,7 +14,7 @@ const CardScoring = async (socket: Socket) => {
 
         const { CARD_SCORING } = CONSTANTS.EVENTS_NAME;
 
-        const ResData = {
+        const CardScoringResData = {
 
             zeroPoints: -Math.abs(CONFIG.GamePlay.ZERO_POINT),
             actionPoints: -Math.abs(CONFIG.GamePlay.SKIP_POINT),
@@ -23,7 +23,7 @@ const CardScoring = async (socket: Socket) => {
 
         };
 
-        EventEmitter.emit(CARD_SCORING, { en: CARD_SCORING, SocketId: socket.id, Data: ResData });
+        EventEmitter.emit(CARD_SCORING, { en: CARD_SCORING, SocketId: socket.id, Data: CardScoringResData });
 
     } catch (error: any) {
         await ErrorLogger('CardScoring Error : ', error);

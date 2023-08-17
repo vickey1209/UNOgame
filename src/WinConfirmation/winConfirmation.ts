@@ -14,11 +14,11 @@ const WinConfirmation = async (en: string, socket: Socket, Data: any) => {
 
         if (UserDetails) {
 
-            // UserDetails.tableId = '';
+            UserDetails.tableId = '';
 
-            // await SetUser(userId, UserDetails);
+            await SetUser(userId, UserDetails);
 
-            await DeleteUser(UserDetails.userId);
+            // await DeleteUser(UserDetails.userId);
 
         };
 

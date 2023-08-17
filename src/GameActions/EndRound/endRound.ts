@@ -35,7 +35,6 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            const { currentRound } = TableDetails;
             const { userId, userName, userProfile, isLeave, seatIndex } = TableDetails.playersArray[i];
 
             let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
@@ -49,8 +48,9 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
             UserInTableDetails.userScore = Score.totalScore;
             UserInTableDetails.isUnoClick = false;
             UserInTableDetails.cardArray = [];
+            UserInTableDetails.lastPickCard = '';
 
-            RoundScoreArray.push({ userId, userName, userProfile, isLeave, seatIndex, userScore: Score.currentRoundScore, currentRound, ...Score });
+            RoundScoreArray.push({ userId, userName, userProfile, isLeave, seatIndex, userScore: Score.currentRoundScore, currentRound: TableDetails.currentRound, ...Score });
 
             await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
 
@@ -63,7 +63,6 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
         await SetRoundHistory(TableDetails.tableId, AllRoundScore);
 
         TableDetails.isLeaveLock = true;
-
         TableDetails.isRoundStart = false;
         TableDetails.isScoreScreen = true;
 

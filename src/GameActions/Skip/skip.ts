@@ -1,7 +1,6 @@
 import { GAME_ACTIONS } from "..";
 import { CONSTANTS } from "../../Constants";
 import { GetTable } from "../../GameRedisOperations/gameRedisOperations";
-import { TableInterface } from "../../Interface/Table/TableInterface";
 import { ErrorLogger, Logger } from "../../Logger/logger";
 
 const Skip = async (tableId: string) => {
@@ -12,7 +11,7 @@ const Skip = async (tableId: string) => {
 
         let isSkip = false, skipSeatIndex = -1, nextTurnSeatIndex = -1;
 
-        let TableDetails: TableInterface = await GetTable(tableId);
+        let TableDetails = await GetTable(tableId);
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 

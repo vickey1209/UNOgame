@@ -37,8 +37,8 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
         if (UserDetails.tableId === '') {
 
             await CreateTable(socket, Data);
-            return;
 
+            return;
         };
 
         let TableDetails = await GetTable(UserDetails.tableId);
@@ -47,22 +47,14 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
             EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.LAST_GAME_FINISHED } });
 
-            // UserDetails.tableId = '';
-            // await SetUser(UserDetails.userId, UserDetails);
-
             return;
-
         };
 
         if (TableDetails && TableDetails.isWinning) {
 
             EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: UserDetails.socketId, Data: { winningArray: TableDetails.winningArray } });
 
-            // UserDetails.tableId = '';
-            // await SetUser(UserDetails.userId, UserDetails);
-
             return;
-
         };
 
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === UserDetails.userId });
@@ -85,8 +77,6 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 let isThrowPossibleData = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
 
-                // if (isThrowPossibleData === undefined || UserInTableDetails.seatIndex !== TableDetails.currentTurn) { isThrowPossible = false }
-
                 if (isThrowPossibleData && isThrowPossibleData?.isThrowPossible && UserInTableDetails.seatIndex === TableDetails.currentTurn) {
                     isThrowPossible = isThrowPossibleData.isThrowPossible, throwPossibleCards = isThrowPossibleData.throwPossibleCards
                 };
@@ -100,12 +90,6 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
                 ) {
                     isUno = true;
                 };
-
-                // let isThrowPossible = await GAME_ACTIONS.IsThrowPossible(UserInTableDetails, TableDetails);
-
-                // if (isThrowPossible === undefined || UserInTableDetails.seatIndex !== TableDetails.currentTurn) { isThrowPossible = false };
-
-                // const isUno = (isThrowPossible && cardArray.length === 2 && UserInTableDetails.seatIndex === TableDetails.currentTurn) ? true : false;
 
                 const RoundJob = await BullTimer.CheckJob.CheckRound(TableDetails.tableId);
                 const UserTurnJob = await BullTimer.CheckJob.CheckUserTurn(tableId, currentTurn);
