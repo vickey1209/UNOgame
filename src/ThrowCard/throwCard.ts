@@ -107,9 +107,6 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
         await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length);
 
-        // if (UserInTableDetails.cardArray.length < 1) { await GAME_ACTIONS.EndRound(TableDetails.tableId, false); }
-        // else { await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length); };
-
     } catch (error: any) {
 
         await ErrorLogger('ThrowCard Error : ', error);

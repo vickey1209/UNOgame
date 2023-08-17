@@ -40,13 +40,11 @@ const RedisConnection = async () => {
 
             console.log('Redis Connected !');
 
-            redisClient.flushDb();
+            // redisClient.flushDb();
 
         });
 
-        redisClient.on('error', (error: any) => {
-            console.log(`Redis Error : ${error}`);
-        });
+        redisClient.on('error', (error: any) => { console.log(`Redis Error : ${error}`); });
 
     } catch (error) {
         console.log('RedisConnection Error : ', error);

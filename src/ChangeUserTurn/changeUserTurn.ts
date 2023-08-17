@@ -21,10 +21,6 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (remainingCardsNumber < 1 && isThrow) {
 
-            // if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_TWO };
-            // if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR };
-            // if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE };
-
             if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_TWO; }
             else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_PLUS_FOUR; }
             else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE; }
@@ -181,8 +177,6 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         TableDetails.isTurnLock = true;
 
-        // await SetTable(TableDetails.tableId, TableDetails);
-
         if (isGameEnd) { // ^ End Game Immediately
 
             await SetTable(TableDetails.tableId, TableDetails);
@@ -192,8 +186,6 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
         } else {
 
             if (isThrow && remainingCardsNumber === 1) { // ^ UNO Bull
-
-                // turnInfoDelay += CONFIG.GamePlay.DELAU_FOR_UNO;
 
                 const nextTurn = TableDetails.currentTurn;
 

@@ -31,13 +31,9 @@ const IsThrowPossible = async (UserInTableDetails: UserInTableInterface, TableDe
 
             };
 
-            // if (isThrowPossible) { break };
-
         };
 
         return { isThrowPossible, throwPossibleCards };
-
-        // return isThrowPossible;
 
     } catch (error: any) {
         await ErrorLogger('IsThrowPossible Error : ', error);

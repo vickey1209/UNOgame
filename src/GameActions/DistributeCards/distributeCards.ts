@@ -50,12 +50,6 @@ const DistributeCards = async (tableId: string) => {
 
             const UserDetails = await GetUser(TableDetails.playersArray[i].userId);
 
-            // if (i == 0) {
-
-            //     UserInTableDetails.cardArray = ['W-D4C-0', 'W-D4C-0', 'B-1-0']
-
-            // } else {
-
             for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
 
                 if (PowerCardNumber > j) {
@@ -83,9 +77,8 @@ const DistributeCards = async (tableId: string) => {
                     if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
 
                 };
+                
             };
-
-            // }
 
             AllUserSocketId.push({ socketId: UserDetails.socketId, Cards: UserInTableDetails.cardArray });
 

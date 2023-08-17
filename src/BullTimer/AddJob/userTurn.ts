@@ -7,7 +7,7 @@ const UserTurn = async (tableId: string, currentTurn: number) => {
 
     try {
 
-        await Logger("UserTurn", JSON.stringify({ tableId }));
+        await Logger("UserTurn", JSON.stringify({ tableId, currentTurn }));
 
         const CONFIG = Config();
 

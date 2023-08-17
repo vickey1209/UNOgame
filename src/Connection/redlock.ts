@@ -28,15 +28,7 @@ const RedLockConnction = async () => {
             // automaticExtensionThreshold: 500
         });
 
-        redLock.on('error', async (error: any) => {
-
-            // console.log(`RedLock > `, error);
-            // console.log(new Date());
-            // console.log('.');
-
-            await ErrorLogger('RedLock Error : ', error);
-
-        });
+        redLock.on('error', async (error: any) => { await ErrorLogger('RedLock Error : ', error); });
 
         console.log('RedLock Connected !');
 
@@ -46,7 +38,7 @@ const RedLockConnction = async () => {
 };
 
 const ApplyLock = async (Path: string, LockId: string) => {
-    // return;
+
     try {
 
         await Logger("ApplyLock", JSON.stringify({ Path, LockId }));
@@ -61,10 +53,10 @@ const ApplyLock = async (Path: string, LockId: string) => {
 };
 
 const RemoveLock = async (Path: string, Lock: any) => {
-    // return;
+
     try {
 
-        await Logger("RemoveLock", JSON.stringify({ Path, LockId: Lock?.resources ? Lock?.resources[0] : Lock?.resources }));
+        await Logger("RemoveLock", JSON.stringify({ Path, LockId: Lock?.resources }));
 
         await Lock.release();
 

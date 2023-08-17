@@ -6,7 +6,7 @@ const RoundScoreDelay = async (tableId: string, delayNumber: number) => {
 
     try {
 
-        await Logger("RoundScoreDelay", JSON.stringify({ tableId }));
+        await Logger("RoundScoreDelay", JSON.stringify({ tableId, delayNumber }));
 
         const jobId = `${tableId}`;
 

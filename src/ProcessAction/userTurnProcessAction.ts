@@ -110,7 +110,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         UserInTableDetails.isUnoClick = false;
 
-        if (UserInTableDetails.turnMissCount !== 3) { UserInTableDetails.turnMissCount += 1; };
+        if (UserInTableDetails.turnMissCount !== CONFIG.GamePlay.TURN_TIMEOUT_COUNT) { UserInTableDetails.turnMissCount += 1; };
 
         await SetTable(TableDetails.tableId, TableDetails);
 
