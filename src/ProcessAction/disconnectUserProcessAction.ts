@@ -1,7 +1,7 @@
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { io } from "../Connection/socket";
 import { CONSTANTS } from "../Constants";
-import { GetTable, GetUser, SetTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetUser, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { RemoveUserFromTable } from "../Table/leaveTable";
@@ -43,7 +43,11 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
         if (TableDetails.isWinning) { throw new Error(CONSTANTS.ERROR_MESSAGES.WINNING_DONE) };
 
-        if (TableDetails.isLeaveLock) {
+        if (TableDetails.isLeaveLock || TableDetails.isTurnLock) {
+
+            UserDetails.tableId = CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
+
+            await SetUser(UserDetails.userId, UserDetails);
 
             TableDetails.disconnectedUsers.push(UserDetails.userId);
 

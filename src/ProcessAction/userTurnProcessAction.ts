@@ -55,11 +55,13 @@ const UserTurnProcessAction = async (Data: any) => {
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
+        if (UserInTableDetails.turnMissCount !== CONFIG.GamePlay.TURN_TIMEOUT_COUNT) { UserInTableDetails.turnMissCount += 1; };
+
         if (UserInTableDetails.lastPickCard !== '' && UserInTableDetails.cardArray.includes(UserInTableDetails.lastPickCard)) {
 
             UserInTableDetails.lastPickCard = '';
 
-        } else {
+        } else if (UserInTableDetails.turnMissCount !== CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
 
             isPick = true;
 
@@ -110,7 +112,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         UserInTableDetails.isUnoClick = false;
 
-        if (UserInTableDetails.turnMissCount !== CONFIG.GamePlay.TURN_TIMEOUT_COUNT) { UserInTableDetails.turnMissCount += 1; };
+        // if (UserInTableDetails.turnMissCount !== CONFIG.GamePlay.TURN_TIMEOUT_COUNT) { UserInTableDetails.turnMissCount += 1; };
 
         await SetTable(TableDetails.tableId, TableDetails);
 
