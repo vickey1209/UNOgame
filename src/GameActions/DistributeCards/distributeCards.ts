@@ -46,43 +46,48 @@ const DistributeCards = async (tableId: string) => {
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
+            if (TableDetails.playersArray[i].isLeave === false) {
 
-            const UserDetails = await GetUser(TableDetails.playersArray[i].userId);
+                let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
 
-            for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
+                const UserDetails = await GetUser(TableDetails.playersArray[i].userId);
 
-                if (PowerCardNumber > j) {
+                for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
 
-                    const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SpecialUnoCards.length - 1));
+                    if (PowerCardNumber > j) {
 
-                    let Card = SpecialUnoCards[RendomNumber];
+                        const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SpecialUnoCards.length - 1));
 
-                    UserInTableDetails.cardArray.push(Card);
+                        let Card = SpecialUnoCards[RendomNumber];
 
-                    if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
-                    if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
-                    if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
+                        UserInTableDetails.cardArray.push(Card);
 
-                } else {
+                        if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
+                        if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
+                        if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
 
-                    const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SimpleUnoCards.length - 1));
+                    } else {
 
-                    const Card = SimpleUnoCards[RendomNumber];
+                        const RendomNumber = await GAME_ACTIONS.RandomNumber(0, (SimpleUnoCards.length - 1));
 
-                    UserInTableDetails.cardArray.push(Card);
+                        const Card = SimpleUnoCards[RendomNumber];
 
-                    if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
-                    if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
-                    if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
+                        UserInTableDetails.cardArray.push(Card);
+
+                        if (AllUnoCards.includes(Card)) { AllUnoCards.splice(AllUnoCards.indexOf(Card), 1); };
+                        if (SimpleUnoCards.includes(Card)) { SimpleUnoCards.splice(SimpleUnoCards.indexOf(Card), 1); };
+                        if (SpecialUnoCards.includes(Card)) { SpecialUnoCards.splice(SpecialUnoCards.indexOf(Card), 1); };
+
+                    };
 
                 };
-                
+
+                AllUserSocketId.push({ socketId: UserDetails.socketId, Cards: UserInTableDetails.cardArray });
+
+                await SetUserInTable(TableDetails.playersArray[i].userId, UserInTableDetails);
+
             };
 
-            AllUserSocketId.push({ socketId: UserDetails.socketId, Cards: UserInTableDetails.cardArray });
-
-            await SetUserInTable(TableDetails.playersArray[i].userId, UserInTableDetails);
         };
 
         TableDetails.playersArray = TableDetails.playersArray.sort((a, b) => { return a.seatIndex - b.seatIndex });
