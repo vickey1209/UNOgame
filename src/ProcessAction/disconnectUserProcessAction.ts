@@ -41,9 +41,19 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
         if (!TableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_NOT_FOUND) };
 
+        const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === userId });
+
+        if (!UserAvailableInTable) { throw new Error(CONSTANTS.ERROR_MESSAGES.WRONG_TABLE) };
+
         if (TableDetails.isWinning) { throw new Error(CONSTANTS.ERROR_MESSAGES.WINNING_DONE) };
 
-        if (TableDetails.isLeaveLock || TableDetails.isTurnLock) {
+        if (
+
+            (TableDetails.isLeaveLock) ||
+            (TableDetails.isTurnLock) ||
+            (TableDetails.currentTurn === UserAvailableInTable.seatIndex && TableDetails.numberOfCardToPick !== 0)
+
+        ) {
 
             UserDetails.tableId = CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
 
