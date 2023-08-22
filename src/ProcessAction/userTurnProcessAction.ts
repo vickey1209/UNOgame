@@ -3,10 +3,12 @@ import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
+import { io } from "../Connection/socket";
 import { CONSTANTS } from "../Constants";
 import { GetTable, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
+import { LeaveRoom } from "../SocketRooms/leaveRoom";
 import { RemoveUserFromTable } from "../Table/leaveTable";
 
 const UserTurnProcessAction = async (Data: any) => {
@@ -175,10 +177,20 @@ const UserTurnProcessAction = async (Data: any) => {
 
         EventEmitter.emit(TURN_MISSED, { en: TURN_MISSED, Data: TurnMissResData, RoomId: TableDetails.tableId });
 
+        if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
+
+            EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.TURN_SKIP_LIMIT_REACHED } });
+
+            const socket = io.sockets.sockets.get(UserDetails.socketId); // * Find User Socket
+
+            if (socket) { await LeaveRoom(socket, TableDetails.tableId); };
+            
+        };
+
         if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT && TableDetails.numberOfCardToPick === 0) {
             // if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
 
-            EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.TURN_SKIP_LIMIT_REACHED } });
+            // EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.TURN_SKIP_LIMIT_REACHED } });
 
             await RemoveUserFromTable(UserInTableDetails.userId, TableDetails.tableId, false);
 
