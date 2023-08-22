@@ -54,7 +54,7 @@ const LiveConfig = (): ConfigInterface => {
 
         LOG: true,
 
-        PLUS_ON_PLUS: false,
+        PLUS_ON_PLUS: true,
 
         GAME_START_TIMER: 4,
         USER_TURN_TIMER: 15,
