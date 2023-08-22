@@ -171,7 +171,22 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
             };
         };
 
-        if (isPick && turnInfoDelay === 0) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK };
+        if (isPick && turnInfoDelay === 0) {
+
+            if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_FOUR) {
+
+                turnInfoDelay = (CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK * CONFIG.GamePlay.PLUS_FOUR_PENALTY_NUMBER);
+
+            } else if (TableDetails.activeCardType) {
+
+                turnInfoDelay = (CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK * CONFIG.GamePlay.PLUS_TWO_PENALTY_NUMBER);
+
+            } else {
+
+                turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK;
+
+            };
+        };
 
         if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE && isThrow) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE };
 
