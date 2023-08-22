@@ -3,6 +3,7 @@ import ERROR_MESSAGES from './errorMessages';
 import BOT_PRIORITY from './botPriority';
 import REDIS_COLLECTION from './redisCollection';
 import COMMON from './commonConstants'
+import BULL_NAMES from './bullNames'
 
 import { UNO_CARDS } from './UnoCards';
 
@@ -14,6 +15,7 @@ const CONSTANTS = Object.freeze({
     BOT_PRIORITY,
     REDIS_COLLECTION,
     COMMON,
+    BULL_NAMES,
 
 });
 
