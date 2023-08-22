@@ -71,7 +71,14 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-        if (TableDetails.isLeaveLock || TableDetails.isWinning || (isPlayerChooseToLeave && TableDetails.isTurnLock) || (TableDetails.numberOfCardToPick !== 0 && TableDetails.currentTurn === UserAvailableInTable.seatIndex)) {
+        if (
+
+            (TableDetails.isLeaveLock) ||
+            (TableDetails.isWinning) ||
+            (isPlayerChooseToLeave && TableDetails.isTurnLock) ||
+            (TableDetails.numberOfCardToPick !== 0 && TableDetails.currentTurn === UserAvailableInTable.seatIndex && isPlayerChooseToLeave)
+
+        ) {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.CAN_NOT_ABLE_TO_LEAVE } });
         };
 

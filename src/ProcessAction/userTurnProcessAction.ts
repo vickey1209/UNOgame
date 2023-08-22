@@ -65,6 +65,61 @@ const UserTurnProcessAction = async (Data: any) => {
 
             isPick = true;
 
+            // if (TableDetails.numberOfCardToPick === 0) {
+
+            //     if (TableDetails.closeCardDeck.length) {
+
+            //         // UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+
+            //         pickCards.push(TableDetails.closeCardDeck[0]);
+
+            //         TableDetails.closeCardDeck.splice(0, 1);
+
+            //     };
+
+            // } else {
+
+            //     for (let i = 0; i < TableDetails.numberOfCardToPick; i++) {
+
+            //         if (TableDetails.closeCardDeck.length) {
+
+            //             // UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
+
+            //             pickCards.push(TableDetails.closeCardDeck[0]);
+
+            //             TableDetails.closeCardDeck.splice(0, 1);
+
+            //         };
+            //     };
+
+            // };
+
+            // const PickCardResData: PickCardResInterface = {
+
+            //     userId: UserInTableDetails.userId,
+            //     tableId: UserInTableDetails.tableId,
+            //     seatIndex: UserInTableDetails.seatIndex,
+            //     pickCards,
+            //     isPlayableCard: false
+
+            // };
+
+            // await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, 0, PickCardResData);
+
+            // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
+
+        } else if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT && TableDetails.numberOfCardToPick !== 0) {
+
+            isPick = true;
+
+            TableDetails.disconnectedUsers.push(UserDetails.userId);
+
+        };
+
+        if (isPick) {
+
+            isPick = true;
+
             if (TableDetails.numberOfCardToPick === 0) {
 
                 if (TableDetails.closeCardDeck.length) {
@@ -106,8 +161,6 @@ const UserTurnProcessAction = async (Data: any) => {
 
             await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, 0, PickCardResData);
 
-            // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
-
         };
 
         UserInTableDetails.isUnoClick = false;
@@ -122,7 +175,8 @@ const UserTurnProcessAction = async (Data: any) => {
 
         EventEmitter.emit(TURN_MISSED, { en: TURN_MISSED, Data: TurnMissResData, RoomId: TableDetails.tableId });
 
-        if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
+        if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT && TableDetails.numberOfCardToPick === 0) {
+            // if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
 
             EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.TURN_SKIP_LIMIT_REACHED } });
 
