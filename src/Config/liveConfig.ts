@@ -81,7 +81,7 @@ const LiveConfig = (): ConfigInterface => {
         PLUS_FOUR_POINT: 50,
         COLOR_CHANGE_POINT: 35,
 
-        DELAY_FOR_SINGLE_PICK: 0.5,
+        DELAY_FOR_SINGLE_PICK: 0.55,
         DELAY_FOR_PLUS_FOUR: 2.2,
         DELAY_FOR_PLUS_TWO: 1,
         DELAY_FOR_COLOR_CHANGE: 2,
