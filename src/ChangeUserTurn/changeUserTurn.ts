@@ -179,7 +179,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) {
 
-                turnInfoDelay = (CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK * CONFIG.GamePlay.PLUS_TWO_PENALTY_NUMBER) + 0.5;
+                turnInfoDelay = (CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK * CONFIG.GamePlay.PLUS_FOUR_PENALTY_NUMBER);
 
             } else {
 
