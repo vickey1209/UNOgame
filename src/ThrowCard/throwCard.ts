@@ -8,6 +8,7 @@ import { BullTimer } from "../BullTimer";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { GAME_ACTIONS } from "../GameActions";
 import { Uno } from "../Uno/uno";
+import { VALIDATOR } from "../Validation";
 
 const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
@@ -27,6 +28,12 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
     try {
 
         await Logger("ThrowCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
+
+        const ValidaionError = await VALIDATOR.ThrowCardValidation(Data);
+
+        if (ValidaionError) {
+            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: ValidaionError } });
+        };
 
         let TableDetails = await GetTable(tableId);
 
