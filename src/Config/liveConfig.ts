@@ -58,7 +58,7 @@ const LiveConfig = (): ConfigInterface => {
 
         GAME_START_TIMER: 4,
         USER_TURN_TIMER: 15,
-        ROUND_TIMER: 300,
+        ROUND_TIMER: 180,
         NEXT_ROUND_TIMER: 10,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
@@ -69,7 +69,7 @@ const LiveConfig = (): ConfigInterface => {
         MAX_SPECIAL_CARD: 3,
         TURN_TIMEOUT_COUNT: 3,
 
-        TOTAL_ROUND_NUMBER: 2,
+        TOTAL_ROUND_NUMBER: 3,
         UNO_PENALTY_NUMBER: 2,
         PLUS_TWO_PENALTY_NUMBER: 2,
         PLUS_FOUR_PENALTY_NUMBER: 4,
@@ -87,8 +87,8 @@ const LiveConfig = (): ConfigInterface => {
         DELAY_FOR_COLOR_CHANGE: 2,
         DELAY_FOR_REVERS: 1,
         DELAY_FOR_UNO: 2,
-        DELAY_FOR_CARD_DISTRIBUTION: 8.5,
-        // DELAY_FOR_CARD_DISTRIBUTION: 6.5,
+        // DELAY_FOR_CARD_DISTRIBUTION: 8.5,
+        DELAY_FOR_CARD_DISTRIBUTION: 6.5,
         DELAY_FOR_TIMES_UP: 2,
         DELAY_FOR_SKIP: 0.5,
 
