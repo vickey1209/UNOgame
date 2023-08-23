@@ -41,7 +41,7 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_TABLE } });
         };
 
-        let UserInTableDetails = await GetUserInTable(userId);
+        let UserInTableDetails = await GetUserInTable(TableDetails.tableId, userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -85,7 +85,7 @@ const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
 
         UserInTableDetails.isUnoClick = true;
 
-        await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
+        await SetUserInTable(TableDetails.tableId, UserInTableDetails.userId, UserInTableDetails);
 
         EventEmitter.emit(UNO, { en: UNO, RoomId: TableDetails.tableId, Data });
 

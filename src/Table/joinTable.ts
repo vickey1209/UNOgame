@@ -157,7 +157,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        await SetUserInTable(UserDetails.userId, UserInTable);
+        await SetUserInTable(TableDetails.tableId, UserDetails.userId, UserInTable);
 
         // EventEmitter.emit(NEW_USER, { en: NEW_USER, Data: PlayerForPlayerArray, RoomId: TableDetails.tableId });
 

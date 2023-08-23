@@ -41,7 +41,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
         if (!UserAvailableInTable) { throw new Error(CONSTANTS.ERROR_MESSAGES.WRONG_TABLE) };
 
-        let UserInTableDetails = await GetUserInTable(UserAvailableInTable?.userId);
+        let UserInTableDetails = await GetUserInTable(TableDetails.tableId, UserAvailableInTable?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -103,7 +103,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
             UserInTableDetails.isUnoClick = false;
 
-            await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
+            await SetUserInTable(TableDetails.tableId, UserInTableDetails.userId, UserInTableDetails);
 
             await SetTable(TableDetails.tableId, TableDetails);
 

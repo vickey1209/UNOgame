@@ -38,7 +38,7 @@ const RoundHistory = async (en: string, socket: Socket, Data: RoundHistoryInterf
             return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_TABLE } });
         };
 
-        let UserInTableDetails = await GetUserInTable(userId);
+        let UserInTableDetails = await GetUserInTable(TableDetails.tableId, userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

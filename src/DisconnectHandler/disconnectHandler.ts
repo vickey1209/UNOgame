@@ -59,7 +59,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
                 await DeleteTable(TableDetails.tableId);
 
-                await DeleteUserInTable(UserDetails.userId);
+                await DeleteUserInTable(TableDetails.tableId, UserDetails.userId);
 
                 await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
 

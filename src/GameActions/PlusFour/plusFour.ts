@@ -47,7 +47,7 @@ const PlusFour = async (tableId: string) => {
 
         if (!PenaltyUser) { throw new Error(CONSTANTS.ERROR_MESSAGES.ARRAY_FIND_ERROR) };
 
-        let UserInTableDetails = await GetUserInTable(PenaltyUser?.userId);
+        let UserInTableDetails = await GetUserInTable(TableDetails.tableId, PenaltyUser?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -92,7 +92,7 @@ const PlusFour = async (tableId: string) => {
 
             UserInTableDetails.isUnoClick = false;
 
-            await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
+            await SetUserInTable(TableDetails.tableId, UserInTableDetails.userId, UserInTableDetails);
 
             const PickCardResData: PickCardResInterface = {
 

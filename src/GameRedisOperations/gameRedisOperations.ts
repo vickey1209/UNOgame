@@ -152,21 +152,21 @@ const DeleteTable = async (TableId: string) => {
 
 // ^ User In Table ...
 
-const UserInTableKeySet = async (UserInTableId: string) => {
+const UserInTableKeySet = async (TableId: string, UserInTableId: string) => {
 
-    await Logger('UserInTableKeySet', JSON.stringify({ UserInTableId }));
+    await Logger('UserInTableKeySet', JSON.stringify({ TableId, UserInTableId }));
 
-    const key = `${USER_IN_TABLE}:${UserInTableId}`;
+    const key = `${USER_IN_TABLE}:${TableId}:${UserInTableId}`;
 
     return key;
 
 };
 
-const SetUserInTable = async (UserInTableId: string, UserInTableData: UserInTableInterface) => {
+const SetUserInTable = async (TableId: string, UserInTableId: string, UserInTableData: UserInTableInterface) => {
 
-    await Logger('SetUserInTable', JSON.stringify({ UserInTableId, UserInTableData }));
+    await Logger('SetUserInTable', JSON.stringify({ TableId, UserInTableId, UserInTableData }));
 
-    const key = await UserInTableKeySet(UserInTableId);
+    const key = await UserInTableKeySet(TableId, UserInTableId);
 
     const UserInTableSet = await SetData(key, UserInTableData);
 
@@ -174,11 +174,11 @@ const SetUserInTable = async (UserInTableId: string, UserInTableData: UserInTabl
 
 };
 
-const GetUserInTable = async (UserInTableId: string): Promise<UserInTableInterface> => {
+const GetUserInTable = async (TableId: string, UserInTableId: string): Promise<UserInTableInterface> => {
 
-    await Logger('GetUserInTable', JSON.stringify({ UserInTableId }));
+    await Logger('GetUserInTable', JSON.stringify({ TableId, UserInTableId }));
 
-    const key = await UserInTableKeySet(UserInTableId);
+    const key = await UserInTableKeySet(TableId, UserInTableId);
 
     const UserInTableGet = await GetData(key);
 
@@ -188,11 +188,11 @@ const GetUserInTable = async (UserInTableId: string): Promise<UserInTableInterfa
 
 };
 
-const DeleteUserInTable = async (UserInTableId: string) => {
+const DeleteUserInTable = async (TableId: string, UserInTableId: string) => {
 
-    await Logger('DeleteUserInTable', JSON.stringify({ UserInTableId }));
+    await Logger('DeleteUserInTable', JSON.stringify({ TableId, UserInTableId }));
 
-    const key = await UserInTableKeySet(UserInTableId);
+    const key = await UserInTableKeySet(TableId, UserInTableId);
 
     await DeleteData(key);
 

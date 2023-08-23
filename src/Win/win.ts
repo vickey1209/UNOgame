@@ -25,7 +25,7 @@ const Win = async (tableId: string, delayNumber: number) => {
 
             const { userId, userName, userProfile, isLeave } = TableDetails.playersArray[i];
 
-            let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
+            let UserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
 
             if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -92,9 +92,9 @@ const Win = async (tableId: string, delayNumber: number) => {
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            const UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
+            const UserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
 
-            if (UserInTableDetails && UserInTableDetails?.tableId === TableDetails.tableId) { await DeleteUserInTable(TableDetails.playersArray[i].userId) };
+            if (UserInTableDetails && UserInTableDetails?.tableId === TableDetails.tableId) { await DeleteUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId) };
 
         };
 

@@ -134,7 +134,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
         await SetTable(Table.tableId, Table);
 
-        await SetUserInTable(UserDetails.userId, UserInTable);
+        await SetUserInTable(Table.tableId, UserDetails.userId, UserInTable);
 
         await SetEmptyTable(UserDetails.bootValue, UserDetails.playerCount, Table.tableId);
 

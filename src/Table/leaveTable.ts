@@ -67,7 +67,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
         if (!UserAvailableInTable) { throw new Error(CONSTANTS.ERROR_MESSAGES.WRONG_TABLE) };
 
-        let UserInTableDetails = await GetUserInTable(userId);
+        let UserInTableDetails = await GetUserInTable(TableDetails.tableId, userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -97,7 +97,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
                 await DeleteTable(TableDetails.tableId);
 
-                await DeleteUserInTable(UserDetails.userId);
+                await DeleteUserInTable(TableDetails.tableId, UserDetails.userId);
 
                 await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
 
