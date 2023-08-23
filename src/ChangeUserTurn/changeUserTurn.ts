@@ -47,7 +47,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (isPick && TableDetails.numberOfCardToPick !== 0) {
 
-            turnInfoDelay += (TableDetails.numberOfCardToPick * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK) + 0.5;
+            turnInfoDelay += (TableDetails.numberOfCardToPick * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK) + 0.8;
 
             isSkip = true, skipSeatIndex = TableDetails.currentTurn;
 
