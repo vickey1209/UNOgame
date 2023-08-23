@@ -30,7 +30,7 @@ const NextRoundProcessAction = async (Data: any) => {
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
+            let UserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
 
             if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -41,7 +41,7 @@ const NextRoundProcessAction = async (Data: any) => {
 
             UserInTableDetails.isUnoClick = false;
 
-            await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
+            await SetUserInTable(TableDetails.tableId, UserInTableDetails.userId, UserInTableDetails);
 
         };
 

@@ -31,7 +31,7 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
         if (!PenaltyUser) { throw new Error(CONSTANTS.ERROR_MESSAGES.ARRAY_FIND_ERROR) };
 
-        let UserInTableDetails = await GetUserInTable(PenaltyUser?.userId);
+        let UserInTableDetails = await GetUserInTable(TableDetails.tableId, PenaltyUser?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -39,7 +39,7 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
         Data?.PickCardResData?.pickCards.forEach((card: string) => { UserInTableDetails.cardArray.push(card); });
 
-        await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
+        await SetUserInTable(TableDetails.tableId, UserInTableDetails.userId, UserInTableDetails);
 
         if (UserInTableDetails.cardArray.length === 2 && Data?.PickCardResData?.isPlayableCard) {
 

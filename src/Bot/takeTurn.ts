@@ -11,10 +11,10 @@ import { Config } from "../Config";
 import { getUserScore } from "../AllUserScore/allUserScore";
 import { findActiveCard } from "./findActiveCard";
 
-const TakeTurn = async (tableId: string) => { 
+const TakeTurn = async (tableId: string) => {
 
     try {
- 
+
         await Logger("TakeTurn", JSON.stringify({ tableId }));
 
         let TableDetails: TableInterface = await GetTable(tableId);
@@ -25,26 +25,26 @@ const TakeTurn = async (tableId: string) => {
 
         if (!UserAvailableInTable) { throw new Error(CONSTANTS.ERROR_MESSAGES.WRONG_TABLE) };
 
-        let UserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
+        let UserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.tableId, UserAvailableInTable?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
         let detailsOfActiveCard = await findActiveCard(UserInTableDetails.cardArray,
             {
-                tableId:TableDetails.tableId,
-                activeCard:TableDetails.activeCard,
-                cardNumber:TableDetails.activeCardType,
-                currentTurnSeatIndex:TableDetails.currentTurn,
-                robotType:TableDetails.botPriority,
-                isClockwise:TableDetails.isClockwise,
-                currentTurn:TableDetails.currentTurn,
-                playersArray:TableDetails.playersArray,
-                activeCardColor:TableDetails.activeCardColor,
+                tableId: TableDetails.tableId,
+                activeCard: TableDetails.activeCard,
+                cardNumber: TableDetails.activeCardType,
+                currentTurnSeatIndex: TableDetails.currentTurn,
+                robotType: TableDetails.botPriority,
+                isClockwise: TableDetails.isClockwise,
+                currentTurn: TableDetails.currentTurn,
+                playersArray: TableDetails.playersArray,
+                activeCardColor: TableDetails.activeCardColor,
             })
 
         console.log(" TakeTurn detailsOfActiveCard : ", detailsOfActiveCard);
 
-        if (detailsOfActiveCard.flag==true && detailsOfActiveCard.card) { // ^ Throw Card
+        if (detailsOfActiveCard.flag == true && detailsOfActiveCard.card) { // ^ Throw Card
 
             let Fake_Socket = {
 
@@ -66,9 +66,9 @@ const TakeTurn = async (tableId: string) => {
 
             const Fake_Data = {
 
-                card:detailsOfActiveCard.card, 
-                cardType:detailsOfActiveCard.card.split('-')[1], 
-                cardColor:detailsOfActiveCard.C_C,
+                card: detailsOfActiveCard.card,
+                cardType: detailsOfActiveCard.card.split('-')[1],
+                cardColor: detailsOfActiveCard.C_C,
                 cardIndex: 0,
 
                 userId: UserInTableDetails.userId,

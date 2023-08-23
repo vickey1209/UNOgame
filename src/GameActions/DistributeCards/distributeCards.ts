@@ -48,7 +48,7 @@ const DistributeCards = async (tableId: string) => {
 
             if (TableDetails.playersArray[i].isLeave === false) {
 
-                let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
+                let UserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
 
                 const UserDetails = await GetUser(TableDetails.playersArray[i].userId);
 
@@ -84,7 +84,7 @@ const DistributeCards = async (tableId: string) => {
 
                 AllUserSocketId.push({ socketId: UserDetails.socketId, Cards: UserInTableDetails.cardArray });
 
-                await SetUserInTable(TableDetails.playersArray[i].userId, UserInTableDetails);
+                await SetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId, UserInTableDetails);
 
             };
 

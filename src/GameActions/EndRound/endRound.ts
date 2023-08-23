@@ -37,7 +37,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
             const { userId, userName, userProfile, isLeave, seatIndex } = TableDetails.playersArray[i];
 
-            let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
+            let UserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
 
             if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -52,7 +52,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
             RoundScoreArray.push({ userId, userName, userProfile, isLeave, seatIndex, userScore: Score.currentRoundScore, currentRound: TableDetails.currentRound, ...Score });
 
-            await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
+            await SetUserInTable(TableDetails.tableId, UserInTableDetails.userId, UserInTableDetails);
 
         };
 

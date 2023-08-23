@@ -123,7 +123,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
 
     const UserAvailableInTable = tableData.playersArray.find((e:any) => { return e.seatIndex === nextTurn });
 
-    let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(UserAvailableInTable?.userId);
+    let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(tableData.tableId,UserAvailableInTable?.userId);
     if(tableData.robotType==CONSTANTS.BOT_PRIORITY.EASY){
         let botPickPriority = await GAME_ACTIONS.RandomNumber(0,10);
         let botPickPriorityBaseOnOpponentCards = await GAME_ACTIONS.RandomNumber(2,5);

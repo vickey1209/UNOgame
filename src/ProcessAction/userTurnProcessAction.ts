@@ -53,7 +53,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
-        let UserInTableDetails = await GetUserInTable(CurrentTurnUser?.userId);
+        let UserInTableDetails = await GetUserInTable(TableDetails.tableId, CurrentTurnUser?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -171,7 +171,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        await SetUserInTable(UserInTableDetails.userId, UserInTableDetails);
+        await SetUserInTable(TableDetails.tableId, UserInTableDetails.userId, UserInTableDetails);
 
         const TurnMissResData = { userId: UserInTableDetails.userId, tableId: UserInTableDetails.tableId, seatIndex: UserInTableDetails.seatIndex, turnMissCount: UserInTableDetails.turnMissCount };
 
@@ -184,7 +184,7 @@ const UserTurnProcessAction = async (Data: any) => {
             const socket = io.sockets.sockets.get(UserDetails.socketId); // * Find User Socket
 
             if (socket) { await LeaveRoom(socket, TableDetails.tableId); };
-            
+
         };
 
         if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT && TableDetails.numberOfCardToPick === 0) {

@@ -48,7 +48,7 @@ const TurnInfoProcessAction = async (Data: any) => {
         TableDetails.isTurnLock = false;
         TableDetails.isLeaveLock = false;
 
-        let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[TableDetails.currentTurn]?.userId);
+        let UserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[TableDetails.currentTurn]?.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -125,7 +125,7 @@ const TurnInfoProcessAction = async (Data: any) => {
             };
             const UserAvailableInTable: any = TableDetails.playersArray.find((e: any) => { return e.seatIndex === nextTurn });
 
-            let nextPlayerUserInTableDetails = await GetUserInTable(UserAvailableInTable.userId);
+            let nextPlayerUserInTableDetails = await GetUserInTable(TableDetails.tableId, UserAvailableInTable.userId);
 
             if (UserInTableDetails.cardArray.length < nextPlayerUserInTableDetails.cardArray.length && RemainingRoundTimer < CONFIG.GamePlay.USER_TURN_TIMER && TableDetails.botPriority === CONSTANTS.BOT_PRIORITY.HARD) {
 

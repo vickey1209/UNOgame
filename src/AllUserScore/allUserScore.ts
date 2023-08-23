@@ -25,7 +25,7 @@ const AllUserScore = async (tableId: string) => {
 
             if (TableDetails.playersArray[i].isLeave === false) {
 
-                let UserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
+                let UserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
 
                 if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 

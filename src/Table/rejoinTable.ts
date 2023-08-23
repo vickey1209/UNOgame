@@ -59,7 +59,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === UserDetails.userId });
 
-        let UserInTableDetails = await GetUserInTable(UserDetails.userId);
+        let UserInTableDetails = await GetUserInTable(TableDetails.tableId, UserDetails.userId);
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -114,7 +114,7 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
                 for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-                    const SingleUserInTableDetails = await GetUserInTable(TableDetails.playersArray[i].userId);
+                    const SingleUserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
 
                     const { turnMissCount, isUnoClick } = SingleUserInTableDetails;
 
