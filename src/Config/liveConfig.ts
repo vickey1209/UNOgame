@@ -64,7 +64,7 @@ const LiveConfig = (): ConfigInterface => {
         UNO_CLICK_TIMER: 2,
         CLEAR_TABLE_DATA_TIMER: 30,
 
-        DISTRIBUTE_CARDS_LIMIT: 12,
+        DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
         TURN_TIMEOUT_COUNT: 3,
@@ -87,7 +87,6 @@ const LiveConfig = (): ConfigInterface => {
         DELAY_FOR_COLOR_CHANGE: 2,
         DELAY_FOR_REVERS: 1,
         DELAY_FOR_UNO: 2,
-        // DELAY_FOR_CARD_DISTRIBUTION: 8.5,
         DELAY_FOR_CARD_DISTRIBUTION: 6.5,
         DELAY_FOR_TIMES_UP: 2,
         DELAY_FOR_SKIP: 0.5,
