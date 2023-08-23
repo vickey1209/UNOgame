@@ -47,7 +47,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
         if (isPick && TableDetails.numberOfCardToPick !== 0) {
 
-            turnInfoDelay += (TableDetails.numberOfCardToPick * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK);
+            turnInfoDelay += (TableDetails.numberOfCardToPick * CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK) + 0.5;
 
             isSkip = true, skipSeatIndex = TableDetails.currentTurn;
 
@@ -179,7 +179,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
             } else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.PLUS_TWO) {
 
-                turnInfoDelay = (CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK * CONFIG.GamePlay.PLUS_FOUR_PENALTY_NUMBER);
+                turnInfoDelay = (CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK * CONFIG.GamePlay.PLUS_TWO_PENALTY_NUMBER) + 0.5;
 
             } else {
 
