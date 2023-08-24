@@ -7,7 +7,7 @@ const IsThrowPossible = async (UserInTableDetails: UserInTableInterface, TableDe
 
     try {
 
-        await Logger("IsThrowPossible", JSON.stringify({ UserInTableDetails }));
+        await Logger("IsThrowPossible", JSON.stringify({ UserInTableDetails, TableDetails }));
 
         let isThrowPossible: boolean = false, throwPossibleCards: Array<string> = [];
 
@@ -32,6 +32,8 @@ const IsThrowPossible = async (UserInTableDetails: UserInTableInterface, TableDe
             };
 
         };
+
+        throwPossibleCards = throwPossibleCards.filter((element, index) => { return throwPossibleCards.indexOf(element) === index });
 
         return { isThrowPossible, throwPossibleCards };
 
