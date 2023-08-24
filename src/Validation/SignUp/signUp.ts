@@ -9,6 +9,8 @@ const SignUpValidation = async (Data: SignUpInterface) => {
         userName: Joi.string().min(1).required(),
         userProfile: Joi.string().required(),
         mobileNumber: Joi.string().required(),
+        socketId: Joi.string(),
+        tableId: Joi.string(),
         chips: Joi.number().strict().required(),
         token: Joi.string().required(),
         bootValue: Joi.number().strict().required(),

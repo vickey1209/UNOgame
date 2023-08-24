@@ -126,7 +126,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
             if (PlayerIndexInArray !== -1) { TableDetails.disconnectedUsers.splice(PlayerIndexInArray, 1); };
 
-            UserDetails.tableId = isPlayerChooseToLeave ? '' : CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
+            UserDetails.tableId = (isPlayerChooseToLeave || UserDetails.tableId === '') ? '' : CONSTANTS.COMMON.DISCONNECTED_OR_TURN_MISS;
             await SetUser(UserDetails.userId, UserDetails);
 
             await SetTable(TableDetails.tableId, TableDetails);
