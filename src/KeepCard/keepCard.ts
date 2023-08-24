@@ -7,7 +7,6 @@ import { EventEmitter } from "../Connection/emitter";
 import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { KeepCardInterface } from "../Interface/KeepCard/KeepCardInterface";
 import { BullTimer } from "../BullTimer";
-import { AllUserScore } from "../AllUserScore/allUserScore";
 
 const KeepCard = async (en: string, socket: Socket, Data: KeepCardInterface) => {
 
@@ -64,8 +63,6 @@ const KeepCard = async (en: string, socket: Socket, Data: KeepCardInterface) => 
         await SetUserInTable(TableDetails.tableId, UserInTableDetails.userId, UserInTableDetails);
 
         await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
-
-        await AllUserScore(TableDetails.tableId);
 
         await ChangeUserTurn(TableDetails.tableId, false, false, 0);
 
