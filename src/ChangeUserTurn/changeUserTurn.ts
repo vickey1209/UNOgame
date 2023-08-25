@@ -9,7 +9,7 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
 
     try {
 
-        await Logger("ChangeUserTurn", JSON.stringify({ tableId }));
+        await Logger("ChangeUserTurn", JSON.stringify({ tableId, isThrow, isPick, remainingCardsNumber }));
 
         const CONFIG = Config();
 
@@ -26,7 +26,6 @@ const ChangeUserTurn = async (tableId: string, isThrow: boolean, isPick: boolean
             else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.COLOR_CHANGE) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_COLOR_CHANGE; }
             else if (TableDetails.activeCardType === CONSTANTS.UNO_CARDS.CARDS_TYPE.REVERS) { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_REVERS; }
             else { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_REVERS; };
-            // else { turnInfoDelay = CONFIG.GamePlay.DELAY_FOR_SINGLE_PICK; };
 
             await BullTimer.AddJob.TurnInfo(TableDetails.tableId, isSkip, skipSeatIndex, isRevers, 0.1);
 

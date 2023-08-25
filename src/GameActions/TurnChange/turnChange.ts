@@ -20,6 +20,8 @@ const ClockWiseTurnChange = async (TableDetails: TableInterface) => {
             };
         };
 
+        await Logger("ClockWiseTurnChange Return", JSON.stringify({ NextTurn }));
+
         return NextTurn;
 
     } catch (error: any) {
@@ -47,6 +49,8 @@ const AntiClockWiseTurnChange = async (TableDetails: TableInterface) => {
                 break;
             };
         };
+
+        await Logger("AntiClockWiseTurnChange Return", JSON.stringify({ NextTurn }));
 
         return NextTurn;
 

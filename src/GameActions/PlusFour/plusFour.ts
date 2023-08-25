@@ -70,6 +70,8 @@ const PlusFour = async (tableId: string) => {
 
             SkipData = { ...SkipData, nextTurnSeatIndex: SkipData.skipSeatIndex };
 
+            await Logger("PlusFour Return", JSON.stringify({ ...SkipData, pickCards, isPenaltyFreeCard, penaltyNumber }));
+
             return { ...SkipData, pickCards, isPenaltyFreeCard, penaltyNumber };
 
         } else {
@@ -109,6 +111,8 @@ const PlusFour = async (tableId: string) => {
             let SkipData = await GAME_ACTIONS.Skip(TableDetails.tableId);
 
             if (!SkipData) { throw new Error(CONSTANTS.ERROR_MESSAGES.SKIP_ERROR) };
+
+            await Logger("PlusFour Return", JSON.stringify({ ...SkipData, pickCards, isPenaltyFreeCard, penaltyNumber }));
 
             return { ...SkipData, pickCards, isPenaltyFreeCard, penaltyNumber };
 

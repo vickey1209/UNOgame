@@ -76,18 +76,6 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
 
         await Logger("NewUser", JSON.stringify({ Data }));
 
-        // const {
-
-        //     userId,
-        //     userName,
-        //     userProfile,
-        //     chips,
-        //     bootValue,
-        //     playerCount,
-        //     isBot
-
-        // } = Data;
-
         const NewUserData: SignUpInterface = {
 
             userId: Data.userId,
@@ -111,24 +99,11 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
     };
 };
 
-
 const UpdateUser = async (socket: Socket, Data: SignUpInterface, AvailableUser: SignUpInterface) => {
 
     try {
 
         await Logger("UpdateUser", JSON.stringify({ AvailableUser, Data }));
-
-        // const {
-
-        //     userId,
-        //     userName,
-        //     userProfile,
-        //     chips,
-        //     bootValue,
-        //     playerCount,
-        //     isBot,
-
-        // } = Data;
 
         const UpdateUserData: SignUpInterface = {
 

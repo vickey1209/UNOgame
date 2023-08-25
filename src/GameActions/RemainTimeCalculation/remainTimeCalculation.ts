@@ -24,6 +24,8 @@ const RemainTimeCalculation = async (Job: any) => {
 
         if (FixedFinalRemainingTime < 0) { return 0; };
 
+        await Logger("RemainTimeCalculation Return", JSON.stringify({ FixedFinalRemainingTime }));
+
         return FixedFinalRemainingTime;
 
     } catch (error: any) {
