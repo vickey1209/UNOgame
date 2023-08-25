@@ -1,3 +1,4 @@
+import { AllUserScore } from "../AllUserScore/allUserScore";
 import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
@@ -55,6 +56,8 @@ const PickCardDelayProcessAction = async (Data: any) => {
         };
 
         EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: Data?.PickCardResData });
+
+        if (Data?.PickCardResData?.isPlayableCard) { await AllUserScore(TableDetails.tableId); };
 
     } catch (error: any) {
 
