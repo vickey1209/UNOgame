@@ -11,7 +11,6 @@ import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterf
 import { GAME_ACTIONS } from "../GameActions";
 import { ThrowCard } from "../ThrowCard/throwCard";
 import { findPointAndColorWiseCards } from "../Bot/findPointAndColorWiseCards";
-import { AllUserScore } from "../AllUserScore/allUserScore";
 
 const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
     // const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => {
@@ -124,8 +123,6 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
         // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
         await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, 0, PickCardResData);
-
-        if (isPlayableCard) { await AllUserScore(TableDetails.tableId); };
 
         if (!isPlayableCard) {
 
