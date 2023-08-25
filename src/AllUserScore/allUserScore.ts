@@ -13,8 +13,6 @@ const AllUserScore = async (tableId: string) => {
 
         const { USERS_SCORE } = CONSTANTS.EVENTS_NAME;
 
-        // let ScoreResData: any = { allUserScore: [] };
-
         let allUserScore = [];
 
         let TableDetails = await GetTable(tableId);
@@ -33,14 +31,12 @@ const AllUserScore = async (tableId: string) => {
 
                 if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
 
-                // ScoreResData.allUserScore.push({ userScore: Math.abs(Score.currentRoundScore), seatIndex: UserInTableDetails.seatIndex, cardsLength: UserInTableDetails.cardArray.length });
                 allUserScore.push({ userScore: Math.abs(Score.currentRoundScore), seatIndex: UserInTableDetails.seatIndex, cardsLength: UserInTableDetails.cardArray.length });
 
             };
 
         };
 
-        // EventEmitter.emit(USERS_SCORE, { en: USERS_SCORE, RoomId: TableDetails.tableId, Data: ScoreResData });
         EventEmitter.emit(USERS_SCORE, { en: USERS_SCORE, RoomId: TableDetails.tableId, Data: { allUserScore } });
 
     } catch (error: any) {
@@ -124,8 +120,6 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
             };
 
         };
-
-        // currentRoundScore = (-Math.abs(currentRoundScore));
 
         totalScore = UserInTableDetails.userScore + currentRoundScore;
 

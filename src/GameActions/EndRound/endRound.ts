@@ -95,10 +95,6 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
             await BullTimer.AddJob.RoundScoreDelay(TableDetails.tableId, delayNumber);
 
-            // await BullTimer.AddJob.NextRound(TableDetails.tableId);
-
-            // EventEmitter.emit(ROUND_SCORE, { en: ROUND_SCORE, RoomId: TableDetails.tableId, Data: { roundScreenTimer: CONFIG.GamePlay.NEXT_ROUND_TIMER, allRoundScore: AllRoundScore } });
-
         };
 
     } catch (error: any) {

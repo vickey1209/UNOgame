@@ -1,6 +1,5 @@
 import { BullTimer } from "../BullTimer";
 import { Config } from "../Config";
-import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
@@ -121,10 +120,7 @@ const UnoClickProcessAction = async (Data: any) => {
 
                 await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, 0, PickCardResData);
 
-                // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
-
                 await BullTimer.AddJob.TurnInfo(TableDetails.tableId, Data?.isSkip, Data?.skipSeatIndex, Data?.isRevers, delayNumber);
-                // await BullTimer.AddJob.TurnInfo(TableDetails.tableId, Data?.isSkip, Data?.skipSeatIndex, Data?.isRevers, Data?.delayNumber);
 
             };
         };

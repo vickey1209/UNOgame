@@ -7,7 +7,7 @@ const Win = async (tableId: string, delayNumber: number) => {
 
     try {
 
-        await Logger("Win", JSON.stringify({ tableId }));
+        await Logger("Win", JSON.stringify({ tableId, delayNumber }));
 
         let TableDetails = await GetTable(tableId);
 

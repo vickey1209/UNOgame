@@ -59,6 +59,8 @@ const Skip = async (tableId: string) => {
 
         };
 
+        await Logger("Skip Return", JSON.stringify({ isSkip, skipSeatIndex, nextTurnSeatIndex }));
+
         return { isSkip, skipSeatIndex, nextTurnSeatIndex };
 
     } catch (error: any) {

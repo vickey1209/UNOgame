@@ -20,6 +20,8 @@ const IsShufflePossible = async (tableId: string) => {
         if (cardsForCloseDeckArray.length < 1) { isShuffle = false; }
         else { cardsForCloseDeckArray = await GAME_ACTIONS.ShuffleArray(cardsForCloseDeckArray); };
 
+        await Logger("IsShufflePossible Return", JSON.stringify({ isShuffle, cardsForCloseDeckArray, cardsForOpenDeckArray: TableDetails.openCardDeck }));
+
         return { isShuffle, cardsForCloseDeckArray, cardsForOpenDeckArray: TableDetails.openCardDeck };
 
     } catch (error: any) {

@@ -35,7 +35,6 @@ const Logger = async (Path: string, Data: string) => {
             // logger.info(JSON.stringify({ Path, Data }));
 
             logger.info(`Path : ${Path} >> Data : ${Data}`);
-            // logger.info('');
 
         };
 
