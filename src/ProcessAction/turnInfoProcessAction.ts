@@ -14,7 +14,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
     const Path = 'TurnInfoProcessAction';
 
-    const { TURN_INFO, ROUND_START, UNO_HIGHLIGHT } = CONSTANTS.EVENTS_NAME;
+    const { TURN_INFO, ROUND_START, UNO_HIGHLIGHT, ACTIVE_CARD } = CONSTANTS.EVENTS_NAME;
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
@@ -42,6 +42,8 @@ const TurnInfoProcessAction = async (Data: any) => {
             await BullTimer.AddJob.Round(TableDetails.tableId);
 
             EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: TableDetails.tableId, Data: { timer: CONFIG.GamePlay.ROUND_TIMER, currentRound: TableDetails.currentRound } });
+
+            EventEmitter.emit(ACTIVE_CARD, { en: ACTIVE_CARD, RoomId: TableDetails.tableId, Data: { activeCard: TableDetails.activeCard, activeCardType: TableDetails.activeCardType, activeCardColor: TableDetails.activeCardColor } });
 
         };
 
