@@ -16,7 +16,7 @@ const Initialize = async () => {
         const CONFIG = Config();
 
         console.log(new Date());
-        // console.log('CONFIG >', CONFIG);
+        console.log('CONFIG >', CONFIG);
 
         if (ENVIRONMENT === 'live') {
 
