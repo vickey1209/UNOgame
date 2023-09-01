@@ -29,11 +29,11 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
         await Logger("ThrowCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
-        const ValidaionError = await VALIDATOR.ThrowCardValidation(Data);
+        // const ValidaionError = await VALIDATOR.ThrowCardValidation(Data);
 
-        if (ValidaionError) {
-            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: ValidaionError } });
-        };
+        // if (ValidaionError) {
+        //     return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: ValidaionError } });
+        // };
 
         let TableDetails = await GetTable(tableId);
 
