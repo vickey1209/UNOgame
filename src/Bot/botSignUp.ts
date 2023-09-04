@@ -9,7 +9,7 @@ const BotSignUp = async (data:any) => {
 
         const SignUpData = {
 
-            userId: `${Date.now()}`,
+            userId: `Bot_${Date.now()}`,
             userName: "Bot",
             userProfile: "No",
             chips: 100,

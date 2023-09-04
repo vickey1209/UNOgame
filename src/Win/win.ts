@@ -88,15 +88,15 @@ const Win = async (tableId: string, delayNumber: number) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        // for (let i = 0; i < TableDetails.playersArray.length; i++) { await DeleteUserInTable(TableDetails.playersArray[i].userId) };
+        for (let i = 0; i < TableDetails.playersArray.length; i++) { await DeleteUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId) };
 
-        for (let i = 0; i < TableDetails.playersArray.length; i++) {
+        // for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            const UserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
+        //     const UserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
 
-            if (UserInTableDetails && UserInTableDetails?.tableId === TableDetails.tableId) { await DeleteUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId) };
+        //     if (UserInTableDetails && UserInTableDetails?.tableId === TableDetails.tableId) { await DeleteUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId) };
 
-        };
+        // };
 
         await BullTimer.AddJob.WinningDelay(TableDetails.tableId, delayNumber);
 
