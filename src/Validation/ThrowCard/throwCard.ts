@@ -9,7 +9,7 @@ const ThrowCardValidation = async (Data: ThrowCardInterface) => {
         cardType: Joi.string().min(1).required(),
         cardColor: Joi.string().min(1).required(),
         cardIndex: Joi.number().strict().required(),
-        isKeepPlayCard: Joi.boolean().required(),
+        isKeepPlayCard: Joi.boolean(),
 
         userId: Joi.string().min(1),
         tableId: Joi.string().min(1),

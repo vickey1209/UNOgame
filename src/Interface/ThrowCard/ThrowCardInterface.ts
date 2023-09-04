@@ -4,6 +4,7 @@ export interface ThrowCardInterface {
     cardType: string,
     cardColor: string,
     cardIndex: number,
+    isKeepPlayCard?: boolean,
 
     userId: string,
     tableId: string,
