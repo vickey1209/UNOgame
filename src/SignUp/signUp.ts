@@ -25,11 +25,11 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
 
         await Logger('SignUp', JSON.stringify({ Data }));
 
-        const ValidaionError = await VALIDATOR.SignUpValidation(Data);
+        // const ValidaionError = await VALIDATOR.SignUpValidation(Data);
 
-        if (ValidaionError) {
-            return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: ValidaionError } });
-        };
+        // if (ValidaionError) {
+        //     return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: ValidaionError } });
+        // };
 
         socket.handshake.auth.userId = Data?.userId;
         socket.handshake.auth.playerCount = Data?.playerCount;
