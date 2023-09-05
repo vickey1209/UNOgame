@@ -112,6 +112,15 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
         //     await Uno(en, socket, { "userId": UserInTableDetails.userId, "tableId": UserInTableDetails.tableId, "seatIndex": UserInTableDetails.seatIndex })
         // };
 
+        if (UserAvailableInTable.isBot && UserInTableDetails.cardArray.length === 1) { 
+            await RemoveLock(Path, Tablelock);
+            setTimeout(async () => {
+                await Uno(en, socket, { "userId": UserInTableDetails.userId, "tableId": UserInTableDetails.tableId, "seatIndex": UserInTableDetails.seatIndex })
+            }, 1000);
+        }else{
+            await RemoveLock(Path, Tablelock);
+        }
+
         await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length);
 
     } catch (error: any) {
@@ -120,7 +129,7 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
     } finally {
 
-        await RemoveLock(Path, Tablelock);
+        // await RemoveLock(Path, Tablelock);
 
     };
 };

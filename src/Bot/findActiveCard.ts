@@ -91,13 +91,17 @@ async function findActiveCard(userCardArray:any, tableData:any){
     }
     console.log(" findActiveCard findActiveCard 2: ",card," card_wild: ",card_wild, " card_w4c :" ,card_w4c," card_no : ",card_no," card_reverse : ",card_reverse," card_skip : ",card_skip," card_draw : ",card_draw);
     
-    card=card_no.concat(card);
-    let active_card=card.concat(card_wild);
-    active_card=active_card.concat(card_w4c);
-    // active_card=active_card.concat(card_no);
-    active_card=active_card.concat(card_reverse);
-    active_card=active_card.concat(card_skip);
+    // card=card_no.concat(card);
+    let active_card=card_reverse.concat(card_skip);
+    // active_card=active_card.concat(card_skip);
+    active_card=active_card.concat(card_no);
+    active_card=active_card.concat(card);
+    active_card=active_card.concat(card_wild);
     active_card=active_card.concat(card_draw);
+    // active_card=active_card.concat(card_no);
+    // active_card=active_card.concat(card_reverse);
+    // active_card=active_card.concat(card_skip);
+    active_card=active_card.concat(card_w4c);
     
     let uniqueArray=[];
     for(let i=0; i < active_card.length; i++){
@@ -199,22 +203,21 @@ async function findActiveCard(userCardArray:any, tableData:any){
                 const RoundJob = await BullTimer.CheckJob.CheckRound(tableData.tableId);
                 let RemainingRoundTimer: any = 0;
                 if (RoundJob) { RemainingRoundTimer = await GAME_ACTIONS.RemainTimeCalculation(RoundJob); };
-                let userActionCardThrowRandom = await GAME_ACTIONS.RandomNumber(2,4);
+                // let userActionCardThrowRandom = await GAME_ACTIONS.RandomNumber(1,2);
 
                 // if(CONFIG.GamePlay.USER_TURN_TIMER < )
 
                 if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && RemainingRoundTimer > CONFIG.GamePlay.USER_TURN_TIMER + 30 /*nextUserInTableDetails.cardArray.length > userActionCardThrowRandom*/){
                     card_bot_w4c = []
                     card_bot_w2c = [];
-                }else if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && nextUserInTableDetails.cardArray.length > userActionCardThrowRandom){
+                }else if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && nextUserInTableDetails.cardArray.length > 2 ){
                     card_bot_w4c = []
                     card_bot_w2c = [];
                 }
                 console.log("card : card :", card, 
                 " card_bot_wild : ", card_bot_wild, 
-                "nextUserInTableDetails.cardArray  : ", nextUserInTableDetails.cardArray, 
-                " userActionCardThrowRandom : ", userActionCardThrowRandom );
-                if((card_bot_wild.length > 0  && card.length === 0 && card_no.length === 0) || nextUserInTableDetails.cardArray.length < userActionCardThrowRandom /*&& D4C_CardInNextPlayerCard.length === 0*/){
+                "nextUserInTableDetails.cardArray  : ", nextUserInTableDetails.cardArray );
+                if((card_bot_wild.length > 0  && card.length === 0 && card_no.length === 0) || nextUserInTableDetails.cardArray.length < 2 /*&& D4C_CardInNextPlayerCard.length === 0*/){
                     color_index = await findPointAndColorWiseCards(userCardArray,color_index)
                 }else{
                     card_bot_wild = [];
@@ -252,11 +255,21 @@ async function findActiveCard(userCardArray:any, tableData:any){
                 let chk__card=uniqueArray[0].slice(0, 4);
                 console.log(" findActiveCard chk__card : ",chk__card);
                 if(chk__card=="W-D4"){
-                    color_index = await findPointAndColorWiseCards(userCardArray,color_index)
-                    return_data.C_C=color_array[color_index];  
+                    if(nextUserInTableDetails.cardArray.length > 2){
+                        return_data.flag = false;
+                    }else{
+                        color_index = await findPointAndColorWiseCards(userCardArray,color_index)
+                        return_data.C_C=color_array[color_index];  
+                    }
+                    
                 }else if(chk__card=="W-CH"){
-                    color_index = await findPointAndColorWiseCards(userCardArray,color_index)
-                    return_data.C_C=color_array[color_index];  
+                    if(nextUserInTableDetails.cardArray.length > 2){
+                        return_data.flag = false;
+                    }else{
+                        color_index = await findPointAndColorWiseCards(userCardArray,color_index)
+                        return_data.C_C=color_array[color_index];  
+                    }
+                    
                 }else{
                     return_data.C_C=uniqueArray[0][0];
                 }

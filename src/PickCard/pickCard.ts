@@ -11,6 +11,8 @@ import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterf
 import { GAME_ACTIONS } from "../GameActions";
 import { ThrowCard } from "../ThrowCard/throwCard";
 import { findPointAndColorWiseCards } from "../Bot/findPointAndColorWiseCards";
+import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
+import { KeepCard } from "../KeepCard/keepCard";
 
 const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
     // const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => {
@@ -131,26 +133,44 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
             await ChangeUserTurn(TableDetails.tableId, false, true, 0);
 
         } else if (UserAvailableInTable.isBot && isPlayableCard) {
-
-            const Fake_Data = {
-                card: UserInTableDetails.lastPickCard, //playableCard,
-                cardType: UserInTableDetails.lastPickCard.split('-')[1], //playableCard.split('-')[1],
-                cardColor: UserInTableDetails.lastPickCard.split('-')[0], //playableCard.split('-')[0],
-                cardIndex: 0,
-                userId: UserInTableDetails.userId,
-                tableId: TableDetails.tableId,
-                seatIndex: UserInTableDetails.seatIndex
-
+            let NextTurn:any = -1;
+            if (TableDetails.isClockwise) {
+                 NextTurn = await GAME_ACTIONS.ClockWiseTurnChange(TableDetails);
+            } else {
+                 NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
             };
-            if (UserInTableDetails.lastPickCard.slice(0, 4) === "W-CH" || UserInTableDetails.lastPickCard.slice(1, 6) === "-D4C-") {
-                let color_array = ["R", "G", "Y", "B"];
-                let color_index = await GAME_ACTIONS.RandomNumber(0, color_array.length - 1);
 
-                color_index = await findPointAndColorWiseCards(UserInTableDetails.cardArray, color_index)
-
-                Fake_Data.cardColor = color_array[color_index];
+            let chk__card=TableDetails.closeCardDeck[0].slice(0, 4);
+            const PlayerIndexInArray = TableDetails.playersArray.findIndex((e) => { return e.seatIndex === NextTurn });
+            if(PlayerIndexInArray !== -1){
+                let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.tableId,TableDetails.playersArray[PlayerIndexInArray].userId);
+                if((chk__card=="W-D4" || chk__card=="W-CH") && nextUserInTableDetails.cardArray.length > 2){
+                    await KeepCard("PICK_CARD",socket,{ userId: UserInTableDetails.userId,
+                        tableId: TableDetails.tableId,
+                        seatIndex: UserInTableDetails.seatIndex})
+                }
+            }else{
+                const Fake_Data = {
+                    card: UserInTableDetails.lastPickCard, //playableCard,
+                    cardType: UserInTableDetails.lastPickCard.split('-')[1], //playableCard.split('-')[1],
+                    cardColor: UserInTableDetails.lastPickCard.split('-')[0], //playableCard.split('-')[0],
+                    cardIndex: 0,
+                    userId: UserInTableDetails.userId,
+                    tableId: TableDetails.tableId,
+                    seatIndex: UserInTableDetails.seatIndex
+    
+                };
+                if (UserInTableDetails.lastPickCard.slice(0, 4) === "W-CH" || UserInTableDetails.lastPickCard.slice(1, 6) === "-D4C-") {
+                    let color_array = ["R", "G", "Y", "B"];
+                    let color_index = await GAME_ACTIONS.RandomNumber(0, color_array.length - 1);
+    
+                    color_index = await findPointAndColorWiseCards(UserInTableDetails.cardArray, color_index)
+    
+                    Fake_Data.cardColor = color_array[color_index];
+                }
+                await BullTimer.AddJob.BotCardThrow({ eventName: "THROW_CARD", socket, delayNumber: 2, Fake_Data })
             }
-            await BullTimer.AddJob.BotCardThrow({ eventName: "THROW_CARD", socket, delayNumber: 2, Fake_Data })
+
         }
 
     } catch (error: any) {
