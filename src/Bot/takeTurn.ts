@@ -54,11 +54,11 @@ const TakeTurn = async (tableId: string) => {
 
                     auth: {
 
-                        userId: '',
-                        tableId: '',
-                        seatIndex: -1,
-                        playerCount: 0,
-                        bootValue: 0,
+                        userId: UserInTableDetails.userId,
+                        tableId: UserInTableDetails.tableId,
+                        seatIndex: UserInTableDetails.seatIndex,
+                        playerCount: TableDetails.maxPlayers,
+                        bootValue: TableDetails.bootValue,
 
                     },
                 },
@@ -89,11 +89,11 @@ const TakeTurn = async (tableId: string) => {
 
                     auth: {
 
-                        userId: '',
-                        tableId: '',
-                        seatIndex: -1,
-                        playerCount: 0,
-                        bootValue: 0,
+                        userId: UserInTableDetails.userId,
+                        tableId: UserInTableDetails.tableId,
+                        seatIndex: UserInTableDetails.seatIndex,
+                        playerCount: TableDetails.maxPlayers,
+                        bootValue: TableDetails.bootValue,
 
                     },
                 },

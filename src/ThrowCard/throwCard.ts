@@ -108,9 +108,9 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
         EventEmitter.emit(THROW_CARD, { en: THROW_CARD, RoomId: TableDetails.tableId, Data: Data });
 
-        if (UserAvailableInTable.isBot && UserInTableDetails.cardArray.length === 1) {
-            await Uno(en, socket, { "userId": UserInTableDetails.userId, "tableId": UserInTableDetails.tableId, "seatIndex": UserInTableDetails.seatIndex })
-        };
+        // if (UserAvailableInTable.isBot && UserInTableDetails.cardArray.length === 1) {
+        //     await Uno(en, socket, { "userId": UserInTableDetails.userId, "tableId": UserInTableDetails.tableId, "seatIndex": UserInTableDetails.seatIndex })
+        // };
 
         await ChangeUserTurn(TableDetails.tableId, true, false, UserInTableDetails.cardArray.length);
 

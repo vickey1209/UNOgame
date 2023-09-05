@@ -130,7 +130,7 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
             seatIndex: NumberOfSeatAvailable[0],
             userScore: 0,
             turnMissCount: 0,
-            isBot: false,
+            isBot: UserDetails.isBot,
             isUnoClick: false,
             lastPickCard: '',
             lastThrowCard: '',
