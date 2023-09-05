@@ -1,6 +1,6 @@
 import { BullTimer } from "../BullTimer";
 import { CONSTANTS } from "../Constants";
-import { DeleteUserInTable, GetRoundHistory, GetTable, GetUser, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
+import { DeleteUser, DeleteUserInTable, GetRoundHistory, GetTable, GetUser, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
 const Win = async (tableId: string, delayNumber: number) => {
@@ -88,7 +88,13 @@ const Win = async (tableId: string, delayNumber: number) => {
 
         await SetTable(TableDetails.tableId, TableDetails);
 
-        for (let i = 0; i < TableDetails.playersArray.length; i++) { await DeleteUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId); };
+        for (let i = 0; i < TableDetails.playersArray.length; i++) {
+
+            await DeleteUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
+
+            if (TableDetails.playersArray[i].isBot) { await DeleteUser(TableDetails.playersArray[i].userId); };
+
+        };
 
         await BullTimer.AddJob.WinningDelay(TableDetails.tableId, delayNumber);
 

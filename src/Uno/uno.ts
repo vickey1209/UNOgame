@@ -8,7 +8,7 @@ import { UnoInterface } from "../Interface/Uno/UnoInterface";
 import { GAME_ACTIONS } from "../GameActions";
 import { BullTimer } from "../BullTimer";
 
-const Uno = async (en: string, socket: Socket, Data: UnoInterface) => {
+const Uno = async (en: string, socket: any, Data: UnoInterface) => {
 
     const Path = 'Uno';
 
