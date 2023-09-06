@@ -16,7 +16,8 @@ import { KeepCard } from "../KeepCard/keepCard";
 
 const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
     // const PickCard = async (en: string, socket: Socket, Data: PickCardInterface) => {
-
+    console.log
+    ("PickCard : Data: ", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
     const Path = 'PickCard';
 
     const { PICK_CARD, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
@@ -32,7 +33,8 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
 
     try {
 
-        await Logger("PickCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
+        console.log
+        ("PickCard", JSON.stringify({ Data, SocketData: socket.handshake.auth }));
 
         let TableDetails = await GetTable(tableId);
 
@@ -125,7 +127,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
         // EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: PickCardResData });
 
         await BullTimer.AddJob.PickCardDelay(TableDetails.tableId, 0, PickCardResData);
-
+        console.log("PickCard isPlayableCard : ",UserAvailableInTable.isBot,isPlayableCard)
         if (!isPlayableCard) {
 
             await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
@@ -139,15 +141,22 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
             } else {
                  NextTurn = await GAME_ACTIONS.AntiClockWiseTurnChange(TableDetails);
             };
-
+            console.log("PickCard NextTurn : ",NextTurn)
             let chk__card=TableDetails.closeCardDeck[0].slice(0, 4);
+            console.log("PickCard chk__card : ",chk__card, TableDetails.playersArray)
             const PlayerIndexInArray = TableDetails.playersArray.findIndex((e) => { return e.seatIndex === NextTurn });
-            if(PlayerIndexInArray !== -1){
+            console.log("PickCard PlayerIndexInArray : ",PlayerIndexInArray)
+            if(PlayerIndexInArray !== -1 && (chk__card=="W-D4" || chk__card=="W-CH")){
                 let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.tableId,TableDetails.playersArray[PlayerIndexInArray].userId);
-                if((chk__card=="W-D4" || chk__card=="W-CH") && nextUserInTableDetails.cardArray.length > 2){
-                    await KeepCard("PICK_CARD",socket,{ userId: UserInTableDetails.userId,
-                        tableId: TableDetails.tableId,
-                        seatIndex: UserInTableDetails.seatIndex})
+                console.log("PickCard nextUserInTableDetails.cardArray : ",nextUserInTableDetails.cardArray , UserInTableDetails.cardArray)
+                if(nextUserInTableDetails.cardArray.length > 2 && UserInTableDetails.cardArray.length > 2){
+
+                    setTimeout( async() => {
+                        await KeepCard("PICK_CARD",socket,{ userId: UserInTableDetails.userId,
+                            tableId: TableDetails.tableId,
+                            seatIndex: UserInTableDetails.seatIndex})
+                    }, 1000);
+                    
                 }
             }else{
                 const Fake_Data = {

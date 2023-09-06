@@ -37,7 +37,7 @@ async function findPointAndColorWiseCards(userCardArray:any, color_index:number)
     })    
 
     console.log("indexOfLongestArray :", cardPointObj );
-    color_index = cardPointObj.idx;
+    color_index =cardPointObj && cardPointObj.idx ? cardPointObj.idx : 0;
     
     // if(resRedCardsCurrentPlayer.length === 0){
     //     color_index = 0;

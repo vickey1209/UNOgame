@@ -40,6 +40,7 @@ const TakeTurn = async (tableId: string) => {
                 currentTurn: TableDetails.currentTurn,
                 playersArray: TableDetails.playersArray,
                 activeCardColor: TableDetails.activeCardColor,
+                penaltyCardCounter : TableDetails.numberOfCardToPick
             })
 
         console.log(" TakeTurn detailsOfActiveCard : ", detailsOfActiveCard);
@@ -106,7 +107,7 @@ const TakeTurn = async (tableId: string) => {
                 seatIndex: UserInTableDetails.seatIndex
 
             };
-
+            console.log(" TakeTurn detailsOfActiveCard PickCard: ",JSON.stringify(Fake_Socket), Fake_Data);
             await PickCard('PICK_CARD', Fake_Socket, Fake_Data);
 
         };
