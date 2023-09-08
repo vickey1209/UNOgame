@@ -25,18 +25,19 @@ async function findActiveCard(userCardArray:any, tableData:any){
     //     }
     // }
     // Search for card color
+    console.log(" findActiveCard user_card : ", user_card);
     let card = user_card.filter((item:string) => new RegExp(tableData.activeCardColor+"-" , 'i').test(item));
     if (card.length > 0) {
         card = card.sort(function(user_card:string, b:string){return Number(user_card[2]) - Number(b[2])})
         card = card.reverse();
     }    
-
+    console.log(" findActiveCard user_card1 : ", user_card);
     // Search for wild card
     let card_wild = user_card.filter((item:string) => new RegExp("W-CH" , 'i').test(item));
     
     // Search for draw 4 card
     let card_w4c = user_card.filter((item:string) => new RegExp("D4C-" , 'i').test(item));
-  
+    console.log(" findActiveCard card_w4c : ", card_w4c);
 
     const cardNumber = tableData.cardNumber === "CH" || tableData.cardNumber === "RE" || tableData.cardNumber === "S" || tableData.cardNumber === "D2C" || tableData.cardNumber === "D4C" ? "----" : tableData.cardNumber; 
 
@@ -60,7 +61,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
 
     let active_w2c_color = user_card.filter((item:string) => new RegExp(tableData.activeCardColor+"-D2C-" , 'i').test(item));     
 
-    console.log(" findActiveCard findActiveCard 1: ");
+    console.log(" findActiveCard findActiveCard 1: ",card_w4c);
     let flag = false; 
     
     if(card.length > 0){
@@ -100,7 +101,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
     let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(tableData.tableId,UserAvailableInTable?.userId);
 
     let w2cSameColorCard = card_draw.filter((item:string) => new RegExp(tableData.activeCardColor+"-D2C-" , 'i').test(item));   
-
+    console.log(" findActiveCard card_w4c111 : ", card_w4c);
     if(tableData.activeCard.slice(2, 5) === "D2C" && card_draw.length === 0 && card_w4c.length === 0){
         flag= false;
     }else if(tableData.activeCard.slice(2, 5) === "D4C" && active_w2c_color.length > 0 && tableData.penaltyCardCounter === 0){
@@ -127,7 +128,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
         card_skip = [];
         card_draw = [];
         w2cSameColorCard = [];
-    }else if(tableData.robotType==CONSTANTS.BOT_PRIORITY.HARD && nextUserInTableDetails.cardArray.length > 2 && userCardArray.length > 2){
+    }else if(tableData.robotType==CONSTANTS.BOT_PRIORITY.HARD && nextUserInTableDetails.cardArray.length > 2 && userCardArray.length > 2 /*&& card_w4c.length < 2*/){
         card_wild = [];
         card_w4c = [];
     }
@@ -166,6 +167,21 @@ async function findActiveCard(userCardArray:any, tableData:any){
     if(uniqueArray.length === 0){
         flag = false;
     }
+
+    // let active2DCard = uniqueArray.filter((item:string) => new RegExp("-D2C-" , 'i').test(item)); 
+    // let active4DCard = uniqueArray.filter((item:string) => new RegExp("-D4C-" , 'i').test(item)); 
+    // if(active2DCard.length > 1){
+    //     let user2DCard = user_card.filter((item:string) => new RegExp("-D2C-" , 'i').test(item)); 
+    //     if(user2DCard.length >= 2){
+    //         uniqueArray = user2DCard;
+    //     }
+    // }else if(active4DCard.length > 1){
+    //     let user4DCard = user_card.filter((item:string) => new RegExp("-D4C-" , 'i').test(item)); 
+    //     if(user4DCard.length >= 2){
+    //         uniqueArray = user4DCard;
+    //     }
+    // }
+
     let return_data={flag:flag,si:tableData.currentTurnSeatIndex,card:"",C_C:""}
     let color_array=["R","G","Y","B"];
     let color_index= await GAME_ACTIONS.RandomNumber(0,color_array.length-1);
@@ -181,19 +197,19 @@ async function findActiveCard(userCardArray:any, tableData:any){
             return_data.card=uniqueArray[0];
         }else if(tableData.robotType==CONSTANTS.BOT_PRIORITY.HARD){
             // Search for draw 4 card
-            card_bot_w4c = uniqueArray.filter(item => new RegExp("D4C-" , 'i').test(item));
+            card_bot_w4c = uniqueArray.filter((item:string) => new RegExp("D4C-" , 'i').test(item));
 
             // Search for draw 2 card
-            card_bot_w2c = uniqueArray.filter(item => new RegExp("-D2C-" , 'i').test(item));
+            card_bot_w2c = uniqueArray.filter((item:string) => new RegExp("-D2C-" , 'i').test(item));
 
             // Search for skip card
-            card_bot_skip = uniqueArray.filter(item => new RegExp("-S-" , 'i').test(item));
+            card_bot_skip = uniqueArray.filter((item:string) => new RegExp("-S-" , 'i').test(item));
   
             // Search for reverse card
-            card_bot_reverse = uniqueArray.filter(item => new RegExp("-RE-" , 'i').test(item));
+            card_bot_reverse = uniqueArray.filter((item:string) => new RegExp("-RE-" , 'i').test(item));
   
             // Search for wild card\
-            card_bot_wild = uniqueArray.filter(item => new RegExp("W-CH" , 'i').test(item));
+            card_bot_wild = uniqueArray.filter((item:string) => new RegExp("W-CH" , 'i').test(item));
             console.log(" findActiveCard findActiveCard 5: ",tableData.robotType);
             if(tableData.activeCard.slice(2, 5) === "D4C" && card_bot_w4c.length > 0){
 
@@ -274,7 +290,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
             return_data.C_C=card_bot_reverse[0][0];
         }else{
 
-            let zeroNumberCard = uniqueArray.filter(item => new RegExp("-0-" , 'i').test(item));
+            let zeroNumberCard = uniqueArray.filter((item:string) => new RegExp("-0-" , 'i').test(item));
             if(zeroNumberCard.length > 0 && tableData.robotType==CONSTANTS.BOT_PRIORITY.HARD){
                 return_data.C_C=zeroNumberCard[0][0];
                 return_data.card=zeroNumberCard[0];
