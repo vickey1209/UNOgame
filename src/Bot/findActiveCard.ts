@@ -6,7 +6,7 @@ import { BullTimer } from "../BullTimer";
 import { Config } from "../Config";
 import { findPointAndColorWiseCards } from "./findPointAndColorWiseCards";
 
-async function findActiveCard(userCardArray:any, tableData:any){
+async function findActiveCard(userCardArray:any, tableData:any){ 
     const CONFIG = Config();
     console.log(" findActiveCard findActiveCard : ", userCardArray,tableData);
     let user_card = userCardArray;
