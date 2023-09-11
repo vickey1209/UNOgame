@@ -150,13 +150,14 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
                 let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(TableDetails.tableId,TableDetails.playersArray[PlayerIndexInArray].userId);
                 console.log("PickCard nextUserInTableDetails.cardArray : ",nextUserInTableDetails.cardArray , UserInTableDetails.cardArray)
                 if(nextUserInTableDetails.cardArray.length > 2 && UserInTableDetails.cardArray.length > 2){
-
                     setTimeout( async() => {
                         await KeepCard("PICK_CARD",socket,{ userId: UserInTableDetails.userId,
                             tableId: TableDetails.tableId,
                             seatIndex: UserInTableDetails.seatIndex})
                     }, 1000);
-                    
+                }else{
+                    await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
+                    await ChangeUserTurn(TableDetails.tableId, false, true, 0);
                 }
             }else{
                 const Fake_Data = {
