@@ -100,46 +100,45 @@ async function findActiveCard(userCardArray:any, tableData:any){
 
     let nextUserInTableDetails: UserInTableInterface = await GetUserInTable(tableData.tableId,UserAvailableInTable?.userId);
 
-    let w2cSameColorCard = card_draw.filter((item:string) => new RegExp(tableData.activeCardColor+"-D2C-" , 'i').test(item));   
-    console.log(" findActiveCard card_w4c111 : ", card_w4c);
-    if(tableData.activeCard.slice(2, 5) === "D2C" && card_draw.length === 0 && card_w4c.length === 0){
-        flag= false;
-    }else if(tableData.activeCard.slice(2, 5) === "D4C" && active_w2c_color.length > 0 && tableData.penaltyCardCounter === 0){
-        card = [];
-        card_wild = [];
-        card_no = [];
-        card_reverse = [];
-        card_skip = [];
-        // card_draw = [];
-        card_w4c = [];
-    }else if(tableData.activeCard.slice(2, 5) === "D4C" && card_w4c.length === 0){
-        flag= false;
-    }else if(tableData.activeCard.slice(2, 5) === "D2C" && (card_draw.length > 0 || card_w4c.length  > 0)){
-        card = [];
-        card_wild = [];
-        card_no = [];
-        card_reverse = [];
-        card_skip = [];
-    }else if(tableData.activeCard.slice(2, 5) === "D4C" && card_w4c.length > 0){
-        card = [];
-        card_wild = [];
-        card_no = [];
-        card_reverse = [];
-        card_skip = [];
-        card_draw = [];
-        w2cSameColorCard = [];
-    }else if(tableData.robotType==CONSTANTS.BOT_PRIORITY.HARD && nextUserInTableDetails.cardArray.length > 2 && userCardArray.length > 2 /*&& card_w4c.length < 2*/){
-        card_wild = [];
-        card_w4c = [];
-    }
-    console.log(" findActiveCard findActiveCard 2: ",card," card_wild: ",card_wild, " card_w4c :" ,card_w4c," card_no : ",card_no," card_reverse : ",card_reverse," card_skip : ",card_skip," card_draw : ",card_draw);
-
     if(tableData.robotType==CONSTANTS.BOT_PRIORITY.EASY){
         let botPickPriority = await GAME_ACTIONS.RandomNumber(0,10);
         let botPickPriorityBaseOnOpponentCards = await GAME_ACTIONS.RandomNumber(2,5);
         if(botPickPriority > 4 && nextUserInTableDetails.cardArray.length < botPickPriorityBaseOnOpponentCards){
             flag = false; 
         }
+    }else{
+
+        console.log(" findActiveCard card_w4c111 : ", card_w4c);
+        if(tableData.activeCard.slice(2, 5) === "D2C" && card_draw.length === 0 && card_w4c.length === 0 && tableData.penaltyCardCounter > 0){
+            flag= false;
+        }else if(tableData.activeCard.slice(2, 5) === "D4C" && active_w2c_color.length > 0 && tableData.penaltyCardCounter === 0){
+            card = [];
+            card_wild = [];
+            card_no = [];
+            card_reverse = [];
+            card_skip = [];
+            // card_draw = [];
+            card_w4c = [];
+        }else if(tableData.activeCard.slice(2, 5) === "D4C" && card_w4c.length === 0 && tableData.penaltyCardCounter > 0){
+            flag= false;
+        }else if(tableData.activeCard.slice(2, 5) === "D2C" && (card_draw.length > 0 || card_w4c.length  > 0)){
+            card = [];
+            card_wild = [];
+            card_no = [];
+            card_reverse = [];
+            card_skip = [];
+        }else if(tableData.activeCard.slice(2, 5) === "D4C" && card_w4c.length > 0){
+            card = [];
+            card_wild = [];
+            card_no = [];
+            card_reverse = [];
+            card_skip = [];
+            card_draw = [];
+        }else if(tableData.robotType==CONSTANTS.BOT_PRIORITY.HARD && nextUserInTableDetails.cardArray.length > 2 && userCardArray.length > 2 && card_w4c.length < 2/*&& card_w4c.length < 2*/){
+            card_wild = [];
+            card_w4c = [];
+        }
+        console.log(" findActiveCard findActiveCard 2: ",card," card_wild: ",card_wild, " card_w4c :" ,card_w4c," card_no : ",card_no," card_reverse : ",card_reverse," card_skip : ",card_skip," card_draw : ",card_draw);
     }
     
     // card=card_no.concat(card);
@@ -168,19 +167,16 @@ async function findActiveCard(userCardArray:any, tableData:any){
         flag = false;
     }
 
-    // let active2DCard = uniqueArray.filter((item:string) => new RegExp("-D2C-" , 'i').test(item)); 
-    // let active4DCard = uniqueArray.filter((item:string) => new RegExp("-D4C-" , 'i').test(item)); 
-    // if(active2DCard.length > 1){
-    //     let user2DCard = user_card.filter((item:string) => new RegExp("-D2C-" , 'i').test(item)); 
-    //     if(user2DCard.length >= 2){
-    //         uniqueArray = user2DCard;
-    //     }
-    // }else if(active4DCard.length > 1){
-    //     let user4DCard = user_card.filter((item:string) => new RegExp("-D4C-" , 'i').test(item)); 
-    //     if(user4DCard.length >= 2){
-    //         uniqueArray = user4DCard;
-    //     }
-    // }
+    let active2DCard = uniqueArray.filter((item:string) => new RegExp("-D2C-" , 'i').test(item)); 
+    let active4DCard = uniqueArray.filter((item:string) => new RegExp("-D4C-" , 'i').test(item)); 
+    if(active2DCard.length > 1 && active4DCard.length > 1){
+        uniqueArray = active2DCard;
+        uniqueArray = uniqueArray.concat(active4DCard);
+    }else if(active2DCard.length > 1){
+        uniqueArray = active2DCard;
+    }else if(active4DCard.length > 1){
+        uniqueArray = active4DCard;
+    }
 
     let return_data={flag:flag,si:tableData.currentTurnSeatIndex,card:"",C_C:""}
     let color_array=["R","G","Y","B"];
