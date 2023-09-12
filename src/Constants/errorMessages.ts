@@ -24,7 +24,7 @@ export = Object.freeze({
     ROUND_SCORE_DONE: "Already Round Score Declared !!!",
     WAIT_FOR_TURN_INFO: "Wait For Turn Info !!!",
     CAN_NOT_ABLE_TO_LEAVE: "Currently You Can't Able To Leave !!!",
-    CAN_NOT_ABLE_TO_PICK_CARD: "Currently, You Won't Be Able To Pick Card !!!",
+    CAN_NOT_ABLE_TO_PICK_CARD: "Currently, You Won't Be Able To Pick A Card !!!",
     USER_IS_ONLINE: "User Is Currently Online !",
     UNO_TURN_LOCK_ERROR: "Turn Is Open During UNO Penalty !!!",
     NO_UNO_PENALTY: "No Uno Penalty !!!",
