@@ -59,7 +59,7 @@ const DevConfig = (): ConfigInterface => {
         PLUS_TWO_POINT: 20,
         PLUS_FOUR_POINT: 50,
         COLOR_CHANGE_POINT: 35,
-        INITIAL_SCORE_POINT: 500,
+        INITIAL_SCORE_POINT: 900,
         UNO_PLAYER_BONUS_POINT: 50,
 
         DELAY_FOR_SINGLE_PICK: 0.55,
