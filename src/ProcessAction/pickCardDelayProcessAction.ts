@@ -1,4 +1,4 @@
-import { AllUserScore } from "../AllUserScore/allUserScore";
+import { AllUserScore, CheckUserScore } from "../AllUserScore/allUserScore";
 import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
@@ -9,7 +9,7 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
     const Path = 'PickCardDelayProcessAction';
 
-    const { PICK_CARD, UNO_HIGHLIGHT } = CONSTANTS.EVENTS_NAME;
+    const { PICK_CARD, UNO_HIGHLIGHT, SCORE_DIFFERENCE } = CONSTANTS.EVENTS_NAME;
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
@@ -38,7 +38,11 @@ const PickCardDelayProcessAction = async (Data: any) => {
 
         // UserInTableDetails.cardArray.push(TableDetails.closeCardDeck[0]);
 
+        const OldUserInTableScore = await CheckUserScore(UserInTableDetails);
+
         Data?.PickCardResData?.pickCards.forEach((card: string) => { UserInTableDetails.cardArray.push(card); });
+
+        const NewUserInTableScore = await CheckUserScore(UserInTableDetails);
 
         await SetUserInTable(TableDetails.tableId, UserInTableDetails.userId, UserInTableDetails);
 
@@ -53,6 +57,20 @@ const PickCardDelayProcessAction = async (Data: any) => {
             };
 
             EventEmitter.emit(UNO_HIGHLIGHT, { en: UNO_HIGHLIGHT, RoomId: TableDetails.tableId, Data: UnoHighlightResData });
+        };
+
+        if (OldUserInTableScore?.currentRoundScore && NewUserInTableScore?.currentRoundScore) {
+
+            const ScoreDifferenceResData = {
+
+                userId: UserInTableDetails.userId,
+                expectedScore: OldUserInTableScore?.currentRoundScore - NewUserInTableScore?.currentRoundScore,
+                currentScore: OldUserInTableScore?.currentRoundScore
+
+            };
+
+            EventEmitter.emit(SCORE_DIFFERENCE, { en: SCORE_DIFFERENCE, RoomId: TableDetails.tableId, Data: ScoreDifferenceResData });
+
         };
 
         EventEmitter.emit(PICK_CARD, { en: PICK_CARD, RoomId: TableDetails.tableId, Data: Data?.PickCardResData });

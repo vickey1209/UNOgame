@@ -93,11 +93,11 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
             await SetTable(TableDetails.tableId, TableDetails);
 
+            await DeleteUserInTable(TableDetails.tableId, UserDetails.userId);
+
             if (TableDetails.playersArray.length < 1) {
 
                 await DeleteTable(TableDetails.tableId);
-
-                await DeleteUserInTable(TableDetails.tableId, UserDetails.userId);
 
                 await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
 

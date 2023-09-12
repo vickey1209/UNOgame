@@ -68,6 +68,7 @@ const EmitterON = async () => {
             UNO_HIGHLIGHT,
             ROUND_HISTORY,
             WINNER_DECLARE,
+            SCORE_DIFFERENCE,
 
         } = CONSTANTS.EVENTS_NAME;
 
@@ -139,6 +140,8 @@ const EmitterON = async () => {
         EventEmitter.on(UNO_HIGHLIGHT, async (data) => { await SendToRoom(UNO_HIGHLIGHT, data); });
 
         EventEmitter.on(WINNER_DECLARE, async (data) => { await SendToRoom(WINNER_DECLARE, data); });
+
+        EventEmitter.on(SCORE_DIFFERENCE, async (data) => { await SendToRoom(SCORE_DIFFERENCE, data); });
 
         // * SendToRoom ....
 
