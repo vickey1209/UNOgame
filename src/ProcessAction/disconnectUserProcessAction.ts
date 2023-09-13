@@ -2,7 +2,7 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { io } from "../Connection/socket";
 import { CONSTANTS } from "../Constants";
 import { GetTable, GetUser, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { RemoveUserFromTable } from "../Table/leaveTable";
 
@@ -29,7 +29,7 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
         if (userId === undefined || tableId === undefined || bootValue === undefined || playerCount === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
 
-        let UserDetails: SignUpInterface = await GetUser(userId);
+        let UserDetails: UserInterface = await GetUser(userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
 

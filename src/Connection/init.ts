@@ -34,7 +34,7 @@ const Initialize = async () => {
 
             await Promise.all([
 
-                HttpConnection(),
+                HttpsConnection(),
                 RedisConnection(),
                 SocketConnection(),
                 RedLockConnction(),
