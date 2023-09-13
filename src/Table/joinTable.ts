@@ -26,7 +26,7 @@ const JoinTable = async (socket: Socket, Data: UserInterface) => {
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
 
-        let TableDetails: TableInterface = await GetTable(UserDetails.tableId);
+        let TableDetails: TableInterface = await GetTable(socket.handshake.auth.tableId);
 
         if (!TableDetails) {
 
