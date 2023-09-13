@@ -7,12 +7,12 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetRoundHistory, GetTable, GetUser, GetUserInTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { JoinRoom } from "../SocketRooms/joinRoom";
 import { CreateTable } from "./createTable";
 
-const RejoinTable = async (socket: any, Data: SignUpInterface) => {
+const RejoinTable = async (socket: any, Data: UserInterface) => {
 
     const Path = 'RejoinTable';
 
@@ -30,9 +30,11 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
         const CONFIG = Config();
 
-        let UserDetails: SignUpInterface = await GetUser(Data?.userId);
+        let UserDetails: UserInterface = await GetUser(Data?.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
+
+        console.log('UserDetails > ', { UserDetails });
 
         if (UserDetails.tableId === '') {
 
@@ -42,6 +44,8 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
         };
 
         let TableDetails = await GetTable(UserDetails.tableId);
+
+        console.log('Table > ', { TableDetails });
 
         if (!TableDetails) {
 
@@ -59,7 +63,11 @@ const RejoinTable = async (socket: any, Data: SignUpInterface) => {
 
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === UserDetails.userId });
 
+        console.log('UserAvailableInTable > ', { UserAvailableInTable });
+
         let UserInTableDetails = await GetUserInTable(TableDetails.tableId, UserDetails.userId);
+
+        console.log('UserInTableDetails > ', { UserInTableDetails });
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
