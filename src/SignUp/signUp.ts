@@ -35,9 +35,9 @@ const SignUp = async (en: string, socket: any, Data: any) => {
         //     return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: ValidaionError } });
         // };
 
+        socket.handshake.auth.tableId = WinZoSignUpData?.tableId;
         socket.handshake.auth.userId = WinZoSignUpData?.localPlayerData?.playerId;
         socket.handshake.auth.playerCount = WinZoSignUpData?.localPlayerData?.playerCount;
-        socket.handshake.auth.tableId = WinZoSignUpData?.localPlayerData?.tableId;
 
         const UserDetails = await GetUser(WinZoSignUpData?.localPlayerData?.playerId);
 

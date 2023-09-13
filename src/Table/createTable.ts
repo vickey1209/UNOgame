@@ -77,7 +77,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: UserInterface) => {
         const Table: TableInterface = {
 
             // tableId: 'TABLE',
-            tableId: UserDetails.tableId,
+            tableId: socket.handshake.auth?.tableId,
             // bootValue: UserDetails.bootValue,
             currentTurn: -1,
             currentRound: 1,
