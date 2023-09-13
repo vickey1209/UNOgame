@@ -27,7 +27,7 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
         await Logger("DisconnectUserProcessAction", JSON.stringify(Data));
 
-        if (userId === undefined || tableId === undefined || bootValue === undefined || playerCount === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
+        if (userId === undefined || tableId === undefined || playerCount === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
 
         let UserDetails: UserInterface = await GetUser(userId);
 
