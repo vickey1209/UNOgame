@@ -90,7 +90,7 @@ const NewUser = async (socket: Socket, Data: any) => {
             userName: Data?.localPlayerData?.playerName,
             userProfile: Data?.localPlayerData?.playerProfilePic,
             socketId: socket.id,
-            tableId: Data?.tableId,
+            tableId: '',
             playerCount: Data?.playerCount,
             isBot: Data?.localPlayerData?.isAI
 
@@ -117,7 +117,7 @@ const UpdateUser = async (socket: Socket, Data: any, AvailableUser: any) => {
             userName: Data?.localPlayerData?.playerName,
             userProfile: Data?.localPlayerData?.playerProfilePic,
             socketId: socket.id,
-            tableId: Data?.tableId,
+            tableId: AvailableUser?.tableId,
             playerCount: Data?.playerCount,
             isBot: Data?.localPlayerData?.isAI
 
