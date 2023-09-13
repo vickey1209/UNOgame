@@ -35,7 +35,7 @@ const CreateTable = async (socket: Socket, Data: UserInterface) => {
 
         // };
 
-        let TableDetails = await GetTable(UserDetails.tableId);
+        let TableDetails = await GetTable(socket.handshake.auth.tableId);
 
         if (TableDetails) { // ^ Join Table
 
