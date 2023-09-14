@@ -7,12 +7,12 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
 import { GetRoundHistory, GetTable, GetUser, GetUserInTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
-import { SignUpInterface, UserInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface, WinzoApiDataInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { JoinRoom } from "../SocketRooms/joinRoom";
 import { CreateTable } from "./createTable";
 
-const RejoinTable = async (socket: any, Data: UserInterface) => {
+const RejoinTable = async (socket: any, WinZoSignUpData: WinzoApiDataInterface, UserData: UserInterface) => {
 
     const Path = 'RejoinTable';
 
@@ -21,31 +21,27 @@ const RejoinTable = async (socket: any, Data: UserInterface) => {
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
     const { ALERT, JOIN_TABLE, REJOIN, WINNER_DECLARE } = CONSTANTS.EVENTS_NAME;
 
-    const TablelockId = `${LOCK}:${TABLES}:${Data?.tableId}`;
-    if (Data?.tableId !== '') { Tablelock = await ApplyLock(Path, TablelockId); };
+    const TablelockId = `${LOCK}:${TABLES}:${UserData?.tableId}`;
+    if (UserData?.tableId !== '') { Tablelock = await ApplyLock(Path, TablelockId); };
 
     try {
 
-        await Logger('RejoinTable', JSON.stringify({ Data }));
+        await Logger('RejoinTable', JSON.stringify({ UserData }));
 
         const CONFIG = Config();
 
-        let UserDetails: UserInterface = await GetUser(Data?.userId);
+        let UserDetails: UserInterface = await GetUser(UserData?.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
-        console.log('UserDetails > ', { UserDetails });
-
         if (UserDetails.tableId === '') {
 
-            await CreateTable(socket, Data);
+            await CreateTable(socket, WinZoSignUpData, UserData);
 
             return;
         };
 
         let TableDetails = await GetTable(UserDetails.tableId);
-
-        console.log('Table > ', { TableDetails });
 
         if (!TableDetails) {
 
@@ -63,11 +59,7 @@ const RejoinTable = async (socket: any, Data: UserInterface) => {
 
         const UserAvailableInTable = TableDetails.playersArray.find(e => { return e.userId === UserDetails.userId });
 
-        console.log('UserAvailableInTable > ', { UserAvailableInTable });
-
         let UserInTableDetails = await GetUserInTable(TableDetails.tableId, UserDetails.userId);
-
-        console.log('UserInTableDetails > ', { UserInTableDetails });
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
@@ -174,7 +166,7 @@ const RejoinTable = async (socket: any, Data: UserInterface) => {
 
         } else {
 
-            await CreateTable(socket, Data);
+            await CreateTable(socket, WinZoSignUpData, UserData);
             return;
 
         };
@@ -185,7 +177,7 @@ const RejoinTable = async (socket: any, Data: UserInterface) => {
 
     } finally {
 
-        if (Data?.tableId !== '') { await RemoveLock(Path, Tablelock); };
+        if (UserData?.tableId !== '') { await RemoveLock(Path, Tablelock); };
 
     };
 };

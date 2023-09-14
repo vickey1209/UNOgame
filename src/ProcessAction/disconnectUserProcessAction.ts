@@ -18,7 +18,7 @@ const DisconnectUserProcessAction = async (Data: any) => {
     const { LOCK, EMPTY_TABLE, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${tableId}`;
-    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${bootValue}:${playerCount}`;
+    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${playerCount}`;
 
     const Tablelock = await ApplyLock(Path, TablelockId);
     const MatchMakingLock = await ApplyLock(Path, MatchMakingId);

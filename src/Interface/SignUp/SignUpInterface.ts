@@ -27,7 +27,7 @@ export interface SignUpInterface {
 }
 
 export interface UserInterface {
- 
+
     userId: string,
     userName: string,
     userProfile: string,
@@ -37,3 +37,41 @@ export interface UserInterface {
     playerCount: number,
 
 }
+
+export interface WinZoSignUpInterface {
+
+    winzoApiData: WinzoApiDataInterface
+
+}
+
+export interface WinzoApiDataInterface {
+
+    tableId: string,
+    playerCount: number,
+    localPlayerData: WinZoLocalPlayerDataInterface,
+    allOpponentsData: Array<WinZoLocalPlayerDataInterface>,
+    configData: WinZoConfigDataInterface
+
+}
+
+export interface WinZoLocalPlayerDataInterface {
+
+    playerName: string,
+    playerId: string,
+    playerProfilePic: string,
+    isAI: boolean
+
+}
+
+export interface WinZoConfigDataInterface {
+
+    USER_TURN_TIMER: number,
+    TOTAL_ROUND_NUMBER: number,
+    ROUND_TIMER: number,
+    DISTRIBUTE_CARDS_LIMIT: number,
+    TURN_TIMEOUT_COUNT: number,
+    INITIAL_SCORE_POINT: number,
+    UNO_PLAYER_BONUS_POINT: number,
+    PLUS_ON_PLUS: boolean
+
+} 
