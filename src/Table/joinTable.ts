@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { SignUpInterface, UserInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface, WinzoApiDataInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { GetTable, GetUser, SetTable, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { CreateTable } from "./createTable";
@@ -12,25 +12,25 @@ import { Config } from "../Config";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { CardScoring } from "../CardScoring/cardScoring";
 
-const JoinTable = async (socket: Socket, Data: UserInterface) => {
+const JoinTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterface, UserData: UserInterface) => {
 
     try {
 
-        await Logger('JoinTable', JSON.stringify({ Data }));
+        await Logger('JoinTable', JSON.stringify({ WinZoSignUpData, UserData }));
 
         const CONFIG = Config();
 
         const { JOIN_TABLE, GAME_START } = CONSTANTS.EVENTS_NAME;
 
-        const UserDetails: UserInterface = await GetUser(Data.userId);
+        const UserDetails: UserInterface = await GetUser(UserData.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
 
-        let TableDetails: TableInterface = await GetTable(socket.handshake.auth.tableId);
+        let TableDetails: TableInterface = await GetTable(WinZoSignUpData?.tableId);
 
         if (!TableDetails) {
 
-            await CreateTable(socket, Data);
+            await CreateTable(socket, WinZoSignUpData, UserData);
             return;
 
         };

@@ -1,6 +1,6 @@
 import cryptoRandomString from "crypto-random-string";
 import { Socket } from "socket.io";
-import { SignUpInterface, UserInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface, WinzoApiDataInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { GetTable, GetUser, SetTable, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { CONSTANTS } from "../Constants";
@@ -14,15 +14,15 @@ import { Config } from "../Config";
 import { CardScoring } from "../CardScoring/cardScoring";
 import { BullTimer } from "../BullTimer";
 
-const CreateTable = async (socket: Socket, Data: UserInterface) => {
+const CreateTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterface, UserData: UserInterface) => {
 
     try {
 
-        await Logger('CreateTable', JSON.stringify({ Data }));
+        await Logger('CreateTable', JSON.stringify({ WinZoSignUpData, UserData }));
 
         const { JOIN_TABLE } = CONSTANTS.EVENTS_NAME;
 
-        const UserDetails = await GetUser(Data.userId);
+        const UserDetails = await GetUser(UserData.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
 
@@ -35,15 +35,15 @@ const CreateTable = async (socket: Socket, Data: UserInterface) => {
 
         // };
 
-        let TableDetails = await GetTable(socket.handshake.auth.tableId);
+        let TableDetails = await GetTable(WinZoSignUpData?.tableId);
 
         if (TableDetails) { // ^ Join Table
 
-            await JoinTable(socket, Data);
+            await JoinTable(socket, WinZoSignUpData, UserData);
 
         } else {
 
-            const Table = await CreateNewTable(socket, UserDetails);
+            const Table = await CreateNewTable(socket, WinZoSignUpData, UserDetails);
 
         };
 
@@ -66,7 +66,7 @@ const CreateTable = async (socket: Socket, Data: UserInterface) => {
     };
 };
 
-const CreateNewTable = async (socket: Socket, UserDetails: UserInterface) => {
+const CreateNewTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterface, UserDetails: UserInterface) => {
 
     try {
 
@@ -77,7 +77,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: UserInterface) => {
         const Table: TableInterface = {
 
             // tableId: 'TABLE',
-            tableId: socket.handshake.auth?.tableId,
+            tableId: WinZoSignUpData?.tableId,
             // bootValue: UserDetails.bootValue,
             currentTurn: -1,
             currentRound: 1,

@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { SignUpInterface, UserInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface, WinZoSignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { EventEmitter } from "../Connection/emitter";
@@ -10,14 +10,14 @@ import { RejoinTable } from "../Table/rejoinTable";
 import { BullTimer } from "../BullTimer";
 import { VALIDATOR } from "../Validation";
 
-const SignUp = async (en: string, socket: any, Data: any) => {
+const SignUp = async (en: string, socket: any, Data: WinZoSignUpInterface) => {
 
     const Path = 'SignUp';
 
     const { SIGNUP, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
     const { LOCK, EMPTY_TABLE } = CONSTANTS.REDIS_COLLECTION;
 
-    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${Data?.bootValue}:${Data?.playerCount}`;
+    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${Data?.winzoApiData?.playerCount}`;
 
     const MatchMakingLock = await ApplyLock(Path, MatchMakingId);
 
@@ -25,9 +25,7 @@ const SignUp = async (en: string, socket: any, Data: any) => {
 
         await Logger('SignUp', JSON.stringify({ Data }));
 
-        const WinZoSignUpData = Data.winzoApiData;
-
-        // console.log(WinZoSignUpData);
+        const WinZoSignUpData = Data?.winzoApiData;
 
         // const ValidaionError = await VALIDATOR.SignUpValidation(Data);
 
@@ -36,8 +34,8 @@ const SignUp = async (en: string, socket: any, Data: any) => {
         // };
 
         socket.handshake.auth.tableId = WinZoSignUpData?.tableId;
+        socket.handshake.auth.playerCount = WinZoSignUpData?.playerCount;
         socket.handshake.auth.userId = WinZoSignUpData?.localPlayerData?.playerId;
-        socket.handshake.auth.playerCount = WinZoSignUpData?.localPlayerData?.playerCount;
 
         const UserDetails = await GetUser(WinZoSignUpData?.localPlayerData?.playerId);
 
@@ -45,25 +43,21 @@ const SignUp = async (en: string, socket: any, Data: any) => {
 
         if (UserDetails) {
 
-            console.log('Sign User Exist !!!!!!!!!!');
-
             const UserData = await UpdateUser(socket, WinZoSignUpData, UserDetails);
             // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             if (!UserData) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
-            await RejoinTable(socket, UserData);
+            await RejoinTable(socket, WinZoSignUpData, UserData);
 
         } else {
-
-            console.log('Sign User Not Exist !!!!!!!!!!');
 
             const UserData = await NewUser(socket, WinZoSignUpData);
             // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             if (!UserData) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
-            await CreateTable(socket, UserData);
+            await CreateTable(socket, WinZoSignUpData, UserData);
 
         };
 
