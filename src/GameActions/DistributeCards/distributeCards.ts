@@ -102,7 +102,9 @@ const DistributeCards = async (tableId: string) => {
 
                 activeCard: TableDetails.activeCard,
                 openCardDeck: TableDetails.openCardDeck,
-                playerCard: AllUserSocketId[i].Cards
+                playerCard: AllUserSocketId[i].Cards,
+                currentRound: TableDetails.currentRound,
+                totalRounds: TableDetails.totalRounds,
 
             };
 
