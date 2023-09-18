@@ -1,7 +1,7 @@
 import { Socket } from "socket.io";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface, WinzoApiDataInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
-import { GetEmptyTable, GetTable, GetUser, DeleteEmptyTable, SetTable, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetUser, SetTable, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { CreateTable } from "./createTable";
 import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
@@ -12,86 +12,123 @@ import { Config } from "../Config";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { CardScoring } from "../CardScoring/cardScoring";
 
-const JoinTable = async (socket: Socket, Data: SignUpInterface) => {
+const JoinTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterface, UserData: UserInterface) => {
 
     try {
 
-        await Logger('JoinTable', JSON.stringify({ Data }));
+        await Logger('JoinTable', JSON.stringify({ WinZoSignUpData, UserData }));
 
         const CONFIG = Config();
 
         const { JOIN_TABLE, GAME_START } = CONSTANTS.EVENTS_NAME;
 
-        const UserDetails: SignUpInterface = await GetUser(Data.userId);
+        const UserDetails: UserInterface = await GetUser(UserData.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
 
-        const EmptyTableList: Array<string> = await GetEmptyTable(Data?.bootValue, Data?.playerCount);
+        let TableDetails: TableInterface = await GetTable(WinZoSignUpData?.tableId);
 
-        if (!EmptyTableList && !Data.isBot) {
-            await CreateTable(socket, Data);
+        if (!TableDetails) {
+
+            await CreateTable(socket, WinZoSignUpData, UserData);
             return;
 
-        }
-
-        let isSeatAvalilable = false;
-
-        for (let i = 0; i < EmptyTableList.length; i++) {
-
-            isSeatAvalilable = false;
-
-            const ArrayLength = EmptyTableList[0].split(':').length;
-
-            let TableDetails = await GetTable(EmptyTableList[0].split(':')[ArrayLength - 1]);
-
-            if (TableDetails) {
-
-                isSeatAvalilable = true;
-
-                if (TableDetails.playersArray.length < TableDetails.maxPlayers) { // * Add Player Data In Table
-
-                    const NewPlayerJoinedTableDetails = await SeatPlayerOnTable(socket, TableDetails, UserDetails);
-
-                    if (!NewPlayerJoinedTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.SEAT_PLAYER_ON_TABLE_ERROR) };
-
-                    TableDetails = NewPlayerJoinedTableDetails;
-
-                };
-
-                // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: TableDetails });
-
-                await CardScoring(socket);
-
-                await JoinRoom(socket, TableDetails.tableId);
-
-                if (TableDetails.playersArray.length === TableDetails.maxPlayers) {
-
-                    EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: TableDetails.tableId, Data: TableDetails });
-
-                    await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
-
-                    const GameStartResData = { timer: CONFIG.GamePlay.GAME_START_TIMER };
-
-                    EventEmitter.emit(GAME_START, { en: GAME_START, Data: GameStartResData, RoomId: TableDetails.tableId });
-
-                    await BullTimer.AddJob.CollectBootValue(TableDetails.tableId);
-
-                } else {
-                    // await BullTimer.AddJob.BotSignup({
-                    //     playerCount:TableDetails.maxPlayers,
-                    //     bootValue:TableDetails.bootValue,
-                    //     delayNumber: 2,
-                    //     tableId : TableDetails.tableId })
-                }
-            };
         };
+
+        const AlreadyUserInTable = TableDetails.playersArray.find((player) => { return player.userId === UserDetails.userId });
+
+        if (TableDetails.maxPlayers !== TableDetails.playersArray.length && !AlreadyUserInTable) {
+
+            const NewPlayerJoinedTableDetails = await SeatPlayerOnTable(socket, TableDetails, UserDetails);
+
+            if (!NewPlayerJoinedTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.SEAT_PLAYER_ON_TABLE_ERROR) };
+
+            TableDetails = NewPlayerJoinedTableDetails;
+
+            await CardScoring(socket);
+
+            await JoinRoom(socket, TableDetails.tableId);
+
+            if (TableDetails.playersArray.length === TableDetails.maxPlayers) {
+
+                EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: TableDetails.tableId, Data: TableDetails });
+
+                const GameStartResData = { timer: CONFIG.GamePlay.GAME_START_TIMER };
+
+                EventEmitter.emit(GAME_START, { en: GAME_START, Data: GameStartResData, RoomId: TableDetails.tableId });
+
+                await BullTimer.AddJob.CollectBootValue(TableDetails.tableId);
+
+            };
+
+        };
+
+        // const EmptyTableList: Array<string> = await GetEmptyTable(Data?.bootValue, Data?.playerCount);
+
+        // if (!EmptyTableList && !Data.isBot) {
+        //     await CreateTable(socket, Data);
+        //     return;
+
+        // }
+
+        // let isSeatAvalilable = false;
+
+        // for (let i = 0; i < EmptyTableList.length; i++) {
+
+        //     isSeatAvalilable = false;
+
+        //     const ArrayLength = EmptyTableList[0].split(':').length;
+
+        //     let TableDetails = await GetTable(EmptyTableList[0].split(':')[ArrayLength - 1]);
+
+        //     if (TableDetails) {
+
+        //         isSeatAvalilable = true;
+
+        //         if (TableDetails.playersArray.length < TableDetails.maxPlayers) { // * Add Player Data In Table
+
+        //             const NewPlayerJoinedTableDetails = await SeatPlayerOnTable(socket, TableDetails, UserDetails);
+
+        //             if (!NewPlayerJoinedTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.SEAT_PLAYER_ON_TABLE_ERROR) };
+
+        //             TableDetails = NewPlayerJoinedTableDetails;
+
+        //         };
+
+        //         // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: TableDetails });
+
+        //         await CardScoring(socket);
+
+        //         await JoinRoom(socket, TableDetails.tableId);
+
+        //         if (TableDetails.playersArray.length === TableDetails.maxPlayers) {
+
+        //             EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: TableDetails.tableId, Data: TableDetails });
+
+        //             await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
+
+        //             const GameStartResData = { timer: CONFIG.GamePlay.GAME_START_TIMER };
+
+        //             EventEmitter.emit(GAME_START, { en: GAME_START, Data: GameStartResData, RoomId: TableDetails.tableId });
+
+        //             await BullTimer.AddJob.CollectBootValue(TableDetails.tableId);
+
+        //         } else {
+        //             // await BullTimer.AddJob.BotSignup({
+        //             //     playerCount:TableDetails.maxPlayers,
+        //             //     bootValue:TableDetails.bootValue,
+        //             //     delayNumber: 2,
+        //             //     tableId : TableDetails.tableId })
+        //         }
+        //     };
+        // };
 
     } catch (error: any) {
         await ErrorLogger('JoinTable Error : ', error);
     };
 };
 
-const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, UserDetails: SignUpInterface): Promise<TableInterface | undefined> => {
+const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, UserDetails: UserInterface): Promise<TableInterface | undefined> => {
 
     try {
 
@@ -114,8 +151,8 @@ const SeatPlayerOnTable = async (socket: Socket, TableDetails: TableInterface, U
         const PlayerForPlayerArray: PlayersArrayInterface = {
 
             userId: UserDetails.userId,
-            userName: UserDetails.userId.slice(0, 6),
-            // userName: UserDetails.userName,
+            // userName: UserDetails.userId.slice(0, 6),
+            userName: UserDetails.userName,
             userProfile: UserDetails.userProfile,
             seatIndex: NumberOfSeatAvailable[0],
             isLeave: false,

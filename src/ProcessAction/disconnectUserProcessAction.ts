@@ -2,7 +2,7 @@ import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { io } from "../Connection/socket";
 import { CONSTANTS } from "../Constants";
 import { GetTable, GetUser, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { RemoveUserFromTable } from "../Table/leaveTable";
 
@@ -18,7 +18,7 @@ const DisconnectUserProcessAction = async (Data: any) => {
     const { LOCK, EMPTY_TABLE, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${tableId}`;
-    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${bootValue}:${playerCount}`;
+    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${playerCount}`;
 
     const Tablelock = await ApplyLock(Path, TablelockId);
     const MatchMakingLock = await ApplyLock(Path, MatchMakingId);
@@ -27,9 +27,9 @@ const DisconnectUserProcessAction = async (Data: any) => {
 
         await Logger("DisconnectUserProcessAction", JSON.stringify(Data));
 
-        if (userId === undefined || tableId === undefined || bootValue === undefined || playerCount === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
+        if (userId === undefined || tableId === undefined || playerCount === undefined) { throw new Error(CONSTANTS.ERROR_MESSAGES.BULL_DATA_NOT_FOUND) };
 
-        let UserDetails: SignUpInterface = await GetUser(userId);
+        let UserDetails: UserInterface = await GetUser(userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
 

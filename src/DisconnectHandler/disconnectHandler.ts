@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 import { ErrorLogger, Logger } from "../Logger/logger";
-import { DeleteEmptyTable, DeleteTable, DeleteUserInTable, GetTable, GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
+import {  DeleteTable, DeleteUserInTable, GetTable, GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { CONSTANTS } from "../Constants";
 import { io } from "../Connection/socket";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
@@ -19,7 +19,7 @@ const DisconnectHandler = async (socket: Socket) => {
     const { LOCK, EMPTY_TABLE, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${tableId}`;
-    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${bootValue}:${playerCount}`;
+    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${playerCount}`;
 
     const Tablelock = await ApplyLock(Path, TablelockId);
     const MatchMakingLock = await ApplyLock(Path, MatchMakingId);
@@ -61,7 +61,7 @@ const DisconnectHandler = async (socket: Socket) => {
 
                 await DeleteUserInTable(TableDetails.tableId, UserDetails.userId);
 
-                await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
+                // await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
 
                 return;
             };
@@ -73,7 +73,7 @@ const DisconnectHandler = async (socket: Socket) => {
                 return;
             };
 
-            await BullTimer.AddJob.DisconnectUser(UserDetails.userId, UserDetails.tableId, UserDetails.bootValue, UserDetails.playerCount);
+            await BullTimer.AddJob.DisconnectUser(UserDetails.userId, UserDetails.tableId, UserDetails.playerCount);
 
         };
 

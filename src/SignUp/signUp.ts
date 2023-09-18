@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface, WinZoSignUpInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { EventEmitter } from "../Connection/emitter";
@@ -10,14 +10,14 @@ import { RejoinTable } from "../Table/rejoinTable";
 import { BullTimer } from "../BullTimer";
 import { VALIDATOR } from "../Validation";
 
-const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
+const SignUp = async (en: string, socket: any, Data: WinZoSignUpInterface) => {
 
     const Path = 'SignUp';
 
     const { SIGNUP, ERROR_POPUP } = CONSTANTS.EVENTS_NAME;
     const { LOCK, EMPTY_TABLE } = CONSTANTS.REDIS_COLLECTION;
 
-    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${Data?.bootValue}:${Data?.playerCount}`;
+    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${Data?.winzoApiData?.playerCount}`;
 
     const MatchMakingLock = await ApplyLock(Path, MatchMakingId);
 
@@ -25,37 +25,39 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
 
         await Logger('SignUp', JSON.stringify({ Data }));
 
+        const WinZoSignUpData = Data?.winzoApiData;
+
         // const ValidaionError = await VALIDATOR.SignUpValidation(Data);
 
         // if (ValidaionError) {
         //     return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: ValidaionError } });
         // };
 
-        socket.handshake.auth.userId = Data?.userId;
-        socket.handshake.auth.playerCount = Data?.playerCount;
-        socket.handshake.auth.bootValue = Data?.bootValue;
+        socket.handshake.auth.tableId = WinZoSignUpData?.tableId;
+        socket.handshake.auth.playerCount = WinZoSignUpData?.playerCount;
+        socket.handshake.auth.userId = WinZoSignUpData?.localPlayerData?.playerId;
 
-        const UserDetails = await GetUser(Data.userId);
+        const UserDetails = await GetUser(WinZoSignUpData?.localPlayerData?.playerId);
 
-        await BullTimer.CancelJob.CancelDisconnectUser(Data.userId);
+        await BullTimer.CancelJob.CancelDisconnectUser(WinZoSignUpData?.localPlayerData?.playerId);
 
         if (UserDetails) {
 
-            const UserData = await UpdateUser(socket, Data, UserDetails);
+            const UserData = await UpdateUser(socket, WinZoSignUpData, UserDetails);
             // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             if (!UserData) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
-            await RejoinTable(socket, UserData);
+            await RejoinTable(socket, WinZoSignUpData, UserData);
 
         } else {
 
-            const UserData = await NewUser(socket, Data);
+            const UserData = await NewUser(socket, WinZoSignUpData);
             // EventEmitter.emit(SIGNUP, { en: SIGNUP, SocketId: socket.id, Data: UserData });
 
             if (!UserData) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND); };
 
-            await CreateTable(socket, UserData);
+            await CreateTable(socket, WinZoSignUpData, UserData);
 
         };
 
@@ -70,27 +72,25 @@ const SignUp = async (en: string, socket: any, Data: SignUpInterface) => {
     };
 };
 
-const NewUser = async (socket: Socket, Data: SignUpInterface) => {
+const NewUser = async (socket: Socket, Data: any) => {
 
     try {
 
         await Logger("NewUser", JSON.stringify({ Data }));
 
-        const NewUserData: SignUpInterface = {
+        const NewUserData: any = {
 
-            userId: Data.userId,
-            userName: Data.userName,
-            userProfile: Data.userProfile,
-            chips: Data.chips,
+            userId: Data?.localPlayerData?.playerId,
+            userName: Data?.localPlayerData?.playerName,
+            userProfile: Data?.localPlayerData?.playerProfilePic,
             socketId: socket.id,
             tableId: '',
-            bootValue: Data.bootValue,
-            playerCount: Data.playerCount,
-            isBot: Data.isBot
+            playerCount: Data?.playerCount,
+            isBot: Data?.localPlayerData?.isAI
 
         };
 
-        const User = await SetUser(Data.userId, NewUserData);
+        const User = await SetUser(NewUserData.userId, NewUserData);
 
         if (User === 'OK') return NewUserData;
 
@@ -99,27 +99,25 @@ const NewUser = async (socket: Socket, Data: SignUpInterface) => {
     };
 };
 
-const UpdateUser = async (socket: Socket, Data: SignUpInterface, AvailableUser: SignUpInterface) => {
+const UpdateUser = async (socket: Socket, Data: any, AvailableUser: any) => {
 
     try {
 
         await Logger("UpdateUser", JSON.stringify({ AvailableUser, Data }));
 
-        const UpdateUserData: SignUpInterface = {
+        const UpdateUserData: UserInterface = {
 
-            userId: Data.userId,
-            userName: Data.userName,
-            userProfile: Data.userProfile,
-            chips: Data.chips,
+            userId: Data?.localPlayerData?.playerId,
+            userName: Data?.localPlayerData?.playerName,
+            userProfile: Data?.localPlayerData?.playerProfilePic,
             socketId: socket.id,
-            tableId: AvailableUser.tableId,
-            bootValue: Data.bootValue,
-            playerCount: Data.playerCount,
-            isBot: Data.isBot
+            tableId: AvailableUser?.tableId,
+            playerCount: Data?.playerCount,
+            isBot: Data?.localPlayerData?.isAI
 
         };
 
-        const User = await SetUser(Data.userId, UpdateUserData);
+        const User = await SetUser(UpdateUserData.userId, UpdateUserData);
 
         if (User === 'OK') return UpdateUserData;
 

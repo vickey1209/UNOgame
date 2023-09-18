@@ -1,7 +1,7 @@
 export interface TableInterface {
 
     tableId: string,
-    bootValue: number,
+    bootValue?: number,
     currentTurn: number,
     currentRound: number,
     totalRounds: number,

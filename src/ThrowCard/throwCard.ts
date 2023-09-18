@@ -9,12 +9,13 @@ import { ChangeUserTurn } from "../ChangeUserTurn/changeUserTurn";
 import { GAME_ACTIONS } from "../GameActions";
 import { Uno } from "../Uno/uno";
 import { VALIDATOR } from "../Validation";
+import { CheckUserScore } from "../AllUserScore/allUserScore";
 
 const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
     const Path = 'ThrowCard';
 
-    const { ERROR_POPUP, THROW_CARD } = CONSTANTS.EVENTS_NAME;
+    const { ERROR_POPUP, THROW_CARD, SCORE_DIFFERENCE } = CONSTANTS.EVENTS_NAME;
     const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const userId = socket.handshake.auth?.userId;
@@ -91,6 +92,8 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
 
         if (isWrongCard) { return EventEmitter.emit(ERROR_POPUP, { en: ERROR_POPUP, SocketId: socket.id, Data: { Message: CONSTANTS.ERROR_MESSAGES.WRONG_CARD } }); };
 
+        const OldUserInTableScore = await CheckUserScore(UserInTableDetails);
+
         TableDetails.activeCard = Data?.card;
         TableDetails.activeCardType = Data?.cardType;
         TableDetails.activeCardColor = Data?.cardColor;
@@ -100,11 +103,26 @@ const ThrowCard = async (en: string, socket: any, Data: ThrowCardInterface) => {
         UserInTableDetails.lastPickCard = '';
         UserInTableDetails.cardArray.splice(UserInTableDetails.cardArray.indexOf(Data?.card), 1);
 
+        const NewUserInTableScore = await CheckUserScore(UserInTableDetails);
+
         await SetUserInTable(TableDetails.tableId, UserInTableDetails.userId, UserInTableDetails);
 
         await SetTable(TableDetails.tableId, TableDetails);
 
         await BullTimer.CancelJob.CancelUserTurn(TableDetails.tableId, TableDetails.currentTurn);
+
+        if (OldUserInTableScore?.currentRoundScore && NewUserInTableScore?.currentRoundScore) {
+
+            const ScoreDifferenceResData = {
+
+                userId: UserInTableDetails.userId,
+                expectedScore: OldUserInTableScore?.currentRoundScore - NewUserInTableScore?.currentRoundScore,
+                currentScore: OldUserInTableScore?.currentRoundScore
+
+            };
+
+            EventEmitter.emit(SCORE_DIFFERENCE, { en: SCORE_DIFFERENCE, RoomId: TableDetails.tableId, Data: ScoreDifferenceResData });
+        };
 
         EventEmitter.emit(THROW_CARD, { en: THROW_CARD, RoomId: TableDetails.tableId, Data: Data });
 

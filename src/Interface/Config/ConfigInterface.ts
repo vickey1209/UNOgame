@@ -58,6 +58,8 @@ export interface GamePlayInterface {
     PLUS_TWO_POINT: number,
     PLUS_FOUR_POINT: number,
     COLOR_CHANGE_POINT: number,
+    INITIAL_SCORE_POINT: number,
+    UNO_PLAYER_BONUS_POINT: number,
 
     DELAY_FOR_SINGLE_PICK: number,
     DELAY_FOR_PLUS_FOUR: number,

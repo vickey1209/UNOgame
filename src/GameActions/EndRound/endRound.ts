@@ -41,9 +41,16 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
             if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-            const Score = await CheckUserScore(UserInTableDetails);
+            let Score = await CheckUserScore(UserInTableDetails);
 
             if (!Score) { throw new Error(CONSTANTS.ERROR_MESSAGES.CHECK_SCORE_ERROR) };
+
+            if (UserInTableDetails.cardArray.length === 0) {
+
+                Score.totalScore += CONFIG.GamePlay.UNO_PLAYER_BONUS_POINT;
+                Score.currentRoundScore += CONFIG.GamePlay.UNO_PLAYER_BONUS_POINT;
+
+            };
 
             UserInTableDetails.userScore = Score.totalScore;
             UserInTableDetails.isUnoClick = false;

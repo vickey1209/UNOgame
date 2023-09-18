@@ -39,7 +39,7 @@ const BotSignUp = async (data:any) => {
             },
         };
 
-        await SignUp('SIGNUP', Fake_Socket, SignUpData);
+        // await SignUp('SIGNUP', Fake_Socket, SignUpData);
 
     } catch (error: any) {
         await ErrorLogger('BotSignUp Error : ', error);

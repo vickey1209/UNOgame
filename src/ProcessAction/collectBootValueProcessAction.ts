@@ -31,7 +31,7 @@ const CollectBootValueProcessAction = async (Data: any) => {
 
         TableDetails.playersArray = TableDetails.playersArray.sort((a, b) => { return a.seatIndex - b.seatIndex });
 
-        await CutBootValueFromUser(TableDetails);
+        // await CutBootValueFromUser(TableDetails);
 
         await SetTable(tableId, TableDetails);
 
@@ -57,25 +57,25 @@ const CollectBootValueProcessAction = async (Data: any) => {
     };
 };
 
-const CutBootValueFromUser = async (TableDetails: TableInterface) => {
+// const CutBootValueFromUser = async (TableDetails: TableInterface) => {
 
-    try {
+//     try {
 
-        await Logger("CutBootValueFromUser", JSON.stringify({ TableDetails }));
+//         await Logger("CutBootValueFromUser", JSON.stringify({ TableDetails }));
 
-        for (let i = 0; i < TableDetails.playersArray.length; i++) {
+//         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            let UserDetails = await GetUser(TableDetails.playersArray[i].userId);
+//             let UserDetails = await GetUser(TableDetails.playersArray[i].userId);
 
-            UserDetails.chips -= TableDetails.bootValue;
+//             UserDetails.chips -= TableDetails.bootValue;
 
-            await SetUser(TableDetails.playersArray[i].userId, UserDetails);
+//             await SetUser(TableDetails.playersArray[i].userId, UserDetails);
 
-        };
+//         };
 
-    } catch (error: any) {
-        await ErrorLogger('CutBootValueFromUser Error : ', error);
-    };
-};
+//     } catch (error: any) {
+//         await ErrorLogger('CutBootValueFromUser Error : ', error);
+//     };
+// };
 
 export { CollectBootValueProcessAction };

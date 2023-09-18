@@ -1,8 +1,8 @@
 import cryptoRandomString from "crypto-random-string";
 import { Socket } from "socket.io";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface, WinzoApiDataInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
-import { GetEmptyTable, GetUser, SetEmptyTable, SetTable, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetUser, SetTable, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { CONSTANTS } from "../Constants";
 import { JoinRoom } from "../SocketRooms/joinRoom";
 import { EventEmitter } from "../Connection/emitter";
@@ -14,28 +14,39 @@ import { Config } from "../Config";
 import { CardScoring } from "../CardScoring/cardScoring";
 import { BullTimer } from "../BullTimer";
 
-const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
+const CreateTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterface, UserData: UserInterface) => {
 
     try {
 
-        await Logger('CreateTable', JSON.stringify({ Data }));
+        await Logger('CreateTable', JSON.stringify({ WinZoSignUpData, UserData }));
 
         const { JOIN_TABLE } = CONSTANTS.EVENTS_NAME;
 
-        const UserDetails = await GetUser(Data.userId);
+        const UserDetails = await GetUser(UserData.userId);
 
         if (!UserDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_NOT_FOUND) };
 
-        const EmptyTableList = await GetEmptyTable(Data?.bootValue, Data?.playerCount);
+        // const EmptyTableList = await GetEmptyTable(Data?.bootValue, Data?.playerCount);
 
-        if (EmptyTableList) {
+        // if (EmptyTableList) {
 
-            await JoinTable(socket, Data);
-            return;
+        //     await JoinTable(socket, Data);
+        //     return;
+
+        // };
+
+        let TableDetails = await GetTable(WinZoSignUpData?.tableId);
+
+        if (TableDetails) { // ^ Join Table
+
+            await JoinTable(socket, WinZoSignUpData, UserData);
+
+        } else {
+
+            const Table = await CreateNewTable(socket, WinZoSignUpData, UserDetails);
 
         };
 
-        const Table = await CreateNewTable(socket, UserDetails);
 
         // setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 2000);
 
@@ -55,7 +66,7 @@ const CreateTable = async (socket: Socket, Data: SignUpInterface) => {
     };
 };
 
-const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
+const CreateNewTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterface, UserDetails: UserInterface) => {
 
     try {
 
@@ -66,8 +77,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
         const Table: TableInterface = {
 
             // tableId: 'TABLE',
-            tableId: cryptoRandomString({ length: 24, type: 'hex' }),
-            bootValue: UserDetails.bootValue,
+            tableId: WinZoSignUpData?.tableId,
+            // bootValue: UserDetails.bootValue,
             currentTurn: -1,
             currentRound: 1,
             totalRounds: CONFIG.GamePlay.TOTAL_ROUND_NUMBER,
@@ -77,8 +88,8 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
                 {
                     userId: UserDetails.userId,
-                    userName: UserDetails.userId.slice(0, 6),
-                    // userName: UserDetails.userName,
+                    // userName: UserDetails.userId.slice(0, 6),
+                    userName: UserDetails.userName,
                     userProfile: UserDetails.userProfile,
                     seatIndex: 0,
                     isLeave: false,
@@ -125,7 +136,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
         };
 
-        socket.handshake.auth.tableId = Table?.tableId;
+        // socket.handshake.auth.tableId = Table?.tableId;
         socket.handshake.auth.seatIndex = 0;
 
         await JoinRoom(socket, Table.tableId);
@@ -137,7 +148,7 @@ const CreateNewTable = async (socket: Socket, UserDetails: SignUpInterface) => {
 
         await SetUserInTable(Table.tableId, UserDetails.userId, UserInTable);
 
-        await SetEmptyTable(UserDetails.bootValue, UserDetails.playerCount, Table.tableId);
+        // await SetEmptyTable(UserDetails.bootValue, UserDetails.playerCount, Table.tableId);
 
         return Table;
 

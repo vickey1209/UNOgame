@@ -31,13 +31,13 @@ const DevConfig = (): ConfigInterface => {
 
     const GamePlay = {
 
-        LOG: false,
+        LOG: true,
 
         PLUS_ON_PLUS: true,
 
         GAME_START_TIMER: 1,
         USER_TURN_TIMER: 15,
-        ROUND_TIMER: 180,
+        ROUND_TIMER: 240,
         NEXT_ROUND_TIMER: 10,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
@@ -59,6 +59,8 @@ const DevConfig = (): ConfigInterface => {
         PLUS_TWO_POINT: 20,
         PLUS_FOUR_POINT: 50,
         COLOR_CHANGE_POINT: 35,
+        INITIAL_SCORE_POINT: 900,
+        UNO_PLAYER_BONUS_POINT: 50,
 
         DELAY_FOR_SINGLE_PICK: 0.55,
         DELAY_FOR_PLUS_FOUR: 2.2,

@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../Constants";
-import { SignUpInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
@@ -19,7 +19,7 @@ const UserKeySet = async (UserKey: string) => {
 
 };
 
-const SetUser = async (UserKey: string, UserData: SignUpInterface) => {
+const SetUser = async (UserKey: string, UserData: UserInterface) => {
 
     await Logger('SetUser', JSON.stringify({ UserKey, UserData }));
 
@@ -31,7 +31,7 @@ const SetUser = async (UserKey: string, UserData: SignUpInterface) => {
 
 };
 
-const GetUser = async (UserKey: string): Promise<SignUpInterface> => {
+const GetUser = async (UserKey: string): Promise<UserInterface> => {
 
     await Logger('GetUser', JSON.stringify({ UserKey }));
 
@@ -60,41 +60,41 @@ const DeleteUser = async (UserKey: string) => {
 
 // ^ Empty Table ...
 
-const GetEmptyTable = async (BootValue: number, PlayerCount: number) => {
+// const GetEmptyTable = async (BootValue: number, PlayerCount: number) => {
 
-    await Logger('GetEmptyTable', JSON.stringify({ BootValue, PlayerCount }));
+//     await Logger('GetEmptyTable', JSON.stringify({ BootValue, PlayerCount }));
 
-    const key = `${EMPTY_TABLE}:${BootValue}:${PlayerCount}:*`;
+//     const key = `${EMPTY_TABLE}:${BootValue}:${PlayerCount}:*`;
 
-    const EmptyTable: Array<string> = await AllKeys(key);
+//     const EmptyTable: Array<string> = await AllKeys(key);
 
-    await Logger('GetEmptyTable Return : ', JSON.stringify({ EmptyTable }));
+//     await Logger('GetEmptyTable Return : ', JSON.stringify({ EmptyTable }));
 
-    return EmptyTable;
+//     return EmptyTable;
 
-};
+// };
 
-const SetEmptyTable = async (BootValue: number, PlayerCount: number, TableId: string) => {
+// const SetEmptyTable = async (BootValue: number, PlayerCount: number, TableId: string) => {
 
-    await Logger('SetEmptyTable', JSON.stringify({ BootValue, PlayerCount, TableId }));
+//     await Logger('SetEmptyTable', JSON.stringify({ BootValue, PlayerCount, TableId }));
 
-    const key = `${EMPTY_TABLE}:${BootValue}:${PlayerCount}:${TableId}`;
+//     const key = `${EMPTY_TABLE}:${BootValue}:${PlayerCount}:${TableId}`;
 
-    const EmptyTable: string = await SetData(key, { tableId: TableId });
+//     const EmptyTable: string = await SetData(key, { tableId: TableId });
 
-    return EmptyTable;
+//     return EmptyTable;
 
-};
+// };
 
-const DeleteEmptyTable = async (BootValue: number, PlayerCount: number, TableId: string) => {
+// const DeleteEmptyTable = async (BootValue: number, PlayerCount: number, TableId: string) => {
 
-    await Logger('DeleteEmptyTable', JSON.stringify({ BootValue, PlayerCount, TableId }));
+//     await Logger('DeleteEmptyTable', JSON.stringify({ BootValue, PlayerCount, TableId }));
 
-    const key = `${EMPTY_TABLE}:${BootValue}:${PlayerCount}:${TableId}`;
+//     const key = `${EMPTY_TABLE}:${BootValue}:${PlayerCount}:${TableId}`;
 
-    await DeleteData(key);
+//     await DeleteData(key);
 
-};
+// };
 
 // ^ Empty Table ...
 
@@ -258,9 +258,9 @@ export {
     GetUser,
     DeleteUser,
 
-    GetEmptyTable,
-    SetEmptyTable,
-    DeleteEmptyTable,
+    // GetEmptyTable,
+    // SetEmptyTable,
+    // DeleteEmptyTable,
 
     SetTable,
     GetTable,

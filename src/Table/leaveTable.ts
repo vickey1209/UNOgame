@@ -2,7 +2,7 @@ import { Socket } from "socket.io";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { CONSTANTS } from "../Constants";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
-import { DeleteEmptyTable, DeleteTable, DeleteUserInTable, GetTable, GetUser, GetUserInTable, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
+import {  DeleteTable, DeleteUserInTable, GetTable, GetUser, GetUserInTable, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { EventEmitter } from "../Connection/emitter";
 import { io } from "../Connection/socket";
 import { LeaveRoom } from "../SocketRooms/leaveRoom";
@@ -24,7 +24,7 @@ const LeaveTable = async (en: string, socket: Socket, Data: LeaveTableInterface)
     const { LOCK, EMPTY_TABLE, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const TablelockId = `${LOCK}:${TABLES}:${tableId}`;
-    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${bootValue}:${playerCount}`;
+    const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${playerCount}`;
 
     const Tablelock = await ApplyLock(Path, TablelockId);
     const MatchMakingLock = await ApplyLock(Path, MatchMakingId);
@@ -93,13 +93,13 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
 
             await SetTable(TableDetails.tableId, TableDetails);
 
+            await DeleteUserInTable(TableDetails.tableId, UserDetails.userId);
+
             if (TableDetails.playersArray.length < 1) {
 
                 await DeleteTable(TableDetails.tableId);
 
-                await DeleteUserInTable(TableDetails.tableId, UserDetails.userId);
-
-                await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
+                // await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
 
             };
 
