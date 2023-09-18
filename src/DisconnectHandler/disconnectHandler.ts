@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 import { ErrorLogger, Logger } from "../Logger/logger";
-import {  DeleteTable, DeleteUserInTable, GetTable, GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
+import {  DeleteTable, DeleteTableConfig, DeleteUserInTable, GetTable, GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { CONSTANTS } from "../Constants";
 import { io } from "../Connection/socket";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
@@ -58,6 +58,8 @@ const DisconnectHandler = async (socket: Socket) => {
                 await SetUser(UserDetails.userId, UserDetails);
 
                 await DeleteTable(TableDetails.tableId);
+
+                await DeleteTableConfig(TableDetails.tableId);
 
                 await DeleteUserInTable(TableDetails.tableId, UserDetails.userId);
 

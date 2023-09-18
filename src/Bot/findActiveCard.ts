@@ -1,5 +1,5 @@
 import { CONSTANTS } from "../Constants";
-import { GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTableConfig, GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { GAME_ACTIONS } from "../GameActions";
 import { BullTimer } from "../BullTimer";
@@ -8,6 +8,11 @@ import { findPointAndColorWiseCards } from "./findPointAndColorWiseCards";
 
 async function findActiveCard(userCardArray:any, tableData:any){
     const CONFIG = Config();
+
+    const TableConfigDetails = await GetTableConfig(tableData.tableId);
+
+    if (!TableConfigDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_CONFIG_NOT_FOUND) };
+
     console.log(" findActiveCard findActiveCard : ", userCardArray,tableData);
     let user_card = userCardArray;
     let last_moved_card = tableData.activeCard;
@@ -203,7 +208,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
 
                 // if(CONFIG.GamePlay.USER_TURN_TIMER < )
 
-                if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && RemainingRoundTimer > CONFIG.GamePlay.USER_TURN_TIMER + 30 /*nextUserInTableDetails.cardArray.length > userActionCardThrowRandom*/){
+                if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && RemainingRoundTimer > TableConfigDetails.USER_TURN_TIMER + 30 /*nextUserInTableDetails.cardArray.length > userActionCardThrowRandom*/){
                     card_bot_w4c = []
                     card_bot_w2c = [];
                 }else if((card_bot_w2c.length > 0 || card_bot_w4c.length > 0) && nextUserInTableDetails.cardArray.length > userActionCardThrowRandom){

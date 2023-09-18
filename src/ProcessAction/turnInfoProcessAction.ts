@@ -5,7 +5,7 @@ import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
-import { GetTable, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetTableConfig, GetUserInTable, SetTable } from "../GameRedisOperations/gameRedisOperations";
 import { TurnInfoResInterface } from "../Interface/TurnInfoRes/TurnInfoResInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { BOT_ACTION } from "../Bot";
@@ -25,7 +25,9 @@ const TurnInfoProcessAction = async (Data: any) => {
 
         await Logger("TurnInfoProcessAction", JSON.stringify(Data));
 
-        const CONFIG = Config();
+        const TableConfigDetails = await GetTableConfig(Data?.tableId);
+
+        if (!TableConfigDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_CONFIG_NOT_FOUND) };
 
         let TableDetails = await GetTable(Data?.tableId);
 
@@ -41,7 +43,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
             await BullTimer.AddJob.Round(TableDetails.tableId);
 
-            EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: TableDetails.tableId, Data: { timer: CONFIG.GamePlay.ROUND_TIMER, currentRound: TableDetails.currentRound } });
+            EventEmitter.emit(ROUND_START, { en: ROUND_START, RoomId: TableDetails.tableId, Data: { timer: TableConfigDetails?.ROUND_TIMER, currentRound: TableDetails.currentRound } });
 
             EventEmitter.emit(ACTIVE_CARD, { en: ACTIVE_CARD, RoomId: TableDetails.tableId, Data: { activeCard: TableDetails.activeCard, activeCardType: TableDetails.activeCardType, activeCardColor: TableDetails.activeCardColor } });
 
@@ -76,8 +78,8 @@ const TurnInfoProcessAction = async (Data: any) => {
             isThrowPossible: isThrowPossibleData.isThrowPossible,
             throwPossibleCards: isThrowPossibleData.throwPossibleCards,
 
-            totalTime: CONFIG.GamePlay.USER_TURN_TIMER,
-            remainingTime: CONFIG.GamePlay.USER_TURN_TIMER
+            totalTime: TableConfigDetails?.USER_TURN_TIMER,
+            remainingTime: TableConfigDetails?.USER_TURN_TIMER
 
         };
 
@@ -129,7 +131,7 @@ const TurnInfoProcessAction = async (Data: any) => {
 
             let nextPlayerUserInTableDetails = await GetUserInTable(TableDetails.tableId, UserAvailableInTable.userId);
 
-            if (UserInTableDetails.cardArray.length < nextPlayerUserInTableDetails.cardArray.length && RemainingRoundTimer < CONFIG.GamePlay.USER_TURN_TIMER && TableDetails.botPriority === CONSTANTS.BOT_PRIORITY.HARD) {
+            if (UserInTableDetails.cardArray.length < nextPlayerUserInTableDetails.cardArray.length && RemainingRoundTimer < TableConfigDetails?.USER_TURN_TIMER && TableDetails.botPriority === CONSTANTS.BOT_PRIORITY.HARD) {
 
                 // Search for draw 4 card
                 let card_bot_w4c = UserInTableDetails.cardArray.filter(item => new RegExp("D4C-", 'i').test(item));

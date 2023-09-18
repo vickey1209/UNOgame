@@ -1,11 +1,11 @@
 import { CONSTANTS } from "../Constants";
-import { SignUpInterface, UserInterface } from "../Interface/SignUp/SignUpInterface";
+import { SignUpInterface, UserInterface, WinZoConfigDataInterface } from "../Interface/SignUp/SignUpInterface";
 import { TableInterface } from "../Interface/Table/TableInterface";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { Logger } from "../Logger/logger";
 import { AllKeys, DeleteData, GetData, SetData } from "../RedisOperations/redisOperations";
 
-const { USERS, EMPTY_TABLE, TABLES, USER_IN_TABLE, ROUND_HISTORY } = CONSTANTS.REDIS_COLLECTION;
+const { USERS, TABLES_CONFIG, TABLES, USER_IN_TABLE, ROUND_HISTORY } = CONSTANTS.REDIS_COLLECTION;
 
 // ^ User ...
 
@@ -252,6 +252,56 @@ const DeleteRoundHistory = async (RoundId: string) => {
 // ^ Round History ...
 
 
+// ^ Table Config ...
+
+const TableConfigKeySet = async (TableId: string) => {
+
+    await Logger('TableConfigKeySet', JSON.stringify({ TableId }));
+
+    const key = `${TABLES_CONFIG}:${TableId}`;
+
+    return key;
+
+};
+
+const SetTableConfig = async (TableId: string, TableConfigData: WinZoConfigDataInterface) => {
+
+    await Logger('SetTableConfig', JSON.stringify({ TableId, TableConfigData }));
+
+    const key = await TableConfigKeySet(TableId);
+
+    const TableConfigSet = await SetData(key, TableConfigData);
+
+    return TableConfigSet;
+
+};
+
+const GetTableConfig = async (TableId: string): Promise<WinZoConfigDataInterface> => {
+
+    await Logger('GetTableConfig', JSON.stringify({ TableId }));
+
+    const key = await TableConfigKeySet(TableId);
+
+    const TableConfig = await GetData(key);
+
+    await Logger('GetTableConfig Return : ', JSON.stringify({ TableConfig }));
+
+    return TableConfig;
+
+};
+
+const DeleteTableConfig = async (TableId: string) => {
+
+    await Logger('DeleteTableConfig', JSON.stringify({ TableId }));
+
+    const key = await TableConfigKeySet(TableId);
+
+    await DeleteData(key);
+
+};
+
+// ^ Table Config ...
+
 export {
 
     SetUser,
@@ -273,5 +323,9 @@ export {
     SetRoundHistory,
     GetRoundHistory,
     DeleteRoundHistory,
+
+    SetTableConfig,
+    GetTableConfig,
+    DeleteTableConfig,
 
 };

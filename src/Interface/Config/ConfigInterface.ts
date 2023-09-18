@@ -31,23 +31,22 @@ export interface GamePlayInterface {
 
     LOG: boolean,
 
-    PLUS_ON_PLUS: boolean,
+    // PLUS_ON_PLUS: boolean,
 
     GAME_START_TIMER: number,
-    USER_TURN_TIMER: number,
-    ROUND_TIMER: number,
+    // USER_TURN_TIMER: number,
+    // ROUND_TIMER: number,
     NEXT_ROUND_TIMER: number,
     RETURN_TO_TABLE_TIMER: number,
     UNO_CLICK_TIMER: number,
-    // TIMES_UP_DELAY_TIMER: number,
     CLEAR_TABLE_DATA_TIMER: number,
 
-    DISTRIBUTE_CARDS_LIMIT: number,
+    // DISTRIBUTE_CARDS_LIMIT: number,
     MIN_SPECIAL_CARD: number,
     MAX_SPECIAL_CARD: number,
-    TURN_TIMEOUT_COUNT: number,
+    // TURN_TIMEOUT_COUNT: number,
 
-    TOTAL_ROUND_NUMBER: number,
+    // TOTAL_ROUND_NUMBER: number,
     UNO_PENALTY_NUMBER: number,
     PLUS_TWO_PENALTY_NUMBER: number,
     PLUS_FOUR_PENALTY_NUMBER: number,
@@ -58,8 +57,8 @@ export interface GamePlayInterface {
     PLUS_TWO_POINT: number,
     PLUS_FOUR_POINT: number,
     COLOR_CHANGE_POINT: number,
-    INITIAL_SCORE_POINT: number,
-    UNO_PLAYER_BONUS_POINT: number,
+    // INITIAL_SCORE_POINT: number,
+    // UNO_PLAYER_BONUS_POINT: number,
 
     DELAY_FOR_SINGLE_PICK: number,
     DELAY_FOR_PLUS_FOUR: number,

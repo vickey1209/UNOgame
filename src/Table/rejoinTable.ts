@@ -6,7 +6,7 @@ import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
 import { GAME_ACTIONS } from "../GameActions";
-import { GetRoundHistory, GetTable, GetUser, GetUserInTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
+import { GetRoundHistory, GetTable, GetTableConfig, GetUser, GetUserInTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { SignUpInterface, UserInterface, WinzoApiDataInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { JoinRoom } from "../SocketRooms/joinRoom";
@@ -50,6 +50,10 @@ const RejoinTable = async (socket: any, WinZoSignUpData: WinzoApiDataInterface, 
             return;
         };
 
+        const TableConfigDetails = await GetTableConfig(UserDetails.tableId);
+
+        if (!TableConfigDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_CONFIG_NOT_FOUND) };
+
         if (TableDetails && TableDetails.isWinning) {
 
             EventEmitter.emit(WINNER_DECLARE, { en: WINNER_DECLARE, RoomId: UserDetails.socketId, Data: { winningArray: TableDetails.winningArray } });
@@ -71,7 +75,8 @@ const RejoinTable = async (socket: any, WinZoSignUpData: WinzoApiDataInterface, 
 
                 let { tableId, bootValue, currentTurn, currentRound, totalRounds, maxPlayers, playersArray, activeCard, activeCardType, activeCardColor, isClockwise, isGameStart, isRoundStart, isScoreScreen, isWinning, isTurnLock }: any = TableDetails;
 
-                const totalUserTurnTimer = CONFIG.GamePlay.USER_TURN_TIMER;
+                const totalUserTurnTimer = TableConfigDetails.USER_TURN_TIMER;
+                // const totalUserTurnTimer = CONFIG.GamePlay.USER_TURN_TIMER;
 
                 let isThrowPossible: boolean = false, throwPossibleCards: Array<string> = [], isUno: boolean = false;
 
