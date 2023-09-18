@@ -1,6 +1,6 @@
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { CONSTANTS } from "../Constants";
-import { DeleteRoundHistory, DeleteTable, GetTable } from "../GameRedisOperations/gameRedisOperations";
+import { DeleteRoundHistory, DeleteTable, DeleteTableConfig, GetTable } from "../GameRedisOperations/gameRedisOperations";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
 const GameEndProcessAction = async (Data: any) => {
@@ -25,6 +25,8 @@ const GameEndProcessAction = async (Data: any) => {
         await DeleteRoundHistory(TableDetails.tableId);
 
         await DeleteTable(TableDetails.tableId);
+
+        await DeleteTableConfig(TableDetails.tableId);
 
     } catch (error: any) {
 

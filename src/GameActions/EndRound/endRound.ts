@@ -3,7 +3,7 @@ import { BullTimer } from "../../BullTimer";
 import { Config } from "../../Config";
 import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
-import { GetRoundHistory, GetTable, GetUserInTable, SetRoundHistory, SetTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
+import { GetRoundHistory, GetTable, GetTableConfig, GetUserInTable, SetRoundHistory, SetTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
 import { ErrorLogger, Logger } from "../../Logger/logger";
 import { Win } from "../../Win/win";
 
@@ -15,7 +15,11 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
         const CONFIG = Config();
 
-        const { ROUND_SCORE, TIMES_UP } = CONSTANTS.EVENTS_NAME;
+        const TableConfigDetails = await GetTableConfig(tableId);
+
+        if (!TableConfigDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_CONFIG_NOT_FOUND) };
+
+        const { TIMES_UP } = CONSTANTS.EVENTS_NAME;
 
         let TableDetails = await GetTable(tableId);
 
@@ -47,8 +51,8 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
             if (UserInTableDetails.cardArray.length === 0) {
 
-                Score.totalScore += CONFIG.GamePlay.UNO_PLAYER_BONUS_POINT;
-                Score.currentRoundScore += CONFIG.GamePlay.UNO_PLAYER_BONUS_POINT;
+                Score.totalScore += TableConfigDetails?.UNO_PLAYER_BONUS_POINT;
+                Score.currentRoundScore += TableConfigDetails?.UNO_PLAYER_BONUS_POINT;
 
             };
 
@@ -77,7 +81,7 @@ const EndRound = async (tableId: string, isRoundTimeEnd: boolean, delayNumber: n
 
         const PlayersAvailableInTable = TableDetails.playersArray.filter(player => { return player.isLeave === false });
 
-        if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER || PlayersAvailableInTable.length < 2) {
+        if (TableDetails.currentRound === TableConfigDetails?.TOTAL_ROUND_NUMBER || PlayersAvailableInTable.length < 2) {
             // if (TableDetails.currentRound === CONFIG.GamePlay.TOTAL_ROUND_NUMBER) {
 
             if (isRoundTimeEnd) {

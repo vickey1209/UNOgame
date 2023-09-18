@@ -2,7 +2,7 @@ import { Socket } from "socket.io";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { CONSTANTS } from "../Constants";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
-import {  DeleteTable, DeleteUserInTable, GetTable, GetUser, GetUserInTable, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
+import {  DeleteTable, DeleteTableConfig, DeleteUserInTable, GetTable, GetUser, GetUserInTable, SetTable, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { EventEmitter } from "../Connection/emitter";
 import { io } from "../Connection/socket";
 import { LeaveRoom } from "../SocketRooms/leaveRoom";
@@ -98,6 +98,8 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
             if (TableDetails.playersArray.length < 1) {
 
                 await DeleteTable(TableDetails.tableId);
+
+                await DeleteTableConfig(TableDetails.tableId);
 
                 // await DeleteEmptyTable(TableDetails.bootValue, TableDetails.maxPlayers, TableDetails.tableId);
 

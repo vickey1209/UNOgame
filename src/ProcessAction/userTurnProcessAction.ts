@@ -5,7 +5,7 @@ import { EventEmitter } from "../Connection/emitter";
 import { ApplyLock, RemoveLock } from "../Connection/redlock";
 import { io } from "../Connection/socket";
 import { CONSTANTS } from "../Constants";
-import { GetTable, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetTableConfig, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { PickCardResInterface } from "../Interface/PickCardRes/PickCardResInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { LeaveRoom } from "../SocketRooms/leaveRoom";
@@ -26,10 +26,12 @@ const UserTurnProcessAction = async (Data: any) => {
 
         await Logger("UserTurnProcessAction", JSON.stringify(Data));
 
-        const CONFIG = Config();
-
         const tableId = Data?.tableId;
         const currentTurn = Data?.currentTurn;
+
+        const TableConfigDetails = await GetTableConfig(tableId);
+
+        if (!TableConfigDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_CONFIG_NOT_FOUND) };
 
         let pickCards: Array<string> = [], isPick = false;
 
@@ -57,17 +59,17 @@ const UserTurnProcessAction = async (Data: any) => {
 
         if (!UserInTableDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.USER_IN_TABLE_NOT_FOUND) };
 
-        if (UserInTableDetails.turnMissCount !== CONFIG.GamePlay.TURN_TIMEOUT_COUNT) { UserInTableDetails.turnMissCount += 1; };
+        if (UserInTableDetails.turnMissCount !== TableConfigDetails?.TURN_TIMEOUT_COUNT) { UserInTableDetails.turnMissCount += 1; };
 
         if (UserInTableDetails.lastPickCard !== '' && UserInTableDetails.cardArray.includes(UserInTableDetails.lastPickCard)) {
 
             UserInTableDetails.lastPickCard = '';
 
-        } else if (UserInTableDetails.turnMissCount !== CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
+        } else if (UserInTableDetails.turnMissCount !== TableConfigDetails?.TURN_TIMEOUT_COUNT) {
 
             isPick = true;
 
-        } else if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT && TableDetails.numberOfCardToPick !== 0) {
+        } else if (UserInTableDetails.turnMissCount === TableConfigDetails?.TURN_TIMEOUT_COUNT && TableDetails.numberOfCardToPick !== 0) {
 
             isPick = true;
 
@@ -134,7 +136,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         EventEmitter.emit(TURN_MISSED, { en: TURN_MISSED, Data: TurnMissResData, RoomId: TableDetails.tableId });
 
-        if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
+        if (UserInTableDetails.turnMissCount === TableConfigDetails?.TURN_TIMEOUT_COUNT) {
 
             EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.TURN_SKIP_LIMIT_REACHED } });
 
@@ -144,7 +146,7 @@ const UserTurnProcessAction = async (Data: any) => {
 
         };
 
-        if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT && TableDetails.numberOfCardToPick === 0) {
+        if (UserInTableDetails.turnMissCount === TableConfigDetails?.TURN_TIMEOUT_COUNT && TableDetails.numberOfCardToPick === 0) {
             // if (UserInTableDetails.turnMissCount === CONFIG.GamePlay.TURN_TIMEOUT_COUNT) {
 
             await RemoveUserFromTable(UserInTableDetails.userId, TableDetails.tableId, false);

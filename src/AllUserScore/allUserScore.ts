@@ -1,7 +1,7 @@
 import { Config } from "../Config";
 import { EventEmitter } from "../Connection/emitter";
 import { CONSTANTS } from "../Constants";
-import { GetTable, GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetTableConfig, GetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { UserInTableInterface } from "../Interface/UserInTable/UserInTableInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 
@@ -55,6 +55,10 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
         await Logger("CheckUserScore", JSON.stringify({ UserInTableDetails }));
 
         const CONFIG = Config();
+
+        const TableConfigDetails = await GetTableConfig(UserInTableDetails.tableId);
+
+        if (!TableConfigDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_CONFIG_NOT_FOUND) };
 
         let totalScore: any = 0, currentRoundScore: any = 0,
             simple: any = { Cards: [], Score: 0 },
@@ -125,7 +129,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
         };
 
-        currentRoundScore = CONFIG.GamePlay.INITIAL_SCORE_POINT - currentRoundScore;
+        currentRoundScore = TableConfigDetails?.INITIAL_SCORE_POINT - currentRoundScore;
 
         totalScore = UserInTableDetails.userScore + currentRoundScore;
 

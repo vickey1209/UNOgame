@@ -2,7 +2,7 @@ import { GAME_ACTIONS } from "..";
 import { Config } from "../../Config";
 import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
-import { GetTable, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetTableConfig, GetUser, GetUserInTable, SetTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
 import { MyCardsResInterface } from "../../Interface/MyCardsRes/MyCardsResInterface";
 import { ErrorLogger, Logger } from "../../Logger/logger";
 import { RandomPlayerTurn } from "../../RandomPlayerTurn/randomPlayer";
@@ -14,6 +14,10 @@ const DistributeCards = async (tableId: string) => {
         await Logger("DistributeCards", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
+
+        const TableConfigDetails = await GetTableConfig(tableId);
+
+        if (!TableConfigDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_CONFIG_NOT_FOUND) };
 
         const { MY_CARDS } = CONSTANTS.EVENTS_NAME;
 
@@ -52,7 +56,7 @@ const DistributeCards = async (tableId: string) => {
 
                 const UserDetails = await GetUser(TableDetails.playersArray[i].userId);
 
-                for (let j = 0; j < CONFIG.GamePlay.DISTRIBUTE_CARDS_LIMIT; j++) {
+                for (let j = 0; j < TableConfigDetails?.DISTRIBUTE_CARDS_LIMIT; j++) {
 
                     if (PowerCardNumber > j) {
 
