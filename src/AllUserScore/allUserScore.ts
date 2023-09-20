@@ -73,7 +73,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
                 currentRoundScore += CONFIG.GamePlay.PLUS_FOUR_POINT;
 
-                wildPlusFour.Score += CONFIG.GamePlay.PLUS_FOUR_POINT;
+                wildPlusFour.Score -= CONFIG.GamePlay.PLUS_FOUR_POINT;
 
                 wildPlusFour.Cards.push(UserInTableDetails.cardArray[i]);
 
@@ -81,7 +81,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
                 currentRoundScore += CONFIG.GamePlay.COLOR_CHANGE_POINT;
 
-                wildColorChange.Score += CONFIG.GamePlay.COLOR_CHANGE_POINT;
+                wildColorChange.Score -= CONFIG.GamePlay.COLOR_CHANGE_POINT;
 
                 wildColorChange.Cards.push(UserInTableDetails.cardArray[i]);
 
@@ -89,7 +89,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
                 currentRoundScore += CONFIG.GamePlay.PLUS_TWO_POINT;
 
-                special.Score += CONFIG.GamePlay.PLUS_TWO_POINT;
+                special.Score -= CONFIG.GamePlay.PLUS_TWO_POINT;
 
                 special.Cards.push(UserInTableDetails.cardArray[i]);
 
@@ -97,7 +97,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
                 currentRoundScore += CONFIG.GamePlay.REVERS_POINT;
 
-                special.Score += CONFIG.GamePlay.REVERS_POINT;
+                special.Score -= CONFIG.GamePlay.REVERS_POINT;
 
                 special.Cards.push(UserInTableDetails.cardArray[i]);
 
@@ -105,7 +105,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
                 currentRoundScore += CONFIG.GamePlay.SKIP_POINT;
 
-                special.Score += CONFIG.GamePlay.SKIP_POINT;
+                special.Score -= CONFIG.GamePlay.SKIP_POINT;
 
                 special.Cards.push(UserInTableDetails.cardArray[i]);
 
@@ -113,7 +113,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
                 currentRoundScore += CONFIG.GamePlay.ZERO_POINT;
 
-                zero.Score += CONFIG.GamePlay.ZERO_POINT;
+                zero.Score -= CONFIG.GamePlay.ZERO_POINT;
 
                 zero.Cards.push(UserInTableDetails.cardArray[i]);
 
@@ -121,7 +121,7 @@ const CheckUserScore = async (UserInTableDetails: UserInTableInterface) => {
 
                 currentRoundScore += Number(UserInTableDetails.cardArray[i].split("-")[1]);
 
-                simple.Score += Number(UserInTableDetails.cardArray[i].split("-")[1]);
+                simple.Score -= Number(UserInTableDetails.cardArray[i].split("-")[1]);
 
                 simple.Cards.push(UserInTableDetails.cardArray[i]);
 
