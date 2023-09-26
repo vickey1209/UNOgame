@@ -44,18 +44,18 @@ const CreateTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterfac
         } else {
 
             const Table = await CreateNewTable(socket, WinZoSignUpData, UserDetails);
-
+            await BullTimer.AddJob.BotSignup({
+                playerCount: Table?.maxPlayers,
+                bootValue: Table?.bootValue,
+                delayNumber: 4,
+                tableId: Table?.tableId
+            })
         };
 
 
         // setTimeout(async () => { await BOT_ACTION.BotSignUp() }, 2000);
 
-        await BullTimer.AddJob.BotSignup({
-            playerCount: Table?.maxPlayers,
-            bootValue: Table?.bootValue,
-            delayNumber: 4,
-            tableId: Table?.tableId
-        })
+       
 
         // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
 
