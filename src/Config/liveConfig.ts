@@ -54,22 +54,22 @@ const LiveConfig = (): ConfigInterface => {
 
         LOG: true,
 
-        PLUS_ON_PLUS: true,
+        // PLUS_ON_PLUS: true,
 
         GAME_START_TIMER: 4,
-        USER_TURN_TIMER: 15,
-        ROUND_TIMER: 180,
+        // USER_TURN_TIMER: 15,
+        // ROUND_TIMER: 180,
         NEXT_ROUND_TIMER: 10,
         RETURN_TO_TABLE_TIMER: 30,
         UNO_CLICK_TIMER: 2,
         CLEAR_TABLE_DATA_TIMER: 0.1,
 
-        DISTRIBUTE_CARDS_LIMIT: 7,
+        // DISTRIBUTE_CARDS_LIMIT: 7,
         MIN_SPECIAL_CARD: 0,
         MAX_SPECIAL_CARD: 3,
-        TURN_TIMEOUT_COUNT: 3,
+        // TURN_TIMEOUT_COUNT: 3,
 
-        TOTAL_ROUND_NUMBER: 3,
+        // TOTAL_ROUND_NUMBER: 3,
         UNO_PENALTY_NUMBER: 2,
         PLUS_TWO_PENALTY_NUMBER: 2,
         PLUS_FOUR_PENALTY_NUMBER: 4,
@@ -80,8 +80,8 @@ const LiveConfig = (): ConfigInterface => {
         PLUS_TWO_POINT: 20,
         PLUS_FOUR_POINT: 50,
         COLOR_CHANGE_POINT: 35,
-        INITIAL_SCORE_POINT: 900,
-        UNO_PLAYER_BONUS_POINT: 50,
+        // INITIAL_SCORE_POINT: 900,
+        // UNO_PLAYER_BONUS_POINT: 50,
 
         DELAY_FOR_SINGLE_PICK: 0.55,
         DELAY_FOR_PLUS_FOUR: 2.2,

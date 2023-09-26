@@ -37,7 +37,7 @@ const EventCases = async (socket: Socket) => {
 
             const Data = Front_Side_Data.data;
 
-            await Logger('EventCases SocketData', JSON.stringify({ SocketData: socket.handshake.auth }));
+            // await Logger('EventCases SocketData', JSON.stringify({ SocketData: socket.handshake.auth }));
 
             switch (EventName) {
 

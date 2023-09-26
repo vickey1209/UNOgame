@@ -3,7 +3,7 @@ import { BullTimer } from "../../BullTimer";
 import { Config } from "../../Config";
 import { EventEmitter } from "../../Connection/emitter";
 import { CONSTANTS } from "../../Constants";
-import { GetTable, GetUserInTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetTableConfig, GetUserInTable, SetUserInTable } from "../../GameRedisOperations/gameRedisOperations";
 import { PickCardResInterface } from "../../Interface/PickCardRes/PickCardResInterface";
 import { ErrorLogger, Logger } from "../../Logger/logger";
 
@@ -14,6 +14,10 @@ const PlusFour = async (tableId: string) => {
         await Logger("PlusFour", JSON.stringify({ tableId }));
 
         const CONFIG = Config();
+
+        const TableConfigDetails = await GetTableConfig(tableId);
+
+        if (!TableConfigDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_CONFIG_NOT_FOUND) };
 
         let isPenaltyFreeCard = false, penaltyNumber = 0;
 
@@ -60,7 +64,7 @@ const PlusFour = async (tableId: string) => {
             }
         };
 
-        if (isPenaltyFreeCard && CONFIG.GamePlay.PLUS_ON_PLUS) {
+        if (isPenaltyFreeCard && TableConfigDetails?.PLUS_ON_PLUS) {
 
             let SkipData = await GAME_ACTIONS.Skip(TableDetails.tableId);
 

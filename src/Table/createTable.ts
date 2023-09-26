@@ -2,7 +2,7 @@ import cryptoRandomString from "crypto-random-string";
 import { Socket } from "socket.io";
 import { SignUpInterface, UserInterface, WinzoApiDataInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
-import { GetTable, GetUser, SetTable, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
+import { GetTable, GetUser, SetTable, SetTableConfig, SetUser, SetUserInTable } from "../GameRedisOperations/gameRedisOperations";
 import { CONSTANTS } from "../Constants";
 import { JoinRoom } from "../SocketRooms/joinRoom";
 import { EventEmitter } from "../Connection/emitter";
@@ -81,7 +81,7 @@ const CreateNewTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInter
             // bootValue: UserDetails.bootValue,
             currentTurn: -1,
             currentRound: 1,
-            totalRounds: CONFIG.GamePlay.TOTAL_ROUND_NUMBER,
+            totalRounds: WinZoSignUpData?.configData?.TOTAL_ROUND_NUMBER,
             maxPlayers: UserDetails.playerCount,
             botPriority: CONSTANTS.BOT_PRIORITY.HARD,
             playersArray: [
@@ -147,6 +147,8 @@ const CreateNewTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInter
         await SetTable(Table.tableId, Table);
 
         await SetUserInTable(Table.tableId, UserDetails.userId, UserInTable);
+
+        await SetTableConfig(Table.tableId, WinZoSignUpData?.configData);
 
         // await SetEmptyTable(UserDetails.bootValue, UserDetails.playerCount, Table.tableId);
 
