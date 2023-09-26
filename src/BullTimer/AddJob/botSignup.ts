@@ -8,7 +8,7 @@ const BotSignup = async (data:any) => {
 
         await Logger("BotSignup", JSON.stringify(data));
 
-        const jobId = `${data.tableId}:BotSignup`;
+        const jobId = `${data.WinZoSignUpData.tableId}:BotSignup`;
         await Logger("BotSignup jobId : ", jobId);
         const options = {
             delay: data.delayNumber * 1000,

@@ -5,21 +5,30 @@ const BotSignUp = async (data:any) => {
 
     try {
 
-        await Logger('BotSignUp', JSON.stringify({}));
+        await Logger('BotSignUp : ', JSON.stringify(data));
 
-        const SignUpData = {
 
-            userId: `Bot_${Date.now()}`,
-            userName: "Bot",
-            userProfile: "No",
-            chips: 100,
-            bootValue:  data.bootValue,
-            playerCount: data.playerCount,
-            socketId: '',
-            tableId: '',
-            isBot: true
 
-        };
+        // const SignUpData = data.WinZoSignUpData.WinZoSignUpData.localPlayerData;
+        data.WinZoSignUpData.localPlayerData = {  
+            "playerName": "Bot",
+            "playerId": `Bot_${Date.now()}`,
+            "playerProfilePic": "No",
+            "isAI": true
+        }
+        // {
+
+        //     userId: `Bot_${Date.now()}`,
+        //     userName: "Bot",
+        //     userProfile: "No",
+        //     chips: 100,
+        //     bootValue:  data.bootValue,
+        //     playerCount: data.playerCount,
+        //     socketId: '',
+        //     tableId: '',
+        //     isBot: true
+
+        // };
 
         let Fake_Socket = {
 
@@ -39,7 +48,7 @@ const BotSignUp = async (data:any) => {
             },
         };
 
-        // await SignUp('SIGNUP', Fake_Socket, SignUpData);
+        await SignUp('SIGNUP', Fake_Socket, {winzoApiData:data.WinZoSignUpData});
 
     } catch (error: any) {
         await ErrorLogger('BotSignUp Error : ', error);

@@ -45,10 +45,11 @@ const CreateTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterfac
 
             const Table = await CreateNewTable(socket, WinZoSignUpData, UserDetails);
             await BullTimer.AddJob.BotSignup({
-                playerCount: Table?.maxPlayers,
-                bootValue: Table?.bootValue,
+                // playerCount: Table?.maxPlayers,
+                // bootValue: Table?.bootValue,
                 delayNumber: 4,
-                tableId: Table?.tableId
+                // tableId: Table?.tableId,
+                WinZoSignUpData
             })
         };
 
