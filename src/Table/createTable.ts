@@ -45,6 +45,8 @@ const CreateTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterfac
 
             const Table = await CreateNewTable(socket, WinZoSignUpData, UserDetails);
 
+            if (Table) { await CardScoring(socket, Table?.tableId); };
+
         };
 
 
@@ -59,7 +61,6 @@ const CreateTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterfac
 
         // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: socket.id, Data: Table });
 
-        await CardScoring(socket);
 
     } catch (error: any) {
         await ErrorLogger('CreateTable Error : ', error);

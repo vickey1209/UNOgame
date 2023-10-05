@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { SignUpInterface, UserInterface, WinZoSignUpInterface } from "../Interface/SignUp/SignUpInterface";
+import { UserInterface, WinZoSignUpInterface, WinzoApiDataInterface } from "../Interface/SignUp/SignUpInterface";
 import { ErrorLogger, Logger } from "../Logger/logger";
 import { GetUser, SetUser } from "../GameRedisOperations/gameRedisOperations";
 import { EventEmitter } from "../Connection/emitter";
@@ -72,13 +72,13 @@ const SignUp = async (en: string, socket: any, Data: WinZoSignUpInterface) => {
     };
 };
 
-const NewUser = async (socket: Socket, Data: any) => {
+const NewUser = async (socket: Socket, Data: WinzoApiDataInterface) => {
 
     try {
 
         await Logger("NewUser", JSON.stringify({ Data }));
 
-        const NewUserData: any = {
+        const NewUserData: UserInterface = {
 
             userId: Data?.localPlayerData?.playerId,
             userName: Data?.localPlayerData?.playerName,
@@ -99,7 +99,7 @@ const NewUser = async (socket: Socket, Data: any) => {
     };
 };
 
-const UpdateUser = async (socket: Socket, Data: any, AvailableUser: any) => {
+const UpdateUser = async (socket: Socket, Data: WinzoApiDataInterface, AvailableUser: UserInterface) => {
 
     try {
 

@@ -38,7 +38,7 @@ const RedisConnection = async () => {
 
         redisClient.on('connect', () => {
 
-            redisClient.flushDb()
+            // redisClient.flushDb()
 
             console.log('Redis Connected !');
             

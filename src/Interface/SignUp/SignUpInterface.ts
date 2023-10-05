@@ -72,6 +72,12 @@ export interface WinZoConfigDataInterface {
     TURN_TIMEOUT_COUNT: number,
     INITIAL_SCORE_POINT: number,
     UNO_PLAYER_BONUS_POINT: number,
-    PLUS_ON_PLUS: boolean
+    PLUS_ON_PLUS: boolean,
+    ZERO_POINT: number,
+    SKIP_POINT: number,
+    REVERS_POINT: number,
+    PLUS_TWO_POINT: number,
+    PLUS_FOUR_POINT: number,
+    COLOR_CHANGE_POINT: number,
 
 } 
