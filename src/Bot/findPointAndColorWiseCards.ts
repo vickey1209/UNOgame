@@ -1,7 +1,7 @@
 import { getUserScore } from "../AllUserScore/allUserScore";
 
 
-async function findPointAndColorWiseCards(userCardArray:any, color_index:number){
+async function findPointAndColorWiseCards(userCardArray:any, color_index:number,tableId:string){
     // let resRedCardsNextPlayer = nextUserInTableDetails.cardArray.filter(item => new RegExp("R-" , 'i').test(item));
     // let resGreenCardsNextPlayer = nextUserInTableDetails.cardArray.filter(item => new RegExp("G-" , 'i').test(item));
     // let resYelloCardsNextPlayer = nextUserInTableDetails.cardArray.filter(item => new RegExp("Y-" , 'i').test(item));
@@ -15,7 +15,7 @@ async function findPointAndColorWiseCards(userCardArray:any, color_index:number)
     let masterArray = [resRedCardsCurrentPlayer,resGreenCardsCurrentPlayer,resYelloCardsCurrentPlayer,resBlueCardsCurrentPlayer];
 
     const userCardPointArray = await Promise.all(
-        masterArray.map(async (cardsArray: any) => await getUserScore(cardsArray)),
+        masterArray.map(async (cardsArray: any) => await getUserScore(cardsArray,tableId)),
     );
     console.log("userCardPointArray :", userCardPointArray );
     let cardPointObj:any = {};
