@@ -174,7 +174,7 @@ const PickCard = async (en: string, socket: any, Data: PickCardInterface) => {
                     let color_array = ["R", "G", "Y", "B"];
                     let color_index = await GAME_ACTIONS.RandomNumber(0, color_array.length - 1);
     
-                    color_index = await findPointAndColorWiseCards(UserInTableDetails.cardArray, color_index)
+                    color_index = await findPointAndColorWiseCards(UserInTableDetails.cardArray, color_index,UserInTableDetails.tableId)
     
                     Fake_Data.cardColor = color_array[color_index];
                 }

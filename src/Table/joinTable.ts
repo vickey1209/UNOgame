@@ -45,7 +45,7 @@ const JoinTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterface,
 
             TableDetails = NewPlayerJoinedTableDetails;
 
-            await CardScoring(socket);
+            await CardScoring(socket, TableDetails.tableId);
 
             await JoinRoom(socket, TableDetails.tableId);
 

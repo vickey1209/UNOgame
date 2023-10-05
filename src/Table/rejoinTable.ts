@@ -147,7 +147,7 @@ const RejoinTable = async (socket: any, WinZoSignUpData: WinzoApiDataInterface, 
 
                 EventEmitter.emit(REJOIN, { en: REJOIN, SocketId: UserDetails.socketId, Data: RejoinResData });
 
-                await CardScoring(socket);
+                await CardScoring(socket, TableDetails.tableId);
 
                 await JoinRoom(socket, TableDetails.tableId);
 
@@ -165,7 +165,7 @@ const RejoinTable = async (socket: any, WinZoSignUpData: WinzoApiDataInterface, 
 
                 // EventEmitter.emit(JOIN_TABLE, { en: JOIN_TABLE, SocketId: UserDetails.socketId, Data: TableDetails });
 
-                await CardScoring(socket);
+                await CardScoring(socket, TableDetails.tableId);
 
             };
 

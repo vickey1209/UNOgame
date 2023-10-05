@@ -262,7 +262,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
                 " card_bot_wild : ", card_bot_wild, 
                 "nextUserInTableDetails.cardArray  : ", nextUserInTableDetails.cardArray );
                 if((card_bot_wild.length > 0  && card.length === 0 && card_no.length === 0) || nextUserInTableDetails.cardArray.length < 2 /*&& D4C_CardInNextPlayerCard.length === 0*/){
-                    color_index = await findPointAndColorWiseCards(userCardArray,color_index)
+                    color_index = await findPointAndColorWiseCards(userCardArray,color_index,tableData.tableId)
                 }else{
                     card_bot_wild = [];
                 }
@@ -275,7 +275,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
   
         if(card_bot_w4c.length > 0){
             return_data.card=card_bot_w4c[0];
-            color_index = await findPointAndColorWiseCards(userCardArray,color_index)
+            color_index = await findPointAndColorWiseCards(userCardArray,color_index,tableData.tableId)
             return_data.C_C=color_array[color_index];
         }else if(card_bot_w2c.length > 0){
             return_data.card=card_bot_w2c[0];
@@ -302,7 +302,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
                     // if(nextUserInTableDetails.cardArray.length > 2){
                     //     return_data.flag = false;
                     // }else{
-                        color_index = await findPointAndColorWiseCards(userCardArray,color_index)
+                        color_index = await findPointAndColorWiseCards(userCardArray,color_index,tableData.tableId)
                         return_data.C_C=color_array[color_index];  
                     // }
                     
@@ -310,7 +310,7 @@ async function findActiveCard(userCardArray:any, tableData:any){
                     // if(nextUserInTableDetails.cardArray.length > 2){
                     //     return_data.flag = false;
                     // }else{
-                        color_index = await findPointAndColorWiseCards(userCardArray,color_index)
+                        color_index = await findPointAndColorWiseCards(userCardArray,color_index,tableData.tableId)
                         return_data.C_C=color_array[color_index];  
                     // }
                     

@@ -53,12 +53,12 @@ const DevConfig = (): ConfigInterface => {
         PLUS_TWO_PENALTY_NUMBER: 2,
         PLUS_FOUR_PENALTY_NUMBER: 4,
 
-        ZERO_POINT: 10,
-        SKIP_POINT: 20,
-        REVERS_POINT: 20,
-        PLUS_TWO_POINT: 20,
-        PLUS_FOUR_POINT: 50,
-        COLOR_CHANGE_POINT: 35,
+        // ZERO_POINT: 10,
+        // SKIP_POINT: 20,
+        // REVERS_POINT: 20,
+        // PLUS_TWO_POINT: 20,
+        // PLUS_FOUR_POINT: 50,
+        // COLOR_CHANGE_POINT: 35,
         // INITIAL_SCORE_POINT: 900,
         // UNO_PLAYER_BONUS_POINT: 50,
 
