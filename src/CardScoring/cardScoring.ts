@@ -17,6 +17,17 @@ const CardScoring = async (socket: Socket, tableId: string) => {
 
         const TableConfigDetails = await GetTableConfig(tableId);
 
+        if (!TableConfigDetails) { throw new Error(CONSTANTS.ERROR_MESSAGES.TABLE_CONFIG_NOT_FOUND) };
+
+        const CardScoringResData = {
+
+            zeroPoints: -Math.abs(TableConfigDetails.ZERO_POINT),
+            actionPoints: -Math.abs(TableConfigDetails.SKIP_POINT),
+            wildCardPoints: -Math.abs(TableConfigDetails.COLOR_CHANGE_POINT),
+            wildPlusFourPoints: -Math.abs(TableConfigDetails.PLUS_FOUR_POINT)
+
+        };
+
         // const CardScoringResData = {
 
         //     zeroPoints: -Math.abs(CONFIG.GamePlay.ZERO_POINT),
@@ -27,7 +38,7 @@ const CardScoring = async (socket: Socket, tableId: string) => {
         // };
 
         // EventEmitter.emit(CARD_SCORING, { en: CARD_SCORING, SocketId: socket.id, Data: CardScoringResData });
-        EventEmitter.emit(CARD_SCORING, { en: CARD_SCORING, SocketId: socket.id, Data: TableConfigDetails });
+        EventEmitter.emit(CARD_SCORING, { en: CARD_SCORING, SocketId: socket.id, Data: CardScoringResData });
 
     } catch (error: any) {
         await ErrorLogger('CardScoring Error : ', error);
