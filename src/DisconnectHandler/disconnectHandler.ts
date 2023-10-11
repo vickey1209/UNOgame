@@ -21,8 +21,8 @@ const DisconnectHandler = async (socket: Socket) => {
     const TablelockId = `${LOCK}:${TABLES}:${tableId}`;
     const MatchMakingId = `${LOCK}:${EMPTY_TABLE}:${playerCount}`;
 
-    const Tablelock = await ApplyLock(Path, TablelockId);
     const MatchMakingLock = await ApplyLock(Path, MatchMakingId);
+    const Tablelock = await ApplyLock(Path, TablelockId);
 
     try {
 
@@ -87,8 +87,8 @@ const DisconnectHandler = async (socket: Socket) => {
 
         socket.handshake.auth = {};
 
-        await RemoveLock(Path, Tablelock);
         await RemoveLock(Path, MatchMakingLock);
+        await RemoveLock(Path, Tablelock);
 
     };
 };
