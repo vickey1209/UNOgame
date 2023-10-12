@@ -44,13 +44,13 @@ const CreateTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInterfac
         } else {
 
             const Table = await CreateNewTable(socket, WinZoSignUpData, UserDetails);
-            await BullTimer.AddJob.BotSignup({
-                // playerCount: Table?.maxPlayers,
-                // bootValue: Table?.bootValue,
-                delayNumber: 4,
-                // tableId: Table?.tableId,
-                WinZoSignUpData
-            })
+            // await BullTimer.AddJob.BotSignup({
+            //     // playerCount: Table?.maxPlayers,
+            //     // bootValue: Table?.bootValue,
+            //     delayNumber: 4,
+            //     // tableId: Table?.tableId,
+            //     WinZoSignUpData
+            // })
 
             if (Table) { await CardScoring(socket, Table?.tableId); };
 
