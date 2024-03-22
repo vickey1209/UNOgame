@@ -31,7 +31,7 @@ const SocketConnection = async () => {
             // NumberOfSocketsOnServer = io.of("/").sockets.size;
             // NumberOfSocketsOnRoom = io.sockets.adapter.rooms.get('TABLE')?.size ? io.sockets.adapter.rooms.get('TABLE')?.size : 0;
 
-            await Logger("SocketConnection", JSON.stringify(socket.id));
+            await Logger("SocketConnection....", JSON.stringify(socket.id));
 
             await EventCases(socket);
 

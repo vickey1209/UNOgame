@@ -15,10 +15,10 @@ const HttpConnection = async () => {
     const CONFIG = Config();
 
     const PORT = CONFIG.ServerPort;
-    httpServer.listen(PORT, () => { console.log(`Server listening on port ${PORT} !`); });
+    httpServer.listen(PORT, () => { console.log(`Server listening on port ${PORT} !!!!`); });
 
     app.get('/', (req, res) => { res.send('UNO !!!'); });
-    app.get('/test', (req, res) => { res.send('UNO !!!'); });
+    app.get('/test', (req, res) => { res.send('UNO.........kk !!!'); });
 };
 
 export { HttpConnection, httpServer };

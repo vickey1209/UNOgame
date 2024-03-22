@@ -10,7 +10,8 @@ const BotSignUp = async (data:any) => {
 
 
         // const SignUpData = data.WinZoSignUpData.WinZoSignUpData.localPlayerData;
-        data.WinZoSignUpData.localPlayerData = {  
+        data.WinZoSignUpData.localPlayerData = 
+        {  
             "playerName": "Bot",
             "playerId": `Bot_${Date.now()}`,
             "playerProfilePic": "No",

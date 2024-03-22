@@ -43,12 +43,12 @@ const RejoinTable = async (socket: any, WinZoSignUpData: WinzoApiDataInterface, 
 
         let TableDetails = await GetTable(UserDetails.tableId);
 
-        if (!TableDetails) {
+        // if (!TableDetails) {
 
-            EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.LAST_GAME_FINISHED } });
+        //     EventEmitter.emit(ALERT, { en: ALERT, SocketId: UserDetails.socketId, Data: { Message: CONSTANTS.ERROR_MESSAGES.LAST_GAME_FINISHED } });
 
-            return;
-        };
+        //     return;
+        // };
 
         const TableConfigDetails = await GetTableConfig(UserDetails.tableId);
 

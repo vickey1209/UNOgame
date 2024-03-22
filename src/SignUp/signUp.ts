@@ -11,6 +11,7 @@ import { BullTimer } from "../BullTimer";
 import { VALIDATOR } from "../Validation";
 
 const SignUp = async (en: string, socket: any, Data: WinZoSignUpInterface) => {
+console.log("signnnnnnnnnnnnnnnnnnn");
 
     const Path = 'SignUp';
 
@@ -23,7 +24,7 @@ const SignUp = async (en: string, socket: any, Data: WinZoSignUpInterface) => {
 
     try {
 
-        await Logger('SignUp', JSON.stringify({ Data }));
+        await Logger('SignUp....=>', JSON.stringify({ Data }));
 
         const WinZoSignUpData = Data?.winzoApiData;
 

@@ -142,7 +142,7 @@ const RemoveUserFromTable = async (userId: string, tableId: string, isPlayerChoo
             if (socket) { await LeaveRoom(socket, TableDetails.tableId); };
 
             const PlayersAvailableInTable = TableDetails.playersArray.filter(player => { return player.isLeave === false });
-
+            
             if (PlayersAvailableInTable.length < 2) {
 
                 await EndRound(TableDetails.tableId, false, 0.1);

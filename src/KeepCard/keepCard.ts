@@ -72,7 +72,7 @@ const KeepCard = async (en: string, socket: Socket, Data: KeepCardInterface) => 
 
     } finally {
 
-        await RemoveLock(Path, Tablelock);
+        await RemoveLock(Path,Tablelock);
 
     };
 };

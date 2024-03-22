@@ -67,7 +67,7 @@ const Win = async (tableId: string, delayNumber: number) => {
 
                 FirstLoopElement.roundScore.forEach((SecondLoopElement: any, SecondLoopIndex: any) => { UserWiseRoundHistory.push(RoundHistoryDetails[FirstLoopIndex].roundScore[SecondLoopIndex]) });
 
-            });
+            }); 
 
             if (UserWiseRoundHistory.length) {
 

@@ -38,10 +38,11 @@ const RedLockConnction = async () => {
 };
 
 const ApplyLock = async (Path: string, LockId: string) => {
+    
 
     try {
 
-        await Logger("ApplyLock", JSON.stringify({ Path, LockId }));
+        await Logger("ApplyLock................", JSON.stringify({ Path, LockId }));
 
         const Lock = await redLock.acquire([LockId], 2 * 1000);
 

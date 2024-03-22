@@ -11,7 +11,7 @@ const RoundHistory = async (en: string, socket: Socket, Data: RoundHistoryInterf
     const Path = 'RoundHistory';
 
     const { ERROR_POPUP, ROUND_HISTORY } = CONSTANTS.EVENTS_NAME;
-    const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
+        const { LOCK, TABLES } = CONSTANTS.REDIS_COLLECTION;
 
     const userId = socket.handshake.auth?.userId;
     const tableId = socket.handshake.auth?.tableId;

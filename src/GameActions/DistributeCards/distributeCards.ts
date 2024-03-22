@@ -50,7 +50,7 @@ const DistributeCards = async (tableId: string) => {
 
         for (let i = 0; i < TableDetails.playersArray.length; i++) {
 
-            if (TableDetails.playersArray[i].isLeave === false) {
+            if (TableDetails.playersArray[i].isLeave === false)  {
 
                 let UserInTableDetails = await GetUserInTable(TableDetails.tableId, TableDetails.playersArray[i].userId);
 

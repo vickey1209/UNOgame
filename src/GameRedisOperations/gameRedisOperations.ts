@@ -33,7 +33,7 @@ const SetUser = async (UserKey: string, UserData: UserInterface) => {
 
 const GetUser = async (UserKey: string): Promise<UserInterface> => {
 
-    await Logger('GetUser', JSON.stringify({ UserKey }));
+    await Logger('GetUser......', JSON.stringify({ UserKey }));
 
     const key = await UserKeySet(UserKey);
 
@@ -182,7 +182,7 @@ const GetUserInTable = async (TableId: string, UserInTableId: string): Promise<U
 
     const UserInTableGet = await GetData(key);
 
-    await Logger('GetUserInTable Return : ', JSON.stringify({ UserInTableGet }));
+    await Logger('GetUserInTable Return : ', JSON.stringify({ UserInTableGet })); 
 
     return UserInTableGet;
 
@@ -327,5 +327,6 @@ export {
     SetTableConfig,
     GetTableConfig,
     DeleteTableConfig,
-
+ 
+ 
 };

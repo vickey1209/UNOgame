@@ -52,7 +52,7 @@ const EventCases = async (socket: Socket) => {
                     break;
 
                 case SIGNUP:
-                    await Logger('EventCases SIGNUP', JSON.stringify({ Data }));
+                    await Logger('EventCases SIGNUP...', JSON.stringify({ Data }));
                     await SignUp(EventName, socket, Data);
                     break;
 

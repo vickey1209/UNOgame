@@ -162,4 +162,4 @@ const CreateNewTable = async (socket: Socket, WinZoSignUpData: WinzoApiDataInter
     };
 };
 
-export { CreateTable };
+ export { CreateTable };

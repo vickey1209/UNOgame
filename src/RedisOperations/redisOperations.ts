@@ -15,21 +15,43 @@ const SetData = async (key: string, data: object) => {
     };
 };
 
-const GetData = async (key: string) => {
 
+
+
+
+
+
+const GetData = async (key: string): Promise<any> => {
     try {
-
-        await Logger('GetData', JSON.stringify({ key }));
+        await Logger('Getdata===>', JSON.stringify({ key }));
 
         let Data = await redisClient.get(key);
-        if (Data) return Data = JSON.parse(Data);
 
-        return '';
-
+        if (Data) {
+            return JSON.parse(Data);
+        } else {
+            return null; // Change this to whatever appropriate value you want to return when no data is found
+        }
     } catch (error: any) {
         await ErrorLogger('GetData Error: ', error);
-    };
+        throw error; // Re-throw the error to propagate it to the caller
+    }
 };
+// const GetData = async (key: string) => {
+
+//     try {
+
+//         await Logger('Getdata===', JSON.stringify({ key }));
+
+//         let Data = await redisClient.get(key);
+//         if (Data) return Data = JSON.parse(Data);
+
+//         return '';
+
+//     } catch (error: any) {
+//         await ErrorLogger('GetData Error: ', error);
+//     };
+// };
 
 const DeleteData = async (key: string) => {
 
